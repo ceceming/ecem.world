@@ -14,7 +14,16 @@
 <meta property="og:url" content="https://ecem.world/">
 
 <style>
-  :root { color-scheme: dark; }
+  :root {
+    color-scheme: dark;
+
+    /* ── The one size knob ────────────────────────────────────────────
+       How much room the object gets on the page. Everything else —
+       how close "coming soon" sits underneath it, how the whole block
+       is centred — follows from this. Raise it for a bigger object,
+       lower it for a smaller one. */
+    --stage: min(60vmin, 340px);
+  }
 
   * { box-sizing: border-box; }
 
@@ -45,7 +54,7 @@
     max-width: 600px;
     /* Optically centred: the canvas carries empty headroom for the big hop,
        so the block is nudged up to sit where the eye expects it. */
-    transform: translateY(-2vmin);
+    transform: translateY(calc(var(--stage) * -0.13));
     opacity: 0;
     transition: opacity 900ms ease;
   }
@@ -55,7 +64,7 @@
   /* The 3D object sits on a fully transparent canvas, so the black page
      shows straight through it. */
   #stage {
-    width: min(72vmin, 520px);
+    width: var(--stage);
     aspect-ratio: 1 / 1;
     position: relative;
   }
@@ -68,9 +77,10 @@
   }
 
   h1 {
-    /* Pulled up into the canvas's dead space beneath the resting object. */
-    margin: clamp(-52px, -5vmin, -12px) 0 0;
-    font-size: clamp(15px, 3.4vmin, 22px);
+    /* Pulled up into the canvas's dead space beneath the resting object.
+       Proportional to the stage, so it stays put at any --stage value. */
+    margin: calc(var(--stage) * -0.12) 0 0;
+    font-size: clamp(12px, 2.7vmin, 16px);
     font-weight: 400;
     letter-spacing: 0.42em;
     /* letter-spacing adds a trailing gap; nudge back so it reads centred */

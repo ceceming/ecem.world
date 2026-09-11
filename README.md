@@ -48,6 +48,23 @@ a bouncing ball.
 Respects `prefers-reduced-motion` (holds still) and pauses when the tab is in
 the background.
 
+## Changing how big the object looks
+
+One line, at the top of `index.html`:
+
+```css
+--stage: min(60vmin, 340px);
+```
+
+That is the only size knob. The object is currently deliberately small. Raise
+the `340px` for a bigger object, lower it for a smaller one; the `60vmin`
+caps it on short or narrow screens so it never overruns a phone. The spacing
+of "coming soon" underneath and the optical centring are both derived from
+this value, so they follow along on their own.
+
+Model files themselves need no scaling — whatever you upload is measured and
+fitted automatically.
+
 ## Why three.js is committed to the repo
 
 `vendor/three/` holds a copy of three.js rather than loading it from a CDN.

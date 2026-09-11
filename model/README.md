@@ -43,7 +43,8 @@ press the zip → Uncompress.
 ## If it comes in sideways, or too big, or too small
 
 Height is normalised automatically, so scale is never something you need to
-fix. Rotation sometimes is. Open `../assets/scene.js` and edit:
+fix here — how large the object looks on the page is the `--stage` line at the
+top of `../index.html`. Rotation sometimes does need fixing. Open `../assets/scene.js` and edit:
 
 ```js
 export const MODEL_ORIENTATION = { x: 0, y: 0, z: 0 };

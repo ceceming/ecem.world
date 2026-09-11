@@ -43,8 +43,9 @@ const CHOREO = {
   beat:     0.16, // small breath between the dance and the big hop
 };
 
-/* The object is normalised so it is exactly 1 unit tall with its feet at
- * y = 0, which keeps the hop heights above meaningful for any model. */
+/* The object is normalised to roughly 1 unit tall with its feet at y = 0,
+ * which keeps the hop heights above meaningful for any model. How large it
+ * then looks on the page is set by --stage in index.html, not here. */
 const TARGET_HEIGHT = 1;
 
 /* ------------------------------------------------------------------ *
@@ -251,7 +252,11 @@ function normalise(object) {
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
   const centre = box.getCenter(new THREE.Vector3());
-  const scale = TARGET_HEIGHT / Math.max(size.y, 1e-6);
+  // Fit by height, but never let a wide or deep model spill out sideways.
+  const scale = Math.min(
+    TARGET_HEIGHT / Math.max(size.y, 1e-6),
+    (TARGET_HEIGHT * 1.3) / Math.max(size.x, size.z, 1e-6)
+  );
 
   const pivot = new THREE.Group();   // rotates and squashes
   const holder = new THREE.Group();  // holds the recentred model
