@@ -18,15 +18,19 @@ import { RoomEnvironment } from '../vendor/three/environments/RoomEnvironment.js
  * 1. WHERE YOUR MODEL LIVES
  *
  * Drop your Meshy export into the /model folder and name the main file
- * either model.glb (easiest — one single file) or model.obj.
- * Everything below is tried in order; the first file that exists wins.
- * If nothing is found, a placeholder shape is shown instead.
+ * either model.glb (easiest — one single file) or model.obj. Capitalised
+ * spellings work too. Everything below is tried in order; the first file
+ * that exists wins. If nothing is found, a placeholder shape is shown.
  * ------------------------------------------------------------------ */
-export const MODEL_CANDIDATES = [
-  'model/model.glb',
-  'model/model.gltf',
-  'model/model.obj',
-];
+const MODEL_FILES = ['model.glb', 'model.gltf', 'model.obj'];
+
+/* Web servers are case-sensitive about filenames, and a file saved straight
+ * out of an export tool often arrives capitalised. Both spellings are tried
+ * so "Model.glb" works exactly as well as "model.glb". */
+export const MODEL_CANDIDATES = MODEL_FILES.flatMap((name) => [
+  `model/${name}`,
+  `model/${name[0].toUpperCase()}${name.slice(1)}`,
+]);
 
 /* Tweak these if your model comes in sideways or upside down. Values are
  * degrees, applied once when the model is loaded. */
