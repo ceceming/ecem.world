@@ -4,8 +4,9 @@
  * Renders a model on a fully TRANSPARENT canvas, so whatever is behind it
  * (the black page) shows through.
  *
- * Animation loop:
- *   5 small hops  ->  a little left/right dance  ->  one big hop  ->  repeat
+ * Motion:
+ *   a slow, continuous drift — six sine waves on unrelated periods, so
+ *   nothing ever starts, lands, or repeats.
  */
 
 import * as THREE from 'three';
@@ -37,127 +38,53 @@ export const MODEL_CANDIDATES = MODEL_FILES.flatMap((name) => [
 export const MODEL_ORIENTATION = { x: 0, y: 0, z: 0 };
 
 /* ------------------------------------------------------------------ *
- * 2. THE CHOREOGRAPHY — all the timing knobs in one place
+ * 2. THE MOTION — a drift, not a loop
+ *
+ * Six independent waves, each with its own period. The periods share no
+ * common multiple worth speaking of, so the combined motion takes weeks to
+ * come back around: there is no beat to catch and nothing ever restarts.
+ * The glyph simply keeps drifting, the way something suspended in water
+ * does.
+ *
+ * Every channel is a plain sine, so position, velocity and acceleration are
+ * all continuous — there is no frame anywhere at which something snaps,
+ * accelerates or lands. That is the whole trick: serenity is the absence of
+ * events, not slow events.
+ *
+ * Amplitudes are fractions of the glyph's height (normalised to 1), except
+ * the three rotations, which are degrees. Periods are seconds. Raising a
+ * period makes that channel slower and calmer; raising an amplitude makes it
+ * travel further.
  * ------------------------------------------------------------------ */
-const CHOREO = {
-  smallHopsPerCycle: 5,
-  smallHop: { duration: 0.62, height: 0.30, crouch: 0.16, air: 0.64 },
-  dance:    { duration: 1.90, yaw: 24, wiggles: 2, bob: 0.05 },
-  bigHop:   { duration: 1.25, height: 1.15, crouch: 0.24, air: 0.58 },
-  beat:     0.16, // small breath between the dance and the big hop
+const DRIFT = {
+  rise:   { amplitude: 0.042, period:  9.3, phase: 0.0 },  // up and down
+  sway:   { amplitude: 0.020, period: 19.7, phase: 1.7 },  // side to side
+  turn:   { amplitude: 7.5,   period: 13.1, phase: 0.0 },  // left and right
+  tilt:   { amplitude: 2.4,   period: 17.3, phase: 2.2 },  // lean
+  nod:    { amplitude: 1.8,   period: 11.6, phase: 0.9 },  // toward and away
+  breath: { amplitude: 0.005, period:  8.1, phase: 0.4 },  // barely-there scale
 };
 
-/* The object is normalised to roughly 1 unit tall with its feet at y = 0,
- * which keeps the hop heights above meaningful for any model. How large it
+/* The glyph is normalised to 1 unit tall and centred on the origin, so it
+ * turns about its own middle rather than pivoting on its base. How large it
  * then looks on the page is set by --stage in index.html, not here. */
 const TARGET_HEIGHT = 1;
 
-/* ------------------------------------------------------------------ *
- * Easing helpers
- * ------------------------------------------------------------------ */
-const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-const easeInQuad = (t) => t * t;
+const wave = ({ amplitude, period, phase }, t) =>
+  amplitude * Math.sin((2 * Math.PI * t) / period + phase);
 
-function easeOutBack(t) {
-  const c1 = 1.70158;
-  const c3 = c1 + 1;
-  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-}
-
-/* ------------------------------------------------------------------ *
- * A single hop, expressed as a pose.
- *
- *   u  : 0 -> 1 progress through this hop
- * Returns { y, squash }, where squash is the vertical scale factor; the
- * horizontal scale is derived from it so the volume stays believable. The
- * curve is continuous across every sub-phase, so nothing visibly pops.
- * ------------------------------------------------------------------ */
-function hopPose(u, { height, crouch, air }) {
-  const land = 1 - crouch - air;
-  const CROUCHED = 0.78;                       // how far it presses down
-  const PUSH_OFF = 0.18;                       // slice of the jump spent unfolding
-  const IMPACT = 0.34;                         // slice of the landing spent absorbing
-  // Stretched along the direction of travel: tallest at take-off and landing,
-  // very slightly squat at the apex where it is barely moving.
-  const stretch = (speed) => 1 + 0.20 * speed - 0.05 * (1 - speed);
-
-  // Anticipation: press down into the ground before pushing off.
-  if (u < crouch) {
-    const p = easeInQuad(u / crouch);
-    return { y: 0, squash: 1 + (CROUCHED - 1) * p };
-  }
-
-  // Airborne: a clean parabola, unfolding out of the crouch as it leaves.
-  if (u < crouch + air) {
-    const a = (u - crouch) / air;
-    const y = height * 4 * a * (1 - a);
-    const speed = Math.abs(1 - 2 * a);         // 1 at take-off & landing, 0 at the apex
-    const target = stretch(speed);
-    const squash = a < PUSH_OFF
-      ? CROUCHED + (target - CROUCHED) * easeOutCubic(a / PUSH_OFF)
-      : target;
-    return { y, squash };
-  }
-
-  // Landing: absorb the impact, then spring back with a little overshoot.
-  const p = clamp((u - crouch - air) / land, 0, 1);
-  const landedWith = stretch(1);
-  const squash = p < IMPACT
-    ? landedWith + (CROUCHED - landedWith) * easeOutCubic(p / IMPACT)
-    : CROUCHED + (1 - CROUCHED) * easeOutBack((p - IMPACT) / (1 - IMPACT));
-  return { y: 0, squash };
-}
-
-/* ------------------------------------------------------------------ *
- * The dance: two right/left sways, easing in and out of stillness.
- * ------------------------------------------------------------------ */
-function dancePose(u, cfg) {
-  const envelope = Math.sin(Math.PI * clamp(u, 0, 1)); // 0 -> 1 -> 0
-  const sway = Math.sin(2 * Math.PI * cfg.wiggles * u);
-  const yaw = THREE.MathUtils.degToRad(cfg.yaw) * sway * envelope;
-  const roll = -0.30 * yaw;                       // lean into the turn
-  const y = cfg.bob * envelope * (1 - Math.cos(4 * Math.PI * cfg.wiggles * u)) / 2;
-  const squash = 1 - 0.05 * envelope * Math.cos(4 * Math.PI * cfg.wiggles * u);
-  return { y, yaw, roll, squash };
-}
-
-/* ------------------------------------------------------------------ *
- * The full cycle, as a list of timed segments.
- * ------------------------------------------------------------------ */
-function buildCycle() {
-  const segments = [];
-  for (let i = 0; i < CHOREO.smallHopsPerCycle; i++) {
-    segments.push({ kind: 'hop', duration: CHOREO.smallHop.duration, cfg: CHOREO.smallHop });
-  }
-  segments.push({ kind: 'dance', duration: CHOREO.dance.duration, cfg: CHOREO.dance });
-  segments.push({ kind: 'rest', duration: CHOREO.beat });
-  segments.push({ kind: 'hop', duration: CHOREO.bigHop.duration, cfg: CHOREO.bigHop });
-  segments.push({ kind: 'rest', duration: CHOREO.beat });
-  return segments;
-}
-
-const CYCLE = buildCycle();
-const CYCLE_LENGTH = CYCLE.reduce((sum, s) => sum + s.duration, 0);
-
-/* Pose for any point in time, in seconds, looping forever. */
-function poseAt(time) {
-  let t = time % CYCLE_LENGTH;
-  for (const segment of CYCLE) {
-    if (t < segment.duration) {
-      const u = t / segment.duration;
-      if (segment.kind === 'hop') {
-        const { y, squash } = hopPose(u, segment.cfg);
-        return { y, yaw: 0, roll: 0, squash };
-      }
-      if (segment.kind === 'dance') {
-        return dancePose(u, segment.cfg);
-      }
-      return { y: 0, yaw: 0, roll: 0, squash: 1 };
-    }
-    t -= segment.duration;
-  }
-  return { y: 0, yaw: 0, roll: 0, squash: 1 };
+/* The pose at any moment. No cycle, no segments, no special cases — the
+ * same handful of sines evaluated at whatever time it happens to be. */
+function poseAt(t) {
+  const degrees = THREE.MathUtils.degToRad;
+  return {
+    x: wave(DRIFT.sway, t),
+    y: wave(DRIFT.rise, t),
+    yaw: degrees(wave(DRIFT.turn, t)),
+    roll: degrees(wave(DRIFT.tilt, t)),
+    pitch: degrees(wave(DRIFT.nod, t)),
+    scale: 1 + wave(DRIFT.breath, t),
+  };
 }
 
 /* ------------------------------------------------------------------ *
@@ -262,11 +189,12 @@ function normalise(object) {
     (TARGET_HEIGHT * 1.3) / Math.max(size.x, size.z, 1e-6)
   );
 
-  const pivot = new THREE.Group();   // rotates and squashes
+  const pivot = new THREE.Group();   // carries the drift
   const holder = new THREE.Group();  // holds the recentred model
   holder.add(object);
+  // Centred on the origin, not stood on a floor: a floating glyph should
+  // turn about its own middle, not pivot on its base.
   object.position.sub(centre);
-  object.position.y += size.y / 2;   // feet on the floor
   holder.scale.setScalar(scale);
   pivot.add(holder);
 
@@ -306,10 +234,11 @@ export async function createScene(container) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-  // Framed so the object fills the stage at rest but the big hop still has
-  // room at the top, with a slight downward tilt so we look at it, not up at it.
-  camera.position.set(0, 1.15, 4.9);
-  camera.lookAt(0, 0.95, 0);
+  // The glyph sits centred on the origin, so the frame is symmetric about it:
+  // just enough margin for the drift to move within, and no dead headroom.
+  // A slight lift keeps us looking at it rather than straight on.
+  camera.position.set(0, 0.08, 2.6);
+  camera.lookAt(0, 0, 0);
 
   // A soft studio environment so PBR (.glb) materials have something to
   // reflect, plus explicit lights that also flatter plain .obj materials.
@@ -340,9 +269,9 @@ export async function createScene(container) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     // Pull back on narrow, portrait containers so nothing clips at the sides.
-    camera.position.z = 4.9 / Math.min(1, Math.max(0.62, camera.aspect));
+    camera.position.z = 2.6 / Math.min(1, Math.max(0.62, camera.aspect));
     camera.updateProjectionMatrix();
-    camera.lookAt(0, 0.95, 0);
+    camera.lookAt(0, 0, 0);
   }
 
   if (typeof ResizeObserver !== 'undefined') {
@@ -352,30 +281,37 @@ export async function createScene(container) {
   resize();
 
   function applyPose(pose) {
-    const squash = pose.squash ?? 1;
-    const spread = 1 / Math.sqrt(Math.max(squash, 1e-3)); // keep the volume
-    pivot.position.y = pose.y ?? 0;
-    pivot.rotation.y = pose.yaw ?? 0;
-    pivot.rotation.z = pose.roll ?? 0;
-    pivot.scale.set(spread, squash, spread);
+    pivot.position.set(pose.x, pose.y, 0);
+    pivot.rotation.set(pose.pitch, pose.yaw, pose.roll);
+    pivot.scale.setScalar(pose.scale);
   }
 
   const stillPlease = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  let clockStart = performance.now();
+  // Elapsed animation time is accumulated rather than read off the clock, so
+  // coming back to a backgrounded tab picks up exactly where it left off
+  // instead of snapping to wherever the wall clock has got to.
+  let elapsed = 0;
+  let previous = null;
   let running = false;
   let frame = 0;
 
   function tick(now) {
     frame = requestAnimationFrame(tick);
-    applyPose(poseAt((now - clockStart) / 1000));
+    if (previous !== null) {
+      // Cap the step so a dropped or delayed frame nudges the drift forward
+      // rather than teleporting it.
+      elapsed += Math.min((now - previous) / 1000, 1 / 20);
+    }
+    previous = now;
+    applyPose(poseAt(elapsed));
     renderer.render(scene, camera);
   }
 
   function start() {
     if (running || stillPlease.matches) return;
     running = true;
-    clockStart = performance.now();
+    previous = null;          // first frame back advances nothing
     frame = requestAnimationFrame(tick);
   }
 
@@ -394,7 +330,7 @@ export async function createScene(container) {
   stillPlease.addEventListener?.('change', () => {
     if (stillPlease.matches) {
       stop();
-      applyPose({ y: 0, yaw: 0, roll: 0, squash: 1 });
+      applyPose(poseAt(0));
       renderer.render(scene, camera);
     } else {
       start();

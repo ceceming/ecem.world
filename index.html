@@ -18,11 +18,10 @@
     color-scheme: dark;
 
     /* ── The one size knob ────────────────────────────────────────────
-       How much room the object gets on the page. Everything else —
-       how close "coming soon" sits underneath it, how the whole block
-       is centred — follows from this. Raise it for a bigger object,
-       lower it for a smaller one. */
-    --stage: min(60vmin, 340px);
+       How much room the glyph gets on the page. The gap to "coming soon"
+       follows from it, so raise this for a bigger glyph and lower it for a
+       smaller one and the spacing keeps itself. */
+    --stage: min(40vmin, 190px);
   }
 
   * { box-sizing: border-box; }
@@ -52,9 +51,6 @@
     align-items: center;
     width: 100%;
     max-width: 600px;
-    /* Optically centred: the canvas carries empty headroom for the big hop,
-       so the block is nudged up to sit where the eye expects it. */
-    transform: translateY(calc(var(--stage) * -0.13));
     opacity: 0;
     transition: opacity 900ms ease;
   }
@@ -77,9 +73,8 @@
   }
 
   h1 {
-    /* Pulled up into the canvas's dead space beneath the resting object.
-       Proportional to the stage, so it stays put at any --stage value. */
-    margin: calc(var(--stage) * -0.085) 0 0;
+    /* The glyph is centred in its canvas, so this is an ordinary gap. */
+    margin: calc(var(--stage) * 0.05) 0 0;
     font-size: clamp(12px, 2.7vmin, 16px);
     font-weight: 400;
     letter-spacing: 0.42em;

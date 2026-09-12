@@ -50,7 +50,7 @@ Drop a new file in this folder. The page tries, in order:
 `model.glb` → `Model.glb` → `model.gltf` → `Model.gltf` → `model.obj` → `Model.obj`
 
 Both capitalisations work, so an export with a capital M needs no renaming.
-If none is found, a placeholder shape hops instead and the site still works.
+If none is found, a placeholder shape drifts instead and the site still works.
 
 For an OBJ, upload the `.obj`, the `.mtl` and the texture together; the page
 reads the `mtllib` line inside the `.obj`, so the material and texture files
