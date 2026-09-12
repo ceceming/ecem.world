@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ecem.world — animated object</title>
+<meta name="robots" content="noindex">
+<style>
+  /* Deliberately no background anywhere: this page is transparent, so it can
+     be dropped on top of any colour, or embedded in another page. */
+  html, body { height: 100%; margin: 0; background: transparent; }
+  #stage { width: 100%; height: 100%; }
+  #stage canvas { display: block; width: 100% !important; height: 100% !important; background: transparent; }
+</style>
+</head>
+<body>
+
+<div id="stage"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+  import { createScene } from './assets/scene.js';
+  createScene(document.getElementById('stage')).catch((err) => console.error(err));
+</script>
+
+</body>
+</html>

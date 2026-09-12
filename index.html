@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ecem.world</title>
+<meta name="description" content="Ecem Öztürk — portfolio. Coming soon.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ecem.world">
+<meta property="og:description" content="Coming soon.">
+<meta property="og:url" content="https://ecem.world/">
+
+<style>
+  :root {
+    color-scheme: dark;
+
+    /* ── The one size knob ────────────────────────────────────────────
+       How much room the object gets on the page. Everything else —
+       how close "coming soon" sits underneath it, how the whole block
+       is centred — follows from this. Raise it for a bigger object,
+       lower it for a smaller one. */
+    --stage: min(60vmin, 340px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+  }
+
+  body {
+    /* Helvetica where it exists, with sane stand-ins everywhere else. */
+    font-family: Helvetica, "Helvetica Neue", "HelveticaNeue", Arial, sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    padding-block: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    /* Optically centred: the canvas carries empty headroom for the big hop,
+       so the block is nudged up to sit where the eye expects it. */
+    transform: translateY(calc(var(--stage) * -0.13));
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+
+  body.ready main { opacity: 1; }
+
+  /* The 3D object sits on a fully transparent canvas, so the black page
+     shows straight through it. */
+  #stage {
+    width: var(--stage);
+    aspect-ratio: 1 / 1;
+    position: relative;
+  }
+
+  #stage canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent;
+  }
+
+  h1 {
+    /* Pulled up into the canvas's dead space beneath the resting object.
+       Proportional to the stage, so it stays put at any --stage value. */
+    margin: calc(var(--stage) * -0.085) 0 0;
+    font-size: clamp(12px, 2.7vmin, 16px);
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    /* letter-spacing adds a trailing gap; nudge back so it reads centred */
+    text-indent: 0.42em;
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+
+  /* Uncomment to put your name above the object.
+  .name {
+    font-size: clamp(12px, 2.4vmin, 15px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    opacity: 0.55;
+    margin: 0;
+  }
+  */
+
+  @media (prefers-reduced-motion: reduce) {
+    main { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- <p class="name">ecem öztürk</p> -->
+  <div id="stage" aria-hidden="true"></div>
+  <h1>coming soon</h1>
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+  import { createScene } from './assets/scene.js';
+
+  const reveal = () => document.body.classList.add('ready');
+
+  createScene(document.getElementById('stage'))
+    .then(reveal)
+    .catch((err) => {
+      // Never leave a blank page: if WebGL is unavailable the words still show.
+      console.error('3D scene failed to start:', err);
+      reveal();
+    });
+</script>
+
+</body>
+</html>
