@@ -6,9 +6,9 @@ black field with "coming soon" underneath.
 **Start here:** [`DOMAIN-SETUP.md`](DOMAIN-SETUP.md) — publishing this on
 GitHub Pages and pointing the GoDaddy domain at it.
 
-**Adding your model:** [`model/README.md`](model/README.md) — drop the Meshy
-export into `/model` and it appears on the page. Until then a placeholder
-shape hops in its place, so the site is never broken.
+**The model:** [`model/README.md`](model/README.md) — the chrome "e" is in
+place and live. Read this before replacing it: the raw Meshy export was
+11.8 MB and was optimised down to 516 KB.
 
 ## What is here
 
@@ -17,7 +17,7 @@ shape hops in its place, so the site is never broken.
 | `index.html` | The coming-soon page: black, Helvetica, object centred |
 | `model.html` | The same object on a fully transparent background, on its own |
 | `assets/scene.js` | The 3D scene and the whole animation |
-| `model/` | Where your Meshy export goes |
+| `model/` | `model.glb` — the chrome "e", optimised for the web |
 | `qr/index.html` | A printable QR code page → [ecem.world/qr/](https://ecem.world/qr/) |
 | `assets/qr/` | The QR code as SVG and PNG, in three styles |
 | `vendor/three/` | three.js r160, committed here on purpose (see below) |

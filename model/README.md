@@ -1,54 +1,69 @@
-# Put your Meshy model here
+# The model
 
-The page looks for these files, in this order, and uses the first one it
-finds. If none are here it falls back to a placeholder shape, so the site
-never breaks while you are still deciding.
+`model.glb` is here and live on the page — a chrome "e" monogram, 3,042
+triangles with a baked base-colour map and a metallic/roughness map.
 
-1. `model.glb`
-2. `model.gltf`
-3. `model.obj`
+## It has been optimised — don't overwrite it with a raw export
 
-## The easy way — GLB
+The file Meshy produced was **11.8 MB**, almost all of it texture: a
+2048×2048 base colour map and a 4096×4096 metallic/roughness map. The object
+renders about 110 pixels tall, so that was roughly twenty times more texture
+than the page can show, and every visitor would have paid for it.
 
-In Meshy, download the model as **GLB**. That is a single file with the
-textures baked inside, which matters a lot when you are uploading from an
-iPad.
+What is committed is **516 KB** and pixel-for-pixel indistinguishable from the
+original at display size — under 0.01% of pixels differ by more than 8/255.
 
-Upload it into this folder and rename it to **`model.glb`**. Done.
+## Redoing it after a new export
 
-## The OBJ way
+If you re-export from Meshy, run the new file through this before committing.
+It needs Node; it does not run on an iPad, so ask me and I'll do it.
 
-Meshy's OBJ download is a zip containing three or four files, roughly:
+```sh
+npm install @gltf-transform/cli
 
+# 1. Cap every texture at 512px (plenty for a ~110px render, even on retina).
+gltf-transform resize new-export.glb step1.glb --width 512 --height 512
+
+# 2. Base colour is a picture -> JPEG. Note --formats png: without it the
+#    command only touches textures that are already JPEG and silently does
+#    nothing.
+gltf-transform jpeg step1.glb step2.glb --formats png \
+  --slots "baseColorTexture" --quality 90
+
+# 3. Metallic/roughness is data, not a picture. Keep it lossless.
+gltf-transform prune step2.glb model.glb
 ```
-0198fa3c_texture.obj
-0198fa3c_texture.mtl
-0198fa3c_texture_diffuse.png
-```
 
-Upload **all of them** into this folder, then rename only the `.obj` to
-**`model.obj`**. Leave the `.mtl` and the texture names exactly as they are —
-the `.obj` names its own material file internally, and the page follows that,
-so the original names keep working.
+Geometry is deliberately left uncompressed. At 117 KB it is not worth adding
+a Draco or Meshopt decoder to the page for.
 
-## Uploading from an iPad
+There is a smaller variant possible — the metallic/roughness map is nearly
+constant (metallic ≈ 0.93, roughness ≈ 0.26), so replacing it with plain
+material factors gives **182 KB**. It was not used, because it visibly alters
+the material rather than just compressing it. Worth revisiting only if the
+page ever needs to be leaner.
 
-On github.com, open this folder → **Add file** → **Upload files** → drag the
-files in → **Commit changes**. To rename after uploading, tap the file, then
-the pencil icon, and edit the name in the box at the top.
+## Replacing the model
 
-If Safari will not let you into a zip, the Files app can unzip it first: long
-press the zip → Uncompress.
+Drop a new file in this folder. The page tries, in order:
 
-## If it comes in sideways, or too big, or too small
+`model.glb` → `Model.glb` → `model.gltf` → `Model.gltf` → `model.obj` → `Model.obj`
 
-Height is normalised automatically, so scale is never something you need to
-fix here — how large the object looks on the page is the `--stage` line at the
-top of `../index.html`. Rotation sometimes does need fixing. Open `../assets/scene.js` and edit:
+Both capitalisations work, so an export with a capital M needs no renaming.
+If none is found, a placeholder shape hops instead and the site still works.
+
+For an OBJ, upload the `.obj`, the `.mtl` and the texture together; the page
+reads the `mtllib` line inside the `.obj`, so the material and texture files
+keep their original export names.
+
+## If it comes in sideways
+
+Height and width are fitted automatically, so scale never needs fixing here —
+how large it looks on the page is the `--stage` line at the top of
+`../index.html`. Rotation sometimes does need a nudge, in `../assets/scene.js`:
 
 ```js
 export const MODEL_ORIENTATION = { x: 0, y: 0, z: 0 };
 ```
 
-Those are degrees. A model that is lying on its back usually wants
-`{ x: -90, y: 0, z: 0 }`. Turning it to face you is the `y` value.
+Degrees. The current model needs none of these.
