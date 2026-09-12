@@ -32,12 +32,12 @@ Defined once, at the top of `assets/scene.js`:
 
 ```js
 const DRIFT = {
-  rise:   { amplitude: 0.042, period:  9.3, phase: 0.0 },  // up and down
-  sway:   { amplitude: 0.020, period: 19.7, phase: 1.7 },  // side to side
-  turn:   { amplitude: 7.5,   period: 13.1, phase: 0.0 },  // left and right
-  tilt:   { amplitude: 2.4,   period: 17.3, phase: 2.2 },  // lean
-  nod:    { amplitude: 1.8,   period: 11.6, phase: 0.9 },  // toward and away
-  breath: { amplitude: 0.005, period:  8.1, phase: 0.4 },  // barely-there scale
+  rise:   { amplitude: 0.100, period:  8.8, phase: 0.0 },  // up and down
+  sway:   { amplitude: 0.045, period: 19.6, phase: 1.7 },  // side to side
+  turn:   { amplitude: 12.0,  period: 14.1, phase: 0.0 },  // left and right
+  tilt:   { amplitude: 4.5,   period: 16.3, phase: 2.2 },  // lean
+  nod:    { amplitude: 3.2,   period: 10.2, phase: 0.9 },  // toward and away
+  breath: { amplitude: 0.010, period:  7.4, phase: 0.4 },  // barely-there scale
 };
 ```
 
@@ -49,11 +49,23 @@ further.**
 There is no cycle and no sequence — no hop, no landing, nothing that starts
 or finishes. Because every channel is a plain sine, position, velocity and
 acceleration are continuous everywhere, so there is no frame at which
-anything snaps or accelerates. In practice the glyph moves about 14px up and
-down and 3px side to side, at a quarter of a pixel per frame.
+anything snaps or accelerates. In practice the glyph moves about 30px up and
+down and 9px side to side, turning through 24 degrees, at a sixth of a pixel
+per frame.
+
+**To make it more or less noticeable, change the amplitudes, not the
+periods.** A sine's peak speed is `amplitude x 2*PI / period`, and below
+roughly 5px/s the eye stops registering movement at all — which is what
+happened at the first attempt. Raising amplitude buys visible travel while
+keeping the motion unhurried; shortening the period buys the same speed by
+making it hurry.
 
 The periods share no useful common multiple, so the combined motion takes
-weeks to come back around. There is no loop for the eye to catch.
+weeks to come back around. They are also chosen so no two sit near a ratio
+the eye reads as "these move together" — 1:1, 5:4, 4:3, 3:2, 5:3, 2:1 — with
+every pair at least 3.4% clear. If you retune a period, check it has not
+landed on one of those against another channel, or those two will lock and
+the drift will start to look like a loop.
 
 Respects `prefers-reduced-motion` (holds still) and pauses when the tab is in
 the background — and because elapsed time is accumulated rather than read off
@@ -64,12 +76,12 @@ the clock, returning to a backgrounded tab resumes exactly where it left off.
 One line, at the top of `index.html`:
 
 ```css
---stage: min(40vmin, 190px);
+--stage: min(42vmin, 205px);
 ```
 
 That is the only size knob. The glyph is currently deliberately small —
-about 130px tall on a laptop. Raise the `190px` for a bigger glyph, lower it
-for a smaller one; the `40vmin` caps it on short or narrow screens so it
+about 130px tall on a laptop. Raise the `205px` for a bigger glyph, lower it
+for a smaller one; the `42vmin` caps it on short or narrow screens so it
 never overruns a phone. The gap to "coming soon" underneath is derived from
 this value, so it follows along on its own.
 
