@@ -56,18 +56,20 @@ export const MODEL_ORIENTATION = { x: 0, y: 0, z: 0 };
  * period makes that channel slower and calmer; raising an amplitude makes it
  * travel further.
  *
- * On visibility: a sine's peak speed is amplitude x 2*PI / period, and below
- * roughly 5 px/s on screen the eye stops registering movement at all and the
- * glyph reads as a still image. So to make the drift more noticeable, raise
- * amplitudes rather than shortening periods — that buys visible travel while
- * keeping the motion unhurried. Shortening periods buys the same speed by
- * making it hurry, which is the thing to avoid.
+ * Two separate things to reach for, depending on what is wrong:
+ *
+ *   Reads as a still image  -> raise AMPLITUDES. Below roughly 5 px/s on
+ *                              screen the eye stops registering movement
+ *                              at all, and more travel fixes that.
+ *   Reads as slow motion    -> raise TEMPO below. Amplitude cannot fix this;
+ *                              a bigger, equally unhurried movement still
+ *                              looks like footage played slowly.
  *
  * The periods are chosen so that no two of them sit near a ratio the eye can
- * read as "these two move together" — 1:1, 3:2, 4:3, 5:3, 2:1 and so on.
- * Every pair here is at least 3.4% clear of the nearest such ratio. Change
- * one period and you can easily land on 3:2 with another channel, at which
- * point those two lock and the drift starts to look like a loop again.
+ * read as "these two move together" — 1:1, 5:4, 4:3, 3:2, 5:3, 2:1 and so on.
+ * Every pair here is at least 3.4% clear of the nearest such ratio. Editing
+ * one period by hand can easily land it on 3:2 against another channel, at
+ * which point those two lock and the drift starts to look like a loop again.
  * ------------------------------------------------------------------ */
 const DRIFT = {
   rise:   { amplitude: 0.100, period:  8.8, phase: 0.0 },  // up and down
@@ -78,13 +80,20 @@ const DRIFT = {
   breath: { amplitude: 0.010, period:  7.4, phase: 0.4 },  // barely-there scale
 };
 
+/* How fast the whole drift runs. 1 is the tuned baseline above; raise it to
+ * speed everything up, lower it to slow everything down. This is the safe way
+ * to change the pace: because it scales every period by the same factor, the
+ * ratios between them are untouched, so no amount of tempo change can push
+ * two channels into a lock. Retuning the six periods by hand can. */
+const TEMPO = 1.6;
+
 /* The glyph is normalised to 1 unit tall and centred on the origin, so it
  * turns about its own middle rather than pivoting on its base. How large it
  * then looks on the page is set by --stage in index.html, not here. */
 const TARGET_HEIGHT = 1;
 
 const wave = ({ amplitude, period, phase }, t) =>
-  amplitude * Math.sin((2 * Math.PI * t) / period + phase);
+  amplitude * Math.sin((2 * Math.PI * t * TEMPO) / period + phase);
 
 /* The pose at any moment. No cycle, no segments, no special cases — the
  * same handful of sines evaluated at whatever time it happens to be. */

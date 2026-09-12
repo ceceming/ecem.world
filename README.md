@@ -50,22 +50,31 @@ There is no cycle and no sequence — no hop, no landing, nothing that starts
 or finishes. Because every channel is a plain sine, position, velocity and
 acceleration are continuous everywhere, so there is no frame at which
 anything snaps or accelerates. In practice the glyph moves about 30px up and
-down and 9px side to side, turning through 24 degrees, at a sixth of a pixel
-per frame.
+down and 10px side to side, turning through 24 degrees, and rises and falls
+once every 5.5 seconds — a quarter of a pixel per frame, against roughly
+10px per frame for a bouncing-ball animation.
 
-**To make it more or less noticeable, change the amplitudes, not the
-periods.** A sine's peak speed is `amplitude x 2*PI / period`, and below
-roughly 5px/s the eye stops registering movement at all — which is what
-happened at the first attempt. Raising amplitude buys visible travel while
-keeping the motion unhurried; shortening the period buys the same speed by
-making it hurry.
+Two different complaints, two different knobs:
+
+- **Reads as a still image** → raise the **amplitudes**. Below roughly 5px/s
+  on screen the eye stops registering movement at all, and more travel is
+  what fixes that.
+- **Reads as slow motion** → raise **`TEMPO`**, just below the block. It
+  multiplies the speed of every channel at once. Amplitude cannot fix this:
+  a bigger but equally unhurried movement still looks like footage played
+  slowly.
+
+`TEMPO` is also the safe way to change the pace. Because it scales every
+period by the same factor, the ratios between them are untouched, so no
+amount of tempo change can push two channels into a lock. Editing the six
+periods by hand can.
 
 The periods share no useful common multiple, so the combined motion takes
 weeks to come back around. They are also chosen so no two sit near a ratio
 the eye reads as "these move together" — 1:1, 5:4, 4:3, 3:2, 5:3, 2:1 — with
-every pair at least 3.4% clear. If you retune a period, check it has not
-landed on one of those against another channel, or those two will lock and
-the drift will start to look like a loop.
+every pair at least 3.4% clear. If you retune an individual period, check it
+has not landed on one of those against another channel, or those two will
+lock and the drift will start to look like a loop.
 
 Respects `prefers-reduced-motion` (holds still) and pauses when the tab is in
 the background — and because elapsed time is accumulated rather than read off
