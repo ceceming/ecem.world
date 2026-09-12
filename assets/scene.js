@@ -55,14 +55,27 @@ export const MODEL_ORIENTATION = { x: 0, y: 0, z: 0 };
  * the three rotations, which are degrees. Periods are seconds. Raising a
  * period makes that channel slower and calmer; raising an amplitude makes it
  * travel further.
+ *
+ * On visibility: a sine's peak speed is amplitude x 2*PI / period, and below
+ * roughly 5 px/s on screen the eye stops registering movement at all and the
+ * glyph reads as a still image. So to make the drift more noticeable, raise
+ * amplitudes rather than shortening periods — that buys visible travel while
+ * keeping the motion unhurried. Shortening periods buys the same speed by
+ * making it hurry, which is the thing to avoid.
+ *
+ * The periods are chosen so that no two of them sit near a ratio the eye can
+ * read as "these two move together" — 1:1, 3:2, 4:3, 5:3, 2:1 and so on.
+ * Every pair here is at least 3.4% clear of the nearest such ratio. Change
+ * one period and you can easily land on 3:2 with another channel, at which
+ * point those two lock and the drift starts to look like a loop again.
  * ------------------------------------------------------------------ */
 const DRIFT = {
-  rise:   { amplitude: 0.042, period:  9.3, phase: 0.0 },  // up and down
-  sway:   { amplitude: 0.020, period: 19.7, phase: 1.7 },  // side to side
-  turn:   { amplitude: 7.5,   period: 13.1, phase: 0.0 },  // left and right
-  tilt:   { amplitude: 2.4,   period: 17.3, phase: 2.2 },  // lean
-  nod:    { amplitude: 1.8,   period: 11.6, phase: 0.9 },  // toward and away
-  breath: { amplitude: 0.005, period:  8.1, phase: 0.4 },  // barely-there scale
+  rise:   { amplitude: 0.100, period:  8.8, phase: 0.0 },  // up and down
+  sway:   { amplitude: 0.045, period: 19.6, phase: 1.7 },  // side to side
+  turn:   { amplitude: 12.0,  period: 14.1, phase: 0.0 },  // left and right
+  tilt:   { amplitude: 4.5,   period: 16.3, phase: 2.2 },  // lean
+  nod:    { amplitude: 3.2,   period: 10.2, phase: 0.9 },  // toward and away
+  breath: { amplitude: 0.010, period:  7.4, phase: 0.4 },  // barely-there scale
 };
 
 /* The glyph is normalised to 1 unit tall and centred on the origin, so it
@@ -237,7 +250,7 @@ export async function createScene(container) {
   // The glyph sits centred on the origin, so the frame is symmetric about it:
   // just enough margin for the drift to move within, and no dead headroom.
   // A slight lift keeps us looking at it rather than straight on.
-  camera.position.set(0, 0.08, 2.6);
+  camera.position.set(0, 0.08, 2.85);
   camera.lookAt(0, 0, 0);
 
   // A soft studio environment so PBR (.glb) materials have something to
@@ -269,7 +282,7 @@ export async function createScene(container) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     // Pull back on narrow, portrait containers so nothing clips at the sides.
-    camera.position.z = 2.6 / Math.min(1, Math.max(0.62, camera.aspect));
+    camera.position.z = 2.85 / Math.min(1, Math.max(0.62, camera.aspect));
     camera.updateProjectionMatrix();
     camera.lookAt(0, 0, 0);
   }
