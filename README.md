@@ -1,7 +1,7 @@
 # ecem.world
 
-Portfolio site. Right now it is a coming-soon page: a 3D object hopping on a
-black field with "coming soon" underneath.
+Portfolio site. Right now it is a coming-soon page: a 3D chrome "e" monogram
+drifting on a black field with "coming soon" underneath.
 
 **Start here:** [`DOMAIN-SETUP.md`](DOMAIN-SETUP.md) — publishing this on
 GitHub Pages and pointing the GoDaddy domain at it.
@@ -14,8 +14,8 @@ place and live. Read this before replacing it: the raw Meshy export was
 
 | | |
 |---|---|
-| `index.html` | The coming-soon page: black, Helvetica, object centred |
-| `model.html` | The same object on a fully transparent background, on its own |
+| `index.html` | The coming-soon page: black, Helvetica, glyph centred |
+| `model.html` | The same glyph on a fully transparent background, on its own |
 | `assets/scene.js` | The 3D scene and the whole animation |
 | `model/` | `model.glb` — the chrome "e", optimised for the web |
 | `qr/index.html` | A printable QR code page → [ecem.world/qr/](https://ecem.world/qr/) |
@@ -31,36 +31,47 @@ no npm. Editing a file on github.com and committing is a deploy.
 Defined once, at the top of `assets/scene.js`:
 
 ```js
-const CHOREO = {
-  smallHopsPerCycle: 5,
-  smallHop: { duration: 0.62, height: 0.30, ... },
-  dance:    { duration: 1.90, yaw: 24, wiggles: 2, ... },
-  bigHop:   { duration: 1.25, height: 1.15, ... },
+const DRIFT = {
+  rise:   { amplitude: 0.042, period:  9.3, phase: 0.0 },  // up and down
+  sway:   { amplitude: 0.020, period: 19.7, phase: 1.7 },  // side to side
+  turn:   { amplitude: 7.5,   period: 13.1, phase: 0.0 },  // left and right
+  tilt:   { amplitude: 2.4,   period: 17.3, phase: 2.2 },  // lean
+  nod:    { amplitude: 1.8,   period: 11.6, phase: 0.9 },  // toward and away
+  breath: { amplitude: 0.005, period:  8.1, phase: 0.4 },  // barely-there scale
 };
 ```
 
-Five small hops, a little right-and-left dance, one big hop, repeat — a
-6.6 second loop. Raise `height` for bouncier, raise `yaw` for a wilder dance,
-lower `duration` for faster. Every hop gets anticipation, stretch in the air
-and a squash on landing, which is what makes it read as alive rather than as
-a bouncing ball.
+Six sine waves, each on its own period, added together. Amplitudes are
+fractions of the glyph's height; the three rotations are degrees; periods are
+seconds. **Longer period = slower and calmer. Larger amplitude = travels
+further.**
+
+There is no cycle and no sequence — no hop, no landing, nothing that starts
+or finishes. Because every channel is a plain sine, position, velocity and
+acceleration are continuous everywhere, so there is no frame at which
+anything snaps or accelerates. In practice the glyph moves about 14px up and
+down and 3px side to side, at a quarter of a pixel per frame.
+
+The periods share no useful common multiple, so the combined motion takes
+weeks to come back around. There is no loop for the eye to catch.
 
 Respects `prefers-reduced-motion` (holds still) and pauses when the tab is in
-the background.
+the background — and because elapsed time is accumulated rather than read off
+the clock, returning to a backgrounded tab resumes exactly where it left off.
 
-## Changing how big the object looks
+## Changing how big the glyph looks
 
 One line, at the top of `index.html`:
 
 ```css
---stage: min(60vmin, 340px);
+--stage: min(40vmin, 190px);
 ```
 
-That is the only size knob. The object is currently deliberately small. Raise
-the `340px` for a bigger object, lower it for a smaller one; the `60vmin`
-caps it on short or narrow screens so it never overruns a phone. The spacing
-of "coming soon" underneath and the optical centring are both derived from
-this value, so they follow along on their own.
+That is the only size knob. The glyph is currently deliberately small —
+about 130px tall on a laptop. Raise the `190px` for a bigger glyph, lower it
+for a smaller one; the `40vmin` caps it on short or narrow screens so it
+never overruns a phone. The gap to "coming soon" underneath is derived from
+this value, so it follows along on its own.
 
 Model files themselves need no scaling — whatever you upload is measured and
 fitted automatically.
@@ -83,9 +94,9 @@ python3 -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## If the object does not appear
+## If the glyph does not appear
 
-The words always render, even when the 3D does not. A missing object means
+The words always render, even when the 3D does not. A missing glyph means
 WebGL is unavailable — very old browsers, or Safari with hardware
 acceleration off. Open the browser console to see what `assets/scene.js`
 logged; it reports which model file it found, or that it fell back to the

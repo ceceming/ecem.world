@@ -25,7 +25,7 @@ Nothing below will work until `index.html` is sitting in the root of `main`.
 2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
 3. Set **Branch** to `main` and the folder to **`/ (root)`**. Press **Save**.
 4. Wait 1–2 minutes, then reload the page. It will show a live URL like
-   `https://ceceming.github.io/ecem.world/`. Open it — the hopping object and
+   `https://ceceming.github.io/ecem.world/`. Open it — the drifting glyph and
    "coming soon" should be there. **Check this works before touching DNS.**
 
 There is already a `CNAME` file in the repository containing `ecem.world`, so
