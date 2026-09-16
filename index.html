@@ -55,7 +55,53 @@
     transition: opacity 900ms ease;
   }
 
-  body.ready main { opacity: 1; }
+  body.ready main,
+  body.ready footer { opacity: 1; }
+
+  /* Pinned to the window rather than sitting in the flow, so adding it does
+     not shift the glyph off the centre it was framed on. */
+  footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    padding-inline: 24px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+
+  footer p {
+    margin: 0 auto;
+    max-width: 30em;
+    /* Same face and size as "coming soon" — but nowhere near its 0.42em
+       tracking, which is fine across two words and unreadable across a
+       sentence. */
+    font-size: clamp(12px, 2.7vmin, 16px);
+    letter-spacing: 0.12em;
+    line-height: 2;
+    text-wrap: balance;
+  }
+
+  footer a {
+    color: inherit;
+    text-decoration: none;
+    /* A hairline, so it reads as tappable without shouting. */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 2px;
+    white-space: nowrap;   /* never break an address across lines */
+    transition: border-color 250ms ease;
+  }
+
+  footer a:hover,
+  footer a:focus-visible { border-bottom-color: #fff; }
+
+  /* On a narrow phone the line fits, but only just — and a wider fallback
+     face than Helvetica would tip it into wrapping. Buy back the room from
+     the tracking rather than the type size. */
+  @media (max-width: 430px) {
+    footer p { letter-spacing: 0.07em; }
+  }
 
   /* The 3D object sits on a fully transparent canvas, so the black page
      shows straight through it. */
@@ -95,7 +141,7 @@
   */
 
   @media (prefers-reduced-motion: reduce) {
-    main { transition: none; }
+    main, footer { transition: none; }
   }
 </style>
 </head>
@@ -106,6 +152,11 @@
   <div id="stage" aria-hidden="true"></div>
   <h1>coming soon</h1>
 </main>
+
+<footer>
+  <p>in the meantime, contact me at
+    <a href="mailto:hello@ecem.world">hello@ecem.world</a></p>
+</footer>
 
 <script type="importmap">
 {
