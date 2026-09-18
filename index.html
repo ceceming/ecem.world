@@ -73,7 +73,10 @@
 
   footer p {
     margin: 0 auto;
-    max-width: 30em;
+    /* Wide enough for the whole line once the newsletter link was added: it
+       needs 561px unwrapped and 30em only allowed 480px, so it was breaking
+       in two on desktop. Phones still wrap, into two balanced lines. */
+    max-width: 38em;
     /* Same face and size as "coming soon" — but nowhere near its 0.42em
        tracking, which is fine across two words and unreadable across a
        sentence. */
@@ -101,6 +104,126 @@
      the tracking rather than the type size. */
   @media (max-width: 430px) {
     footer p { letter-spacing: 0.07em; }
+  }
+
+  footer .sep { padding: 0 0.5em; opacity: 0.4; }
+
+  /* ── The newsletter dialog ──────────────────────────────────────────
+     A native <dialog>, so Escape, the top layer and focus handling come
+     from the browser rather than from script. */
+  dialog {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #fff;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .panel {
+    position: relative;
+    width: min(480px, calc(100vw - 48px));
+    /* showModal() focuses the first focusable thing it finds, which drew a
+       ring around the close button on open. Focus lands on the panel itself
+       instead: still inside the dialog for Escape and for screen readers,
+       but nothing to see. */
+    outline: none;
+  }
+
+  /* The label and the close button share one row above the embed. An earlier
+     version floated the button 40px above the panel, which put it off the top
+     of the screen on a landscape phone. Nothing sits outside the panel now. */
+  .panel-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    margin-bottom: 12px;
+  }
+
+  .panel .eyebrow {
+    margin: 0;
+    font-size: clamp(11px, 2.4vmin, 13px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  .panel iframe {
+    display: block;
+    width: 100%;
+    height: var(--embed-height, 320px);
+    border: 0;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .panel .close {
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    color: #fff;
+    opacity: 0.6;
+    font: 400 24px/1 Helvetica, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+  }
+
+  .panel .close { outline: none; }
+
+  .panel .close:hover,
+  .panel .close:focus-visible { opacity: 1; }
+
+  /* Keyboard users still get a marker; mouse users do not. */
+  .panel .close:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 3px;
+  }
+
+  /* Substack's form stacks at narrow widths and needs the extra room. */
+  @media (max-width: 520px) {
+    .panel { --embed-height: 380px; }
+  }
+
+  /* On a short window — a phone held sideways — the embed is capped to what
+     actually fits rather than pushing the panel past the edges. */
+  @media (max-height: 520px) {
+    .panel { --embed-height: calc(100dvh - 110px); }
+  }
+
+  /* Arrives the way everything else on this page does: a slow fade, no
+     bounce. @starting-style is what lets a dialog animate in from display:
+     none; where it is unsupported the dialog simply appears. */
+  dialog, dialog::backdrop {
+    transition: opacity 450ms ease, overlay 450ms allow-discrete, display 450ms allow-discrete;
+    opacity: 0;
+  }
+
+  dialog[open], dialog[open]::backdrop { opacity: 1; }
+
+  @starting-style {
+    dialog[open], dialog[open]::backdrop { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    main, footer { transition: none; }
+    dialog, dialog::backdrop { transition: none; }
   }
 
   /* The 3D object sits on a fully transparent canvas, so the black page
@@ -140,9 +263,6 @@
   }
   */
 
-  @media (prefers-reduced-motion: reduce) {
-    main, footer { transition: none; }
-  }
 </style>
 </head>
 <body>
@@ -155,8 +275,23 @@
 
 <footer>
   <p>in the meantime, contact me at
-    <a href="mailto:hello@ecem.world">hello@ecem.world</a></p>
+    <a href="mailto:hello@ecem.world">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
+      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a></p>
 </footer>
+
+<dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
+  <div class="panel" tabindex="-1" autofocus>
+    <div class="panel-head">
+      <p class="eyebrow">my newsletter</p>
+      <button type="button" class="close" data-close aria-label="Close">&times;</button>
+    </div>
+    <!-- No scrolling="no": where the embed is capped on a short screen, the
+         form must still be reachable rather than clipped. -->
+    <iframe src="https://luckbug.substack.com/embed"
+            title="Subscribe to luckbug on Substack"
+            loading="lazy"></iframe>
+  </div>
+</dialog>
 
 <script type="importmap">
 {
@@ -178,6 +313,61 @@
       console.error('3D scene failed to start:', err);
       reveal();
     });
+</script>
+
+<script>
+  /* The newsletter dialog.
+   *
+   * It opens itself once, after a pause long enough that the glyph gets seen
+   * first, and once someone closes it, it stays closed for that browser. A
+   * popup that returns on every visit is the thing that makes people leave.
+   * The "newsletter" link in the footer reopens it on demand, so nothing is
+   * lost by dismissing it.
+   */
+  (function () {
+    const OPENS_AFTER = 6000;               // ms after the page settles
+    const KEY = 'ecem.world:newsletter-dismissed';
+
+    const dialog = document.getElementById('newsletter');
+    const link = document.getElementById('newsletter-link');
+    if (!dialog || typeof dialog.showModal !== 'function') return;  // no <dialog>: the link still goes to Substack
+
+    // Private windows and blocked site data make storage throw, not just come
+    // back empty — so every touch of it is wrapped.
+    const dismissed = () => {
+      try { return localStorage.getItem(KEY) === '1'; } catch (err) { return false; }
+    };
+    const remember = () => {
+      try { localStorage.setItem(KEY, '1'); } catch (err) { /* nothing to do */ }
+    };
+
+    const open = () => { if (!dialog.open) dialog.showModal(); };
+
+    // Closing by any route — the button, Escape, the backdrop — is a dismissal.
+    dialog.addEventListener('close', remember);
+    dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+
+    // A click that lands outside the panel's box closes it. Clicks inside the
+    // cross-origin iframe never reach this document, so they cannot misfire.
+    dialog.addEventListener('click', (event) => {
+      const box = dialog.querySelector('.panel').getBoundingClientRect();
+      const outside =
+        event.clientX < box.left || event.clientX > box.right ||
+        event.clientY < box.top || event.clientY > box.bottom;
+      if (outside) dialog.close();
+    });
+
+    if (link) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();          // without JS this link just opens Substack
+        open();
+      });
+    }
+
+    if (!dismissed()) {
+      window.setTimeout(open, OPENS_AFTER);
+    }
+  })();
 </script>
 
 </body>
