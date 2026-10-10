@@ -73,10 +73,10 @@
 
   footer p {
     margin: 0 auto;
-    /* Wide enough for the whole line once the newsletter link was added: it
-       needs 561px unwrapped and 30em only allowed 480px, so it was breaking
-       in two on desktop. Phones still wrap, into two balanced lines. */
-    max-width: 38em;
+    /* Wide enough for the whole line as links get added to it. Measure
+       before changing: it breaks in two the moment the unwrapped width
+       exceeds this. Phones wrap regardless, into two balanced lines. */
+    max-width: 44em;
     /* Same face and size as "coming soon" — but nowhere near its 0.42em
        tracking, which is fine across two words and unreadable across a
        sentence. */
@@ -276,7 +276,8 @@
 <footer>
   <p>in the meantime, contact me at
     <a href="mailto:hello@ecem.world">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
-      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a></p>
+      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a><span class="sep" aria-hidden="true">·</span><a
+      href="assets/ecem-ozturk-cv.pdf" target="_blank" rel="noopener">cv</a></p>
 </footer>
 
 <dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
