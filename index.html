@@ -207,116 +207,6 @@
     .panel { --embed-height: calc(100dvh - 110px); }
   }
 
-  /* ── The CV, as a sheet you take rather than a file you download ─────
-     A printed page resting in the dark. Hovering lifts it off the surface
-     and a paper tag swings in; taking it downloads the PDF. */
-  .panel.cv { width: auto; }
-
-  .sheet {
-    position: relative;
-    display: block;
-    width: min(400px, calc(100vw - 56px));
-    aspect-ratio: 1 / 1.2941;          /* US Letter, matching the PDF */
-    margin: 0 auto;
-    cursor: pointer;
-    /* The paper turns square-on and rises as you reach for it. */
-    transform: rotate(1.2deg);
-    transition: transform 320ms cubic-bezier(.22,.61,.36,1),
-                filter 320ms ease;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.55));
-  }
-
-  /* The page behind: no second image needed, only its edge is ever seen. */
-  .sheet::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #efece6;
-    transform: rotate(-3.2deg) translate(-5px, 4px);
-    transition: transform 320ms cubic-bezier(.22,.61,.36,1);
-  }
-
-  .sheet img {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    background: #fff;
-  }
-
-  .sheet:hover,
-  .sheet:focus-visible {
-    transform: rotate(0deg) translateY(-10px) scale(1.015);
-    filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.75));
-    outline: none;
-  }
-
-  .sheet:hover::before,
-  .sheet:focus-visible::before { transform: rotate(-5deg) translate(-9px, 7px); }
-
-  .sheet:active {
-    transform: rotate(0deg) translateY(-3px) scale(1.004);
-    transition-duration: 90ms;
-  }
-
-  /* The tag only appears when you reach for the page. */
-  .sheet .tag {
-    position: absolute;
-    /* Stuck onto the page's corner rather than floating above it — which
-       also keeps it clear of the close button in the row above. */
-    top: 12px;
-    right: -14px;
-    z-index: 2;
-    padding: 7px 12px;
-    background: #faf8f4;
-    color: #111;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-indent: 0.18em;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-    transform: rotate(5deg) scale(0.9);
-    opacity: 0;
-    transition: opacity 240ms ease, transform 320ms cubic-bezier(.22,.61,.36,1);
-  }
-
-  .sheet:hover .tag,
-  .sheet:focus-visible .tag { opacity: 1; transform: rotate(5deg) scale(1); }
-
-  /* Keyboard users get the same lift, so the tag is never the only cue. */
-  .sheet:focus-visible img { outline: 2px solid rgba(255, 255, 255, 0.7); outline-offset: 3px; }
-
-  /* There is no hover on a touch screen, and the tag is the whole invitation
-     — so on a phone it is simply always there. */
-  @media (hover: none) {
-    .sheet .tag { opacity: 1; transform: rotate(5deg) scale(1); }
-  }
-
-  /* Shorter windows get a smaller sheet rather than a clipped one. */
-  @media (max-height: 760px) { .sheet { width: min(330px, calc(100vw - 56px)); } }
-  @media (max-height: 620px) { .sheet { width: min(270px, calc(100vw - 56px)); } }
-  @media (max-height: 470px) { .sheet { width: min(205px, calc(100vw - 56px)); } }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sheet, .sheet::before, .sheet .tag { transition: none; }
-  }
-
-  /* Arrives the way everything else on this page does: a slow fade, no
-     bounce. @starting-style is what lets a dialog animate in from display:
-     none; where it is unsupported the dialog simply appears. */
-  dialog, dialog::backdrop {
-    transition: opacity 450ms ease, overlay 450ms allow-discrete, display 450ms allow-discrete;
-    opacity: 0;
-  }
-
-  dialog[open], dialog[open]::backdrop { opacity: 1; }
-
-  @starting-style {
-    dialog[open], dialog[open]::backdrop { opacity: 0; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     main, footer { transition: none; }
     dialog, dialog::backdrop { transition: none; }
@@ -373,7 +263,7 @@
   <p>in the meantime, contact me at
     <a href="mailto:hello@ecem.world">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
       href="https://luckbug.substack.com" id="newsletter-link">newsletter</a><span class="sep" aria-hidden="true">·</span><a
-      href="assets/ecem-ozturk-cv.pdf" id="cv-link" target="_blank" rel="noopener">cv</a></p>
+      href="assets/ecem-ozturk-cv.pdf" download="Ecem-Ozturk-CV-2026.pdf">cv</a></p>
 </footer>
 
 <dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
@@ -387,21 +277,6 @@
     <iframe src="https://luckbug.substack.com/embed"
             title="Subscribe to luckbug on Substack"
             loading="lazy"></iframe>
-  </div>
-</dialog>
-
-<dialog id="cv" aria-label="Take a copy of my CV">
-  <div class="panel cv" tabindex="-1" autofocus>
-    <div class="panel-head">
-      <p class="eyebrow">my cv</p>
-      <button type="button" class="close" data-close aria-label="Close">&times;</button>
-    </div>
-    <a class="sheet" href="assets/ecem-ozturk-cv.pdf" download="Ecem-Ozturk-CV-2026.pdf">
-      <img src="assets/cv-page-1.webp" width="893" height="1155"
-           alt="Ecem Ozturk, Designer and Creative Director — curriculum vitae, first page"
-           loading="lazy" decoding="async">
-      <span class="tag">take a copy</span>
-    </a>
   </div>
 </dialog>
 
@@ -443,28 +318,6 @@
     const dialog = document.getElementById('newsletter');
     const link = document.getElementById('newsletter-link');
     const supported = dialog && typeof dialog.showModal === 'function';
-
-    /* The CV opens as a sheet of paper you pick up. Its link points straight
-     * at the PDF, so with no <dialog> support, or no JavaScript, it simply
-     * opens the file — the flourish is the enhancement, not the mechanism. */
-    const cvDialog = document.getElementById('cv');
-    const cvLink = document.getElementById('cv-link');
-    if (cvLink && cvDialog && typeof cvDialog.showModal === 'function') {
-      cvLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        cvDialog.showModal();
-      });
-      cvDialog.querySelector('[data-close]').addEventListener('click', () => cvDialog.close());
-      cvDialog.addEventListener('click', (event) => {
-        const box = cvDialog.querySelector('.panel').getBoundingClientRect();
-        if (event.clientX < box.left || event.clientX > box.right ||
-            event.clientY < box.top || event.clientY > box.bottom) cvDialog.close();
-      });
-      // Taking a copy ends the moment; the download still happens.
-      cvDialog.querySelector('.sheet').addEventListener('click', () => {
-        window.setTimeout(() => cvDialog.close(), 700);
-      });
-    }
 
     if (!supported) return;  // no <dialog>: the newsletter link still goes to Substack
 
