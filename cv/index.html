@@ -14,6 +14,19 @@
 
   html, body { margin: 0; background: #000; }
 
+  /* Everything that is not the paper is a way back, so the dark says so.
+     There is no built-in "back" cursor, hence the inlined arrow; the keyword
+     after it is the fallback wherever a custom cursor is refused. */
+  body {
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACl0lEQVR42u1XTUhUURg99747jiFOSFqtKhczFVQMYoQtxEUtXbkTjBbpQmbROgxyUWokZbQ0ERICXc3CRQjubKUbQQicRat5Q4SpjTD63r2nRXfsNc5oP86zwAN387jwnfPdc757H3CM/xziSAtLKQHACb04SSGEAIC70Wj0QpjdECQFSQkgNTw8/JHkRQCw36oKKaVEX19fBMCD8fHxLL8jFALSnncMwON0Ov2ZJD3P04VCoeoEpOM4AHCqoaHh5fz8/Fdb3ITRAccWPxuPx98sLi7mi8r5A1Uj4CilACDe0tIys7q6WiDJnZ0dQ7Konpubm5cBSOsN54D128WvdnR0zLquq0vabgIdOK+UQk1NDZRSFZeN7R6ocsUjkYj2PO96V1fX84mJiZuxWAxaayqlhG13cQ4gmUz2+L6ftQq5j6gIgLcA1u3MYLnhIaSUNMbc6u/vfzo6Opqsra2F1hqO4+zuJbmraGpqKru2trYNQJKV64+MjGRc170jhMiSFOXIiunpaUdK2TM0NPTBGEOSRuug3/4cbW1tswBO2zjvivnJuSsrKwLAycbGxnohBIwxrHR2h4WgBzg4OKillK96e3tzuVzuycDAQNx2QljmezA3N/cln897JPc9Atd1TwBQpXtEhQRo3/dvp1KpZ2NjY9esLyClFKUeaG1tfbi0tJS1YniA2D0mPCiGN7q7u99vbW2RpPF9v1wMz/1NDH+FxJXOzs53ruuawCyo+iAqJdHc3t4+k8lkvDBHcSmJM4lE4vXy8vJ2mJdR6aVU39TU9GJhYSF4KYX7IAEQraure5ROp9dJcmNjIzQCQRKOlPL+5OTkJ5KXwiQAACIQqXuJRKL5KJ7oQghRzHboz/J/4sfkGIeGb43VDs7S/yilAAAAAElFTkSuQmCC") 16 16, pointer;
+  }
+
+  /* Over the paper itself, nothing is clickable — an ordinary pointer. */
+  .pages img { cursor: default; }
+
+  /* Links keep the hand that says "this does its own thing". */
+  a { cursor: pointer; }
+
   body {
     font-family: Helvetica, "Helvetica Neue", "HelveticaNeue", Arial, sans-serif;
     color: #fff;
@@ -160,6 +173,39 @@
        loading="lazy" decoding="async">
 </main>
 
+
+<script>
+  /* The whole dark field is a way back: click any of it and you return to the
+   * landing page. The paper, the links and the header are excluded — and so
+   * are the things that only look like clicks. */
+  (function () {
+    const HOME = '../';
+    let startX = 0, startY = 0;
+
+    addEventListener('pointerdown', (event) => {
+      startX = event.clientX;
+      startY = event.clientY;
+    }, { passive: true });
+
+    addEventListener('click', (event) => {
+      // The paper, any link, and the header bar all keep their own behaviour.
+      if (event.target.closest('img, a, header')) return;
+
+      // Finishing a text selection is not a click, nor is the end of a drag
+      // or a flick-scroll that happens to land on the background.
+      const selection = window.getSelection();
+      if (selection && selection.toString().trim()) return;
+      if (Math.hypot(event.clientX - startX, event.clientY - startY) > 8) return;
+
+      location.href = HOME;
+    });
+
+    // The keyboard equivalent of clicking away, for anyone who cannot.
+    addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') location.href = HOME;
+    });
+  })();
+</script>
 
 </body>
 </html>
