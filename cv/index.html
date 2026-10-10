@@ -47,9 +47,33 @@
     letter-spacing: 0.22em;
   }
 
-  header a { color: inherit; text-decoration: none; opacity: 0.55; transition: opacity 220ms ease; }
-  header a:hover, header a:focus-visible { opacity: 1; }
   header .here { opacity: 0.85; }
+
+  /* Not a button pretending to be text — a real one, so it is tabbable and
+     answers Enter. It happens to look like the instruction it is. */
+  .hint {
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    opacity: 0.5;
+    transition: opacity 220ms ease;
+  }
+
+  .hint:hover, .hint:focus-visible { opacity: 0.9; }
+  .hint:focus-visible { outline: 1px solid rgba(255,255,255,0.6); outline-offset: 6px; }
+
+  /* "click" is the wrong verb on a phone. */
+  .hint .tap { display: none; }
+
+  @media (hover: none) {
+    .hint .click { display: none; }
+    .hint .tap { display: inline; }
+  }
 
   /* ── The pages ───────────────────────────────────────────────────── */
   .pages {
@@ -154,7 +178,8 @@
 <body>
 
 <header>
-  <a href="../">← ecem.world</a>
+  <button type="button" class="hint" id="back">[&nbsp;<span class="click">click</span><span class="tap">tap</span>
+    anywhere to go back&nbsp;]</button>
   <span class="here">art director · cv</span>
 </header>
 
@@ -188,8 +213,10 @@
     }, { passive: true });
 
     addEventListener('click', (event) => {
-      // The paper, any link, and the header bar all keep their own behaviour.
-      if (event.target.closest('img, a, header')) return;
+      // Only the paper and the things with their own behaviour are exempt.
+      // The header is no longer among them: it holds no link now, and the
+      // text there promises that anywhere goes back.
+      if (event.target.closest('img, a, button')) return;
 
       // Finishing a text selection is not a click, nor is the end of a drag
       // or a flick-scroll that happens to land on the background.
@@ -199,6 +226,9 @@
 
       location.href = HOME;
     });
+
+    const hint = document.getElementById('back');
+    if (hint) hint.addEventListener('click', () => { location.href = HOME; });
 
     // The keyboard equivalent of clicking away, for anyone who cannot.
     addEventListener('keydown', (event) => {
