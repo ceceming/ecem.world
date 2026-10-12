@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ecem Ozturk — Art Director — CV</title>
+<!--
+  ─────────────────────────────────────────────────────────────────────────
+  This file is the SOURCE of assets/ecem-ozturk-cv.pdf. Edit it, never the
+  PDF. To rebuild the PDF and the two page images the /cv/ viewer shows:
+
+      tools/build-cv.sh
+
+  Type: the Helvetica stack, matching the rest of ecem.world. Arial and
+  Liberation Sans are metric-compatible with Helvetica, so the line breaks
+  below hold whichever of the three a machine actually has — the layout you
+  see here is the layout you get if you ever re-print this on a Mac, where
+  it will set in true Helvetica.
+
+  Colour: there is none, by design. The whole document is black, one grey
+  (--ink-soft) for anything secondary, and hairlines. Resist adding more.
+
+  Page geometry is US Letter for the Toronto market. Switching to A4 means
+  changing --page-w/--page-h and the @page size together, then re-checking
+  that nothing orphans across the break.
+  ─────────────────────────────────────────────────────────────────────────
+-->
+<style>
+  :root {
+    /* Page */
+    --page-w: 8.5in;
+    --page-h: 11in;
+    --margin-x: 0.62in;
+    --margin-top: 0.56in;
+    --margin-bottom: 0.5in;
+
+    /* The only three values that carry any colour */
+    --ink: #000;
+    --ink-soft: #595959;        /* meta lines, sub-lines, separators */
+    --rule: #c8c8c8;            /* hairlines */
+
+    /* Type scale, in points because this is print */
+    --t-name: 25pt;
+    --t-role: 8.5pt;
+    --t-section: 7.5pt;
+    --t-body: 8.7pt;
+    --t-meta: 7.7pt;
+    --t-group: 8.4pt;
+
+    --lead: 1.48;
+  }
+
+  /* The page box carries the margins, so content FLOWS rather than sitting in
+     fixed-height boxes. That matters: a fixed box with overflow:hidden would
+     silently swallow a line that didn't fit, whereas flowed content that
+     outgrows two pages shows up as a third page in the output — loud, and
+     caught by the build script's page-count check. */
+  @page {
+    size: 8.5in 11in;
+    margin: var(--margin-top) var(--margin-x) var(--margin-bottom);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; background: #fff; }
+
+  body {
+    font-family: Helvetica, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+    color: var(--ink);
+    font-size: var(--t-body);
+    line-height: var(--lead);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* A .sheet is where I want a page to END, not a fixed canvas. */
+  .sheet { break-after: page; page-break-after: always; }
+
+  .sheet:last-of-type { break-after: auto; page-break-after: auto; }
+
+  /* ── Masthead ───────────────────────────────────────────────────────── */
+  header { margin-bottom: 15pt; }
+
+  /* 0.12em, and the number is measured rather than chosen by eye.
+     Past a certain tracking a PDF emits a real space between every glyph, so
+     the name stops copying — and stops parsing — as a name. Measured against
+     two independent extractors on this exact file: pypdf breaks between
+     0.135em and 0.14em, PyMuPDF between 0.145em and 0.15em. Two parsers, two
+     different cliffs, which is the useful finding: applicant tracking systems
+     will disagree too, so this sits at 0.12em for headroom instead of at the
+     edge of whichever one I happened to test. It still reads as a tracked
+     masthead.
+
+     The tracked section labels further down DO cross that line, deliberately:
+     they are this layout's main device — there is no colour and only one
+     weight to work with — and nothing depends on reading them mechanically.
+     Everything a parser actually harvests is untracked and extracts cleanly:
+     name, contact line, role titles, employers, dates and bullet prose. All
+     of it asserted in tools/build-cv.sh, so tracking cannot creep back up
+     without the build failing. */
+  h1 {
+    margin: 0;
+    font-size: var(--t-name);
+    font-weight: 400;              /* weight would shout; spacing speaks instead */
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;          /* tracking adds a trailing gap — centre it back */
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .role {
+    margin: 9pt 0 0;
+    font-size: var(--t-role);
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .contact {
+    margin: 11pt 0 0;
+    padding-top: 9pt;
+    border-top: 0.5pt solid var(--rule);
+    font-size: var(--t-meta);
+    letter-spacing: 0.035em;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  .contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 0.4pt solid var(--rule);
+    padding-bottom: 1pt;
+  }
+
+  .contact .sep { padding: 0 0.62em; color: var(--rule); }
+
+  /* ── Summary ────────────────────────────────────────────────────────── */
+  .summary {
+    margin: 0 0 20pt;
+    /* Narrower than the measure so the paragraph reads as a block of type
+       rather than running the full width like a bullet does. */
+    max-width: 6.55in;
+    font-size: var(--t-body);
+    line-height: 1.6;
+    /* Ragged right, not justified. Justifying a measure this wide without
+       hyphenation stretched the word spaces far enough to open rivers down
+       the paragraph — the one place on the page where the spacing stopped
+       looking deliberate. */
+    text-align: left;
+  }
+
+  /* ── Section headings ───────────────────────────────────────────────── */
+  h2 {
+    margin: 0 0 10pt;
+    padding-bottom: 5pt;
+    border-bottom: 0.75pt solid var(--ink);
+    font-size: var(--t-section);
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  section { margin-bottom: 15pt; }
+  section:last-child { margin-bottom: 0; }
+
+  /* ── Core skills: two columns of four groups ────────────────────────── */
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.42in;
+    row-gap: 14pt;
+  }
+
+  .group h3 {
+    margin: 0 0 5pt;
+    font-size: var(--t-group);
+    font-weight: 700;
+    letter-spacing: 0.055em;
+  }
+
+  .group ul { margin: 0; padding: 0; list-style: none; }
+
+  .group li {
+    padding-left: 9pt;
+    margin-bottom: 2.8pt;
+    line-height: 1.44;
+  }
+
+  /* An en dash reads quieter than a round bullet and keeps the column edge
+     straight, which is the whole point of a two-column skills block.
+     inline-block + negative margin, never position:absolute — see the note
+     on .entry li::before. */
+  .group li::before {
+    content: "–";
+    display: inline-block;
+    width: 9pt;
+    margin-left: -9pt;
+    color: var(--ink-soft);
+  }
+
+  .group li b { font-weight: 700; }
+
+  /* ── Experience ─────────────────────────────────────────────────────── */
+  .entry {
+    margin-bottom: 10pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .entry:last-child { margin-bottom: 0; }
+
+  .entry h3 {
+    margin: 0;
+    font-size: var(--t-body);
+    font-weight: 700;
+    letter-spacing: 0.012em;
+    line-height: 1.35;
+  }
+
+  .entry h3 .org { font-weight: 400; }
+
+  /* The vertical bar between role and employer, set apart from both so it
+     doesn't collide with a descender. */
+  .entry h3 .bar { padding: 0 0.42em; color: var(--rule); font-weight: 400; }
+
+  .meta {
+    margin: 2.5pt 0 4.5pt;
+    font-size: var(--t-meta);
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+  }
+
+  .meta .sep { padding: 0 0.5em; color: var(--rule); }
+
+  .entry ul { margin: 0; padding: 0; list-style: none; }
+
+  .entry li {
+    padding-left: 11pt;
+    margin-bottom: 2.2pt;
+    line-height: 1.44;
+  }
+
+  /* In flow, not absolutely positioned. An absolute marker is invisible to
+     the PDF's text layer ordering: every dash ended up collected after the
+     prose, so copying the CV — or an applicant tracking system reading it —
+     got the bullets detached from their lines. An inline-block of fixed
+     width pulled back by its own width hangs identically and reads in
+     order. */
+  .entry li::before {
+    content: "–";
+    display: inline-block;
+    width: 11pt;
+    margin-left: -11pt;
+    color: var(--ink-soft);
+  }
+
+  /* ── Education ──────────────────────────────────────────────────────── */
+  .edu { margin-bottom: 7pt; break-inside: avoid; page-break-inside: avoid; }
+  .edu:last-child { margin-bottom: 0; }
+
+  .edu h3 {
+    margin: 0;
+    font-size: var(--t-body);
+    font-weight: 700;
+    letter-spacing: 0.012em;
+    line-height: 1.34;
+  }
+
+  .edu h3 .where { font-weight: 400; }
+  .edu h3 .bar { padding: 0 0.42em; color: var(--rule); font-weight: 400; }
+
+  .edu .when {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: var(--t-meta);
+    letter-spacing: 0.03em;
+  }
+
+  .edu p {
+    margin: 2pt 0 0;
+    font-size: var(--t-meta);
+    line-height: 1.43;
+    color: var(--ink-soft);
+  }
+
+  /* ── Running head, page two only ────────────────────────────────────
+     Replaces a repeated "(continued)" heading: it does the same job of
+     saying the page is not the first, and also says whose page it is. */
+  .runhead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 0 13pt;
+    padding-bottom: 4pt;
+    border-bottom: 0.5pt solid var(--rule);
+    font-size: 7pt;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .runhead .who { color: var(--ink); }
+  .runhead .pg { letter-spacing: 0.16em; }
+
+  /* Screen-only courtesy: the two sheets as pages on a grey desk, so opening
+     this file in a browser approximates the print result. Approximates only —
+     the PDF is what the build script measures, not this. */
+  @media screen {
+    body { background: #e8e8e8; padding: 24px 0; }
+
+    .sheet {
+      width: var(--page-w);
+      min-height: var(--page-h);
+      padding: var(--margin-top) var(--margin-x) var(--margin-bottom);
+      margin: 0 auto 24px;
+      background: #fff;
+      box-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE ONE ══════════════════════════════════════════════════════════ -->
+<div class="sheet">
+
+  <header>
+    <h1>Ecem Ozturk</h1>
+    <p class="role">Art Director</p>
+    <p class="contact">Toronto, ON<span class="sep">·</span><a
+      href="https://ecem.world">ecem.world</a><span class="sep">·</span><a
+      href="mailto:hello@ecem.world">hello@ecem.world</a><span class="sep">·</span><a
+      href="https://www.linkedin.com/in/ecem-%C3%B6zt%C3%BCrk/">LinkedIn</a></p>
+  </header>
+
+  <p class="summary">Multidisciplinary designer and art director with an MDes in
+  Digital Futures and a BA in Product Design. I work across brand identity, art
+  direction, and immersive digital experience — owning both the concept and the
+  craft, then prototyping and shipping what I design. My practice spans visual
+  identity systems, editorial and campaign direction, UI/UX, and 3D/VR, backed
+  by the production discipline to carry creative work from first idea to launch.</p>
+
+  <section>
+    <h2>Core Skills</h2>
+    <div class="skills">
+
+      <div class="group">
+        <h3>Creative Direction &amp; Brand</h3>
+        <ul>
+          <li><b>Art Direction:</b> Concept development, visual storytelling &amp; campaign direction.</li>
+          <li><b>Brand Identity:</b> Building visual identity systems &amp; brand architecture.</li>
+          <li><b>Editorial &amp; Copy:</b> Tone of voice, copywriting &amp; narrative design.</li>
+          <li><b>Creative Strategy:</b> Positioning, moodboarding &amp; a clear aesthetic point of view.</li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h3>Visual &amp; Experience Design</h3>
+        <ul>
+          <li><b>Typography &amp; Layout:</b> Editorial layout, type systems &amp; composition.</li>
+          <li><b>UI/UX &amp; Systems:</b> Interface design &amp; design systems in Figma.</li>
+          <li><b>3D &amp; Immersive:</b> Modelling in Rhinoceros 3D; rendering &amp; animation in Blender; VR in Unity.</li>
+          <li><b>Motion &amp; Interaction:</b> Interaction logic &amp; animated, interactive experiences.</li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h3>Craft, Tools &amp; Making</h3>
+        <ul>
+          <li><b>Design Tools:</b> Figma, Rhinoceros 3D, Blender, Unity &amp; the Adobe ecosystem.</li>
+          <li><b>AI Creative Pipeline:</b> Expert prompting; Claude Code, Meshy &amp; Firefly.</li>
+          <li><b>Creative Coding:</b> Prototyping interactive and web-based pieces.</li>
+          <li><b>Material Craft:</b> Machine knitting &amp; hands-on textile experimentation.</li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <h3>Production &amp; Delivery</h3>
+        <ul>
+          <li><b>End-to-End Delivery:</b> Taking creative projects from concept to launch.</li>
+          <li><b>Agile Production:</b> Sprint operations &amp; roadmap prioritization (Asana).</li>
+          <li><b>Stakeholder Alignment:</b> Coordinating design, engineering &amp; clients.</li>
+          <li><b>Global Launches:</b> Managing international product &amp; brand rollouts.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Professional Experience</h2>
+
+    <div class="entry">
+      <h3>Freelance Designer &amp; Graphic Designer<span
+        class="bar">|</span><span class="org">Independent</span></h3>
+      <p class="meta">Remote<span class="sep">·</span>Toronto, ON<span class="sep">·</span>2023 – Present</p>
+      <ul>
+        <li>Designed and built Shopify-integrated e-commerce websites and an Amazon brand presence — shaping visual identity, layout, and conversion-focused product pages.</li>
+        <li>Created packaging design for home-appliance product lines, taking artwork from concept through to print-ready production.</li>
+        <li>Produced e-commerce-ready product photography and a full suite of marketing collateral — catalogues, flyers, banners, and social media content — with a consistent brand look across channels.</li>
+        <li>Designed sales pitch decks and presentation materials supporting client sales and market-expansion efforts.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Project Coordinator<span class="bar">|</span><span class="org">Vretta Inc.</span></h3>
+      <p class="meta">Toronto, ON, Canada<span class="sep">·</span>February 2026 – June 2026</p>
+      <ul>
+        <li>Coordinated delivery of a digital assessment tool for Canadian K–12 schools, running weekly stakeholder meetings and keeping design, product, and engineering teams aligned to schedule.</li>
+        <li>Managed timelines, documentation, and cross-functional communication across the full project lifecycle.</li>
+      </ul>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ══ PAGE TWO ══════════════════════════════════════════════════════════ -->
+<div class="sheet">
+
+  <p class="runhead">
+    <span class="who">Ecem Ozturk &nbsp;·&nbsp; Art Director</span>
+    <span class="pg">Page 2 of 2</span>
+  </p>
+
+  <section>
+    <div class="entry">
+      <h3>Brand &amp; Creative Lead, Market Expansion &amp; Localization<span
+        class="bar">|</span><span class="org">Master Ev Gereçleri — Freelance</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>June 2025 – Present</p>
+      <ul>
+        <li>Lead brand and visual direction for international kitchen-appliance and cosmetics lines — shaping identity, packaging, and e-commerce presentation across global markets.</li>
+        <li>Art-direct prepress and production across Turkey–China supply chains, tightening visual consistency and reducing revision cycles.</li>
+        <li>Direct the design of e-commerce platforms, from visual identity and conversion-focused UX through to back-end integration.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Creator &amp; Art Director — Anatolian Futures: A Feminist Folklore (VR)<span
+        class="bar">|</span><span class="org">OCAD University</span></h3>
+      <p class="meta">Toronto, ON, Canada<span class="sep">·</span>September 2024 – March 2025<span class="sep">·</span>Defended April 2025</p>
+      <ul>
+        <li>Directed the full creative vision of an immersive VR experience in Unity — narrative, world-building, visual identity, and interaction design.</li>
+        <li>Designed environments, 3D assets, and UI systems for a cohesive immersive aesthetic.</li>
+        <li>Engineered interactive systems with AI-assisted C# scripting, balancing creative intent against technical performance and hardware constraints.</li>
+        <li>Iterated the experience through user testing and feedback loops, from prototype to public technical defense.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Associate Product Designer<span class="bar">|</span><span class="org">Passion Punch Studio</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>April 2023 – July 2023</p>
+      <ul>
+        <li>Designed UI/UX and brand assets for a mobile gaming platform, aligning visual and product direction across Design, Product, and Engineering.</li>
+        <li>Maintained visual and design-system consistency across features and brand rollouts within Agile sprints (Asana).</li>
+        <li>Ran QA reviews to keep visual and technical execution cohesive across multidisciplinary teams.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Game Design Intern<span class="bar">|</span><span class="org">Passion Punch Studio</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>December 2022 – March 2023</p>
+      <ul>
+        <li>Reworked UI/UX and core gameplay flows for a match-3 title, smoothing friction to improve session quality and retention.</li>
+        <li>Translated product goals into wireframes and design assets for clean hand-off to engineering.</li>
+        <li>Benchmarked casual-game and monetization trends to inform design and feature direction.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Interior Design Intern<span class="bar">|</span><span class="org">Toros &amp; Partners</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>September 2020 – December 2020</p>
+      <ul>
+        <li>Developed concepts for hospitality and residential projects alongside the design team, from visual moodboards through to material selection.</li>
+        <li>Drew plans, elevations, and circulation models for industrial kitchens.</li>
+        <li>Rendered interiors to communicate spatial and material intent.</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>Education &amp; Certifications</h2>
+
+    <div class="edu">
+      <h3>Master of Design, Digital Futures<span class="bar">|</span><span
+        class="where">OCAD University, Toronto, ON</span><span class="bar">|</span><span
+        class="when">2023 – 2025</span></h3>
+      <p>Specialized in emerging technologies, immersive design, and human-centered innovation.</p>
+    </div>
+
+    <div class="edu">
+      <h3>Bachelor of Arts in Design, Product Design<span class="bar">|</span><span
+        class="where">NABA, Milan, Italy</span><span class="bar">|</span><span
+        class="when">2019 – 2022</span></h3>
+      <p>Concentration in interior design.</p>
+    </div>
+
+    <div class="edu">
+      <h3>Industrial Design<span class="bar">|</span><span
+        class="where">Pratt Institute, New York, NY</span><span class="bar">|</span><span
+        class="when">2018 – 2019</span></h3>
+      <p>Foundation year, before relocating to Milan.</p>
+    </div>
+
+    <div class="edu">
+      <h3>Data Analyst Certification, DAC<span class="bar">|</span><span
+        class="where">BrainStation, Toronto, ON</span><span class="bar">|</span><span
+        class="when">2024</span></h3>
+      <p>SQL, Excel, and Python for data-driven decision making.</p>
+    </div>
+
+    <div class="edu">
+      <h3>High School Diploma<span class="bar">|</span><span
+        class="where">American Robert College, Istanbul, Turkey</span></h3>
+      <p>Graduated from Turkey's top high school, admitting students in the top 0.5% nationwide via a competitive entrance exam.</p>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>

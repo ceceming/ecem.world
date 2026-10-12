@@ -20,11 +20,18 @@ place and live. Read this before replacing it: the raw Meshy export was
 | `model/` | `model.glb` — the chrome "e", optimised for the web |
 | `qr/index.html` | A printable QR code page → [ecem.world/qr/](https://ecem.world/qr/) |
 | `assets/qr/` | The QR code as SVG and PNG, in three styles |
+| `cv/index.html` | The CV viewer → [ecem.world/cv/](https://ecem.world/cv/) |
+| `assets/cv-source.html` | **The CV itself.** Edit this, never the PDF |
+| `assets/ecem-ozturk-cv.pdf` | Built from the above — the file people download |
+| `assets/cv-page-*.webp` | Built from the above — what the viewer shows |
+| `tools/build-cv.sh` | Rebuilds those three from the source |
 | `vendor/three/` | three.js r160, committed here on purpose (see below) |
 | `CNAME` | Tells GitHub Pages the site lives at `ecem.world` |
 
-Everything is static files. There is no build step, nothing to install, and
-no npm. Editing a file on github.com and committing is a deploy.
+The site is static files: editing one on github.com and committing is a
+deploy. The one exception is the CV — three of the files above are generated,
+and changing the CV means editing its source and re-running the build. See
+[The CV](#the-cv).
 
 ## The animation
 
@@ -79,6 +86,78 @@ lock and the drift will start to look like a loop.
 Respects `prefers-reduced-motion` (holds still) and pauses when the tab is in
 the background — and because elapsed time is accumulated rather than read off
 the clock, returning to a backgrounded tab resumes exactly where it left off.
+
+## The CV
+
+`assets/cv-source.html` is the document. The PDF people download and the two
+images the viewer shows are both generated from it:
+
+```sh
+tools/build-cv.sh
+```
+
+Editing the PDF directly, or editing the images, gets overwritten the next
+time anyone runs that. Edit the HTML.
+
+### What the build checks
+
+It refuses to overwrite the committed files unless all of this holds:
+
+- **Exactly two pages.** The layout is tuned to fill two and no more. A third
+  page means something was added without making room — fix the source rather
+  than shipping it. (This is also why the source uses flowed pagination
+  instead of fixed-height page boxes: a fixed box with `overflow: hidden`
+  would have swallowed the extra line silently.)
+- **No home address and no personal phone number** anywhere in the PDF's text
+  layer. Both were in the original Word document and are deliberately gone;
+  the CV gives "Toronto, ON" and an email. This check is the thing that stops
+  them coming back.
+- **The text layer reads correctly.** Name, role titles, employers, dates and
+  bullets all have to extract as running text — see below.
+- The page images actually rendered and are not blank.
+
+It also sets the PDF's document metadata (title, author, keywords), so a
+parser reading the document properties gets a clean name.
+
+### Typography
+
+No colour anywhere: black, one grey for secondary text, and hairlines. One
+typeface, two weights. Hierarchy comes from size, case, tracking and space.
+
+The Helvetica stack matches the rest of the site. Arial and Liberation Sans
+are metric-compatible with Helvetica, so **the line breaks hold whichever of
+the three a machine has** — the layout is the same if you open the source on
+a Mac and re-print it there in real Helvetica.
+
+### Why the name is tracked less than it looks like it should be
+
+Past a certain letter-spacing, a PDF emits a real space between every glyph,
+and the name stops copying — and stops parsing — as a name. Measured on this
+file against two extractors: pypdf breaks between 0.135em and 0.14em, PyMuPDF
+between 0.145em and 0.15em.
+
+Two parsers, two different cliffs. That is the useful part: applicant
+tracking systems will disagree too, so the name sits at **0.12em** for
+headroom rather than at the edge of whichever one got tested.
+
+The section labels are tracked far wider on purpose — they are the main
+device in a layout with no colour and only one weight, and nothing needs to
+read them mechanically. Everything a parser actually harvests is untracked.
+The build asserts all of this, so tracking cannot creep back up unnoticed.
+
+Bullet markers are `inline-block` with a negative margin, never
+`position: absolute`. Absolutely-positioned markers sit outside the text
+flow: the PDF collected every dash after all the prose, so copying the CV
+detached the bullets from their lines.
+
+### Rebuilding it elsewhere
+
+The build needs headless Chromium, plus `pypdf` and `PyMuPDF`. Point it at a
+different browser or interpreter with:
+
+```sh
+CHROME=/path/to/chrome PY=python3 tools/build-cv.sh
+```
 
 ## Changing how big the glyph looks
 
