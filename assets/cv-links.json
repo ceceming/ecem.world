@@ -1,0 +1,32 @@
+[
+ {
+  "page": 1,
+  "kind": "link",
+  "value": "https://ecem.world/",
+  "label": "ecem.world",
+  "left": 41.1765,
+  "top": 13.8258,
+  "width": 6.8627,
+  "height": 1.2311
+ },
+ {
+  "page": 1,
+  "kind": "copy",
+  "value": "hello@ecem.world",
+  "label": "hello@ecem.world",
+  "left": 50.0,
+  "top": 13.8258,
+  "width": 11.152,
+  "height": 1.2311
+ },
+ {
+  "page": 1,
+  "kind": "link",
+  "value": "https://www.linkedin.com/in/ecem-%C3%B6zt%C3%BCrk/",
+  "label": "LinkedIn",
+  "left": 63.1127,
+  "top": 13.8258,
+  "width": 5.1471,
+  "height": 1.2311
+ }
+]
