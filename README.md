@@ -24,6 +24,7 @@ place and live. Read this before replacing it: the raw Meshy export was
 | `assets/cv-source.html` | **The CV itself.** Edit this, never the PDF |
 | `assets/ecem-ozturk-cv.pdf` | Built from the above — the file people download |
 | `assets/cv-page-*.webp` | Built from the above — what the viewer shows |
+| `assets/cv-links.json` | Built from the above — where the viewer puts live links |
 | `tools/build-cv.sh` | Rebuilds those three from the source |
 | `vendor/three/` | three.js r160, committed here on purpose (see below) |
 | `CNAME` | Tells GitHub Pages the site lives at `ecem.world` |
@@ -115,9 +116,39 @@ It refuses to overwrite the committed files unless all of this holds:
 - **The text layer reads correctly.** Name, role titles, employers, dates and
   bullets all have to extract as running text — see below.
 - The page images actually rendered and are not blank.
+- The PDF still **has** hyperlinks, including the mailto — the viewer's live
+  links are built from them, so losing them would quietly break the page.
 
 It also sets the PDF's document metadata (title, author, keywords), so a
 parser reading the document properties gets a clean name.
+
+### Live links on the site
+
+The viewer shows flat images, so the PDF's hyperlinks do not survive onto
+the page — someone reading the CV at ecem.world/cv/ without downloading it
+would have nothing to click. The build reads the real link rectangles back
+out of the PDF it just produced and writes them to `assets/cv-links.json` as
+percentages of the page; the viewer fetches that and lays transparent
+hotspots over the image.
+
+Doing it this way rather than measuring the picture by hand is the point:
+the hotspots move when the layout moves. If the fetch fails the page is just
+what it was before, an image and a download button.
+
+`ecem.world` and `LinkedIn` open in a new tab, captioned with where they
+actually go. **The email copies instead of opening a mail app**, which is
+not guessable, so it says "click to copy" on hover and confirms with
+"copied hello@ecem.world".
+
+Touch has no hover, so the caption rides the press — it appears on
+finger-down and the copy happens on lift. A permanent caption was tried and
+removed: the page image scales down with the window but a legible bubble
+does not, so at phone width it sat across her name. For the same reason the
+`:hover` rules are inside `@media (hover: hover)` — an unscoped `:hover`
+sticks after a tap on a touch screen and would park the bubble there anyway.
+
+If the clipboard is unavailable (an insecure context, an old browser) the
+button falls back to `mailto:` rather than doing nothing.
 
 ### Typography
 

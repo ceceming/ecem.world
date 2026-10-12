@@ -79,6 +79,8 @@
     gap: 20px;
   }
 
+  .page { position: relative; }
+
   .pages img {
     display: block;
     width: 100%;
@@ -86,6 +88,116 @@
     background: #fff;
     /* Paper lifted off the dark, rather than a white box stuck to it. */
     box-shadow: 0 18px 44px rgba(0, 0, 0, 0.8);
+  }
+
+  /* ── Live links over the paper ───────────────────────────────────────
+     The pages are flat images, so the PDF's own hyperlinks do not survive
+     onto the site. These sit on top of them, placed from the rectangles the
+     build reads back out of the PDF (assets/cv-links.json) — so they move
+     when the layout moves and cannot drift out of register by hand.
+
+     The underline is already drawn on the paper underneath. These add the
+     behaviour, not a second set of marks. */
+  .hot {
+    position: absolute;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: transparent;              /* the words are in the image below */
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 160ms ease;
+  }
+
+  /* The link rectangles are about 10pt tall — roughly 23px at full width and
+     half that on a phone, well under a thumb. This grows the target without
+     moving the highlight. Horizontal growth stays small: the three links sit
+     close together and must not overlap each other. */
+  .hot::after {
+    content: "";
+    position: absolute;
+    inset: -13px -4px;
+  }
+
+  /* Hover is scoped to devices that actually have a pointer. Left unscoped,
+     a tapped element on a touch screen keeps :hover until something else is
+     tapped — so the caption would stay parked over her name after a copy,
+     which is the exact thing the press-to-reveal behaviour avoids. */
+  @media (hover: hover) {
+    .hot:hover { background: rgba(0, 0, 0, 0.1); }
+  }
+
+  .hot:focus-visible {
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    box-shadow: 0 0 0 2px #000;
+  }
+
+  /* ── What each one does, said before it is pressed ───────────────── */
+  .tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 9px);
+    transform: translateX(-50%);
+    z-index: 4;
+    padding: 5px 9px;
+    border-radius: 4px;
+    background: #15151a;
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  /* The little nib pointing down at the link. */
+  .tip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -4px;
+    border: 4px solid transparent;
+    border-top-color: #15151a;
+  }
+
+  .hot:focus-visible .tip,
+  .tip.is-shown { opacity: 1; }
+
+  @media (hover: hover) {
+    .hot:hover .tip { opacity: 1; }
+  }
+
+  /* Confirmation reuses the same bubble rather than throwing a toast
+     somewhere else on the screen. */
+  .tip.is-done { background: #1f6f3f; }
+  .tip.is-done::after { border-top-color: #1f6f3f; }
+
+  @media (hover: none) {
+    /* No hover here, so two things change.
+
+       The targets have to advertise themselves, since nothing will reveal
+       them on approach.
+
+       And the caption cannot simply be left up. The page image scales down
+       with the window but a legible bubble does not, so at phone width a
+       permanent one is wider than the whole contact line and sits across
+       her name. It is shown on finger-down instead (see the script): you
+       read "click to copy" while pressing, and "copied" when you lift. */
+    .hot { background: rgba(0, 0, 0, 0.07); }
+    .hot::after { inset: -15px -5px; }
+
+    .tip {
+      font-size: 10px;
+      padding: 4px 8px;
+      letter-spacing: 0.04em;
+    }
   }
 
   /* ── Take a copy ─────────────────────────────────────────────────── */
@@ -230,12 +342,16 @@
       <path d="M6 0v9M2.5 5.5L6 9l3.5-3.5M0 12.5h12" stroke="currentColor" stroke-width="1.3"/>
     </svg>
   </a>
-  <img src="../assets/cv-page-1.webp" width="1500" height="1942"
-       alt="Ecem Ozturk, Art Director — curriculum vitae, page one: contact details, summary, core skills, and professional experience."
-       decoding="async">
-  <img src="../assets/cv-page-2.webp" width="1500" height="1942"
-       alt="Curriculum vitae, page two: remaining professional experience, education and certifications."
-       loading="lazy" decoding="async">
+  <div class="page" data-page="1">
+    <img src="../assets/cv-page-1.webp" width="1500" height="1942"
+         alt="Ecem Ozturk, Art Director — curriculum vitae, page one: contact details, summary, core skills, and professional experience."
+         decoding="async">
+  </div>
+  <div class="page" data-page="2">
+    <img src="../assets/cv-page-2.webp" width="1500" height="1942"
+         alt="Curriculum vitae, page two: remaining professional experience, education and certifications."
+         loading="lazy" decoding="async">
+  </div>
 </main>
 
 
@@ -277,6 +393,141 @@
     addEventListener('keydown', (event) => {
       if (event.key === 'Escape') location.href = HOME;
     });
+  })();
+</script>
+
+<script>
+  /* Live links laid over the paper.
+   *
+   * The pages are flat images, so a reader who never downloads the PDF has no
+   * working links at all. These overlays restore them, positioned from
+   * assets/cv-links.json — rectangles the build reads back out of the PDF it
+   * just produced, as percentages, so they track the layout instead of being
+   * measured off the picture by hand.
+   *
+   * The email is the odd one out: it copies rather than opening a mail app,
+   * which nobody can guess from looking at it, so it says so first.
+   *
+   * If any of this fails the page is exactly what it was before — an image of
+   * a CV and a download button.
+   */
+  (function () {
+    const COPIED_FOR = 1800;   // ms the confirmation stays up
+
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (err) { /* fall through to the old way */ }
+
+      // Pre-clipboard-API browsers, and anything that refuses the promise.
+      try {
+        const field = document.createElement('textarea');
+        field.value = text;
+        field.setAttribute('readonly', '');
+        field.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;';
+        document.body.appendChild(field);
+        field.select();
+        field.setSelectionRange(0, text.length);   // iOS needs the range
+        const ok = document.execCommand('copy');
+        field.remove();
+        return ok;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function hotspot(link) {
+      const isCopy = link.kind === 'copy';
+      const el = document.createElement(isCopy ? 'button' : 'a');
+
+      el.className = 'hot';
+      el.dataset.kind = link.kind;
+      el.style.left = link.left + '%';
+      el.style.top = link.top + '%';
+      el.style.width = link.width + '%';
+      el.style.height = link.height + '%';
+
+      const tip = document.createElement('span');
+      tip.className = 'tip';
+      el.appendChild(tip);
+
+      if (isCopy) {
+        el.type = 'button';
+        tip.textContent = 'click to copy';
+        el.setAttribute('aria-label', 'Copy email address ' + link.value);
+
+        // Touch has no hover, so the caption rides the press: it comes up
+        // under the finger before the tap completes, which is the only
+        // moment left to say what this does. A permanent one is not an
+        // option — at phone width the bubble is wider than the contact line
+        // it describes.
+        el.addEventListener('pointerdown', (event) => {
+          if (event.pointerType === 'mouse') return;   // hover already covers it
+          clearTimeout(el._reset);
+          tip.textContent = 'click to copy';
+          tip.classList.remove('is-done');
+          tip.classList.add('is-shown');
+        });
+
+        // If the finger slides off without lifting, nothing was copied, so
+        // the caption should not linger.
+        for (const ending of ['pointercancel', 'pointerleave']) {
+          el.addEventListener(ending, () => {
+            if (!tip.classList.contains('is-done')) tip.classList.remove('is-shown');
+          });
+        }
+
+        el.addEventListener('click', async (event) => {
+          event.preventDefault();
+          const ok = await copyText(link.value);
+
+          if (!ok) {
+            // Never a dead button: if the clipboard is unavailable, do the
+            // thing the address would have done anyway.
+            location.href = 'mailto:' + link.value;
+            return;
+          }
+
+          tip.textContent = 'copied ' + link.value;
+          tip.classList.add('is-done', 'is-shown');
+          clearTimeout(el._reset);
+          el._reset = setTimeout(() => {
+            tip.textContent = 'click to copy';
+            tip.classList.remove('is-done', 'is-shown');
+          }, COPIED_FOR);
+        });
+      } else {
+        el.href = link.value;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+        // The destination, not the word on the page — worth knowing before
+        // following it, and the paper underneath already shows the word.
+        // Decoded, or her LinkedIn reads as "ecem-%C3%B6zt%C3%BCrk".
+        let shown = link.value.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        try { shown = decodeURIComponent(shown); } catch (err) { /* keep raw */ }
+        tip.textContent = shown;
+        el.setAttribute('aria-label', link.label + ' — opens in a new tab');
+      }
+
+      return el;
+    }
+
+    fetch('../assets/cv-links.json', { cache: 'no-cache' })
+      .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
+      .then((links) => {
+        for (const link of links) {
+          const page = document.querySelector(`.page[data-page="${link.page}"]`);
+          if (page) page.appendChild(hotspot(link));
+        }
+      })
+      .catch((err) => {
+        // Worth saying out loud, because nothing visible goes wrong: the
+        // links simply stay as printed pixels.
+        console.warn('CV link overlays unavailable:', err);
+      });
   })();
 </script>
 

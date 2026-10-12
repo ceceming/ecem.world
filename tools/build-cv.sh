@@ -116,6 +116,54 @@ with open(path, "wb") as fh:
 print("  metadata: set")
 PYCHECK
 
+echo "→ writing the link map"
+# The viewer at /cv/ shows flat images, so the PDF's hyperlinks are just
+# pixels there. Rather than hand-placing hotspots over the picture — which
+# would silently drift the next time the layout moves a line — the real link
+# rectangles are read back out of the PDF that was just built and written as
+# percentages of the page. The page reads this and lays its overlays on top.
+"$PY" - "$work/cv.pdf" <<'PYLINKS'
+import json
+import sys
+
+import pymupdf
+
+doc = pymupdf.open(sys.argv[1])
+links = []
+for number, page in enumerate(doc, start=1):
+    width, height = page.rect.width, page.rect.height
+    for link in page.get_links():
+        uri = link.get("uri")
+        if not uri:
+            continue
+        rect = link["from"]
+        label = page.get_textbox(rect).strip()
+        links.append({
+            "page": number,
+            "kind": "copy" if uri.startswith("mailto:") else "link",
+            # What the overlay acts on: the bare address for a copy, the URL
+            # otherwise.
+            "value": uri[len("mailto:"):] if uri.startswith("mailto:") else uri,
+            "label": label,
+            "left": round(100 * rect.x0 / width, 4),
+            "top": round(100 * rect.y0 / height, 4),
+            "width": round(100 * (rect.x1 - rect.x0) / width, 4),
+            "height": round(100 * (rect.y1 - rect.y0) / height, 4),
+        })
+
+if not links:
+    sys.exit("  FAIL: the PDF has no hyperlinks — the contact line lost its links")
+if not any(l["kind"] == "copy" for l in links):
+    sys.exit("  FAIL: no mailto link found, so the copy-email overlay has nothing to sit on")
+
+with open("assets/cv-links.json", "w") as fh:
+    json.dump(links, fh, indent=1, ensure_ascii=False)
+    fh.write("\n")
+
+for l in links:
+    print(f"  p{l['page']}  {l['kind']:4}  {l['label']!r} -> {l['value']}")
+PYLINKS
+
 echo "→ rendering page images"
 "$PY" - "$work/cv.pdf" "$PAGE_W_PX" <<'PYRENDER'
 import sys
