@@ -46,7 +46,7 @@
     --t-meta: 7.7pt;
     --t-group: 8.4pt;
 
-    --lead: 1.46;
+    --lead: 1.48;
   }
 
   /* The page box carries the margins, so content FLOWS rather than sitting in
@@ -145,7 +145,7 @@
        rather than running the full width like a bullet does. */
     max-width: 6.55in;
     font-size: var(--t-body);
-    line-height: 1.52;
+    line-height: 1.56;
     /* Ragged right, not justified. Justifying a measure this wide without
        hyphenation stretched the word spaces far enough to open rivers down
        the paragraph — the one place on the page where the spacing stopped
@@ -155,8 +155,8 @@
 
   /* ── Section headings ───────────────────────────────────────────────── */
   h2 {
-    margin: 0 0 9pt;
-    padding-bottom: 4pt;
+    margin: 0 0 10pt;
+    padding-bottom: 5pt;
     border-bottom: 0.75pt solid var(--ink);
     font-size: var(--t-section);
     font-weight: 700;
@@ -164,7 +164,7 @@
     text-transform: uppercase;
   }
 
-  section { margin-bottom: 12pt; }
+  section { margin-bottom: 15pt; }
   section:last-child { margin-bottom: 0; }
 
   /* ── Core skills: two columns of four groups ────────────────────────── */
@@ -172,7 +172,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 0.42in;
-    row-gap: 11pt;
+    row-gap: 12pt;
   }
 
   .group h3 {
@@ -186,8 +186,8 @@
 
   .group li {
     padding-left: 9pt;
-    margin-bottom: 2pt;
-    line-height: 1.36;
+    margin-bottom: 2.3pt;
+    line-height: 1.4;
   }
 
   /* An en dash reads quieter than a round bullet and keeps the column edge
@@ -206,7 +206,7 @@
 
   /* ── Experience ─────────────────────────────────────────────────────── */
   .entry {
-    margin-bottom: 8pt;
+    margin-bottom: 10pt;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -228,7 +228,7 @@
   .entry h3 .bar { padding: 0 0.42em; color: var(--rule); font-weight: 400; }
 
   .meta {
-    margin: 2pt 0 4pt;
+    margin: 2.5pt 0 4.5pt;
     font-size: var(--t-meta);
     letter-spacing: 0.03em;
     color: var(--ink-soft);
@@ -240,8 +240,8 @@
 
   .entry li {
     padding-left: 11pt;
-    margin-bottom: 1.5pt;
-    line-height: 1.4;
+    margin-bottom: 2.2pt;
+    line-height: 1.44;
   }
 
   /* In flow, not absolutely positioned. An absolute marker is invisible to
@@ -259,7 +259,7 @@
   }
 
   /* ── Education ──────────────────────────────────────────────────────── */
-  .edu { margin-bottom: 5pt; break-inside: avoid; page-break-inside: avoid; }
+  .edu { margin-bottom: 7pt; break-inside: avoid; page-break-inside: avoid; }
   .edu:last-child { margin-bottom: 0; }
 
   .edu h3 {
@@ -267,7 +267,7 @@
     font-size: var(--t-body);
     font-weight: 700;
     letter-spacing: 0.012em;
-    line-height: 1.3;
+    line-height: 1.34;
   }
 
   .edu h3 .where { font-weight: 400; }
@@ -281,9 +281,9 @@
   }
 
   .edu p {
-    margin: 1.5pt 0 0;
+    margin: 2pt 0 0;
     font-size: var(--t-meta);
-    line-height: 1.38;
+    line-height: 1.43;
     color: var(--ink-soft);
   }
 
@@ -294,7 +294,7 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin: 0 0 11pt;
+    margin: 0 0 13pt;
     padding-bottom: 4pt;
     border-bottom: 0.5pt solid var(--rule);
     font-size: 7pt;
@@ -395,17 +395,6 @@
     <h2>Professional Experience</h2>
 
     <div class="entry">
-      <h3>Brand &amp; Creative Lead, Market Expansion &amp; Localization<span
-        class="bar">|</span><span class="org">Master Ev Gereçleri — Freelance</span></h3>
-      <p class="meta">Istanbul, Turkey<span class="sep">·</span>June 2025 – Present</p>
-      <ul>
-        <li>Lead brand and visual direction for international kitchen-appliance and cosmetics lines — shaping identity, packaging, and e-commerce presentation across global markets.</li>
-        <li>Art-direct prepress and production across Turkey–China supply chains, tightening visual consistency and reducing revision cycles.</li>
-        <li>Direct the design of e-commerce platforms, from visual identity and conversion-focused UX through to back-end integration.</li>
-      </ul>
-    </div>
-
-    <div class="entry">
       <h3>Freelance Designer &amp; Graphic Designer<span
         class="bar">|</span><span class="org">Independent</span></h3>
       <p class="meta">Remote<span class="sep">·</span>Toronto, ON<span class="sep">·</span>2023 – Present</p>
@@ -414,6 +403,17 @@
         <li>Created packaging design for home-appliance product lines, taking artwork from concept through to print-ready production.</li>
         <li>Produced e-commerce-ready product photography and a full suite of marketing collateral — catalogues, flyers, banners, and social media content — with a consistent brand look across channels.</li>
         <li>Designed sales pitch decks and presentation materials supporting client sales and market-expansion efforts.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <h3>Brand &amp; Creative Lead, Market Expansion &amp; Localization<span
+        class="bar">|</span><span class="org">Master Ev Gereçleri — Freelance</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>June 2025 – Present</p>
+      <ul>
+        <li>Lead brand and visual direction for international kitchen-appliance and cosmetics lines — shaping identity, packaging, and e-commerce presentation across global markets.</li>
+        <li>Art-direct prepress and production across Turkey–China supply chains, tightening visual consistency and reducing revision cycles.</li>
+        <li>Direct the design of e-commerce platforms, from visual identity and conversion-focused UX through to back-end integration.</li>
       </ul>
     </div>
 
@@ -448,14 +448,6 @@
         <li>Designed environments, 3D assets, and UI systems for a cohesive immersive aesthetic.</li>
         <li>Engineered interactive systems with AI-assisted C# scripting, balancing creative intent against technical performance and hardware constraints.</li>
         <li>Iterated the experience through user testing and feedback loops, from prototype to public technical defense.</li>
-      </ul>
-    </div>
-
-    <div class="entry">
-      <h3>Mobile Game UX Consultant<span class="bar">|</span><span class="org">Superheart — Remote</span></h3>
-      <p class="meta">May 2024 – June 2024</p>
-      <ul>
-        <li>Advised on UX, gameplay feel, and product positioning for a free-to-play title.</li>
       </ul>
     </div>
 
