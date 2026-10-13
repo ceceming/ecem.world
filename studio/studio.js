@@ -71,7 +71,8 @@
 
   const uniqueSlug = (base, id) => {
     let s = base, n = 2;
-    while (state.posts.some((p) => p.slug === s && p.id !== id)) s = `${base}-${n++}`;
+    // "about" is the About page's address, so no post may take it.
+    while (s === 'about' || state.posts.some((p) => p.slug === s && p.id !== id)) s = `${base}-${n++}`;
     return s;
   };
 
@@ -705,7 +706,7 @@
 
   function renderSite() {
     const f = $('#site-form');
-    ['name', 'bio', 'currently', 'email'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] || ''; });
+    ['name', 'bio', 'about', 'currently', 'email'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] || ''; });
   }
 
   function renderAll() {

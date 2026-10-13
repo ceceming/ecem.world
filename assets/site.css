@@ -95,6 +95,9 @@ img, video { display: block; max-width: 100%; }
 
 .filters button { color: var(--dim); transition: color 150ms ease; }
 .filters button[aria-pressed="true"] { color: var(--fg); }
+/* About sits on the same row, pushed to its far right. */
+.filters .about-link { margin-left: auto; color: var(--dim); transition: color 150ms ease; }
+.filters .about-link:hover, .filters .about-link[aria-current="page"] { color: var(--fg); }
 .filters sup { font-size: 0.75em; margin-left: 2px; color: var(--faint); }
 
 /* The index scrolls inside the panel, so the footer menu never moves. */
@@ -276,7 +279,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .sheet .close { color: var(--dim); }
 .sheet .close:hover { color: var(--fg); }
 
-.sheet-body { max-width: 1180px; margin: 0 auto; padding: 0 var(--pad) 120px; }
+.sheet-body { outline: none; max-width: 1180px; margin: 0 auto; padding: 0 var(--pad) 120px; }
 
 .sheet-media { display: grid; gap: var(--gap); }
 .sheet-media .frame { flex: none; width: 100%; max-width: calc(88vh * var(--r)); margin: 0 auto; }
@@ -311,6 +314,30 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   color: var(--dim);
 }
 .sheet-next a:hover { color: var(--fg); }
+
+/* About: the portrait beside the text. The photo is black and white, and
+   turns to colour on hover — the colour version sits on top, fading in.
+   A screen without hover (phone, tablet) toggles it with a tap instead. */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 48px;
+  align-items: start;
+}
+.portrait { position: relative; margin: 0; background: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.portrait img { width: 100%; height: auto; }
+.portrait .color { position: absolute; inset: 0; height: 100%; object-fit: cover; opacity: 0; transition: opacity 700ms ease; }
+@media (hover: hover) { .portrait:hover .color { opacity: 1; } }
+.portrait.is-color .color { opacity: 1; }
+.about-text { position: sticky; top: 70px; }
+.about-text .lead { margin: 0 0 1.2em; font-size: 20px; line-height: 1.35; max-width: 30em; }
+.about-text .prose { font-size: var(--t-large); line-height: 1.5; max-width: 34em; }
+.about-text .prose p { margin: 0 0 1em; }
+.about-text dl { margin: 32px 0 0; padding-top: 10px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 7em 1fr; gap: 6px 12px; }
+.about-text dt { color: var(--faint); }
+.about-text dd { margin: 0; }
+.about-text dd a { border-bottom: 1px solid var(--faint); }
+.about-text dd a:hover { border-bottom-color: var(--fg); }
 
 /* Reposted writing reads as a column of text, not a project. */
 .sheet.is-writing .sheet-text { grid-template-columns: minmax(0, 1fr); max-width: 680px; margin: 0 auto; border: 0; }
@@ -357,6 +384,9 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   .caption .c-mid { display: none; }
 
   .sheet-text { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .about-text { position: static; }
+  .about-text .lead { font-size: 17px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

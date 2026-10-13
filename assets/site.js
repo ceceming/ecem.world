@@ -225,6 +225,7 @@
 
   function openSheet(p) {
     sheet.classList.toggle('is-writing', p.type === 'writing');
+    document.querySelector('.about-link').removeAttribute('aria-current');
     let title, body;
 
     if (p.type === 'writing') {
@@ -262,7 +263,36 @@
     sheet.scrollTop = 0;
   }
 
+  function openAbout() {
+    const pic = site.portrait;
+    sheet.classList.remove('is-writing');
+    slot('sheet-title').innerHTML = `<b>About</b>`;
+    slot('sheet-body').innerHTML = `<div class="about">
+      ${pic ? `<figure class="portrait" style="aspect-ratio:${pic.w}/${pic.h}" title="">
+        <img class="bw" src="${esc(src(pic.bw))}" alt="${esc(pic.alt || site.name || '')}" width="${pic.w}" height="${pic.h}">
+        <img class="color" src="${esc(src(pic.color))}" alt="" aria-hidden="true" loading="lazy">
+      </figure>` : ''}
+      <div class="about-text">
+        <p class="lead">${esc(site.bio || '')}</p>
+        <div class="prose">${prose(site.about)}</div>
+        <dl>
+          ${site.email ? `<dt>Contact</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd>` : ''}
+          <dt>Newsletter</dt><dd><a href="${esc((site.substack && site.substack.url) || 'https://luckbug.substack.com')}" target="_blank" rel="noopener">luck bug, on Substack ↗</a></dd>
+          <dt>CV</dt><dd><a href="cv/">View or download</a></dd>
+        </dl>
+      </div>
+    </div>`;
+    const fig = slot('sheet-body').querySelector('.portrait');
+    if (fig) fig.addEventListener('click', () => fig.classList.toggle('is-color'));
+    document.title = `About — ${site.name || 'Ecem Öztürk'}`;
+    document.querySelector('.about-link').setAttribute('aria-current', 'page');
+    if (!sheet.open) sheet.showModal();
+    sheet.scrollTop = 0;
+  }
+
   function closeSheet() {
+    const about = document.querySelector('.about-link');
+    if (about) about.removeAttribute('aria-current');
     if (sheet.open) sheet.close();
     document.title = 'Ecem Öztürk — ecem.world';
   }
@@ -277,6 +307,7 @@
   function route() {
     const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
     if (!h) return closeSheet();
+    if (h === 'about') return openAbout();
     if (h.startsWith('w/')) {
       const p = writingIndex.find((q) => q.slug === h.slice(2)) || posts.find((q) => q.type === 'writing' && q.slug === h.slice(2));
       return p ? openSheet(p) : closeSheet();
