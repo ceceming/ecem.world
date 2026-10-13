@@ -21,8 +21,9 @@ live and merged to `main`.
 | [`/qr/`](https://ecem.world/qr/) | A printable QR code page, for the business card |
 | `/model.html` | The monogram alone on a transparent background, for reuse |
 
-**The next phase — the actual portfolio — has not started.** Reference study
-is the current open item; see [What's next](#whats-next).
+**The next phase — the actual portfolio — has not started.** The reference
+study is done ([`REFERENCE-STUDY.md`](REFERENCE-STUDY.md)); the open questions
+in [What's next](#whats-next) are the next step.
 
 ---
 
@@ -192,7 +193,9 @@ press. Two things touch forced:
   `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, driven by the global
   Playwright at `/opt/node-tools/node_modules/playwright`.
 - **The container's egress proxy blocks most external hosts** — every CDN,
-  meshy.ai, substack.com, drive.google.com, and `ecem.world` itself. Deploys
+  meshy.ai, substack.com, drive.google.com, and `ecem.world` itself. Hosts are
+  opened in the environment's *Network access → Allowed domains*, and a
+  running session picks the change up. Deploys
   are therefore verified through the GitHub API rather than by loading the
   live page. Say so rather than implying the live page was seen.
 
@@ -204,54 +207,34 @@ press. Two things touch forced:
 
 Nothing of it exists yet. The coming-soon page is the whole site.
 
-### Reference sites — study pending, currently blocked
+### Reference sites — studied
 
-Four sites she pointed to, off the top of her head, as examples she likes:
+Four sites she pointed to as examples she likes. **Full study in
+[`REFERENCE-STUDY.md`](REFERENCE-STUDY.md)** — layouts, measured dimensions,
+how each introduces media, and every bio quoted verbatim.
 
-| Site | Studied? |
-|---|---|
-| <https://emitakahashi.ca/> | ✗ not reachable |
-| <https://imnik.com/> | ✗ not reachable |
-| <https://www.amyfang.work/> | ✗ not reachable |
-| <https://www.jessicakatona.com/> | ✗ not reachable |
+| Site | Built with | In one line |
+|---|---|---|
+| <https://emitakahashi.ca/> | Cargo | Two-up slideshows on the left, CV pinned in the right third |
+| <https://imnik.com/> | Cargo | Black, rounded boxes; pinned `Client · Project · Year` index beside a mixed-ratio video grid |
+| <https://www.amyfang.work/> | Next.js | Three fixed columns; two endless image columns either side of a static bio |
+| <https://www.jessicakatona.com/> | Squarespace | Large serif bio, then staggered stills and looping video |
 
-**All four are denied by this environment's network policy** (the egress proxy
-answers 403 to CONNECT), and this session has no browser tool to go round it.
-They have deliberately **not** been described from guesswork.
+What they share: the bio is visible on the home page without a click on all
+four, and pinned on screen on three; one typeface at one or two sizes on
+three; hairline rules everywhere; media at its own ratio; inline video always
+muted, looping and without controls. Bios are third person, 1–2 sentences on
+the home page, and run *name + what they are → where → what the practice is
+about → proof by names → currently*.
 
-**A network-policy change does not reach a container that is already running.**
-`emitakahashi.ca` was added to Allowed domains mid-session and stayed denied;
-the proxy was healthy at the time (GitHub resolved fine) but `example.com` was
-refused too, which means the container was still enforcing the allowlist it
-started with. **Add the domains first, then start a fresh session** — that
-session reads this file and has the context to carry on.
-
-**Tried again from a fresh session on 13 October 2026, and still blocked.**
-All four still get 403 to CONNECT. The built-in WebFetch tool does not get
-around it either: it fails DNS for every host, `example.com` included, so it
-is held by the same policy. Web search does not index any of the four sites
-either. So the domains are **not** in the allowlist this session started with.
-Either they were never saved, or the save did not take. Check the
-environment's Allowed domains list itself before starting another session.
-
-**Two different settings look alike — only one of them matters for a cloud
-session.** Settings → System → *Allowed sites* (desktop app) governs Claude's
-browser on her own computer; it does nothing for a cloud container. The four
-sites were added there, which is why the cloud session above stayed blocked.
-The cloud setting is the environment's *Network access → Allowed domains*.
-
-To unblock, either:
-
-1. Add the four domains under **Allowed domains** in the environment's network
-   settings (cloud environment menu in the title bar → Edit), leaving *Allow
-   package managers* ticked, **then start a new session**; or
-2. Send screenshots — full-page home, one project page, and the about page for
-   each. Works in any session, but rules out measuring type scale, column
-   counts and breakpoints.
-
-What to look for once they are reachable, in her words: *dimensions,
-templates, layouts, the way they introduce media, designer intro bio
-descriptions.*
+**How it got unblocked — worth remembering.** Two different settings look
+alike. Settings → System → *Allowed sites* (desktop app) governs Claude's
+browser on her own computer and does nothing for a cloud container; the four
+sites were first added there, and the session stayed blocked. The setting that
+mattered is the environment's *Network access → Allowed domains*. Once that
+was changed, **the running session picked it up within minutes** — the
+earlier note in this log saying a fresh session was required was wrong, or
+at least is no longer true.
 
 ### Open questions, not yet asked
 
@@ -260,4 +243,6 @@ descriptions.*
 - Does "coming soon" become a home page, or does the portfolio replace it?
 - How much work is there to show, and in what media — stills, video, VR
   capture, 3D?
-- One page or many? (The reference study should answer this.)
+- One page or many? (All four keep the work on one page, with an About/Info
+  page at most. Amy opens projects as an overlay over the home page; Nik is
+  the only one with full project pages.)
