@@ -234,6 +234,12 @@ either. So the domains are **not** in the allowlist this session started with.
 Either they were never saved, or the save did not take. Check the
 environment's Allowed domains list itself before starting another session.
 
+**Two different settings look alike — only one of them matters for a cloud
+session.** Settings → System → *Allowed sites* (desktop app) governs Claude's
+browser on her own computer; it does nothing for a cloud container. The four
+sites were added there, which is why the cloud session above stayed blocked.
+The cloud setting is the environment's *Network access → Allowed domains*.
+
 To unblock, either:
 
 1. Add the four domains under **Allowed domains** in the environment's network
