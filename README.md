@@ -3,6 +3,10 @@
 Portfolio site. Right now it is a coming-soon page: a 3D chrome "e" monogram
 drifting on a black field with "coming soon" underneath.
 
+**What we decided and why:** [`PROJECT-LOG.md`](PROJECT-LOG.md) — the
+running record of what is built, the reasoning behind it, and what is next.
+Read it before changing anything that looks arbitrary; most of it is not.
+
 **Start here:** [`DOMAIN-SETUP.md`](DOMAIN-SETUP.md) — publishing this on
 GitHub Pages and pointing the GoDaddy domain at it.
 
