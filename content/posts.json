@@ -44,25 +44,27 @@
       "id": "s2b8m3",
       "type": "image",
       "status": "published",
-      "slug": "sample-standalone-image",
-      "title": "Sample standalone image",
+      "slug": "a-mediterranean-summer-can-be-exercised-anywhere-postcard",
+      "title": "A Mediterranean summer can be exercised anywhere.",
       "year": "2026",
       "tags": [
-        "Rhino",
-        "Blender"
+        "Illustrator",
+        "Blender",
+        "MeshyAI"
       ],
       "summary": "",
-      "body": "",
+      "body": "Made for the Substack post \"A Mediterranean summer can be exercised anywhere.\". Generated 3D models using photos I took during my Bodrum summer trip, as a keepsake of what I kept close during my time there. ",
       "size": "small",
       "media": [
         {
           "type": "image",
-          "src": "media/samples/d-1.webp",
-          "w": 1600,
-          "h": 2000,
+          "src": "media/s2b8m3/d7159cf7-f0a7-4ae9-a7f1-c895a92b90fc-146-0ykn.webp",
+          "w": 1460,
+          "h": 2103,
           "alt": ""
         }
-      ]
+      ],
+      "slugTouched": true
     },
     {
       "id": "s3c9n4",
