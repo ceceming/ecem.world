@@ -219,13 +219,21 @@ Four sites she pointed to, off the top of her head, as examples she likes:
 answers 403 to CONNECT), and this session has no browser tool to go round it.
 They have deliberately **not** been described from guesswork.
 
+**A network-policy change does not reach a container that is already running.**
+`emitakahashi.ca` was added to Allowed domains mid-session and stayed denied;
+the proxy was healthy at the time (GitHub resolved fine) but `example.com` was
+refused too, which means the container was still enforcing the allowlist it
+started with. **Add the domains first, then start a fresh session** — that
+session reads this file and has the context to carry on.
+
 To unblock, either:
 
 1. Add the four domains under **Allowed domains** in the environment's network
    settings (cloud environment menu in the title bar → Edit), leaving *Allow
-   package managers* ticked; or
+   package managers* ticked, **then start a new session**; or
 2. Send screenshots — full-page home, one project page, and the about page for
-   each.
+   each. Works in any session, but rules out measuring type scale, column
+   counts and breakpoints.
 
 What to look for once they are reachable, in her words: *dimensions,
 templates, layouts, the way they introduce media, designer intro bio
