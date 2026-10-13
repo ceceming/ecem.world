@@ -3,7 +3,7 @@
     {
       "id": "t1rndr",
       "type": "tool",
-      "status": "draft",
+      "status": "published",
       "slug": "obj-render-studio",
       "title": "OBJ Render Studio",
       "year": "2026",
@@ -39,7 +39,7 @@
     {
       "id": "t2txtr",
       "type": "tool",
-      "status": "draft",
+      "status": "published",
       "slug": "textures-studio",
       "title": "Textures Studio",
       "year": "2026",
