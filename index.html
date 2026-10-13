@@ -13,7 +13,24 @@
 <meta property="og:description" content="Art director and designer, Toronto.">
 <meta property="og:url" content="https://ecem.world/">
 
-<link rel="stylesheet" href="assets/site.css?v=20261014a">
+<link rel="stylesheet" href="assets/site.css?v=20261014c">
+
+<!-- The opening (see "The opening" in site.css): once per browser tab, and
+     not when arriving on a project's link or in the studio's preview. If the
+     script below never runs, the page simply shows as normal. -->
+<script>
+  (function () {
+    if (location.hash.length > 2 || /[?&]preview/.test(location.search)) return;
+    try {
+      if (sessionStorage.getItem('ecem.world:intro')) return;
+      sessionStorage.setItem('ecem.world:intro', '1');
+    } catch (err) { /* storage blocked: play it anyway */ }
+    var root = document.documentElement;
+    root.classList.add('intro');
+    // Never leave the page hidden, whatever fails.
+    setTimeout(function () { root.classList.remove('intro'); }, 7000);
+  })();
+</script>
 </head>
 <body>
 
@@ -76,10 +93,42 @@
 
 <script type="module">
   import { createScene } from './assets/scene.js';
-  createScene(document.getElementById('stage'))
-    .catch((err) => console.error('3D scene failed to start:', err));
+
+  const root = document.documentElement;
+  const stage = document.getElementById('stage');
+  const mark = stage.parentElement;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // How far the large "e" is scaled down to sit in its corner.
+  const fit = () => root.style.setProperty('--k', String(mark.clientWidth / stage.clientWidth));
+  fit();
+  window.addEventListener('resize', fit);
+
+  const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
+
+  if (root.classList.contains('intro')) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Let the model load (but never wait on it for long), then let it be
+    // seen large and drifting for a moment, as on the coming-soon page.
+    await Promise.race([ready, wait(3500)]);
+    await wait(still ? 0 : 1300);
+
+    // Measure the large "e", switch to the finished layout, measure again,
+    // then animate between the two (so the move lands exactly in place).
+    const first = stage.getBoundingClientRect();
+    root.classList.remove('intro');
+    fit();
+    const last = stage.getBoundingClientRect();
+    if (!still) {
+      const k = mark.clientWidth / stage.clientWidth;
+      stage.animate([
+        { transform: `translate(${first.left - last.left}px, ${first.top - last.top}px) scale(1)` },
+        { transform: `scale(${k})` },
+      ], { duration: 1300, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
+    }
+  }
 </script>
 
-<script src="assets/site.js?v=20261014a"></script>
+<script src="assets/site.js?v=20261014b"></script>
 </body>
 </html>
