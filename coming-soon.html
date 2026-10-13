@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ecem.world</title>
+<meta name="description" content="Ecem Öztürk — portfolio. Coming soon.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ecem.world">
+<meta property="og:description" content="Coming soon.">
+<meta property="og:url" content="https://ecem.world/">
+
+<style>
+  :root {
+    color-scheme: dark;
+
+    /* ── The one size knob ────────────────────────────────────────────
+       How much room the glyph gets on the page. The gap to "coming soon"
+       follows from it, so raise this for a bigger glyph and lower it for a
+       smaller one and the spacing keeps itself. */
+    --stage: min(42vmin, 205px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+  }
+
+  body {
+    /* Helvetica where it exists, with sane stand-ins everywhere else. */
+    font-family: Helvetica, "Helvetica Neue", "HelveticaNeue", Arial, sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    padding-block: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+
+  body.ready main,
+  body.ready footer { opacity: 1; }
+
+  /* Pinned to the window rather than sitting in the flow, so adding it does
+     not shift the glyph off the centre it was framed on. */
+  footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    padding-inline: 24px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+
+  footer p {
+    margin: 0 auto;
+    /* Wide enough for the whole line as links get added to it. Measure
+       before changing: it breaks in two the moment the unwrapped width
+       exceeds this. Phones wrap regardless, into two balanced lines. */
+    max-width: 44em;
+    /* Same face and size as "coming soon" — but nowhere near its 0.42em
+       tracking, which is fine across two words and unreadable across a
+       sentence. */
+    font-size: clamp(12px, 2.7vmin, 16px);
+    letter-spacing: 0.12em;
+    line-height: 2;
+    text-wrap: balance;
+  }
+
+  footer a {
+    color: inherit;
+    text-decoration: none;
+    /* A hairline, so it reads as tappable without shouting. */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 2px;
+    white-space: nowrap;   /* never break an address across lines */
+    transition: border-color 250ms ease;
+  }
+
+  footer a:hover,
+  footer a:focus-visible { border-bottom-color: #fff; }
+
+  /* On a narrow phone the line fits, but only just — and a wider fallback
+     face than Helvetica would tip it into wrapping. Buy back the room from
+     the tracking rather than the type size. */
+  @media (max-width: 430px) {
+    footer p { letter-spacing: 0.07em; }
+  }
+
+  footer .sep { padding: 0 0.5em; opacity: 0.4; }
+
+  /* ── The newsletter dialog ──────────────────────────────────────────
+     A native <dialog>, so Escape, the top layer and focus handling come
+     from the browser rather than from script. */
+  dialog {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #fff;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .panel {
+    position: relative;
+    width: min(480px, calc(100vw - 48px));
+    /* showModal() focuses the first focusable thing it finds, which drew a
+       ring around the close button on open. Focus lands on the panel itself
+       instead: still inside the dialog for Escape and for screen readers,
+       but nothing to see. */
+    outline: none;
+  }
+
+  /* The label and the close button share one row above the embed. An earlier
+     version floated the button 40px above the panel, which put it off the top
+     of the screen on a landscape phone. Nothing sits outside the panel now. */
+  .panel-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    margin-bottom: 12px;
+  }
+
+  .panel .eyebrow {
+    margin: 0;
+    font-size: clamp(11px, 2.4vmin, 13px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  .panel iframe {
+    display: block;
+    width: 100%;
+    height: var(--embed-height, 320px);
+    border: 0;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .panel .close {
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    color: #fff;
+    opacity: 0.6;
+    font: 400 24px/1 Helvetica, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+  }
+
+  .panel .close { outline: none; }
+
+  .panel .close:hover,
+  .panel .close:focus-visible { opacity: 1; }
+
+  /* Keyboard users still get a marker; mouse users do not. */
+  .panel .close:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 3px;
+  }
+
+  /* Substack's form stacks at narrow widths and needs the extra room. */
+  @media (max-width: 520px) {
+    .panel { --embed-height: 380px; }
+  }
+
+  /* On a short window — a phone held sideways — the embed is capped to what
+     actually fits rather than pushing the panel past the edges. */
+  @media (max-height: 520px) {
+    .panel { --embed-height: calc(100dvh - 110px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    main, footer { transition: none; }
+    dialog, dialog::backdrop { transition: none; }
+  }
+
+  /* The 3D object sits on a fully transparent canvas, so the black page
+     shows straight through it. */
+  #stage {
+    width: var(--stage);
+    aspect-ratio: 1 / 1;
+    position: relative;
+  }
+
+  #stage canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent;
+  }
+
+  h1 {
+    /* The glyph is centred in its canvas, so this is an ordinary gap. */
+    margin: calc(var(--stage) * 0.05) 0 0;
+    font-size: clamp(12px, 2.7vmin, 16px);
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    /* letter-spacing adds a trailing gap; nudge back so it reads centred */
+    text-indent: 0.42em;
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+
+  /* Uncomment to put your name above the object.
+  .name {
+    font-size: clamp(12px, 2.4vmin, 15px);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    opacity: 0.55;
+    margin: 0;
+  }
+  */
+
+</style>
+</head>
+<body>
+
+<main>
+  <!-- <p class="name">ecem öztürk</p> -->
+  <div id="stage" aria-hidden="true"></div>
+  <h1>coming soon</h1>
+</main>
+
+<footer>
+  <p>in the meantime, contact me at
+    <a href="mailto:hello@ecem.world">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
+      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a><span class="sep" aria-hidden="true">·</span><a
+      href="cv/">cv</a></p>
+</footer>
+
+<dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
+  <div class="panel" tabindex="-1" autofocus>
+    <div class="panel-head">
+      <p class="eyebrow">my newsletter</p>
+      <button type="button" class="close" data-close aria-label="Close">&times;</button>
+    </div>
+    <!-- No scrolling="no": where the embed is capped on a short screen, the
+         form must still be reachable rather than clipped. -->
+    <iframe src="https://luckbug.substack.com/embed"
+            title="Subscribe to luckbug on Substack"
+            loading="lazy"></iframe>
+  </div>
+</dialog>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+  import { createScene } from './assets/scene.js';
+
+  const reveal = () => document.body.classList.add('ready');
+
+  createScene(document.getElementById('stage'))
+    .then(reveal)
+    .catch((err) => {
+      // Never leave a blank page: if WebGL is unavailable the words still show.
+      console.error('3D scene failed to start:', err);
+      reveal();
+    });
+</script>
+
+<script>
+  /* The newsletter dialog.
+   *
+   * It opens itself once, after a pause long enough that the glyph gets seen
+   * first, and once someone closes it, it stays closed for that browser. A
+   * popup that returns on every visit is the thing that makes people leave.
+   * The "newsletter" link in the footer reopens it on demand, so nothing is
+   * lost by dismissing it.
+   */
+  (function () {
+    const OPENS_AFTER = 6000;               // ms after the page settles
+    const KEY = 'ecem.world:newsletter-dismissed';
+
+    const dialog = document.getElementById('newsletter');
+    const link = document.getElementById('newsletter-link');
+    const supported = dialog && typeof dialog.showModal === 'function';
+
+    if (!supported) return;  // no <dialog>: the newsletter link still goes to Substack
+
+    // Private windows and blocked site data make storage throw, not just come
+    // back empty — so every touch of it is wrapped.
+    const dismissed = () => {
+      try { return localStorage.getItem(KEY) === '1'; } catch (err) { return false; }
+    };
+    const remember = () => {
+      try { localStorage.setItem(KEY, '1'); } catch (err) { /* nothing to do */ }
+    };
+
+    const open = () => { if (!dialog.open) dialog.showModal(); };
+
+    // Closing by any route — the button, Escape, the backdrop — is a dismissal.
+    dialog.addEventListener('close', remember);
+    dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+
+    // A click that lands outside the panel's box closes it. Clicks inside the
+    // cross-origin iframe never reach this document, so they cannot misfire.
+    dialog.addEventListener('click', (event) => {
+      const box = dialog.querySelector('.panel').getBoundingClientRect();
+      const outside =
+        event.clientX < box.left || event.clientX > box.right ||
+        event.clientY < box.top || event.clientY > box.bottom;
+      if (outside) dialog.close();
+    });
+
+    if (link) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();          // without JS this link just opens Substack
+        open();
+      });
+    }
+
+    if (!dismissed()) {
+      window.setTimeout(open, OPENS_AFTER);
+    }
+  })();
+</script>
+
+</body>
+</html>

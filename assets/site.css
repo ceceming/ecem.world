@@ -1,0 +1,362 @@
+/*
+ * ecem.world — the portfolio.
+ *
+ * The shape comes from the reference study (ecem-world-notes/REFERENCE-STUDY.md):
+ *   - a pinned panel with the bio always visible (Emi, Nik, Amy)
+ *   - an index of Title · Client · Year inside it (Nik)
+ *   - media at its own ratio, never cropped to one shape (Nik, Emi)
+ *   - one typeface, two sizes, hierarchy from position, grey and hairlines
+ *   - a project opens over the page, so closing it puts you back (Amy)
+ *
+ * Every colour and size is a token below. Change them here, not in rules.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #000;
+  --fg: #fff;
+  --dim: rgba(255, 255, 255, 0.52);    /* captions, meta */
+  --faint: rgba(255, 255, 255, 0.3);   /* separators */
+  --rule: rgba(255, 255, 255, 0.16);   /* hairlines */
+  --tile: #111;                        /* where media is still loading */
+
+  --font: Helvetica, "Helvetica Neue", "HelveticaNeue", Arial, sans-serif;
+  --t-small: 12px;   /* everything but the bio */
+  --t-large: 15px;   /* the bio, and titles inside a project */
+
+  --panel-w: 360px;
+  --gap: 12px;       /* between pieces of media */
+  --pad: 18px;       /* page margins */
+  --mark: 84px;      /* the drifting "e" */
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 var(--t-small) / 1.45 var(--font);
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+img, video { display: block; max-width: 100%; }
+
+:focus-visible { outline: 1px solid var(--dim); outline-offset: 3px; }
+
+/* ── The panel ───────────────────────────────────────────────────────── */
+
+.panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--panel-w);
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad);
+  padding-bottom: max(var(--pad), env(safe-area-inset-bottom));
+  border-right: 1px solid var(--rule);
+}
+
+.mark { display: block; width: var(--mark); margin: -10px 0 4px -14px; }
+#stage { width: 100%; aspect-ratio: 1 / 1; }
+#stage canvas { display: block; width: 100% !important; height: 100% !important; }
+
+.name {
+  margin: 0 0 10px;
+  font-size: var(--t-small);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+.bio {
+  margin: 0;
+  font-size: var(--t-large);
+  line-height: 1.38;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+.currently { margin: 12px 0 0; color: var(--dim); }
+
+.filters {
+  display: flex;
+  gap: 14px;
+  margin: 26px 0 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.filters button { color: var(--dim); transition: color 150ms ease; }
+.filters button[aria-pressed="true"] { color: var(--fg); }
+.filters sup { font-size: 0.75em; margin-left: 2px; color: var(--faint); }
+
+/* The index scrolls inside the panel, so the footer menu never moves. */
+.index {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  margin: 0 calc(var(--pad) * -1);
+  padding: 0 var(--pad);
+}
+
+.index .group { margin: 0; padding: 14px 0 4px; color: var(--faint); }
+
+.index a {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 0.8fr) 3.2em;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--dim);
+  transition: color 150ms ease;
+}
+
+.index a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.index a span:first-child { color: var(--fg); }
+.index a span:last-child { text-align: right; }
+.index a.is-writing { grid-template-columns: 1fr 4.6em; }
+
+@media (hover: hover) {
+  .index a:hover { color: var(--fg); }
+  .filters button:hover { color: var(--fg); }
+}
+
+/* The coming-soon page's footer menu, carried over as it was. */
+.menu {
+  padding-top: 14px;
+  letter-spacing: 0.12em;
+  line-height: 2;
+}
+
+.menu a {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  white-space: nowrap;
+  transition: border-color 250ms ease;
+}
+
+.menu a:hover, .menu a:focus-visible { border-bottom-color: var(--fg); }
+.menu .sep { padding: 0 0.5em; opacity: 0.4; }
+
+/* ── The feed ────────────────────────────────────────────────────────── */
+
+.feed {
+  margin-left: var(--panel-w);
+  padding: var(--pad);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: row dense;
+  gap: 64px var(--gap);
+  align-items: start;
+}
+
+.item { grid-column: span 2; min-width: 0; }
+.item.is-small, .item.writing { grid-column: span 1; }
+
+/* A row of media at equal height: each frame grows in proportion to its own
+   width ÷ height, so nothing is cropped and the row lines up top and bottom. */
+.frames { display: flex; gap: var(--gap); }
+
+.frame {
+  position: relative;
+  flex: var(--r) 1 0;
+  aspect-ratio: var(--r);
+  min-width: 0;
+  background: var(--tile);
+  overflow: hidden;
+}
+
+.frame > img, .frame > video, .frame > iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+/* --r on the row is the sum of its frames' ratios, so this caps the row's
+   height: nothing runs far below the fold or fills the screen on its own. */
+.frames { max-width: calc(78vh * var(--r) + var(--gap) * 2); }
+
+.frame img { opacity: 0; transition: opacity 500ms ease; }
+.frame img.loaded { opacity: 1; }
+
+.caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--dim);
+}
+
+.caption > :first-child { color: var(--fg); }
+.item.is-small .caption,
+.item.image .caption { grid-template-columns: minmax(0, 1fr) auto; }
+.item.is-small .caption .c-mid,
+.item.image .caption .c-mid { display: none; }
+
+.more { color: var(--faint); }
+
+/* Writing: text, not a picture of text. */
+.writing a.card { display: block; padding-top: 8px; border-top: 1px solid var(--rule); }
+.writing .w-meta { color: var(--dim); display: flex; justify-content: space-between; }
+.writing h2 { margin: 18px 0 8px; font-size: var(--t-large); font-weight: 400; line-height: 1.3; }
+.writing p { margin: 0; color: var(--dim); max-width: 40em; }
+.writing .w-cover { margin-top: 18px; aspect-ratio: 1; max-width: 160px; background: var(--tile); }
+.writing .w-cover img { width: 100%; height: 100%; object-fit: cover; }
+.writing .go { display: inline-block; margin-top: 14px; color: var(--fg); }
+
+@media (hover: hover) {
+  .item a { transition: opacity 200ms ease; }
+  .item a:hover .frame { opacity: 0.86; }
+  .writing a.card:hover h2 { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+}
+
+.item.flash { animation: flash 1200ms ease; }
+@keyframes flash { 0%, 40% { opacity: 0.35; } 100% { opacity: 1; } }
+
+.empty { grid-column: 1 / -1; color: var(--dim); padding-top: 40vh; text-align: center; }
+
+/* Shown only in the studio's preview: drafts and archived pieces appear
+   there so they can be checked before going live. */
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid var(--faint);
+  border-radius: 3px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ── A project, opened ───────────────────────────────────────────────── */
+
+dialog { border: 0; padding: 0; color: var(--fg); background: transparent; max-width: none; max-height: none; }
+dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+.sheet {
+  width: 100vw;
+  height: 100dvh;
+  margin: 0;
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.sheet::backdrop { background: var(--bg); }
+
+.sheet-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: var(--pad);
+  background: linear-gradient(var(--bg) 60%, transparent);
+}
+
+.sheet-title { margin: 0; color: var(--dim); }
+.sheet-title b { font-weight: 400; color: var(--fg); }
+.sheet .close { color: var(--dim); }
+.sheet .close:hover { color: var(--fg); }
+
+.sheet-body { max-width: 1180px; margin: 0 auto; padding: 0 var(--pad) 120px; }
+
+.sheet-media { display: grid; gap: var(--gap); }
+.sheet-media .frame { flex: none; width: 100%; max-width: calc(88vh * var(--r)); margin: 0 auto; }
+
+.sheet-text {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 40px;
+  margin: 56px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+.sheet-text h2 { margin: 0 0 18px; font-size: var(--t-large); font-weight: 400; }
+.sheet-text .prose { font-size: var(--t-large); line-height: 1.5; max-width: 38em; }
+.sheet-text .prose p { margin: 0 0 1em; }
+.sheet-text .prose a { border-bottom: 1px solid var(--faint); }
+.sheet-text .prose img { height: auto; margin: 1.5em 0; }
+.sheet-text .prose figure { margin: 0; }
+.sheet-text .prose figcaption { font-size: var(--t-small); color: var(--dim); }
+.sheet-text .prose blockquote { margin: 0 0 1em; padding-left: 1em; border-left: 1px solid var(--faint); }
+.sheet-text dl { margin: 0; color: var(--dim); }
+.sheet-text dt { color: var(--faint); }
+.sheet-text dd { margin: 0 0 10px; color: var(--fg); }
+
+.sheet-next {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  color: var(--dim);
+}
+.sheet-next a:hover { color: var(--fg); }
+
+/* Reposted writing reads as a column of text, not a project. */
+.sheet.is-writing .sheet-text { grid-template-columns: minmax(0, 1fr); max-width: 680px; margin: 0 auto; border: 0; }
+
+/* ── The newsletter popup (as on the coming-soon page) ──────────────── */
+
+.panel-pop { position: relative; width: min(480px, calc(100vw - 48px)); outline: none; }
+.pop-head { position: relative; display: flex; align-items: center; justify-content: center; min-height: 34px; margin-bottom: 12px; }
+.pop-head .eyebrow { margin: 0; font-size: 13px; letter-spacing: 0.3em; text-indent: 0.3em; opacity: 0.75; }
+.panel-pop iframe { display: block; width: 100%; height: var(--embed-height, 320px); border: 0; border-radius: 6px; background: #fff; }
+.panel-pop .close {
+  position: absolute; top: 50%; right: -4px; transform: translateY(-50%);
+  width: 34px; height: 34px; display: grid; place-items: center;
+  opacity: 0.6; font-size: 24px; line-height: 1; transition: opacity 200ms ease;
+}
+.panel-pop .close:hover { opacity: 1; }
+@media (max-width: 520px) { .panel-pop { --embed-height: 380px; } }
+@media (max-height: 520px) { .panel-pop { --embed-height: calc(100dvh - 110px); } }
+
+/* ── Narrow screens ──────────────────────────────────────────────────────
+   One column. The panel becomes the top of the page and the index is
+   dropped, as Nik's site does on a phone — the feed is the index there. */
+
+@media (max-width: 860px) {
+  .frames { max-width: none; }
+  :root { --pad: 14px; --mark: 72px; }
+
+  .panel { position: static; width: auto; border: 0; padding-bottom: 0; }
+  .index { display: none; }
+  .menu { order: 10; position: fixed; left: 0; right: 0; bottom: 0; z-index: 2;
+          padding: 10px var(--pad) max(10px, env(safe-area-inset-bottom));
+          background: linear-gradient(transparent, var(--bg) 45%); text-align: center; }
+  .filters { margin-top: 22px; }
+
+  .feed { margin: 0; grid-template-columns: minmax(0, 1fr); gap: 48px; padding-bottom: 90px; }
+  .item, .item.is-small, .item.writing { grid-column: auto; }
+
+  /* Three across is too small to read on a phone: a project's frames
+     wrap, two to a row, each still at its own ratio. */
+  .item.project .frames { flex-wrap: wrap; }
+  .item.project .frame { flex-basis: calc(40% * var(--r)); }
+
+  .caption { grid-template-columns: minmax(0, 1fr) auto; }
+  .caption .c-mid { display: none; }
+
+  .sheet-text { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

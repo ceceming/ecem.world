@@ -1,0 +1,35 @@
+# Keeps content/substack.json in step with luckbug.substack.com.
+# Hourly, plus a "Run workflow" button (the studio's "Check Substack now"
+# uses the same button through the API). Commits only when a post changed.
+name: Sync Substack
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: substack-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/sync-substack.mjs
+      - name: Commit if changed
+        run: |
+          if git diff --quiet content/substack.json; then exit 0; fi
+          git config user.name  "substack-sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/substack.json
+          git commit -m "Sync Substack posts"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push
