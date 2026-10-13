@@ -1,0 +1,8 @@
+# Files in the repo that are not part of the website, so Cloudflare does not
+# put them online (same format as .gitignore).
+.git
+.github
+.assetsignore
+wrangler.jsonc
+tools
+*.md
