@@ -3,9 +3,11 @@
 Portfolio site. Right now it is a coming-soon page: a 3D chrome "e" monogram
 drifting on a black field with "coming soon" underneath.
 
-**What we decided and why:** [`PROJECT-LOG.md`](PROJECT-LOG.md) — the
-running record of what is built, the reasoning behind it, and what is next.
+**What we decided and why** lives in a separate, private repo,
+`ceceming/ecem-world-notes` (`PROJECT-LOG.md` and `REFERENCE-STUDY.md`).
 Read it before changing anything that looks arbitrary; most of it is not.
+This repo is public, so working notes, drafts and anything under NDA go
+there, never here.
 
 **Start here:** [`DOMAIN-SETUP.md`](DOMAIN-SETUP.md) — publishing this on
 GitHub Pages and pointing the GoDaddy domain at it.
