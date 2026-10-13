@@ -1,6 +1,32 @@
 {
   "posts": [
     {
+      "id": "s2b8m3",
+      "type": "image",
+      "status": "published",
+      "slug": "a-mediterranean-summer-can-be-exercised-anywhere-postcard",
+      "title": "A Mediterranean summer can be exercised anywhere.",
+      "year": "2026",
+      "tags": [
+        "Illustrator",
+        "Blender",
+        "MeshyAI"
+      ],
+      "summary": "",
+      "body": "Made for the Substack post \"A Mediterranean summer can be exercised anywhere.\". Generated 3D models using photos I took during my Bodrum summer trip, as a keepsake of what I kept close during my time there. ",
+      "size": "small",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/s2b8m3/d7159cf7-f0a7-4ae9-a7f1-c895a92b90fc-146-0ykn.webp",
+          "w": 1460,
+          "h": 2103,
+          "alt": ""
+        }
+      ],
+      "slugTouched": true
+    },
+    {
       "id": "t1rndr",
       "type": "tool",
       "status": "published",
@@ -70,32 +96,6 @@
           "alt": "The Textures Studio interface: presets on the left, the image in the centre, the filter stack on the right"
         }
       ]
-    },
-    {
-      "id": "s2b8m3",
-      "type": "image",
-      "status": "published",
-      "slug": "a-mediterranean-summer-can-be-exercised-anywhere-postcard",
-      "title": "A Mediterranean summer can be exercised anywhere.",
-      "year": "2026",
-      "tags": [
-        "Illustrator",
-        "Blender",
-        "MeshyAI"
-      ],
-      "summary": "",
-      "body": "Made for the Substack post \"A Mediterranean summer can be exercised anywhere.\". Generated 3D models using photos I took during my Bodrum summer trip, as a keepsake of what I kept close during my time there. ",
-      "size": "small",
-      "media": [
-        {
-          "type": "image",
-          "src": "media/s2b8m3/d7159cf7-f0a7-4ae9-a7f1-c895a92b90fc-146-0ykn.webp",
-          "w": 1460,
-          "h": 2103,
-          "alt": ""
-        }
-      ],
-      "slugTouched": true
     }
   ]
 }
