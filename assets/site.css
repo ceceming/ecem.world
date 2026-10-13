@@ -365,6 +365,20 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .about-text dd a { border-bottom: 1px solid var(--faint); }
 .about-text dd a:hover { border-bottom-color: var(--fg); }
 
+/* Tools: a way to try them, everywhere they appear. */
+.try-line { margin: 6px 0 0; display: flex; gap: 16px; }
+.try-line a, .try-buttons a { color: var(--fg); border-bottom: 1px solid var(--faint); }
+.try-line a:hover, .try-buttons a:hover { border-bottom-color: var(--fg); }
+.tool-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin: 0 0 24px; }
+.tool-summary { margin: 0; font-size: 20px; line-height: 1.35; max-width: 36em; }
+.try-buttons { margin: 0; display: flex; gap: 20px; font-size: var(--t-large); }
+.tool-live { margin: 0 0 var(--gap); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.tool-live .tool-open { width: 100%; padding: 22px; text-align: left; font-size: var(--t-large); }
+.tool-live .tool-open:hover { background: #0d0d0d; }
+.tool-live.is-open { border: 0; }
+.tool-live iframe { display: block; width: 100%; height: min(760px, 82vh); border: 0; border-radius: 10px; background: #111; }
+.sheet-text h2.sub { margin-top: 2.2em; }
+
 /* Reposted writing reads as a column of text, not a project. */
 .sheet.is-writing .sheet-text { grid-template-columns: minmax(0, 1fr); max-width: 680px; margin: 0 auto; border: 0; }
 

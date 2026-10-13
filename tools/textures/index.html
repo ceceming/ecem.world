@@ -1,0 +1,4588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Textures Studio</title>
+<meta name="description" content="Drag in an image and stack print, glyph, paper and painterly textures. Everything runs locally in your browser.">
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+/* Textures Studio — UI shell */
+:root {
+  --bg: #0d0e11;
+  --bg-stage: #121317;
+  --panel: #16181d;
+  --panel-2: #1b1e24;
+  --line: #262a32;
+  --line-soft: #1f232a;
+  --text: #e8eaef;
+  --muted: #8d94a1;
+  --accent: #ff6b3d;
+  --accent-dim: #3a2118;
+  --cyan: #47c9d8;
+  --radius: 9px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 244px minmax(0, 1fr) 316px;
+  grid-template-rows: 52px minmax(0, 1fr);
+  grid-template-areas: "top top top" "left stage right";
+  height: 100vh;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; letter-spacing: .2px; }
+.brand-text b { font-weight: 650; }
+.brand-text { color: var(--text); }
+.mark { width: 22px; height: 22px; border-radius: 5px; display: block; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.sep { width: 1px; height: 22px; background: var(--line); }
+
+/* ---------- buttons & fields ---------- */
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--text);
+  border-radius: 7px;
+  padding: 6px 11px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .12s, border-color .12s, color .12s, opacity .12s;
+}
+.btn:hover { background: #232830; border-color: #333944; }
+.btn:active { transform: translateY(.5px); }
+.btn.ghost { background: transparent; }
+.btn.ghost:hover { background: var(--panel-2); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #14100e; font-weight: 600; }
+.btn.primary:hover { background: #ff7f57; border-color: #ff7f57; }
+.btn.icon { padding: 5px 9px; line-height: 1; font-size: 14px; }
+.btn.tiny { padding: 3px 8px; font-size: 11.5px; color: var(--muted); }
+.btn.tiny:hover { color: var(--text); }
+.btn[disabled] { opacity: .38; pointer-events: none; }
+.btn.mono { font-family: var(--mono); font-size: 11.5px; min-width: 58px; }
+.linkbtn {
+  background: none; border: 0; padding: 0; font: inherit; color: var(--accent);
+  cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+}
+kbd {
+  font-family: var(--mono); font-size: 10.5px; background: var(--panel-2);
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 5px;
+}
+select, input[type="text"], input[type="number"] {
+  appearance: none;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font: inherit;
+  font-size: 12px;
+  width: 100%;
+}
+select { background-image: linear-gradient(transparent, transparent); padding-right: 22px; cursor: pointer; }
+.field.inline { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+.field.inline select { width: auto; }
+.toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--muted); }
+.toggle input { accent-color: var(--accent); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); }
+
+/* ---------- panels ---------- */
+.panel {
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.panel-left { grid-area: left; border-right: 1px solid var(--line); }
+.panel-right { grid-area: right; border-left: 1px solid var(--line); }
+.panel-section { padding: 12px 12px 8px; }
+.panel-section.grow { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-bottom: 0; }
+.panel-section.head-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 4px; }
+.row-actions { display: flex; gap: 4px; }
+.panel-title {
+  margin: 0 0 9px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- presets ---------- */
+.preset-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.preset {
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 7px 9px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.25;
+  transition: border-color .12s, background .12s;
+}
+.preset:hover { border-color: var(--accent); background: #20242b; }
+.preset .swatch {
+  display: block; height: 20px; border-radius: 4px; margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+/* ---------- library ---------- */
+.library { overflow-y: auto; padding-bottom: 14px; flex: 1; min-height: 0; }
+.lib-group + .lib-group { margin-top: 12px; }
+.lib-group-title {
+  font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 6px; font-weight: 600;
+}
+.lib-item {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  width: 100%; text-align: left; cursor: pointer; font: inherit;
+  background: transparent; border: 1px solid transparent; color: var(--text);
+  border-radius: 7px; padding: 6px 8px;
+}
+.lib-item:hover { background: var(--panel-2); border-color: var(--line); }
+.lib-item .plus { color: var(--muted); font-size: 15px; line-height: 1; }
+.lib-item:hover .plus { color: var(--accent); }
+.lib-item .desc { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+
+/* ---------- stage ---------- */
+.stage {
+  grid-area: stage;
+  position: relative;
+  background:
+    linear-gradient(45deg, #16171b 25%, transparent 25%) 0 0 / 22px 22px,
+    linear-gradient(-45deg, #16171b 25%, transparent 25%) 0 11px / 22px 22px,
+    linear-gradient(45deg, transparent 75%, #16171b 75%) 11px -11px / 22px 22px,
+    linear-gradient(-45deg, transparent 75%, #16171b 75%) -11px 0 / 22px 22px,
+    var(--bg-stage);
+  display: flex; flex-direction: column; min-width: 0; min-height: 0;
+}
+.stage-scroll { flex: 1; min-height: 0; overflow: auto; display: grid; place-items: center; padding: 22px; }
+.viewport { position: relative; line-height: 0; box-shadow: 0 18px 50px rgba(0,0,0,.55); }
+.viewport canvas { display: block; max-width: none; image-rendering: auto; }
+.compare-layer { position: absolute; inset: 0; clip-path: inset(0 100% 0 0); }
+.viewport.compare .compare-layer { clip-path: inset(0 calc(100% - var(--split, 50%)) 0 0); }
+.viewport.peek .compare-layer { clip-path: inset(0 0 0 0); }
+.compare-handle { display: none; }
+.viewport.compare .compare-handle {
+  display: block; position: absolute; top: 0; bottom: 0; left: var(--split, 50%);
+  width: 2px; background: var(--accent); cursor: ew-resize; transform: translateX(-1px);
+}
+.viewport.compare .compare-handle span {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 26px; height: 26px; border-radius: 50%; background: var(--accent);
+  border: 2px solid #14100e;
+}
+.stage.empty .stage-scroll { visibility: hidden; }
+
+.stage-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 7px 12px; border-top: 1px solid var(--line); background: var(--panel);
+}
+.stage-bar-group { display: flex; align-items: center; gap: 8px; }
+.hint { color: #6d737f; font-size: 11.5px; }
+
+/* ---------- dropzone ---------- */
+.dropzone {
+  position: absolute; inset: 0; display: none; place-items: center;
+  background: rgba(13,14,17,.82); backdrop-filter: blur(2px); z-index: 5;
+}
+.stage.empty .dropzone, .dropzone.active { display: grid; }
+.dropzone.active { background: rgba(13,14,17,.93); }
+.dropzone-inner {
+  text-align: center; border: 1.5px dashed var(--line); border-radius: 16px;
+  padding: 34px 46px; background: rgba(22,24,29,.7);
+}
+.dropzone.active .dropzone-inner { border-color: var(--accent); }
+.dropzone-glyph { width: 64px; height: 48px; color: var(--accent); margin: 0 auto 14px; display: block; }
+.dropzone-title { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+.dropzone-sub { margin: 0; color: var(--muted); }
+.dropzone-note { margin: 16px 0 0; color: #616774; font-size: 11.5px; }
+
+/* ---------- stack ---------- */
+.stack { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 12px 20px; }
+.stack-empty { padding: 4px 14px 20px; color: var(--text); }
+.stack-empty p { margin: 0 0 4px; }
+.layer {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--panel-2); margin-bottom: 8px; overflow: hidden;
+}
+.layer.disabled .layer-head-main { opacity: .45; }
+.layer-head {
+  display: flex; align-items: center; gap: 7px; padding: 7px 8px; cursor: pointer;
+  user-select: none;
+}
+.layer-head:hover { background: #20242b; }
+.layer-head-main { display: flex; align-items: center; gap: 7px; flex: 1; min-width: 0; }
+.layer-name { font-size: 12.5px; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.layer-group { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.layer-tools { display: flex; align-items: center; gap: 2px; }
+.layer-tools button {
+  background: none; border: 0; color: var(--muted); cursor: pointer;
+  font: inherit; font-size: 13px; line-height: 1; padding: 3px 4px; border-radius: 4px;
+}
+.layer-tools button:hover { color: var(--text); background: #2a2f38; }
+.layer-tools button.danger:hover { color: #ff7a6a; }
+.chev { color: var(--muted); font-size: 10px; transition: transform .14s; }
+.layer.open .chev { transform: rotate(90deg); }
+.layer-body { display: none; padding: 4px 10px 12px; border-top: 1px solid var(--line-soft); }
+.layer.open .layer-body { display: block; }
+
+.ctrl { margin-top: 10px; }
+.ctrl-label {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  font-size: 11.5px; color: var(--muted); margin-bottom: 4px;
+}
+.ctrl-value { font-family: var(--mono); font-size: 11px; color: var(--text); }
+.ctrl input[type="range"] {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 18px;
+  background: transparent; cursor: pointer; display: block;
+}
+.ctrl input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px; border-radius: 2px; background: #2f343d;
+}
+.ctrl input[type="range"]::-moz-range-track { height: 3px; border-radius: 2px; background: #2f343d; }
+.ctrl input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--text); margin-top: -5px; border: 0;
+}
+.ctrl input[type="range"]::-moz-range-thumb {
+  width: 13px; height: 13px; border-radius: 50%; background: var(--text); border: 0;
+}
+.ctrl input[type="range"]:hover::-webkit-slider-thumb { background: var(--accent); }
+.ctrl input[type="range"]:hover::-moz-range-thumb { background: var(--accent); }
+.ctrl.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ctrl.row .ctrl-label { margin: 0; }
+.swatch-input {
+  width: 30px; height: 22px; padding: 0; border: 1px solid var(--line);
+  border-radius: 5px; background: none; cursor: pointer;
+}
+.swatch-input::-webkit-color-swatch-wrapper { padding: 2px; }
+.swatch-input::-webkit-color-swatch { border: 0; border-radius: 3px; }
+.ctrl-colors { display: flex; gap: 8px; flex-wrap: wrap; }
+.ctrl-colors .one { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+
+/* Embed chrome only appears when the studio is framed in another page. */
+.embed-only { display: none; }
+body.is-embed .embed-only { display: inline-flex; }
+body.is-embed .topbar { padding-left: 12px; }
+a.btn { text-decoration: none; align-items: center; justify-content: center; }
+
+/* GPU effects are marked so it is obvious which layers depend on the stage. */
+.gpu-chip {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(71, 201, 216, .14);
+  border: 1px solid rgba(71, 201, 216, .35);
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .04em;
+  vertical-align: 1px;
+}
+/* The chip says more than the group name does, so it wins the space. */
+.gpu-chip + .layer-group { display: none; }
+.layer-blocked { border-color: #5a3a24; }
+.layer-warning {
+  margin: 8px 0 2px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: rgba(255, 107, 61, .09);
+  border: 1px solid rgba(255, 107, 61, .3);
+  color: #ffb08f;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 12px);
+  background: #23272f; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 14px; border-radius: 8px; font-size: 12.5px;
+  opacity: 0; pointer-events: none; transition: opacity .18s, transform .18s; z-index: 40;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2b3038; border-radius: 6px; border: 3px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #3a414c; background-clip: content-box; }
+
+
+
+/* ---------- export sheet ---------- */
+.sheet {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+  padding: 28px; background: rgba(8,9,11,.78); backdrop-filter: blur(3px);
+}
+.sheet[hidden] { display: none; }
+.sheet-panel {
+  width: min(920px, 100%); max-height: 100%; display: flex; flex-direction: column;
+  gap: 14px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; padding: 18px; box-shadow: 0 30px 70px rgba(0,0,0,.6);
+}
+.sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.sheet-title { margin: 0; font-size: 15px; font-weight: 600; }
+.sheet-sub { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+.sheet-actions { display: flex; gap: 8px; }
+.sheet-actions .btn { text-decoration: none; display: inline-block; }
+.sheet-image {
+  flex: 1; min-height: 0; display: grid; place-items: center; overflow: auto;
+  background:
+    linear-gradient(45deg, #191b1f 25%, transparent 25%) 0 0 / 20px 20px,
+    linear-gradient(-45deg, #191b1f 25%, transparent 25%) 0 10px / 20px 20px,
+    linear-gradient(45deg, transparent 75%, #191b1f 75%) 10px -10px / 20px 20px,
+    linear-gradient(-45deg, transparent 75%, #191b1f 75%) -10px 0 / 20px 20px,
+    #131417;
+  border: 1px solid var(--line-soft); border-radius: 9px; padding: 12px;
+}
+.sheet-image img { max-width: 100%; max-height: 56vh; display: block; }
+.sheet-note { margin: 0; color: var(--muted); font-size: 11.5px; }
+.sheet-note b { color: var(--text); font-weight: 600; }
+
+/* ---------- responsive ----------
+   Three layouts, split by how much horizontal room there is for the rails:
+
+     > 1024px   the three-column studio
+     <= 1024px  both rails become bottom sheets driven by a tab bar, so the
+                canvas keeps the screen. This covers every iPad in portrait
+                (744-1024pt) as well as phones — previously 721-1024px hid the
+                left rail with no tab bar to reach it from.
+     <= 720px   phone tightening on top of the sheet layout. */
+
+.wide-only { display: inline; }
+.narrow-only { display: none; }
+.mobile-tabs { display: none; }
+
+@media (max-width: 1180px) {
+  #app { grid-template-columns: 208px minmax(0, 1fr) 280px; }
+  .hint { display: none; }
+}
+
+@media (max-width: 1024px) {
+  :root { --sheet-h: min(62dvh, 520px); }
+
+  #app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "top" "stage" "tabs";
+    height: 100dvh;
+  }
+
+  .wide-only { display: none !important; }
+  .narrow-only { display: inline; }
+
+  /* Touch targets grow; the bar scrolls sideways rather than wrapping. */
+  .topbar {
+    height: auto;
+    padding: 8px 10px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+  .brand-text { display: none; }
+  .topbar-actions { gap: 6px; overflow-x: auto; scrollbar-width: none; }
+  .topbar-actions::-webkit-scrollbar { display: none; }
+  .btn { padding: 9px 12px; font-size: 13px; }
+  .btn.icon { padding: 8px 11px; }
+  select { padding: 8px 8px; font-size: 13px; }
+
+  .stage-scroll { padding: 10px; }
+  .stage-bar { padding: 6px 10px; gap: 8px; }
+  .stage-bar .mono { font-size: 10.5px; }
+
+  .dropzone-inner { padding: 26px 22px; margin: 0 14px; }
+  .dropzone-title { font-size: 15px; }
+
+  /* Both rails become sheets that slide up over the canvas. */
+  .panel {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    z-index: 30;
+    height: var(--sheet-h);
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -18px 44px rgba(0, 0, 0, .5);
+    transform: translateY(110%);
+    transition: transform .24s ease;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+  .panel::before {
+    content: "";
+    position: absolute;
+    top: 7px; left: 50%;
+    width: 38px; height: 4px;
+    margin-left: -19px;
+    border-radius: 3px;
+    background: var(--line);
+  }
+  .panel-section { padding-top: 18px; }
+  body.nav-presets .panel-left,
+  body.nav-library .panel-left,
+  body.nav-stack .panel-right { transform: translateY(0); }
+
+  /* With a sheet up, keep the whole image in the strip that is still visible
+     rather than letting it sit behind the sheet. */
+  body.nav-presets .stage-scroll,
+  body.nav-library .stage-scroll,
+  body.nav-stack .stage-scroll { padding-bottom: calc(var(--sheet-h) + 14px); }
+
+  /* The left rail holds two sections; each tab shows one of them. */
+  body.nav-presets .panel-left .panel-section.grow { display: none; }
+  body.nav-library .panel-left > .panel-section:first-child { display: none; }
+
+  .preset-list { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .preset { padding: 9px 10px; font-size: 12.5px; }
+  .preset .swatch { height: 26px; }
+  .lib-item { padding: 10px 8px; }
+  .library, .stack { -webkit-overflow-scrolling: touch; }
+  .layer-head { padding: 10px 8px; }
+  .layer-tools button { padding: 7px 8px; font-size: 15px; }
+  .ctrl input[type="range"] { height: 30px; }
+  .ctrl input[type="range"]::-webkit-slider-thumb { width: 20px; height: 20px; margin-top: -8.5px; }
+  .ctrl input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; }
+  .swatch-input { width: 42px; height: 30px; }
+
+  /* Tab bar. */
+  .mobile-tabs {
+    grid-area: tabs;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    padding: 4px 6px calc(4px + env(safe-area-inset-bottom));
+    z-index: 40;
+    position: relative;
+  }
+  .mtab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 50px;
+    padding: 6px 4px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .mtab-glyph { font-size: 16px; line-height: 1; }
+  .mtab[aria-expanded="true"] { color: var(--accent); background: var(--panel-2); }
+  /* Keep status messages clear of the tab bar and above an open sheet. */
+  .toast { bottom: calc(74px + env(safe-area-inset-bottom)); z-index: 60; }
+
+  .mtab-label { display: inline-flex; align-items: center; gap: 5px; }
+  .mtab-count {
+    min-width: 15px;
+    padding: 1px 4px;
+    border-radius: 7px;
+    background: var(--line);
+    color: var(--text);
+    font-size: 10px;
+    font-family: var(--mono);
+    line-height: 1.35;
+  }
+  .mtab[aria-expanded="true"] .mtab-count { background: var(--accent); color: #14100e; }
+
+  /* The stage bar keeps only what you can act on; the render stats are
+     desktop-only detail. */
+  #meta { display: none; }
+  .stage-bar { justify-content: flex-start; }
+  .stage-bar-group { gap: 6px; }
+  .toggle { font-size: 12px; }
+
+  /* Export sheet fills the screen on a phone. */
+  .sheet { padding: 0; }
+  .sheet-panel {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    padding: max(14px, env(safe-area-inset-top)) 14px calc(14px + env(safe-area-inset-bottom));
+  }
+  .sheet-head { flex-direction: column; align-items: stretch; gap: 10px; }
+  .sheet-actions .btn { flex: 1; text-align: center; padding: 12px; }
+  .sheet-image img { max-height: 48dvh; }
+}
+
+/* Tablets run the sheet layout but have room the phone rules give away:
+   full button labels, the render stats, and wider grids inside the sheets. */
+@media (min-width: 721px) and (max-width: 1024px) {
+  :root { --sheet-h: min(56dvh, 620px); }
+
+  .wide-only { display: inline !important; }
+  .narrow-only { display: none; }
+  .brand-text { display: inline; }
+  #meta { display: block; }
+  .hint { display: none; }
+
+  .topbar { padding: 10px 14px; }
+  .stage-bar { justify-content: space-between; padding: 8px 14px; }
+  .stage-scroll { padding: 16px; }
+
+  .panel {
+    border-radius: 20px 20px 0 0;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .panel-section { padding-left: 16px; padding-right: 16px; }
+  .stack { padding-left: 16px; padding-right: 16px; }
+  .library { padding-left: 10px; padding-right: 10px; }
+
+  .preset-list { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .preset .swatch { height: 30px; }
+
+  /* Two columns of textures: the sheet is wide enough to halve the scrolling. */
+  .lib-group { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
+  .lib-group-title { grid-column: 1 / -1; }
+
+  .mobile-tabs { padding: 6px 18px calc(6px + env(safe-area-inset-bottom)); gap: 10px; }
+  .mtab { min-height: 54px; font-size: 12px; }
+  .mtab-glyph { font-size: 17px; }
+
+  /* A centred export panel reads better than a full-screen takeover here. */
+  .sheet { padding: 26px; }
+  .sheet-panel {
+    width: min(820px, 100%);
+    height: auto;
+    max-height: 100%;
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .sheet-head { flex-direction: row; align-items: flex-start; }
+  .sheet-actions .btn { flex: 0 0 auto; }
+  .sheet-image img { max-height: 58dvh; }
+}
+
+@media (max-width: 380px) {
+  .preset-list { grid-template-columns: 1fr; }
+  .btn { padding: 8px 10px; font-size: 12.5px; }
+}
+
+/* Pointer-coarse devices get comfortable hit areas regardless of width. */
+@media (pointer: coarse) {
+  /* Let the scroller pan with one finger, but keep two-finger gestures for the
+     app's own pinch-zoom instead of Safari zooming the whole page. */
+  .stage-scroll { touch-action: pan-x pan-y; }
+  .viewport { touch-action: pan-x pan-y; }
+  .btn, .mtab, .lib-item, .preset, .layer-head { touch-action: manipulation; }
+  .compare-handle { touch-action: none; }
+  .viewport.compare .compare-handle { width: 3px; }
+  .viewport.compare .compare-handle span { width: 34px; height: 34px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="mark" src="data:image/png;base64,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" alt="" width="22" height="22">
+      <span class="brand-text"><b>Textures</b> Studio</span>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="btn-open" class="btn"><span class="wide-only">Open image</span><span class="narrow-only">Open</span></button>
+      <button id="btn-sample" class="btn ghost">Sample</button>
+      <span class="sep wide-only" role="separator"></span>
+      <button id="btn-undo" class="btn icon ghost" title="Undo (⌘Z)" aria-label="Undo">↺</button>
+      <button id="btn-redo" class="btn icon ghost" title="Redo (⇧⌘Z)" aria-label="Redo">↻</button>
+      <button id="btn-reset" class="btn ghost wide-only" title="Clear the stack">Reset</button>
+      <span class="sep wide-only" role="separator"></span>
+      <label class="field inline">
+        <span class="wide-only">Scale</span>
+        <select id="export-scale" aria-label="Export scale">
+          <option value="1">1×</option>
+          <option value="2">2×</option>
+        </select>
+      </label>
+      <button id="btn-export" class="btn primary" title="Export (E)"><span class="wide-only">Export PNG</span><span class="narrow-only">Export</span></button>
+      <span class="sep embed-only" role="separator"></span>
+      <button id="btn-fullscreen" class="btn icon ghost embed-only" title="Fullscreen (F)" aria-label="Fullscreen">⛶</button>
+      <a id="btn-popout" class="btn icon ghost embed-only" target="_blank" rel="noopener"
+         title="Open in a new tab" aria-label="Open in a new tab">↗</a>
+    </div>
+  </header>
+
+  <aside class="panel panel-left">
+    <section class="panel-section">
+      <h2 class="panel-title">Presets</h2>
+      <div id="preset-list" class="preset-list"></div>
+    </section>
+    <section class="panel-section grow">
+      <h2 class="panel-title">Texture library</h2>
+      <div id="library" class="library"></div>
+    </section>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="stage-scroll" id="stage-scroll">
+      <div class="viewport" id="viewport">
+        <canvas id="canvas-out"></canvas>
+        <canvas id="canvas-src" class="compare-layer"></canvas>
+        <div class="compare-handle" id="compare-handle"><span></span></div>
+      </div>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-inner">
+        <svg class="dropzone-glyph" viewBox="0 0 64 48" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="61" height="45" rx="5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M4 38 L22 21 L34 32 L44 24 L60 38" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="45" cy="13" r="5" fill="currentColor"/>
+        </svg>
+        <p class="dropzone-title" id="dz-title">Drop an image here</p>
+        <p class="dropzone-sub" id="dz-sub">or paste from the clipboard · <button class="linkbtn" id="dz-browse">browse files</button> · <button class="linkbtn" id="dz-sample">use a sample</button></p>
+        <p class="dropzone-note">Nothing is uploaded. All processing happens in this tab.</p>
+      </div>
+    </div>
+
+    <div class="stage-bar">
+      <div class="stage-bar-group">
+        <button class="btn icon ghost" id="zoom-out" aria-label="Zoom out">−</button>
+        <button class="btn ghost mono" id="zoom-label">Fit</button>
+        <button class="btn icon ghost" id="zoom-in" aria-label="Zoom in">+</button>
+      </div>
+      <div class="stage-bar-group">
+        <label class="toggle"><input type="checkbox" id="compare-toggle"><span>Compare</span></label>
+        <span class="hint wide-only">hold <kbd>space</kbd> to peek at the original</span>
+      </div>
+      <div class="stage-bar-group">
+        <span class="mono muted" id="meta">—</span>
+      </div>
+    </div>
+  </main>
+
+  <aside class="panel panel-right">
+    <section class="panel-section head-row">
+      <h2 class="panel-title">Stack</h2>
+      <div class="row-actions">
+        <button class="btn tiny ghost" id="btn-randomize" title="Randomise the current stack (R)">Shuffle</button>
+        <button class="btn tiny ghost" id="btn-copy">Copy JSON</button>
+      </div>
+    </section>
+    <div id="stack" class="stack"></div>
+    <div class="stack-empty" id="stack-empty">
+      <p>No textures yet.</p>
+      <p class="muted">Pick a preset, or add a texture from the library.</p>
+    </div>
+  </aside>
+
+  <div class="sheet" id="export-sheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet-head">
+        <div>
+          <h2 class="sheet-title" id="sheet-title">Export ready</h2>
+          <p class="sheet-sub mono" id="sheet-meta">—</p>
+        </div>
+        <div class="sheet-actions">
+          <a class="btn primary" id="sheet-save" download>Save PNG</a>
+          <button class="btn ghost" id="sheet-close" type="button">Close</button>
+        </div>
+      </div>
+      <div class="sheet-image"><img id="sheet-img" alt="Exported image"></div>
+      <p class="sheet-note" id="sheet-note">If the download doesn't start, right-click the image above (or long-press on touch) and choose <b>Save image</b>.</p>
+    </div>
+  </div>
+
+  <nav class="mobile-tabs" id="mobile-tabs" aria-label="Panels">
+    <button class="mtab" data-panel="presets" type="button">
+      <span class="mtab-glyph" aria-hidden="true">◱</span><span class="mtab-label">Presets</span>
+    </button>
+    <button class="mtab" data-panel="library" type="button">
+      <span class="mtab-glyph" aria-hidden="true">＋</span><span class="mtab-label">Textures</span>
+    </button>
+    <button class="mtab" data-panel="stack" type="button">
+      <span class="mtab-glyph" aria-hidden="true">≡</span>
+      <span class="mtab-label">Stack<span class="mtab-count" id="mtab-count" hidden>0</span></span>
+    </button>
+  </nav>
+
+  <input type="file" id="file-input" accept="image/*" hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+/* Textures Studio — pixel utilities.
+   Everything here works on ImageData in sRGB bytes; only the canvas helpers
+   touch the DOM. */
+(function (TX) {
+  'use strict';
+  var U = TX.util = {};
+
+  U.clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+  U.clamp01 = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+  U.lerp = function (a, b, t) { return a + (b - a) * t; };
+  U.smoothstep = function (t) { t = U.clamp01(t); return t * t * (3 - 2 * t); };
+  U.luma = function (r, g, b) { return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+
+  U.makeCanvas = function (w, h) {
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, w | 0);
+    c.height = Math.max(1, h | 0);
+    return c;
+  };
+  U.ctx2d = function (canvas) {
+    return canvas.getContext('2d', { willReadFrequently: true });
+  };
+  U.blank = function (w, h) {
+    return new ImageData(new Uint8ClampedArray(w * h * 4), w, h);
+  };
+  U.clone = function (img) {
+    return new ImageData(new Uint8ClampedArray(img.data), img.width, img.height);
+  };
+  U.toCanvas = function (img) {
+    var c = U.makeCanvas(img.width, img.height);
+    U.ctx2d(c).putImageData(img, 0, 0);
+    return c;
+  };
+  U.fromCanvas = function (canvas) {
+    return U.ctx2d(canvas).getImageData(0, 0, canvas.width, canvas.height);
+  };
+  /* Resample through the canvas scaler. `smooth` off gives nearest neighbour,
+     which is what chunky pixel effects want on the way back up. */
+  U.resize = function (img, w, h, smooth) {
+    var c = U.makeCanvas(w, h), ctx = U.ctx2d(c);
+    ctx.imageSmoothingEnabled = !!smooth;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(U.toCanvas(img), 0, 0, w, h);
+    return U.fromCanvas(c);
+  };
+  /* An opaque ImageData filled with one colour — the paper under an ink. */
+  U.filled = function (w, h, rgb) {
+    var img = U.blank(w, h), d = img.data;
+    for (var i = 0; i < d.length; i += 4) {
+      d[i] = rgb[0]; d[i + 1] = rgb[1]; d[i + 2] = rgb[2]; d[i + 3] = 255;
+    }
+    return img;
+  };
+
+  /* ---- colour ---- */
+  U.hexToRgb = function (hex) {
+    var h = String(hex || '#000000').replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    if (isNaN(n)) n = 0;
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  };
+  U.rgbToHex = function (r, g, b) {
+    var f = function (v) { return ('0' + U.clamp(Math.round(v), 0, 255).toString(16)).slice(-2); };
+    return '#' + f(r) + f(g) + f(b);
+  };
+  U.cssRgb = function (rgb) {
+    return 'rgb(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ')';
+  };
+
+  /* ---- blur ----
+     Three box passes approximate a Gaussian closely enough for texture work
+     and stay linear in the radius. Buffers are Float32 with 4 interleaved
+     channels, matching ImageData layout. */
+
+  function boxH(src, dst, w, h, r) {
+    var norm = 1 / (2 * r + 1);
+    for (var y = 0; y < h; y++) {
+      var row = y * w * 4;
+      for (var c = 0; c < 4; c++) {
+        var sum = 0, j;
+        for (j = -r; j <= r; j++) sum += src[row + U.clamp(j, 0, w - 1) * 4 + c];
+        for (var x = 0; x < w; x++) {
+          dst[row + x * 4 + c] = sum * norm;
+          sum += src[row + U.clamp(x + r + 1, 0, w - 1) * 4 + c]
+               - src[row + U.clamp(x - r, 0, w - 1) * 4 + c];
+        }
+      }
+    }
+  }
+
+  function boxV(src, dst, w, h, r) {
+    var norm = 1 / (2 * r + 1);
+    for (var x = 0; x < w; x++) {
+      var col = x * 4;
+      for (var c = 0; c < 4; c++) {
+        var sum = 0, j;
+        for (j = -r; j <= r; j++) sum += src[U.clamp(j, 0, h - 1) * w * 4 + col + c];
+        for (var y = 0; y < h; y++) {
+          dst[y * w * 4 + col + c] = sum * norm;
+          sum += src[U.clamp(y + r + 1, 0, h - 1) * w * 4 + col + c]
+               - src[U.clamp(y - r, 0, h - 1) * w * 4 + col + c];
+        }
+      }
+    }
+  }
+
+  function boxSizes(sigma, n) {
+    var wIdeal = Math.sqrt((12 * sigma * sigma / n) + 1);
+    var wl = Math.floor(wIdeal); if (wl % 2 === 0) wl--;
+    var mIdeal = (12 * sigma * sigma - n * wl * wl - 4 * n * wl - 3 * n) / (-4 * wl - 4);
+    var m = Math.round(mIdeal);
+    var sizes = [];
+    for (var i = 0; i < n; i++) sizes.push(i < m ? wl : wl + 2);
+    return sizes;
+  }
+
+  U.blur = function (img, radius) {
+    if (!(radius > 0.4)) return img;
+    var w = img.width, h = img.height;
+    var a = Float32Array.from(img.data);
+    var b = new Float32Array(a.length);
+    var sizes = boxSizes(radius, 3);
+    for (var p = 0; p < 3; p++) {
+      var r = Math.max(1, (sizes[p] - 1) >> 1);
+      boxH(a, b, w, h, r);
+      boxV(b, a, w, h, r);
+    }
+    var out = U.blank(w, h);
+    out.data.set(a);
+    return out;
+  };
+
+  /* ---- luminance fields ---- */
+
+  /* Float32 luminance in 0..1, optionally pre-blurred so coarse screens
+     (halftone cells, glyph cells) sample an average rather than one pixel. */
+  U.lumaField = function (img, blurRadius) {
+    var src = blurRadius > 0.4 ? U.blur(img, blurRadius) : img;
+    var n = img.width * img.height;
+    var f = new Float32Array(n);
+    var d = src.data;
+    for (var i = 0, j = 0; i < n; i++, j += 4) {
+      f[i] = U.luma(d[j], d[j + 1], d[j + 2]) / 255;
+    }
+    return f;
+  };
+
+  /* Bilinear sample of a Float32 field, edges clamped. */
+  U.sampleField = function (field, w, h, x, y) {
+    var xf = U.clamp(x, 0, w - 1), yf = U.clamp(y, 0, h - 1);
+    var x0 = xf | 0, y0 = yf | 0;
+    var x1 = x0 + 1 < w ? x0 + 1 : x0, y1 = y0 + 1 < h ? y0 + 1 : y0;
+    var tx = xf - x0, ty = yf - y0;
+    var top = field[y0 * w + x0] + (field[y0 * w + x1] - field[y0 * w + x0]) * tx;
+    var bot = field[y1 * w + x0] + (field[y1 * w + x1] - field[y1 * w + x0]) * tx;
+    return top + (bot - top) * ty;
+  };
+
+  /* Bilinear RGB sample into `out` (length >= 3). */
+  U.sampleRGB = function (img, x, y, out) {
+    var w = img.width, h = img.height, d = img.data;
+    var xf = U.clamp(x, 0, w - 1), yf = U.clamp(y, 0, h - 1);
+    var x0 = xf | 0, y0 = yf | 0;
+    var x1 = x0 + 1 < w ? x0 + 1 : x0, y1 = y0 + 1 < h ? y0 + 1 : y0;
+    var tx = xf - x0, ty = yf - y0;
+    var i00 = (y0 * w + x0) * 4, i10 = (y0 * w + x1) * 4;
+    var i01 = (y1 * w + x0) * 4, i11 = (y1 * w + x1) * 4;
+    for (var c = 0; c < 3; c++) {
+      var top = d[i00 + c] + (d[i10 + c] - d[i00 + c]) * tx;
+      var bot = d[i01 + c] + (d[i11 + c] - d[i01 + c]) * tx;
+      out[c] = top + (bot - top) * ty;
+    }
+    return out;
+  };
+
+  /* Sobel gradient magnitude of luminance, normalised to 0..1. */
+  U.sobel = function (img) {
+    var w = img.width, h = img.height, d = img.data;
+    var g = new Float32Array(w * h);
+    var l = new Float32Array(w * h);
+    for (var i = 0, j = 0; i < w * h; i++, j += 4) l[i] = U.luma(d[j], d[j + 1], d[j + 2]) / 255;
+    for (var y = 1; y < h - 1; y++) {
+      for (var x = 1; x < w - 1; x++) {
+        var i0 = y * w + x;
+        var gx = -l[i0 - w - 1] - 2 * l[i0 - 1] - l[i0 + w - 1]
+               + l[i0 - w + 1] + 2 * l[i0 + 1] + l[i0 + w + 1];
+        var gy = -l[i0 - w - 1] - 2 * l[i0 - w] - l[i0 - w + 1]
+               + l[i0 + w - 1] + 2 * l[i0 + w] + l[i0 + w + 1];
+        g[i0] = Math.min(1, Math.sqrt(gx * gx + gy * gy) / 4);
+      }
+    }
+    return g;
+  };
+
+  /* ---- blending ---- */
+  U.blendModes = [
+    'normal', 'multiply', 'screen', 'overlay', 'soft-light',
+    'darken', 'lighten', 'difference'
+  ];
+
+  function blendChannel(mode, b, t) {
+    switch (mode) {
+      case 'multiply': return b * t;
+      case 'screen': return b + t - b * t;
+      case 'overlay': return b < 0.5 ? 2 * b * t : 1 - 2 * (1 - b) * (1 - t);
+      case 'soft-light':
+        return t < 0.5
+          ? b - (1 - 2 * t) * b * (1 - b)
+          : b + (2 * t - 1) * ((b < 0.25 ? ((16 * b - 12) * b + 4) * b : Math.sqrt(b)) - b);
+      case 'darken': return Math.min(b, t);
+      case 'lighten': return Math.max(b, t);
+      case 'difference': return Math.abs(b - t);
+      default: return t;
+    }
+  }
+
+  /* Composite `top` onto `base` (same dimensions). Mutates and returns base. */
+  U.composite = function (base, top, amount, mode) {
+    var a = U.clamp01(amount);
+    if (a <= 0) return base;
+    var bd = base.data, td = top.data, n = bd.length;
+    var plain = !mode || mode === 'normal';
+    if (plain && a >= 1) { bd.set(td); return base; }
+    for (var i = 0; i < n; i += 4) {
+      for (var c = 0; c < 3; c++) {
+        var b = bd[i + c] / 255, t = td[i + c] / 255;
+        var v = plain ? t : blendChannel(mode, b, t);
+        bd[i + c] = (b + (v - b) * a) * 255;
+      }
+      bd[i + 3] = bd[i + 3] + (td[i + 3] - bd[i + 3]) * a;
+    }
+    return base;
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* A small WebGL2 stage for the pipeline.
+
+   Effects that are a pure function of (source pixel, position) are far cheaper
+   on the GPU than in a JS loop, and refraction/warp effects are impractical
+   otherwise. This runs one fragment shader over the image and reads the result
+   back as ImageData, so a GL effect drops into the same sequential stack as
+   every CPU effect and keeps blend modes, opacity and undo.
+
+   Preview and export both run here, on the same device, so an export matches
+   what was on screen. Where WebGL2 is missing the stage reports unavailable
+   and the pipeline skips those layers rather than silently exporting something
+   different from the preview. */
+(function (TX) {
+  'use strict';
+  var U = TX.util;
+  var gl = null;
+  var canvas = null;
+  var state = 'untried';      // untried | ready | unavailable
+  var programs = Object.create(null);
+  var texture = null;
+  var quad = null;
+
+  var VERT = [
+    '#version 300 es',
+    'in vec2 a_pos;',
+    'out vec2 v_uv;',
+    'void main() {',
+    // texImage2D maps ImageData row 0 (the top) to v=0, and readPixels returns
+    // the framebuffer bottom-up. Mapping clip -1 to v=0 therefore puts the
+    // image's top row where readPixels reads first, and no flip is needed.
+    '  v_uv = a_pos * 0.5 + 0.5;',
+    '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+    '}'
+  ].join('\n');
+
+  var PRELUDE = [
+    '#version 300 es',
+    'precision highp float;',
+    'precision highp sampler2D;',
+    'in vec2 v_uv;',
+    'out vec4 fragColor;',
+    'uniform sampler2D u_tex;',
+    'uniform vec2 u_res;',      // render size in pixels
+    'uniform float u_scale;',   // render px per image px
+    'uniform float u_seed;',
+    '',
+    'vec4 tex(vec2 uv) { return texture(u_tex, clamp(uv, vec2(0.0), vec2(1.0))); }',
+    'float luma(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }',
+    'float hash(vec2 p) {',
+    '  p = fract(p * vec2(123.34, 456.21) + u_seed * 0.0013);',
+    '  p += dot(p, p + 45.32);',
+    '  return fract(p.x * p.y);',
+    '}',
+    'float vnoise(vec2 p) {',
+    '  vec2 i = floor(p), f = fract(p);',
+    '  vec2 u = f * f * (3.0 - 2.0 * f);',
+    '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),',
+    '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);',
+    '}',
+    'float fbm(vec2 p) {',
+    '  float v = 0.0, a = 0.5;',
+    '  for (int i = 0; i < 5; i++) { v += a * vnoise(p); p *= 2.03; a *= 0.5; }',
+    '  return v;',
+    '}',
+    ''
+  ].join('\n');
+
+  function compile(type, source) {
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, source);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      var log = gl.getShaderInfoLog(sh);
+      gl.deleteShader(sh);
+      throw new Error('shader compile failed: ' + log);
+    }
+    return sh;
+  }
+
+  function init() {
+    if (state !== 'untried') return state === 'ready';
+    state = 'unavailable';
+    try {
+      canvas = U.makeCanvas(1, 1);
+      gl = canvas.getContext('webgl2', {
+        alpha: false, antialias: false, depth: false, stencil: false,
+        premultipliedAlpha: false, preserveDrawingBuffer: false,
+        powerPreference: 'high-performance'
+      });
+      if (!gl) return false;
+
+      quad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+      // One oversized triangle covers the viewport with no seam down the middle.
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+
+      texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+
+      canvas.addEventListener('webglcontextlost', function (e) {
+        e.preventDefault();
+        state = 'unavailable';
+        programs = Object.create(null);
+      });
+
+      state = 'ready';
+      return true;
+    } catch (err) {
+      console.warn('[gl] unavailable:', err);
+      return false;
+    }
+  }
+
+  function programFor(fragBody) {
+    var cached = programs[fragBody];
+    if (cached) return cached;
+    var vs = compile(gl.VERTEX_SHADER, VERT);
+    var fs = compile(gl.FRAGMENT_SHADER, PRELUDE + fragBody);
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.bindAttribLocation(prog, 0, 'a_pos');
+    gl.linkProgram(prog);
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      var log = gl.getProgramInfoLog(prog);
+      gl.deleteProgram(prog);
+      throw new Error('program link failed: ' + log);
+    }
+    programs[fragBody] = prog;
+    return prog;
+  }
+
+  function setUniform(prog, name, value) {
+    var loc = gl.getUniformLocation(prog, name);
+    if (loc === null) return;                 // optimised out, not an error
+    if (typeof value === 'number') gl.uniform1f(loc, value);
+    else if (typeof value === 'boolean') gl.uniform1i(loc, value ? 1 : 0);
+    else if (value && value.length === 2) gl.uniform2f(loc, value[0], value[1]);
+    else if (value && value.length === 3) gl.uniform3f(loc, value[0], value[1], value[2]);
+    else if (value && value.length === 4) gl.uniform4f(loc, value[0], value[1], value[2], value[3]);
+  }
+
+  var api = TX.gl = {};
+
+  api.available = function () { return init(); };
+
+  api.maxSize = function () { return init() ? gl.getParameter(gl.MAX_TEXTURE_SIZE) : 0; };
+
+  /* Run one fragment shader over `src`. Returns new ImageData, or null when
+     the stage cannot run — callers must treat null as "leave the input alone". */
+  api.run = function (src, fragBody, uniforms, env) {
+    if (!init()) return null;
+    var w = src.width, h = src.height;
+    var max = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    if (w > max || h > max) {
+      console.warn('[gl] ' + w + 'x' + h + ' exceeds MAX_TEXTURE_SIZE ' + max);
+      return null;
+    }
+    try {
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      var prog = programFor(fragBody);
+      gl.useProgram(prog);
+      gl.viewport(0, 0, w, h);
+
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, src.data);
+      gl.uniform1i(gl.getUniformLocation(prog, 'u_tex'), 0);
+
+      setUniform(prog, 'u_res', [w, h]);
+      setUniform(prog, 'u_scale', (env && env.scale) || 1);
+      setUniform(prog, 'u_seed', ((env && env.seed) || 1) % 10000);
+      if (uniforms) {
+        Object.keys(uniforms).forEach(function (k) { setUniform(prog, k, uniforms[k]); });
+      }
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      var out = U.blank(w, h);
+      gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, out.data);
+      return out;
+    } catch (err) {
+      console.warn('[gl] run failed:', err);
+      return null;
+    }
+  };
+
+  /* Effects declare their shader and uniforms; this wraps the plumbing so an
+     effect definition stays a schema plus a shader. */
+  api.effect = function (fragBody, uniformsFor) {
+    return function (src, p, env) {
+      // Null, not a copy of the input: a shader that fails to compile would
+      // otherwise look exactly like a layer the user set to do nothing.
+      return api.run(src, fragBody, uniformsFor(p, env, src), env);
+    };
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Seeded randomness and value noise. Deterministic so a stack renders the
+   same grain at preview size and at export size. */
+(function (TX) {
+  'use strict';
+  var N = TX.noise = {};
+
+  /* mulberry32 — small, fast, good enough for texture. */
+  N.rng = function (seed) {
+    var a = (seed >>> 0) || 1;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
+  /* Integer hash -> [0,1). */
+  function hash2(x, y, seed) {
+    var h = Math.imul(x | 0, 374761393) ^ Math.imul(y | 0, 668265263) ^ Math.imul(seed | 0, 2246822519);
+    h = Math.imul(h ^ (h >>> 13), 1274126177);
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+  }
+  N.hash2 = hash2;
+
+  /* Value noise with smoothstep interpolation, in 0..1. */
+  N.value2 = function (x, y, seed) {
+    var xi = Math.floor(x), yi = Math.floor(y);
+    var xf = x - xi, yf = y - yi;
+    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    var a = hash2(xi, yi, seed), b = hash2(xi + 1, yi, seed);
+    var c = hash2(xi, yi + 1, seed), d = hash2(xi + 1, yi + 1, seed);
+    var top = a + (b - a) * u, bot = c + (d - c) * u;
+    return top + (bot - top) * v;
+  };
+
+  /* Fractal sum of value noise, normalised to 0..1. */
+  N.fbm = function (x, y, seed, octaves, gain, lacunarity) {
+    octaves = octaves || 4;
+    gain = gain === undefined ? 0.5 : gain;
+    lacunarity = lacunarity || 2;
+    var sum = 0, amp = 1, norm = 0, fx = x, fy = y;
+    for (var i = 0; i < octaves; i++) {
+      sum += amp * N.value2(fx, fy, seed + i * 1013);
+      norm += amp;
+      amp *= gain;
+      fx *= lacunarity; fy *= lacunarity;
+    }
+    return sum / (norm || 1);
+  };
+
+  /* A tileable-enough noise plane at `w x h`, values 0..1, feature size `cell`
+     pixels. Cheaper than calling fbm per pixel when only one octave is wanted. */
+  N.plane = function (w, h, cell, seed) {
+    cell = Math.max(1, cell);
+    var gw = Math.max(2, Math.ceil(w / cell) + 2);
+    var gh = Math.max(2, Math.ceil(h / cell) + 2);
+    var grid = new Float32Array(gw * gh);
+    for (var gy = 0; gy < gh; gy++) {
+      for (var gx = 0; gx < gw; gx++) grid[gy * gw + gx] = hash2(gx, gy, seed);
+    }
+    var out = new Float32Array(w * h);
+    for (var y = 0; y < h; y++) {
+      var fy = y / cell, y0 = fy | 0, ty = fy - y0;
+      var sy = ty * ty * (3 - 2 * ty);
+      for (var x = 0; x < w; x++) {
+        var fx = x / cell, x0 = fx | 0, tx = fx - x0;
+        var sx = tx * tx * (3 - 2 * tx);
+        var a = grid[y0 * gw + x0], b = grid[y0 * gw + x0 + 1];
+        var c = grid[(y0 + 1) * gw + x0], d = grid[(y0 + 1) * gw + x0 + 1];
+        var top = a + (b - a) * sx, bot = c + (d - c) * sx;
+        out[y * w + x] = top + (bot - top) * sy;
+      }
+    }
+    return out;
+  };
+
+  /* 8x8 Bayer matrix, values 0..1 — used by ordered dithering and by the
+     riso screen. */
+  var BAYER8 = (function () {
+    var m = [[0, 32, 8, 40, 2, 34, 10, 42], [48, 16, 56, 24, 50, 18, 58, 26],
+             [12, 44, 4, 36, 14, 46, 6, 38], [60, 28, 52, 20, 62, 30, 54, 22],
+             [3, 35, 11, 43, 1, 33, 9, 41], [51, 19, 59, 27, 49, 17, 57, 25],
+             [15, 47, 7, 39, 13, 45, 5, 37], [63, 31, 55, 23, 61, 29, 53, 21]];
+    var f = new Float32Array(64);
+    for (var y = 0; y < 8; y++) for (var x = 0; x < 8; x++) f[y * 8 + x] = (m[y][x] + 0.5) / 64;
+    return f;
+  })();
+
+  N.bayer = function (size) {
+    if (size === 8) return { m: BAYER8, n: 8 };
+    var n = size === 2 ? 2 : 4;
+    var f = new Float32Array(n * n);
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < n; x++) {
+        // Sub-sample the 8x8 matrix and re-rank to keep the ordering valid.
+        f[y * n + x] = BAYER8[(y * (8 / n)) * 8 + x * (8 / n)];
+      }
+    }
+    // Re-rank the sampled values so they spread evenly across 0..1.
+    var idx = Array.from(f.keys()).sort(function (a, b) { return f[a] - f[b]; });
+    idx.forEach(function (k, rank) { f[k] = (rank + 0.5) / (n * n); });
+    return { m: f, n: n };
+  };
+
+  N.bayerAt = function (b, x, y) {
+    return b.m[(y % b.n + b.n) % b.n * b.n + (x % b.n + b.n) % b.n];
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Effect registry.
+
+   An effect is a pure-ish function of (ImageData, params, env) -> ImageData.
+   The pipeline owns opacity and blend mode, so effects can always return a
+   fully-applied result and let the stack decide how much of it lands.
+
+   `env` carries:
+     w, h      render dimensions
+     scale     render size / image size — every spatial parameter is authored
+               in image pixels and must be multiplied by this, so a preview
+               and a 2x export look the same
+     px(v)     shorthand for that multiplication
+     seed      per-layer seed, stable across renders
+     quality   'draft' | 'full' — effects may cut corners while a slider drags
+*/
+(function (TX) {
+  'use strict';
+
+  TX.effects = {};
+  TX.effectList = [];
+  TX.groupOrder = ['Tone', 'Print', 'Optics', 'Glyph', 'Paper', 'Painterly'];
+
+  TX.register = function (def) {
+    if (!def.id || typeof def.apply !== 'function') {
+      throw new Error('invalid effect: ' + (def && def.id));
+    }
+    def.params = def.params || [];
+    def.group = def.group || 'Tone';
+    def.defaultAmount = def.defaultAmount === undefined ? 100 : def.defaultAmount;
+    def.defaultBlend = def.defaultBlend || 'normal';
+    TX.effects[def.id] = def;
+    TX.effectList.push(def);
+    return def;
+  };
+
+  TX.defaultParams = function (id) {
+    var def = TX.effects[id];
+    var out = {};
+    if (!def) return out;
+    def.params.forEach(function (p) { out[p.key] = p.def; });
+    return out;
+  };
+
+  var uid = 0;
+  TX.makeLayer = function (id, overrides) {
+    var def = TX.effects[id];
+    if (!def) throw new Error('unknown effect: ' + id);
+    var layer = {
+      uid: 'L' + (++uid) + '-' + Math.random().toString(36).slice(2, 6),
+      type: id,
+      enabled: true,
+      open: true,
+      amount: def.defaultAmount,
+      blend: def.defaultBlend,
+      seed: (Math.random() * 1e9) | 0,
+      params: TX.defaultParams(id)
+    };
+    if (overrides) {
+      if (overrides.params) {
+        Object.keys(overrides.params).forEach(function (k) {
+          layer.params[k] = overrides.params[k];
+        });
+      }
+      ['enabled', 'amount', 'blend', 'seed', 'open'].forEach(function (k) {
+        if (overrides[k] !== undefined) layer[k] = overrides[k];
+      });
+    }
+    return layer;
+  };
+
+  /* Effects grouped for the library panel, in TX.groupOrder order. */
+  TX.byGroup = function () {
+    var map = {};
+    TX.effectList.forEach(function (def) {
+      (map[def.group] = map[def.group] || []).push(def);
+    });
+    return TX.groupOrder.filter(function (g) { return map[g]; })
+      .map(function (g) { return { group: g, items: map[g] }; });
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Tone & optics — the layers you reach for before and after a texture. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, N = TX.noise;
+
+  /* ---------------------------------------------------------------- adjust */
+  TX.register({
+    id: 'adjust',
+    name: 'Adjust',
+    group: 'Tone',
+    desc: 'Exposure, contrast, colour',
+    params: [
+      { key: 'exposure', label: 'Exposure', type: 'range', min: -2, max: 2, step: 0.05, def: 0, unit: ' EV' },
+      { key: 'contrast', label: 'Contrast', type: 'range', min: -100, max: 100, step: 1, def: 0 },
+      { key: 'gamma', label: 'Gamma', type: 'range', min: 0.4, max: 2.5, step: 0.05, def: 1 },
+      { key: 'saturation', label: 'Saturation', type: 'range', min: 0, max: 200, step: 1, def: 100, unit: '%' },
+      { key: 'temperature', label: 'Temperature', type: 'range', min: -100, max: 100, step: 1, def: 0 }
+    ],
+    apply: function (src, p) {
+      var out = U.clone(src), d = out.data;
+      var gain = Math.pow(2, p.exposure);
+      var cf = Math.tan((U.clamp(p.contrast, -99, 99) / 100 + 1) * Math.PI / 4);
+      var tw = p.temperature / 100;
+      var chGain = [gain * (1 + 0.20 * tw), gain * (1 - 0.02 * Math.abs(tw)), gain * (1 - 0.20 * tw)];
+      var invGamma = 1 / Math.max(0.05, p.gamma);
+      var sat = p.saturation / 100;
+
+      // One 256-entry ramp per channel covers exposure, temperature, contrast
+      // and gamma; only saturation needs the other channels.
+      var lut = [new Float32Array(256), new Float32Array(256), new Float32Array(256)];
+      for (var c = 0; c < 3; c++) {
+        for (var i = 0; i < 256; i++) {
+          var v = (i / 255) * chGain[c];
+          v = (v - 0.5) * cf + 0.5;
+          lut[c][i] = Math.pow(U.clamp01(v), invGamma) * 255;
+        }
+      }
+      for (var j = 0; j < d.length; j += 4) {
+        var r = lut[0][d[j]], g = lut[1][d[j + 1]], b = lut[2][d[j + 2]];
+        if (sat !== 1) {
+          var l = U.luma(r, g, b);
+          r = l + (r - l) * sat; g = l + (g - l) * sat; b = l + (b - l) * sat;
+        }
+        d[j] = r; d[j + 1] = g; d[j + 2] = b;
+      }
+      return out;
+    }
+  });
+
+  /* --------------------------------------------------------------- duotone */
+  TX.register({
+    id: 'duotone',
+    name: 'Duotone',
+    group: 'Tone',
+    desc: 'Two-ink tonal map',
+    params: [
+      { key: 'shadow', label: 'Shadow ink', type: 'color', def: '#16233c' },
+      { key: 'highlight', label: 'Paper', type: 'color', def: '#efe7d6' },
+      { key: 'midpoint', label: 'Midpoint', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' },
+      { key: 'spread', label: 'Spread', type: 'range', min: 5, max: 200, step: 1, def: 100, unit: '%' }
+    ],
+    apply: function (src, p) {
+      var out = U.clone(src), d = out.data;
+      var lo = U.hexToRgb(p.shadow), hi = U.hexToRgb(p.highlight);
+      var w = Math.max(0.02, p.spread / 100);
+      var a = p.midpoint / 100 - w / 2;
+      for (var i = 0; i < d.length; i += 4) {
+        var t = U.smoothstep((U.luma(d[i], d[i + 1], d[i + 2]) / 255 - a) / w);
+        d[i] = lo[0] + (hi[0] - lo[0]) * t;
+        d[i + 1] = lo[1] + (hi[1] - lo[1]) * t;
+        d[i + 2] = lo[2] + (hi[2] - lo[2]) * t;
+      }
+      return out;
+    }
+  });
+
+  /* ------------------------------------------------------------- posterize */
+  TX.register({
+    id: 'posterize',
+    name: 'Posterize',
+    group: 'Tone',
+    desc: 'Flatten to N tones',
+    params: [
+      { key: 'levels', label: 'Levels', type: 'range', min: 2, max: 16, step: 1, def: 5 },
+      { key: 'mode', label: 'Quantize', type: 'select', def: 'rgb', options: [
+        { value: 'rgb', label: 'Per channel' }, { value: 'luma', label: 'Luminance' } ] },
+      { key: 'dither', label: 'Ordered dither', type: 'toggle', def: false }
+    ],
+    apply: function (src, p) {
+      var out = U.clone(src), d = out.data, w = src.width;
+      var n = Math.max(2, p.levels | 0), step = 1 / (n - 1);
+      var bay = N.bayer(8);
+      for (var i = 0, px = 0; i < d.length; i += 4, px++) {
+        var jitter = p.dither ? (N.bayerAt(bay, px % w, (px / w) | 0) - 0.5) * step : 0;
+        if (p.mode === 'luma') {
+          var l = U.luma(d[i], d[i + 1], d[i + 2]) / 255;
+          var q = Math.round(U.clamp01(l + jitter) * (n - 1)) / (n - 1);
+          var k = l > 0.004 ? q / l : 0;
+          d[i] *= k; d[i + 1] *= k; d[i + 2] *= k;
+        } else {
+          for (var c = 0; c < 3; c++) {
+            d[i + c] = Math.round(U.clamp01(d[i + c] / 255 + jitter) * (n - 1)) / (n - 1) * 255;
+          }
+        }
+      }
+      return out;
+    }
+  });
+
+  /* ------------------------------------------------------------- threshold */
+  TX.register({
+    id: 'threshold',
+    name: 'Threshold',
+    group: 'Tone',
+    desc: 'Hard two-tone cut',
+    params: [
+      { key: 'level', label: 'Level', type: 'range', min: 0, max: 100, step: 0.5, def: 50, unit: '%' },
+      { key: 'softness', label: 'Softness', type: 'range', min: 0, max: 50, step: 0.5, def: 3, unit: '%' },
+      { key: 'dark', label: 'Ink', type: 'color', def: '#141414' },
+      { key: 'light', label: 'Paper', type: 'color', def: '#f7f4ec' }
+    ],
+    apply: function (src, p) {
+      var out = U.clone(src), d = out.data;
+      var dark = U.hexToRgb(p.dark), light = U.hexToRgb(p.light);
+      var lev = p.level / 100, s = p.softness / 100;
+      for (var i = 0; i < d.length; i += 4) {
+        var l = U.luma(d[i], d[i + 1], d[i + 2]) / 255;
+        var t = s > 0.001 ? U.smoothstep((l - (lev - s / 2)) / s) : (l >= lev ? 1 : 0);
+        d[i] = dark[0] + (light[0] - dark[0]) * t;
+        d[i + 1] = dark[1] + (light[1] - dark[1]) * t;
+        d[i + 2] = dark[2] + (light[2] - dark[2]) * t;
+      }
+      return out;
+    }
+  });
+
+  /* ------------------------------------------------------------------ blur */
+  TX.register({
+    id: 'blur',
+    name: 'Blur',
+    group: 'Tone',
+    desc: 'Gaussian softening',
+    params: [
+      { key: 'radius', label: 'Radius', type: 'range', min: 0, max: 40, step: 0.5, def: 4, unit: 'px' }
+    ],
+    apply: function (src, p, env) {
+      return U.blur(src, env.px(p.radius));
+    }
+  });
+
+  /* --------------------------------------------------------------- sharpen */
+  TX.register({
+    id: 'sharpen',
+    name: 'Sharpen',
+    group: 'Tone',
+    desc: 'Unsharp mask',
+    params: [
+      { key: 'amount', label: 'Amount', type: 'range', min: 0, max: 300, step: 5, def: 100, unit: '%' },
+      { key: 'radius', label: 'Radius', type: 'range', min: 0.5, max: 10, step: 0.5, def: 2, unit: 'px' }
+    ],
+    apply: function (src, p, env) {
+      var soft = U.blur(src, env.px(p.radius));
+      var out = U.clone(src), d = out.data, s = soft.data, k = p.amount / 100;
+      for (var i = 0; i < d.length; i += 4) {
+        for (var c = 0; c < 3; c++) d[i + c] = d[i + c] + (d[i + c] - s[i + c]) * k;
+      }
+      return out;
+    }
+  });
+
+  /* ---------------------------------------------------------------- chroma */
+  TX.register({
+    id: 'chroma',
+    name: 'Misregister',
+    group: 'Print',
+    desc: 'Off-plate colour shift',
+    params: [
+      { key: 'distance', label: 'Offset', type: 'range', min: 0, max: 40, step: 0.5, def: 5, unit: 'px' },
+      { key: 'angle', label: 'Angle', type: 'range', min: 0, max: 360, step: 1, def: 0, unit: '°' },
+      { key: 'mode', label: 'Plates', type: 'select', def: 'rgb', options: [
+        { value: 'rgb', label: 'R / B split' },
+        { value: 'redcyan', label: 'Red vs cyan' } ] }
+    ],
+    apply: function (src, p, env) {
+      var out = U.clone(src), d = out.data, sd = src.data;
+      var w = src.width, h = src.height;
+      var a = p.angle * Math.PI / 180, dist = env.px(p.distance);
+      var dx = Math.cos(a) * dist, dy = Math.sin(a) * dist;
+      var tmp = [0, 0, 0], tmp2 = [0, 0, 0];
+      for (var y = 0, i = 0; y < h; y++) {
+        for (var x = 0; x < w; x++, i += 4) {
+          U.sampleRGB(src, x + dx, y + dy, tmp);
+          U.sampleRGB(src, x - dx, y - dy, tmp2);
+          if (p.mode === 'redcyan') {
+            d[i] = tmp[0];
+            d[i + 1] = tmp2[1];
+            d[i + 2] = tmp2[2];
+          } else {
+            d[i] = tmp[0];
+            d[i + 1] = sd[i + 1];
+            d[i + 2] = tmp2[2];
+          }
+        }
+      }
+      return out;
+    }
+  });
+
+  /* -------------------------------------------------------------- vignette */
+  TX.register({
+    id: 'vignette',
+    name: 'Vignette',
+    group: 'Paper',
+    desc: 'Edge burn',
+    params: [
+      { key: 'amount', label: 'Amount', type: 'range', min: 0, max: 100, step: 1, def: 45, unit: '%' },
+      { key: 'radius', label: 'Radius', type: 'range', min: 0, max: 120, step: 1, def: 70, unit: '%' },
+      { key: 'softness', label: 'Softness', type: 'range', min: 1, max: 100, step: 1, def: 55, unit: '%' },
+      { key: 'roundness', label: 'Roundness', type: 'range', min: 0, max: 100, step: 1, def: 70, unit: '%' },
+      { key: 'color', label: 'Colour', type: 'color', def: '#000000' }
+    ],
+    apply: function (src, p) {
+      var out = U.clone(src), d = out.data, w = src.width, h = src.height;
+      var col = U.hexToRgb(p.color);
+      var r0 = p.radius / 100 * 1.25;
+      var soft = Math.max(0.02, p.softness / 100);
+      var k = U.lerp(8, 2, p.roundness / 100);
+      var amt = p.amount / 100;
+      for (var y = 0, i = 0; y < h; y++) {
+        var ny = Math.abs((y + 0.5) / h - 0.5) * 2;
+        for (var x = 0; x < w; x++, i += 4) {
+          var nx = Math.abs((x + 0.5) / w - 0.5) * 2;
+          var dist = Math.pow(Math.pow(nx, k) + Math.pow(ny, k), 1 / k);
+          var v = U.smoothstep((dist - r0) / soft) * amt;
+          if (v <= 0) continue;
+          d[i] += (col[0] - d[i]) * v;
+          d[i + 1] += (col[1] - d[i + 1]) * v;
+          d[i + 2] += (col[2] - d[i + 2]) * v;
+        }
+      }
+      return out;
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Print — screens, plates and presses. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, N = TX.noise;
+
+  /* Draw one rotated halftone screen. `cov` is a 0..1 coverage field the size
+     of the image; the context is rotated so the cell grid lands on the angle
+     and the shapes come along for free. */
+  function drawScreen(ctx, cov, w, h, cell, angleDeg, color, shape) {
+    var a = angleDeg * Math.PI / 180;
+    var cos = Math.cos(a), sin = Math.sin(a);
+    // Corners of the image expressed in grid space (inverse rotation).
+    var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    [[0, 0], [w, 0], [0, h], [w, h]].forEach(function (c) {
+      var gx = c[0] * cos + c[1] * sin;
+      var gy = -c[0] * sin + c[1] * cos;
+      if (gx < minX) minX = gx; if (gx > maxX) maxX = gx;
+      if (gy < minY) minY = gy; if (gy > maxY) maxY = gy;
+    });
+    var i0 = Math.floor(minX / cell) - 1, i1 = Math.ceil(maxX / cell) + 1;
+    var j0 = Math.floor(minY / cell) - 1, j1 = Math.ceil(maxY / cell) + 1;
+
+    ctx.save();
+    ctx.rotate(a);
+    ctx.fillStyle = color;
+    for (var j = j0; j <= j1; j++) {
+      var gy2 = j * cell;
+      for (var i = i0; i <= i1; i++) {
+        var gx2 = i * cell;
+        var wx = gx2 * cos - gy2 * sin;
+        var wy = gx2 * sin + gy2 * cos;
+        if (wx < -cell || wy < -cell || wx > w + cell || wy > h + cell) continue;
+        var c = U.sampleField(cov, w, h, wx, wy);
+        if (c <= 0.004) continue;
+        if (c > 1) c = 1;
+        var s = Math.sqrt(c);
+        switch (shape) {
+          case 'square':
+            var side = cell * s;
+            ctx.fillRect(gx2 - side / 2, gy2 - side / 2, side, side);
+            break;
+          case 'diamond':
+            var d = cell * s * 0.72;
+            ctx.beginPath();
+            ctx.moveTo(gx2, gy2 - d); ctx.lineTo(gx2 + d, gy2);
+            ctx.lineTo(gx2, gy2 + d); ctx.lineTo(gx2 - d, gy2);
+            ctx.closePath(); ctx.fill();
+            break;
+          case 'line':
+            ctx.fillRect(gx2 - cell / 2 - 0.5, gy2 - cell * c / 2, cell + 1, cell * c);
+            break;
+          case 'cross':
+            var t = cell * c * 0.62;
+            ctx.fillRect(gx2 - cell / 2 - 0.5, gy2 - t / 2, cell + 1, t);
+            ctx.fillRect(gx2 - t / 2, gy2 - cell / 2 - 0.5, t, cell + 1);
+            break;
+          default: // dot
+            ctx.beginPath();
+            ctx.arc(gx2, gy2, cell * 0.72 * s, 0, Math.PI * 2);
+            ctx.fill();
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  /* -------------------------------------------------------------- halftone */
+  var CMYK_INKS = [
+    { key: 'c', color: '#00a8e8', angle: 15 },
+    { key: 'm', color: '#e6007e', angle: 75 },
+    { key: 'y', color: '#ffe800', angle: 0 },
+    { key: 'k', color: '#101010', angle: 45 }
+  ];
+
+  TX.register({
+    id: 'halftone',
+    name: 'Halftone',
+    group: 'Print',
+    desc: 'Rotated dot screen',
+    detail: function (p) { return p.cell; },
+    params: [
+      { key: 'cell', label: 'Cell', type: 'range', min: 2, max: 40, step: 0.5, def: 6, unit: 'px' },
+      { key: 'angle', label: 'Screen angle', type: 'range', min: 0, max: 90, step: 1, def: 45, unit: '°' },
+      { key: 'shape', label: 'Shape', type: 'select', def: 'dot', options: [
+        { value: 'dot', label: 'Dot' }, { value: 'square', label: 'Square' },
+        { value: 'diamond', label: 'Diamond' }, { value: 'line', label: 'Line' },
+        { value: 'cross', label: 'Cross' } ] },
+      { key: 'mode', label: 'Plates', type: 'select', def: 'mono', options: [
+        { value: 'mono', label: 'Single ink' }, { value: 'cmyk', label: 'CMYK' } ] },
+      { key: 'weight', label: 'Ink weight', type: 'range', min: 0.4, max: 2.2, step: 0.05, def: 1 },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#121212',
+        showIf: function (p) { return p.mode !== 'cmyk'; } },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f6f3ea' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var cell = Math.max(1.5, env.px(p.cell));
+      var canvas = U.makeCanvas(w, h), ctx = U.ctx2d(canvas);
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, w, h);
+
+      var blurred = U.blur(src, cell * 0.38);
+      var d = blurred.data, n = w * h, i, j;
+
+      if (p.mode === 'cmyk') {
+        var fields = { c: new Float32Array(n), m: new Float32Array(n), y: new Float32Array(n), k: new Float32Array(n) };
+        for (i = 0, j = 0; i < n; i++, j += 4) {
+          var c = 1 - d[j] / 255, m = 1 - d[j + 1] / 255, y = 1 - d[j + 2] / 255;
+          var k = Math.min(c, m, y);
+          var inv = k < 0.999 ? 1 / (1 - k) : 0;
+          fields.c[i] = Math.pow(U.clamp01((c - k) * inv), p.weight);
+          fields.m[i] = Math.pow(U.clamp01((m - k) * inv), p.weight);
+          fields.y[i] = Math.pow(U.clamp01((y - k) * inv), p.weight);
+          fields.k[i] = Math.pow(U.clamp01(k), p.weight);
+        }
+        ctx.globalCompositeOperation = 'multiply';
+        CMYK_INKS.forEach(function (ink) {
+          drawScreen(ctx, fields[ink.key], w, h, cell, p.angle + ink.angle, ink.color, p.shape);
+        });
+        ctx.globalCompositeOperation = 'source-over';
+      } else {
+        var cov = new Float32Array(n);
+        for (i = 0, j = 0; i < n; i++, j += 4) {
+          cov[i] = Math.pow(U.clamp01(1 - U.luma(d[j], d[j + 1], d[j + 2]) / 255), p.weight);
+        }
+        drawScreen(ctx, cov, w, h, cell, p.angle, p.ink, p.shape);
+      }
+      return U.fromCanvas(canvas);
+    }
+  });
+
+  /* ---------------------------------------------------------------- dither */
+  var KERNELS = {
+    floyd: [[1, 0, 7 / 16], [-1, 1, 3 / 16], [0, 1, 5 / 16], [1, 1, 1 / 16]],
+    atkinson: [[1, 0, 1 / 8], [2, 0, 1 / 8], [-1, 1, 1 / 8], [0, 1, 1 / 8], [1, 1, 1 / 8], [0, 2, 1 / 8]],
+    jarvis: [[1, 0, 7 / 48], [2, 0, 5 / 48], [-2, 1, 3 / 48], [-1, 1, 5 / 48], [0, 1, 7 / 48],
+             [1, 1, 5 / 48], [2, 1, 3 / 48], [-2, 2, 1 / 48], [-1, 2, 3 / 48], [0, 2, 5 / 48],
+             [1, 2, 3 / 48], [2, 2, 1 / 48]]
+  };
+
+  TX.register({
+    id: 'dither',
+    name: 'Dither',
+    group: 'Print',
+    desc: 'Error diffusion & ordered',
+    detail: function (p) { return p.pixel; },
+    params: [
+      { key: 'method', label: 'Method', type: 'select', def: 'floyd', options: [
+        { value: 'floyd', label: 'Floyd–Steinberg' }, { value: 'atkinson', label: 'Atkinson' },
+        { value: 'jarvis', label: 'Jarvis' }, { value: 'bayer8', label: 'Bayer 8×8' },
+        { value: 'bayer4', label: 'Bayer 4×4' }, { value: 'bayer2', label: 'Bayer 2×2' },
+        { value: 'random', label: 'Random' } ] },
+      { key: 'levels', label: 'Levels', type: 'range', min: 2, max: 8, step: 1, def: 2 },
+      { key: 'pixel', label: 'Pixel size', type: 'range', min: 1, max: 16, step: 1, def: 1, unit: 'px' },
+      { key: 'mode', label: 'Colour', type: 'select', def: 'mono', options: [
+        { value: 'mono', label: 'Two ink' }, { value: 'rgb', label: 'RGB' } ] },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#101010',
+        showIf: function (p) { return p.mode === 'mono'; } },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f7f5ef',
+        showIf: function (p) { return p.mode === 'mono'; } }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var pxs = Math.max(1, Math.round(env.px(p.pixel)));
+      var ww = Math.max(1, Math.round(w / pxs)), hh = Math.max(1, Math.round(h / pxs));
+      var work = pxs > 1 ? U.resize(src, ww, hh, true) : U.clone(src);
+      var d = work.data;
+      var n = Math.max(2, p.levels | 0), q = n - 1;
+      var mono = p.mode === 'mono';
+      var ink = U.hexToRgb(p.ink), paper = U.hexToRgb(p.paper);
+      var kernel = KERNELS[p.method];
+      var bay = /^bayer/.test(p.method) ? N.bayer(parseInt(p.method.slice(5), 10)) : null;
+      var rand = N.rng(env.seed);
+
+      // Channels to diffuse: one luminance channel, or three colour channels.
+      var chan = mono ? 1 : 3;
+      var buf = new Float32Array(ww * hh * chan);
+      var i, x, y, c;
+      for (i = 0; i < ww * hh; i++) {
+        if (mono) buf[i] = U.luma(d[i * 4], d[i * 4 + 1], d[i * 4 + 2]) / 255;
+        else for (c = 0; c < 3; c++) buf[i * 3 + c] = d[i * 4 + c] / 255;
+      }
+
+      for (y = 0; y < hh; y++) {
+        for (x = 0; x < ww; x++) {
+          var base = (y * ww + x) * chan;
+          for (c = 0; c < chan; c++) {
+            var old = buf[base + c];
+            var val;
+            if (kernel) {
+              val = Math.round(U.clamp01(old) * q) / q;
+              var err = old - val;
+              for (var t = 0; t < kernel.length; t++) {
+                var nx = x + kernel[t][0], ny = y + kernel[t][1];
+                if (nx < 0 || nx >= ww || ny >= hh) continue;
+                buf[(ny * ww + nx) * chan + c] += err * kernel[t][2];
+              }
+            } else {
+              var thr = bay ? N.bayerAt(bay, x, y) : rand();
+              val = Math.round(U.clamp01(old + (thr - 0.5) / q) * q) / q;
+            }
+            buf[base + c] = val;
+          }
+        }
+      }
+
+      for (i = 0; i < ww * hh; i++) {
+        if (mono) {
+          var v = U.clamp01(buf[i]);
+          d[i * 4] = ink[0] + (paper[0] - ink[0]) * v;
+          d[i * 4 + 1] = ink[1] + (paper[1] - ink[1]) * v;
+          d[i * 4 + 2] = ink[2] + (paper[2] - ink[2]) * v;
+        } else {
+          for (c = 0; c < 3; c++) d[i * 4 + c] = U.clamp01(buf[i * 3 + c]) * 255;
+        }
+        d[i * 4 + 3] = 255;
+      }
+
+      return pxs > 1 ? U.resize(work, w, h, false) : work;
+    }
+  });
+
+  /* ------------------------------------------------------------------ riso */
+  /* Separate an image into non-negative coverages for a set of spot inks.
+
+     Each ink subtracts `D = 1 - inkColour` from the paper, so reproducing a
+     pixel means solving  min |sum_k a_k D_k - (1 - pixel)|  with every a_k in
+     0..1. Two inks get an exact solve with an active-set fallback; three fall
+     back to a few rounds of coordinate descent, which converges quickly on a
+     problem this small. */
+  function separate(src, inks, weight) {
+    var n = src.width * src.height, d = src.data, K = inks.length;
+    var covs = [], dens = [], dots = [];
+    for (var k = 0; k < K; k++) {
+      var D = [1 - inks[k][0] / 255, 1 - inks[k][1] / 255, 1 - inks[k][2] / 255];
+      dens.push(D);
+      dots.push(Math.max(1e-4, D[0] * D[0] + D[1] * D[1] + D[2] * D[2]));
+      covs.push(new Float32Array(n));
+    }
+    var t = [0, 0, 0], a = new Float64Array(K);
+    var D0 = dens[0], D1 = dens[1];
+    var B = K > 1 ? D0[0] * D1[0] + D0[1] * D1[1] + D0[2] * D1[2] : 0;
+    var det = K > 1 ? dots[0] * dots[1] - B * B : 0;
+
+    for (var i = 0, j = 0; i < n; i++, j += 4) {
+      t[0] = 1 - d[j] / 255; t[1] = 1 - d[j + 1] / 255; t[2] = 1 - d[j + 2] / 255;
+      if (K === 1) {
+        a[0] = U.clamp01((D0[0] * t[0] + D0[1] * t[1] + D0[2] * t[2]) / dots[0]);
+      } else if (K === 2) {
+        var p0 = D0[0] * t[0] + D0[1] * t[1] + D0[2] * t[2];
+        var p1 = D1[0] * t[0] + D1[1] * t[1] + D1[2] * t[2];
+        var a0, a1;
+        if (Math.abs(det) < 1e-6) {
+          a0 = p0 / dots[0]; a1 = 0;
+        } else {
+          a0 = (dots[1] * p0 - B * p1) / det;
+          a1 = (dots[0] * p1 - B * p0) / det;
+        }
+        // Off the feasible square, re-solve on the active edge.
+        if (a0 < 0) { a0 = 0; a1 = p1 / dots[1]; }
+        else if (a1 < 0) { a1 = 0; a0 = p0 / dots[0]; }
+        a[0] = U.clamp01(a0); a[1] = U.clamp01(a1);
+      } else {
+        for (var q = 0; q < K; q++) a[q] = 0;
+        for (var iter = 0; iter < 4; iter++) {
+          for (var m = 0; m < K; m++) {
+            var Dm = dens[m], num = 0;
+            for (var c = 0; c < 3; c++) {
+              var resid = t[c];
+              for (var o = 0; o < K; o++) if (o !== m) resid -= a[o] * dens[o][c];
+              num += Dm[c] * resid;
+            }
+            a[m] = U.clamp01(num / dots[m]);
+          }
+        }
+      }
+      for (var z = 0; z < K; z++) covs[z][i] = Math.pow(a[z], weight);
+    }
+    return { covs: covs, dens: dens };
+  }
+
+  TX.register({
+    id: 'riso',
+    name: 'Riso',
+    group: 'Print',
+    desc: 'Spot-ink duplicator',
+    detail: function (p) { return p.texture === 'dots' ? p.dotSize : p.grainSize; },
+    params: [
+      { key: 'ink1', label: 'Ink 1', type: 'color', def: '#ff4f39' },
+      { key: 'ink2', label: 'Ink 2', type: 'color', def: '#1c4fa1' },
+      { key: 'ink3', label: 'Ink 3', type: 'color', def: '#f2c000',
+        showIf: function (p) { return !!p.thirdInk; } },
+      { key: 'thirdInk', label: 'Use ink 3', type: 'toggle', def: false },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f5efe1' },
+      { key: 'weight', label: 'Ink weight', type: 'range', min: 0.4, max: 2.2, step: 0.05, def: 1 },
+      { key: 'misreg', label: 'Misregistration', type: 'range', min: 0, max: 20, step: 0.5, def: 2.5, unit: 'px' },
+      { key: 'texture', label: 'Texture', type: 'select', def: 'grain', options: [
+        { value: 'grain', label: 'Grain' }, { value: 'dots', label: 'Dot screen' },
+        { value: 'clean', label: 'Clean' } ] },
+      { key: 'grain', label: 'Grain', type: 'range', min: 0, max: 100, step: 1, def: 30, unit: '%',
+        showIf: function (p) { return p.texture === 'grain'; } },
+      { key: 'grainSize', label: 'Grain size', type: 'range', min: 0.5, max: 12, step: 0.1, def: 2.2, unit: 'px',
+        showIf: function (p) { return p.texture === 'grain'; } },
+      { key: 'dotSize', label: 'Dot size', type: 'range', min: 1, max: 12, step: 0.5, def: 3, unit: 'px',
+        showIf: function (p) { return p.texture === 'dots'; } }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height, n = w * h;
+      var inkHex = [p.ink1, p.ink2];
+      if (p.thirdInk) inkHex.push(p.ink3);
+      var inks = inkHex.map(U.hexToRgb);
+      var sep = separate(src, inks, p.weight);
+      var paper = U.hexToRgb(p.paper);
+      var out = U.blank(w, h), od = out.data;
+
+      var misreg = env.px(p.misreg);
+      var offsets = inks.map(function (_, k) {
+        var a = (k * 137 + 20) * Math.PI / 180;
+        return [Math.cos(a) * misreg, Math.sin(a) * misreg];
+      });
+
+      var grainAmt = p.grain / 100;
+      var grainPlane = (p.texture === 'grain' && grainAmt > 0)
+        ? N.plane(w, h, Math.max(1, env.px(p.grainSize)), env.seed) : null;
+      var bay = p.texture === 'dots' ? N.bayer(8) : null;
+      var dotSize = Math.max(1, env.px(p.dotSize));
+
+      for (var y = 0, i = 0, j = 0; y < h; y++) {
+        for (var x = 0; x < w; x++, i++, j += 4) {
+          var r = paper[0] / 255, g = paper[1] / 255, b = paper[2] / 255;
+          for (var k = 0; k < inks.length; k++) {
+            var a = U.sampleField(sep.covs[k], w, h, x - offsets[k][0], y - offsets[k][1]);
+            if (grainPlane) {
+              a *= 1 + (grainPlane[i] - 0.5) * 2 * grainAmt * (1 - a * 0.6);
+            } else if (bay) {
+              var thr = N.bayerAt(bay, Math.floor((x + k * 3) / dotSize), Math.floor((y + k * 5) / dotSize));
+              a = a > thr ? 1 : a * 0.15;
+            }
+            a = U.clamp01(a);
+            if (a <= 0) continue;
+            var D = sep.dens[k];
+            r *= 1 - a * D[0];
+            g *= 1 - a * D[1];
+            b *= 1 - a * D[2];
+          }
+          od[j] = r * 255; od[j + 1] = g * 255; od[j + 2] = b * 255; od[j + 3] = 255;
+        }
+      }
+      void n;
+      return out;
+    }
+  });
+
+  /* ----------------------------------------------------------- crosshatch */
+  TX.register({
+    id: 'crosshatch',
+    name: 'Crosshatch',
+    group: 'Print',
+    desc: 'Engraved line shading',
+    detail: function (p) { return p.thickness; },
+    params: [
+      { key: 'spacing', label: 'Spacing', type: 'range', min: 2, max: 40, step: 0.5, def: 9, unit: 'px' },
+      { key: 'thickness', label: 'Line weight', type: 'range', min: 0.5, max: 8, step: 0.1, def: 1.6, unit: 'px' },
+      { key: 'levels', label: 'Passes', type: 'range', min: 1, max: 5, step: 1, def: 4 },
+      { key: 'angle', label: 'Base angle', type: 'range', min: 0, max: 180, step: 1, def: 35, unit: '°' },
+      { key: 'wobble', label: 'Wobble', type: 'range', min: 0, max: 100, step: 1, def: 20, unit: '%' },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#191919' },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f7f4ea' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var spacing = Math.max(1.5, env.px(p.spacing));
+      var thick = Math.max(0.4, env.px(p.thickness));
+      var levels = Math.max(1, p.levels | 0);
+      var ink = U.hexToRgb(p.ink), paper = U.hexToRgb(p.paper);
+      var field = U.lumaField(src, spacing * 0.35);
+      var wob = p.wobble / 100 * spacing * 0.9;
+      var wobblePlane = wob > 0 ? N.plane(w, h, Math.max(2, env.px(28)), env.seed) : null;
+
+      var dirs = [];
+      for (var k = 0; k < levels; k++) {
+        var a = (p.angle + k * 45) * Math.PI / 180;
+        dirs.push([Math.cos(a), Math.sin(a)]);
+      }
+
+      var out = U.blank(w, h), od = out.data;
+      for (var y = 0, i = 0, j = 0; y < h; y++) {
+        for (var x = 0; x < w; x++, i++, j += 4) {
+          var dark = 1 - field[i];
+          var cover = 0;
+          for (var b = 0; b < levels; b++) {
+            // Bands start above zero so highlights keep their paper.
+            var t0 = (b + 0.6) / (levels + 0.6);
+            if (dark <= t0) break;
+            var local = U.clamp01((dark - t0) * (levels + 0.6));
+            var u = x * dirs[b][0] + y * dirs[b][1];
+            if (wobblePlane) u += (wobblePlane[i] - 0.5) * wob;
+            var m = u - spacing * Math.floor(u / spacing);
+            var dist = Math.abs(m - spacing / 2);
+            var half = thick * (0.35 + 0.65 * local) / 2;
+            var c = U.clamp01((half - dist) / 0.8 + 0.5);
+            if (c > cover) cover = c;
+          }
+          od[j] = ink[0] + (paper[0] - ink[0]) * (1 - cover);
+          od[j + 1] = ink[1] + (paper[1] - ink[1]) * (1 - cover);
+          od[j + 2] = ink[2] + (paper[2] - ink[2]) * (1 - cover);
+          od[j + 3] = 255;
+        }
+      }
+      return out;
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Glyph — mosaics that replace pixels with marks. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, N = TX.noise;
+
+  var RAMPS = {
+    standard: ' .:-=+*#%@',
+    blocks: ' ░▒▓█',
+    dots: ' ·∙•●',
+    binary: ' 01',
+    dense: " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+  };
+
+  var FONTS = {
+    mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+    sans: 'ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif',
+    serif: 'Georgia, "Times New Roman", serif'
+  };
+
+  /* Grid-resolution average of the image: one sample per cell, area-weighted
+     by the canvas scaler. */
+  function cellAverages(src, gw, gh) {
+    return U.resize(src, gw, gh, true);
+  }
+
+  /* ----------------------------------------------------------------- ascii */
+  TX.register({
+    id: 'ascii',
+    name: 'ASCII',
+    group: 'Glyph',
+    desc: 'Type-set from luminance',
+    detail: function (p) { return p.cell; },
+    params: [
+      { key: 'cell', label: 'Cell', type: 'range', min: 4, max: 48, step: 1, def: 11, unit: 'px' },
+      { key: 'ramp', label: 'Character set', type: 'select', def: 'standard', options: [
+        { value: 'standard', label: 'Classic  .:-=+*#%@' },
+        { value: 'blocks', label: 'Blocks  ░▒▓█' },
+        { value: 'dots', label: 'Dots  ·∙•●' },
+        { value: 'binary', label: 'Binary  01' },
+        { value: 'dense', label: 'Dense (70 steps)' },
+        { value: 'custom', label: 'Custom…' } ] },
+      { key: 'custom', label: 'Custom ramp (light → dark)', type: 'text', def: ' .oO@',
+        showIf: function (p) { return p.ramp === 'custom'; } },
+      { key: 'font', label: 'Face', type: 'select', def: 'mono', options: [
+        { value: 'mono', label: 'Monospace' }, { value: 'sans', label: 'Sans' }, { value: 'serif', label: 'Serif' } ] },
+      { key: 'aspect', label: 'Cell aspect', type: 'range', min: 0.5, max: 2.4, step: 0.05, def: 1.7 },
+      { key: 'invert', label: 'Invert ramp', type: 'toggle', def: false },
+      { key: 'weight', label: 'Ink weight', type: 'range', min: 0.4, max: 2.2, step: 0.05, def: 1 },
+      { key: 'colorMode', label: 'Colour', type: 'select', def: 'ink', options: [
+        { value: 'ink', label: 'Single ink' }, { value: 'source', label: 'From image' } ] },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#14e08a',
+        showIf: function (p) { return p.colorMode === 'ink'; } },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#0b0f0d' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var cw = Math.max(2, env.px(p.cell));
+      var ch = Math.max(2, cw * p.aspect);
+      var gw = Math.max(1, Math.ceil(w / cw)), gh = Math.max(1, Math.ceil(h / ch));
+      var chars = (p.ramp === 'custom' ? (p.custom || ' .oO@') : RAMPS[p.ramp]) || RAMPS.standard;
+      var last = chars.length - 1;
+
+      // Dense glyphs should land where the *ink* is doing the work: on dark
+      // paper that means the bright parts of the image, not the dark ones.
+      var paperL = U.luma.apply(null, U.hexToRgb(p.paper));
+      var inkL = p.colorMode === 'ink' ? U.luma.apply(null, U.hexToRgb(p.ink)) : 128;
+      var lightOnDark = inkL > paperL;
+      if (p.invert) lightOnDark = !lightOnDark;
+
+      var canvas = U.makeCanvas(w, h), ctx = U.ctx2d(canvas);
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = Math.round(ch * 0.95) + 'px ' + FONTS[p.font];
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = p.ink;
+
+      var avg = cellAverages(src, gw, gh), ad = avg.data;
+      for (var gy = 0; gy < gh; gy++) {
+        for (var gx = 0; gx < gw; gx++) {
+          var k = (gy * gw + gx) * 4;
+          var l = U.luma(ad[k], ad[k + 1], ad[k + 2]) / 255;
+          var density = Math.pow(U.clamp01(lightOnDark ? l : 1 - l), p.weight);
+          var idx = Math.round(density * last);
+          var glyph = chars.charAt(idx);
+          if (glyph === ' ' || glyph === '') continue;
+          if (p.colorMode === 'source') {
+            ctx.fillStyle = 'rgb(' + (ad[k] | 0) + ',' + (ad[k + 1] | 0) + ',' + (ad[k + 2] | 0) + ')';
+          }
+          ctx.fillText(glyph, (gx + 0.5) * cw, (gy + 0.5) * ch);
+        }
+      }
+      return U.fromCanvas(canvas);
+    }
+  });
+
+  /* ---------------------------------------------------------------- mosaic */
+  TX.register({
+    id: 'mosaic',
+    name: 'Mosaic',
+    group: 'Glyph',
+    desc: 'Tiles, dots, tiles',
+    detail: function (p) { return p.cell; },
+    params: [
+      { key: 'cell', label: 'Cell', type: 'range', min: 3, max: 64, step: 1, def: 14, unit: 'px' },
+      { key: 'shape', label: 'Shape', type: 'select', def: 'circle', options: [
+        { value: 'square', label: 'Square' }, { value: 'circle', label: 'Circle' },
+        { value: 'diamond', label: 'Diamond' }, { value: 'triangle', label: 'Triangle' } ] },
+      { key: 'gap', label: 'Gap', type: 'range', min: 0, max: 60, step: 1, def: 12, unit: '%' },
+      { key: 'sizeMode', label: 'Size', type: 'select', def: 'fixed', options: [
+        { value: 'fixed', label: 'Uniform' }, { value: 'luma', label: 'By darkness' } ] },
+      { key: 'stagger', label: 'Brick offset', type: 'toggle', def: false },
+      { key: 'paper', label: 'Background', type: 'color', def: '#0e0f12' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var cell = Math.max(2, env.px(p.cell));
+      var gw = Math.max(1, Math.ceil(w / cell)) + 1, gh = Math.max(1, Math.ceil(h / cell));
+      var avg = cellAverages(src, gw, gh), ad = avg.data;
+
+      var canvas = U.makeCanvas(w, h), ctx = U.ctx2d(canvas);
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, w, h);
+
+      var pad = 1 - p.gap / 100;
+      for (var gy = 0; gy < gh; gy++) {
+        var shift = (p.stagger && gy % 2) ? -cell / 2 : 0;
+        for (var gx = 0; gx < gw; gx++) {
+          var k = (gy * gw + gx) * 4;
+          var r = ad[k], g = ad[k + 1], b = ad[k + 2];
+          var scale = pad;
+          if (p.sizeMode === 'luma') scale *= Math.sqrt(U.clamp01(1 - U.luma(r, g, b) / 255));
+          var s = cell * scale;
+          if (s < 0.35) continue;
+          var cx = (gx + 0.5) * cell + shift, cy = (gy + 0.5) * cell;
+          ctx.fillStyle = 'rgb(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ')';
+          switch (p.shape) {
+            case 'circle':
+              ctx.beginPath(); ctx.arc(cx, cy, s / 2, 0, Math.PI * 2); ctx.fill(); break;
+            case 'diamond':
+              ctx.beginPath();
+              ctx.moveTo(cx, cy - s / 1.5); ctx.lineTo(cx + s / 1.5, cy);
+              ctx.lineTo(cx, cy + s / 1.5); ctx.lineTo(cx - s / 1.5, cy);
+              ctx.closePath(); ctx.fill(); break;
+            case 'triangle':
+              ctx.beginPath();
+              ctx.moveTo(cx, cy - s / 1.7); ctx.lineTo(cx + s / 1.7, cy + s / 2.4);
+              ctx.lineTo(cx - s / 1.7, cy + s / 2.4);
+              ctx.closePath(); ctx.fill(); break;
+            default:
+              ctx.fillRect(cx - s / 2, cy - s / 2, s, s);
+          }
+        }
+      }
+      return U.fromCanvas(canvas);
+    }
+  });
+
+  /* --------------------------------------------------------------- stipple */
+  TX.register({
+    id: 'stipple',
+    name: 'Stipple',
+    group: 'Glyph',
+    desc: 'Pointillist dot spray',
+    detail: function (p) { return p.size; },
+    params: [
+      { key: 'density', label: 'Density', type: 'range', min: 20, max: 5000, step: 20, def: 1200 },
+      { key: 'size', label: 'Dot size', type: 'range', min: 0.3, max: 10, step: 0.1, def: 1.8, unit: 'px' },
+      { key: 'jitter', label: 'Scatter', type: 'range', min: 0, max: 100, step: 1, def: 85, unit: '%' },
+      { key: 'sizeByLuma', label: 'Size by tone', type: 'toggle', def: true },
+      { key: 'weight', label: 'Ink weight', type: 'range', min: 0.4, max: 3, step: 0.05, def: 1.1 },
+      { key: 'colorMode', label: 'Colour', type: 'select', def: 'source', options: [
+        { value: 'source', label: 'From image' }, { value: 'ink', label: 'Single ink' } ] },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#1a1a1a',
+        showIf: function (p) { return p.colorMode === 'ink'; } },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f4efe3' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var canvas = U.makeCanvas(w, h), ctx = U.ctx2d(canvas);
+      ctx.fillStyle = p.paper;
+      ctx.fillRect(0, 0, w, h);
+
+      var field = U.lumaField(src, Math.max(0, env.px(0.8)));
+      var rnd = N.rng(env.seed);
+      // Candidates sit on a jittered grid: even coverage without the clumping
+      // of pure random sampling, and the count follows the render scale.
+      var count = p.density * (w * h) / 10000;
+      if (env.quality === 'draft') count *= 0.5;
+      var step = Math.max(0.5, Math.sqrt((w * h) / Math.max(1, count)));
+      var jit = p.jitter / 100;
+      var dot = Math.max(0.2, env.px(p.size));
+      var single = p.colorMode === 'ink';
+      if (single) ctx.fillStyle = p.ink;
+      var d = src.data;
+
+      for (var gy = 0; gy < h; gy += step) {
+        for (var gx = 0; gx < w; gx += step) {
+          var x = gx + step * (0.5 + (rnd() - 0.5) * jit);
+          var y = gy + step * (0.5 + (rnd() - 0.5) * jit);
+          var ix = U.clamp(x | 0, 0, w - 1), iy = U.clamp(y | 0, 0, h - 1);
+          var tone = Math.pow(U.clamp01(1 - field[iy * w + ix]), p.weight);
+          if (rnd() > tone) continue;
+          var r = p.sizeByLuma ? dot * (0.35 + 0.65 * tone) : dot;
+          if (!single) {
+            var k = (iy * w + ix) * 4;
+            ctx.fillStyle = 'rgb(' + d[k] + ',' + d[k + 1] + ',' + d[k + 2] + ')';
+          }
+          if (r < 1.6) {
+            // Below ~1.5px an arc costs more than it shows.
+            ctx.fillRect(x - r / 2, y - r / 2, r, r);
+          } else {
+            ctx.beginPath();
+            ctx.arc(x, y, r / 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+      return U.fromCanvas(canvas);
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Paper — the substrate: grain, stock, fibre and relief. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, N = TX.noise;
+
+  /* ----------------------------------------------------------------- grain */
+  TX.register({
+    id: 'grain',
+    name: 'Grain',
+    group: 'Paper',
+    desc: 'Film / press grain',
+    detail: function (p) { return p.size; },
+    params: [
+      { key: 'amount', label: 'Amount', type: 'range', min: 0, max: 100, step: 1, def: 32, unit: '%' },
+      { key: 'size', label: 'Grain size', type: 'range', min: 0.4, max: 12, step: 0.1, def: 1.1, unit: 'px' },
+      { key: 'response', label: 'Sits in', type: 'select', def: 'midtones', options: [
+        { value: 'even', label: 'Everything' }, { value: 'midtones', label: 'Midtones' },
+        { value: 'shadows', label: 'Shadows' }, { value: 'highlights', label: 'Highlights' } ] },
+      { key: 'color', label: 'Colour grain', type: 'toggle', def: false }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height;
+      var out = U.clone(src), d = out.data;
+      var cell = Math.max(0.6, env.px(p.size));
+      var amt = p.amount / 100;
+      if (amt <= 0) return out;
+      var planes = [N.plane(w, h, cell, env.seed)];
+      if (p.color) {
+        planes.push(N.plane(w, h, cell, env.seed + 7919));
+        planes.push(N.plane(w, h, cell, env.seed + 15013));
+      }
+      for (var i = 0, j = 0; i < w * h; i++, j += 4) {
+        var l = U.luma(d[j], d[j + 1], d[j + 2]) / 255;
+        var resp;
+        switch (p.response) {
+          case 'midtones': resp = 4 * l * (1 - l); break;
+          case 'shadows': resp = 1 - l; break;
+          case 'highlights': resp = l; break;
+          default: resp = 1;
+        }
+        var k = amt * 128 * resp;
+        for (var c = 0; c < 3; c++) {
+          var nv = planes[p.color ? c : 0][i];
+          d[j + c] += (nv - 0.5) * 2 * k;
+        }
+      }
+      return out;
+    }
+  });
+
+  /* ----------------------------------------------------------------- paper */
+  TX.register({
+    id: 'paper',
+    name: 'Paper stock',
+    group: 'Paper',
+    desc: 'Fibre, tooth and relief',
+    defaultBlend: 'normal',
+    params: [
+      { key: 'scale', label: 'Tooth scale', type: 'range', min: 4, max: 300, step: 1, def: 48, unit: 'px' },
+      { key: 'roughness', label: 'Roughness', type: 'range', min: 1, max: 6, step: 1, def: 4 },
+      { key: 'contrast', label: 'Mottle', type: 'range', min: 0, max: 100, step: 1, def: 28, unit: '%' },
+      { key: 'fiber', label: 'Fibre', type: 'range', min: 0, max: 100, step: 1, def: 30, unit: '%' },
+      { key: 'fiberAngle', label: 'Fibre angle', type: 'range', min: 0, max: 180, step: 1, def: 0, unit: '°' },
+      { key: 'relief', label: 'Relief', type: 'range', min: 0, max: 100, step: 1, def: 35, unit: '%' },
+      { key: 'light', label: 'Light angle', type: 'range', min: 0, max: 360, step: 1, def: 135, unit: '°' },
+      { key: 'tint', label: 'Stock tint', type: 'color', def: '#f3ece0' },
+      { key: 'show', label: 'Output', type: 'select', def: 'apply', options: [
+        { value: 'apply', label: 'Image on stock' }, { value: 'texture', label: 'Stock only' } ] }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height, n = w * h;
+      var out = U.blank(w, h), od = out.data, sd = src.data;
+      var tint = U.hexToRgb(p.tint);
+
+      // Height field: a few octaves of value noise, plus optional stretched
+      // fibre laid along `fiberAngle`.
+      var base = Math.max(2, env.px(p.scale));
+      var height = new Float32Array(n);
+      var amp = 1, norm = 0, oct = p.roughness | 0;
+      for (var o = 0; o < oct; o++) {
+        var plane = N.plane(w, h, Math.max(1, base / Math.pow(2.1, o)), env.seed + o * 977);
+        for (var i = 0; i < n; i++) height[i] += plane[i] * amp;
+        norm += amp;
+        amp *= 0.55;
+      }
+      for (i = 0; i < n; i++) height[i] /= norm;
+
+      if (p.fiber > 0) {
+        var fAmt = p.fiber / 100;
+        var fa = p.fiberAngle * Math.PI / 180;
+        var cos = Math.cos(fa), sin = Math.sin(fa);
+        var fseed = env.seed + 4211;
+        var fLong = Math.max(2, env.px(90));
+        var fShort = Math.max(1, env.px(1.4));
+        for (var y = 0, idx = 0; y < h; y++) {
+          for (var x = 0; x < w; x++, idx++) {
+            var u = (x * cos + y * sin) / fLong;
+            var v = (-x * sin + y * cos) / fShort;
+            height[idx] = height[idx] * (1 - fAmt * 0.55) + N.value2(u, v, fseed) * fAmt * 0.55;
+          }
+        }
+      }
+
+      var mottle = p.contrast / 100;
+      var relief = p.relief / 100 * 3.2;
+      var la = p.light * Math.PI / 180;
+      var lx = Math.cos(la), ly = Math.sin(la);
+      var textureOnly = p.show === 'texture';
+
+      for (var yy = 0, k = 0, j = 0; yy < h; yy++) {
+        for (var xx = 0; xx < w; xx++, k++, j += 4) {
+          var hgt = height[k];
+          var gx = height[k + (xx < w - 1 ? 1 : 0)] - height[k - (xx > 0 ? 1 : 0)];
+          var gy = height[k + (yy < h - 1 ? w : 0)] - height[k - (yy > 0 ? w : 0)];
+          var shade = 1 + relief * (gx * lx + gy * ly);
+          var tone = 1 - mottle * (0.5 - hgt);
+          for (var c = 0; c < 3; c++) {
+            var stock = tint[c] * tone * shade;
+            od[j + c] = textureOnly ? stock : sd[j + c] * (stock / 255);
+          }
+          od[j + 3] = 255;
+        }
+      }
+      return out;
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Painterly — filters that trade detail for brushwork. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, N = TX.noise;
+
+  /* Separable box mean over a Float32 plane, O(1) per pixel. */
+  function boxMean(plane, w, h, r) {
+    var tmp = new Float32Array(w * h);
+    var out = new Float32Array(w * h);
+    var norm = 1 / (2 * r + 1), x, y, j, sum;
+    for (y = 0; y < h; y++) {
+      var row = y * w;
+      sum = 0;
+      for (j = -r; j <= r; j++) sum += plane[row + U.clamp(j, 0, w - 1)];
+      for (x = 0; x < w; x++) {
+        tmp[row + x] = sum * norm;
+        sum += plane[row + U.clamp(x + r + 1, 0, w - 1)] - plane[row + U.clamp(x - r, 0, w - 1)];
+      }
+    }
+    for (x = 0; x < w; x++) {
+      sum = 0;
+      for (j = -r; j <= r; j++) sum += tmp[U.clamp(j, 0, h - 1) * w + x];
+      for (y = 0; y < h; y++) {
+        out[y * w + x] = sum * norm;
+        sum += tmp[U.clamp(y + r + 1, 0, h - 1) * w + x] - tmp[U.clamp(y - r, 0, h - 1) * w + x];
+      }
+    }
+    return out;
+  }
+
+  /* ------------------------------------------------------------- oil paint */
+  /* Kuwahara: replace each pixel with the mean of whichever of four
+     overlapping quadrants is flattest. Quadrant statistics come from box means
+     sampled at an offset, so cost is independent of the radius. */
+  function kuwaharaPass(img, r) {
+    var w = img.width, h = img.height, n = w * h, d = img.data;
+    var rb = Math.max(1, Math.round(r / 2));
+    var pr = new Float32Array(n), pg = new Float32Array(n), pb = new Float32Array(n);
+    var pl = new Float32Array(n), pl2 = new Float32Array(n);
+    for (var i = 0, j = 0; i < n; i++, j += 4) {
+      pr[i] = d[j]; pg[i] = d[j + 1]; pb[i] = d[j + 2];
+      var l = U.luma(d[j], d[j + 1], d[j + 2]);
+      pl[i] = l; pl2[i] = l * l;
+    }
+    var mr = boxMean(pr, w, h, rb), mg = boxMean(pg, w, h, rb), mb = boxMean(pb, w, h, rb);
+    var ml = boxMean(pl, w, h, rb), ml2 = boxMean(pl2, w, h, rb);
+    var vari = pl2; // reuse
+    for (i = 0; i < n; i++) vari[i] = Math.max(0, ml2[i] - ml[i] * ml[i]);
+
+    var out = U.blank(w, h), od = out.data;
+    var offs = [[-rb, -rb], [rb, -rb], [-rb, rb], [rb, rb]];
+    for (var y = 0, k = 0, o = 0; y < h; y++) {
+      for (var x = 0; x < w; x++, k++, o += 4) {
+        var best = Infinity, bi = k;
+        for (var q = 0; q < 4; q++) {
+          var sx = U.clamp(x + offs[q][0], 0, w - 1);
+          var sy = U.clamp(y + offs[q][1], 0, h - 1);
+          var si = sy * w + sx;
+          if (vari[si] < best) { best = vari[si]; bi = si; }
+        }
+        od[o] = mr[bi]; od[o + 1] = mg[bi]; od[o + 2] = mb[bi]; od[o + 3] = 255;
+      }
+    }
+    return out;
+  }
+
+  TX.register({
+    id: 'oil',
+    name: 'Oil paint',
+    group: 'Painterly',
+    desc: 'Kuwahara brush flattening',
+    params: [
+      { key: 'radius', label: 'Brush', type: 'range', min: 1, max: 24, step: 1, def: 6, unit: 'px' },
+      { key: 'passes', label: 'Passes', type: 'range', min: 1, max: 3, step: 1, def: 1 },
+      { key: 'edge', label: 'Edge ink', type: 'range', min: 0, max: 100, step: 1, def: 0, unit: '%' }
+    ],
+    apply: function (src, p, env) {
+      var r = Math.max(1, Math.round(env.px(p.radius)));
+      var passes = env.quality === 'draft' ? 1 : (p.passes | 0);
+      var img = src;
+      for (var i = 0; i < passes; i++) img = kuwaharaPass(img, r);
+      if (p.edge > 0) {
+        var g = U.sobel(img);
+        var out = U.clone(img), d = out.data, k = p.edge / 100;
+        for (var q = 0, j = 0; q < g.length; q++, j += 4) {
+          var m = 1 - U.clamp01(g[q] * 2.2) * k;
+          d[j] *= m; d[j + 1] *= m; d[j + 2] *= m;
+        }
+        return out;
+      }
+      return img === src ? U.clone(src) : img;
+    }
+  });
+
+  /* ------------------------------------------------------------ watercolour */
+  TX.register({
+    id: 'watercolor',
+    name: 'Watercolour',
+    group: 'Painterly',
+    desc: 'Wet bleed, flat washes',
+    params: [
+      { key: 'smooth', label: 'Wash', type: 'range', min: 0, max: 24, step: 0.5, def: 4, unit: 'px' },
+      { key: 'bleed', label: 'Bleed', type: 'range', min: 0, max: 40, step: 0.5, def: 9, unit: 'px' },
+      { key: 'bleedScale', label: 'Bleed scale', type: 'range', min: 4, max: 200, step: 1, def: 34, unit: 'px' },
+      { key: 'levels', label: 'Washes', type: 'range', min: 2, max: 24, step: 1, def: 9 },
+      { key: 'edge', label: 'Edge pooling', type: 'range', min: 0, max: 100, step: 1, def: 45, unit: '%' },
+      { key: 'granulation', label: 'Granulation', type: 'range', min: 0, max: 100, step: 1, def: 30, unit: '%' }
+    ],
+    apply: function (src, p, env) {
+      var w = src.width, h = src.height, n = w * h;
+      var wash = U.blur(src, env.px(p.smooth));
+
+      // Wobble the sampling position with two noise planes so wash boundaries
+      // wander the way pigment does on wet paper.
+      var bleed = env.px(p.bleed);
+      var img;
+      if (bleed > 0.2) {
+        var cell = Math.max(2, env.px(p.bleedScale));
+        var nx = N.plane(w, h, cell, env.seed);
+        var ny = N.plane(w, h, cell, env.seed + 3391);
+        img = U.blank(w, h);
+        var od = img.data, tmp = [0, 0, 0];
+        for (var y = 0, i = 0, j = 0; y < h; y++) {
+          for (var x = 0; x < w; x++, i++, j += 4) {
+            U.sampleRGB(wash, x + (nx[i] - 0.5) * 2 * bleed, y + (ny[i] - 0.5) * 2 * bleed, tmp);
+            od[j] = tmp[0]; od[j + 1] = tmp[1]; od[j + 2] = tmp[2]; od[j + 3] = 255;
+          }
+        }
+      } else {
+        img = U.clone(wash);
+      }
+
+      var levels = Math.max(2, p.levels | 0), q = levels - 1, d = img.data;
+      for (var k = 0; k < d.length; k += 4) {
+        for (var c = 0; c < 3; c++) d[k + c] = Math.round(d[k + c] / 255 * q) / q * 255;
+      }
+
+      var edge = p.edge / 100;
+      var gran = p.granulation / 100;
+      if (edge > 0 || gran > 0) {
+        var g = edge > 0 ? U.sobel(img) : null;
+        var grainPlane = gran > 0 ? N.plane(w, h, Math.max(2, env.px(2.4)), env.seed + 811) : null;
+        for (var m = 0, o = 0; m < n; m++, o += 4) {
+          var mul = 1;
+          if (g) mul -= U.clamp01(g[m] * 2.4) * edge * 0.75;
+          if (grainPlane) {
+            var l = U.luma(d[o], d[o + 1], d[o + 2]) / 255;
+            mul *= 1 - (grainPlane[m] - 0.5) * gran * 0.5 * (1 - l * 0.6);
+          }
+          d[o] *= mul; d[o + 1] *= mul; d[o + 2] *= mul;
+        }
+      }
+      return img;
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Optics — GPU effects.
+ *
+ * These run as fragment shaders through TX.gl. Refraction and warp effects are
+ * impractical in a JS loop at interactive speed, and the ones that are merely
+ * expensive on the CPU become free here. Both preview and export run on the
+ * GPU, on the same device, so an export matches the screen.
+ *
+ * Effects are drawn from the catalogue of shader-effects-inc/shaders (MIT), a
+ * WebGPU component library. They are written here in GLSL rather than vendored:
+ * that library is WebGPU-only with no fallback, which rules out iPad Safari
+ * before iPadOS 26 and is unverifiable in this project's test environment,
+ * while WebGL2 covers iOS 15+, every current desktop browser, and embedded
+ * frames.
+ */
+(function (TX) {
+  'use strict';
+  var U = TX.util;
+
+  function rgb01(hex) {
+    var c = U.hexToRgb(hex);
+    return [c[0] / 255, c[1] / 255, c[2] / 255];
+  }
+
+  /* Shared setup: centre, pixel position and radius in render pixels. */
+  var POLAR = [
+    '  vec2 px = v_uv * u_res;',
+    '  vec2 ctr = u_res * 0.5;',
+    '  vec2 d = px - ctr;',
+    ''
+  ].join('\n');
+
+  function register(def) {
+    def.group = def.group || 'Optics';
+    def.gpu = true;
+    def.apply = TX.gl.effect(def.shader, def.uniforms);
+    delete def.shader;
+    delete def.uniforms;
+    TX.register(def);
+  }
+
+  /* ------------------------------------------------------------- fluted --- */
+  register({
+    id: 'fluted',
+    name: 'Fluted glass',
+    desc: 'Ribbed refraction',
+    detail: function (p) { return p.width; },
+    params: [
+      { key: 'width', label: 'Rib width', type: 'range', min: 3, max: 160, step: 1, def: 26, unit: 'px' },
+      { key: 'depth', label: 'Refraction', type: 'range', min: 0, max: 80, step: 1, def: 26, unit: 'px' },
+      { key: 'angle', label: 'Angle', type: 'range', min: 0, max: 180, step: 1, def: 0, unit: '°' },
+      { key: 'profile', label: 'Profile', type: 'select', def: 'round', options: [
+        { value: 'round', label: 'Half-round' }, { value: 'prism', label: 'Prism' },
+        { value: 'ripple', label: 'Ripple' } ] },
+      { key: 'seam', label: 'Seam shading', type: 'range', min: 0, max: 100, step: 1, def: 30, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_width; uniform float u_depth; uniform float u_angle;',
+      'uniform float u_profile; uniform float u_seam;',
+      'void main() {',
+      POLAR,
+      '  float a = radians(u_angle);',
+      '  vec2 n = vec2(cos(a), sin(a));',
+      '  float rib = max(2.0, u_width * u_scale);',
+      '  float f = fract(dot(px, n) / rib) - 0.5;',   // -0.5..0.5 across one rib
+      '  float bend;',
+      '  if (u_profile < 0.5) {',
+      // A half-round rib deviates the ray more steeply toward its edges.
+      '    bend = clamp(f / sqrt(max(1e-4, 0.25 - f * f)), -3.0, 3.0);',
+      '  } else if (u_profile < 1.5) {',
+      '    bend = f * 2.0;',                            // flat prism facets
+      '  } else {',
+      '    bend = sin(f * 6.2831853);',                 // soft repeating ripple
+      '  }',
+      '  vec2 off = n * bend * u_depth * u_scale;',
+      '  vec3 c = tex((px + off) / u_res).rgb;',
+      // Rib boundaries catch and lose light.
+      '  float edge = smoothstep(0.34, 0.5, abs(f));',
+      '  c *= 1.0 - edge * u_seam * 0.55;',
+      '  c += (1.0 - smoothstep(0.0, 0.16, abs(f))) * u_seam * 0.10;',
+      '  fragColor = vec4(c, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return {
+        u_width: p.width, u_depth: p.depth, u_angle: p.angle,
+        u_profile: p.profile === 'round' ? 0 : p.profile === 'prism' ? 1 : 2,
+        u_seam: p.seam / 100
+      };
+    }
+  });
+
+  /* -------------------------------------------------------------- twirl --- */
+  register({
+    id: 'twirl',
+    name: 'Twirl',
+    desc: 'Swirl around centre',
+    params: [
+      { key: 'angle', label: 'Twist', type: 'range', min: -720, max: 720, step: 5, def: 180, unit: '°' },
+      { key: 'radius', label: 'Radius', type: 'range', min: 5, max: 150, step: 1, def: 70, unit: '%' },
+      { key: 'cx', label: 'Centre X', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' },
+      { key: 'cy', label: 'Centre Y', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_angle; uniform float u_radius; uniform vec2 u_centre;',
+      'void main() {',
+      '  vec2 px = v_uv * u_res;',
+      '  vec2 ctr = u_centre * u_res;',
+      '  vec2 d = px - ctr;',
+      '  float R = max(1.0, u_radius * 0.5 * min(u_res.x, u_res.y));',
+      '  float t = clamp(1.0 - length(d) / R, 0.0, 1.0);',
+      '  float ang = radians(u_angle) * t * t;',
+      '  float s = sin(ang), c = cos(ang);',
+      '  vec2 q = vec2(d.x * c - d.y * s, d.x * s + d.y * c) + ctr;',
+      '  fragColor = vec4(tex(q / u_res).rgb, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_angle: p.angle, u_radius: p.radius / 100, u_centre: [p.cx / 100, p.cy / 100] };
+    }
+  });
+
+  /* -------------------------------------------------------------- bulge --- */
+  register({
+    id: 'bulge',
+    name: 'Bulge',
+    desc: 'Spherize or pinch',
+    params: [
+      { key: 'strength', label: 'Strength', type: 'range', min: -100, max: 100, step: 1, def: 60 },
+      { key: 'radius', label: 'Radius', type: 'range', min: 5, max: 150, step: 1, def: 75, unit: '%' },
+      { key: 'cx', label: 'Centre X', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' },
+      { key: 'cy', label: 'Centre Y', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_strength; uniform float u_radius; uniform vec2 u_centre;',
+      'void main() {',
+      '  vec2 px = v_uv * u_res;',
+      '  vec2 ctr = u_centre * u_res;',
+      '  vec2 d = px - ctr;',
+      '  float R = max(1.0, u_radius * 0.5 * min(u_res.x, u_res.y));',
+      '  float rn = length(d) / R;',
+      '  vec2 q = px;',
+      '  if (rn < 1.0 && rn > 1e-4) {',
+      // exponent below 1 magnifies the centre, above 1 draws it inward
+      '    float e = exp(-u_strength * 1.7);',
+      '    float k = pow(rn, e - 1.0);',
+      '    k = mix(1.0, k, smoothstep(1.0, 0.0, rn));',
+      '    q = ctr + d * k;',
+      '  }',
+      '  fragColor = vec4(tex(q / u_res).rgb, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_strength: p.strength / 100, u_radius: p.radius / 100,
+               u_centre: [p.cx / 100, p.cy / 100] };
+    }
+  });
+
+  /* --------------------------------------------------------------- wave --- */
+  register({
+    id: 'wave',
+    name: 'Wave',
+    desc: 'Sine displacement',
+    params: [
+      { key: 'amplitude', label: 'Amplitude', type: 'range', min: 0, max: 120, step: 1, def: 18, unit: 'px' },
+      { key: 'wavelength', label: 'Wavelength', type: 'range', min: 4, max: 400, step: 2, def: 90, unit: 'px' },
+      { key: 'angle', label: 'Angle', type: 'range', min: 0, max: 180, step: 1, def: 90, unit: '°' },
+      { key: 'turbulence', label: 'Turbulence', type: 'range', min: 0, max: 100, step: 1, def: 0, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_amp; uniform float u_wl; uniform float u_angle; uniform float u_turb;',
+      'void main() {',
+      '  vec2 px = v_uv * u_res;',
+      '  float a = radians(u_angle);',
+      '  vec2 n = vec2(cos(a), sin(a));',
+      '  vec2 perp = vec2(-n.y, n.x);',
+      '  float wl = max(2.0, u_wl * u_scale);',
+      '  float phase = dot(px, n) / wl * 6.2831853;',
+      '  float w = sin(phase);',
+      '  if (u_turb > 0.0) w = mix(w, (fbm(px / (wl * 0.6)) - 0.5) * 2.0, u_turb);',
+      '  vec2 q = px + perp * w * u_amp * u_scale;',
+      '  fragColor = vec4(tex(q / u_res).rgb, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_amp: p.amplitude, u_wl: p.wavelength, u_angle: p.angle, u_turb: p.turbulence / 100 };
+    }
+  });
+
+  /* ------------------------------------------------------- kaleidoscope --- */
+  register({
+    id: 'kaleidoscope',
+    name: 'Kaleidoscope',
+    desc: 'Mirrored segments',
+    params: [
+      { key: 'segments', label: 'Segments', type: 'range', min: 2, max: 24, step: 1, def: 6 },
+      { key: 'rotation', label: 'Rotation', type: 'range', min: 0, max: 360, step: 1, def: 0, unit: '°' },
+      { key: 'zoom', label: 'Zoom', type: 'range', min: 20, max: 300, step: 1, def: 100, unit: '%' },
+      { key: 'cx', label: 'Centre X', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' },
+      { key: 'cy', label: 'Centre Y', type: 'range', min: 0, max: 100, step: 1, def: 50, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_segments; uniform float u_rotation; uniform float u_zoom; uniform vec2 u_centre;',
+      'void main() {',
+      '  vec2 px = v_uv * u_res;',
+      '  vec2 ctr = u_centre * u_res;',
+      '  vec2 d = px - ctr;',
+      '  float r = length(d);',
+      '  float ang = atan(d.y, d.x) + radians(u_rotation);',
+      '  float seg = 6.2831853 / max(2.0, u_segments);',
+      '  ang = mod(ang, seg);',
+      '  ang = min(ang, seg - ang);',           // fold each wedge onto its mirror
+      '  vec2 q = ctr + vec2(cos(ang), sin(ang)) * r / max(0.2, u_zoom);',
+      '  fragColor = vec4(tex(q / u_res).rgb, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_segments: p.segments, u_rotation: p.rotation, u_zoom: p.zoom / 100,
+               u_centre: [p.cx / 100, p.cy / 100] };
+    }
+  });
+
+  /* ------------------------------------------------------------ contour --- */
+  register({
+    id: 'contour',
+    name: 'Contour',
+    desc: 'Topographic isolines',
+    detail: function (p) { return p.thickness; },
+    params: [
+      { key: 'levels', label: 'Levels', type: 'range', min: 2, max: 60, step: 1, def: 14 },
+      { key: 'thickness', label: 'Line weight', type: 'range', min: 0.4, max: 8, step: 0.1, def: 1.2, unit: 'px' },
+      { key: 'smooth', label: 'Smoothing', type: 'range', min: 0, max: 100, step: 1, def: 30, unit: '%' },
+      { key: 'mode', label: 'Output', type: 'select', def: 'lines', options: [
+        { value: 'lines', label: 'Lines on paper' }, { value: 'over', label: 'Lines over image' },
+        { value: 'bands', label: 'Filled bands' } ] },
+      { key: 'ink', label: 'Ink', type: 'color', def: '#14181f' },
+      { key: 'paper', label: 'Paper', type: 'color', def: '#f4efe2' }
+    ],
+    shader: [
+      'uniform float u_levels; uniform float u_thick; uniform float u_smooth;',
+      'uniform float u_mode; uniform vec3 u_ink; uniform vec3 u_paper;',
+      'void main() {',
+      '  vec3 base = tex(v_uv).rgb;',
+      '  float l = luma(base);',
+      '  if (u_smooth > 0.0) {',
+      '    vec2 e = (1.0 + u_smooth * 3.0) / u_res;',
+      '    l = (l',
+      '       + luma(tex(v_uv + vec2(e.x, 0.0)).rgb) + luma(tex(v_uv - vec2(e.x, 0.0)).rgb)',
+      '       + luma(tex(v_uv + vec2(0.0, e.y)).rgb) + luma(tex(v_uv - vec2(0.0, e.y)).rgb)) * 0.2;',
+      '  }',
+      '  float v = l * u_levels;',
+      '  float g = fract(v);',
+      // fwidth keeps the line a constant width on screen whatever the gradient
+      '  float w = max(fwidth(v), 1e-4) * max(0.4, u_thick * u_scale);',
+      '  float line = 1.0 - smoothstep(0.0, w, min(g, 1.0 - g));',
+      '  vec3 outc;',
+      '  if (u_mode < 0.5) {',
+      '    outc = mix(u_paper, u_ink, line);',
+      '  } else if (u_mode < 1.5) {',
+      '    outc = mix(base, u_ink, line);',
+      '  } else {',
+      '    float band = floor(v) / max(1.0, u_levels - 1.0);',
+      '    outc = mix(u_ink, u_paper, band);',
+      '    outc = mix(outc, u_ink, line * 0.6);',
+      '  }',
+      '  fragColor = vec4(outc, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_levels: p.levels, u_thick: p.thickness, u_smooth: p.smooth / 100,
+               u_mode: p.mode === 'lines' ? 0 : p.mode === 'over' ? 1 : 2,
+               u_ink: rgb01(p.ink), u_paper: rgb01(p.paper) };
+    }
+  });
+
+  /* ------------------------------------------------------- gradient map --- */
+  register({
+    id: 'gradientmap',
+    name: 'Gradient map',
+    group: 'Tone',
+    desc: 'Luminance to a ramp',
+    params: [
+      { key: 'shadow', label: 'Shadows', type: 'color', def: '#1b1035' },
+      { key: 'mid', label: 'Midtones', type: 'color', def: '#c2443f' },
+      { key: 'highlight', label: 'Highlights', type: 'color', def: '#ffd79a' },
+      { key: 'midpoint', label: 'Midpoint', type: 'range', min: 5, max: 95, step: 1, def: 50, unit: '%' },
+      { key: 'contrast', label: 'Contrast', type: 'range', min: 0, max: 200, step: 1, def: 100, unit: '%' }
+    ],
+    shader: [
+      'uniform vec3 u_shadow; uniform vec3 u_mid; uniform vec3 u_high;',
+      'uniform float u_midpoint; uniform float u_contrast;',
+      'void main() {',
+      '  float l = luma(tex(v_uv).rgb);',
+      '  l = clamp((l - 0.5) * u_contrast + 0.5, 0.0, 1.0);',
+      '  vec3 c = l < u_midpoint',
+      '    ? mix(u_shadow, u_mid, l / max(1e-4, u_midpoint))',
+      '    : mix(u_mid, u_high, (l - u_midpoint) / max(1e-4, 1.0 - u_midpoint));',
+      '  fragColor = vec4(c, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_shadow: rgb01(p.shadow), u_mid: rgb01(p.mid), u_high: rgb01(p.highlight),
+               u_midpoint: p.midpoint / 100, u_contrast: p.contrast / 100 };
+    }
+  });
+
+  /* -------------------------------------------------------------- bloom --- */
+  register({
+    id: 'bloom',
+    name: 'Bloom',
+    desc: 'Light bleeding from highlights',
+    params: [
+      { key: 'threshold', label: 'Threshold', type: 'range', min: 0, max: 100, step: 1, def: 62, unit: '%' },
+      { key: 'radius', label: 'Spread', type: 'range', min: 2, max: 160, step: 1, def: 42, unit: 'px' },
+      { key: 'intensity', label: 'Intensity', type: 'range', min: 0, max: 300, step: 5, def: 110, unit: '%' },
+      { key: 'tint', label: 'Tint', type: 'color', def: '#ffe8c4' }
+    ],
+    shader: [
+      'uniform float u_threshold; uniform float u_radius; uniform float u_intensity; uniform vec3 u_tint;',
+      'void main() {',
+      '  vec3 base = tex(v_uv).rgb;',
+      '  vec3 sum = vec3(0.0);',
+      '  float R = u_radius * u_scale;',
+      // A golden-angle spiral gives even coverage from few taps.
+      '  for (int i = 0; i < 24; i++) {',
+      '    float fi = float(i);',
+      '    float ang = fi * 2.39996323;',
+      '    float rr = sqrt((fi + 0.5) / 24.0) * R;',
+      '    vec3 c = tex(v_uv + vec2(cos(ang), sin(ang)) * rr / u_res).rgb;',
+      '    sum += c * max(0.0, luma(c) - u_threshold);',
+      '  }',
+      '  vec3 glow = sum / 24.0 * u_intensity * u_tint * 3.0;',
+      '  fragColor = vec4(base + glow - base * glow, 1.0);',   // screen
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_threshold: p.threshold / 100, u_radius: p.radius,
+               u_intensity: p.intensity / 100, u_tint: rgb01(p.tint) };
+    }
+  });
+
+  /* ----------------------------------------------------------- solarize --- */
+  register({
+    id: 'solarize',
+    name: 'Solarize',
+    group: 'Tone',
+    desc: 'Darkroom tone inversion',
+    params: [
+      { key: 'threshold', label: 'Threshold', type: 'range', min: 0, max: 100, step: 1, def: 55, unit: '%' },
+      { key: 'softness', label: 'Softness', type: 'range', min: 0, max: 60, step: 1, def: 12, unit: '%' },
+      { key: 'channels', label: 'Applies to', type: 'select', def: 'luma', options: [
+        { value: 'luma', label: 'Luminance' }, { value: 'rgb', label: 'Each channel' } ] }
+    ],
+    shader: [
+      'uniform float u_threshold; uniform float u_softness; uniform float u_channels;',
+      'void main() {',
+      '  vec3 c = tex(v_uv).rgb;',
+      '  float s = max(1e-4, u_softness);',
+      '  if (u_channels < 0.5) {',
+      '    float t = smoothstep(u_threshold - s, u_threshold + s, luma(c));',
+      '    c = mix(c, 1.0 - c, t);',
+      '  } else {',
+      '    vec3 t = smoothstep(vec3(u_threshold - s), vec3(u_threshold + s), c);',
+      '    c = mix(c, 1.0 - c, t);',
+      '  }',
+      '  fragColor = vec4(c, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_threshold: p.threshold / 100, u_softness: p.softness / 100,
+               u_channels: p.channels === 'luma' ? 0 : 1 };
+    }
+  });
+
+  /* ---------------------------------------------------------- aberration --- */
+  register({
+    id: 'aberration',
+    name: 'Lens fringe',
+    group: 'Print',
+    desc: 'Radial colour separation',
+    params: [
+      { key: 'amount', label: 'Fringe', type: 'range', min: 0, max: 60, step: 0.5, def: 9, unit: 'px' },
+      { key: 'falloff', label: 'Falloff', type: 'range', min: 0.2, max: 4, step: 0.1, def: 1.6 },
+      { key: 'barrel', label: 'Barrel', type: 'range', min: -60, max: 60, step: 1, def: 0, unit: '%' }
+    ],
+    shader: [
+      'uniform float u_amount; uniform float u_falloff; uniform float u_barrel;',
+      'void main() {',
+      '  vec2 c = vec2(0.5);',
+      '  vec2 dir = v_uv - c;',
+      '  float r = length(dir) * 2.0;',
+      '  vec2 uv = v_uv;',
+      '  if (abs(u_barrel) > 0.001) uv = c + dir * (1.0 + u_barrel * r * r);',
+      '  float k = pow(clamp(r, 0.0, 1.0), u_falloff) * u_amount * u_scale;',
+      '  vec2 off = normalize(dir + 1e-6) * k / u_res;',
+      '  fragColor = vec4(tex(uv + off).r, tex(uv).g, tex(uv - off).b, 1.0);',
+      '}'
+    ].join('\n'),
+    uniforms: function (p) {
+      return { u_amount: p.amount, u_falloff: p.falloff, u_barrel: p.barrel / 100 };
+    }
+  });
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* The render pipeline: source image -> stack of effects -> canvas.
+
+   Spatial parameters are authored in image pixels. `env.scale` is the ratio of
+   the render size to the image size, so the same stack looks identical in the
+   preview and in a 2x export. */
+(function (TX) {
+  'use strict';
+  var U = TX.util;
+
+  TX.MAX_RENDER_DIM = 5000;
+  /* Mobile Safari silently hands back a blank canvas past roughly 16.7M pixels
+     (4096²), so an export from a phone photo would come out empty. The app
+     lowers this on touch devices; on desktop there is no such wall. */
+  TX.MAX_RENDER_AREA = Infinity;
+
+  TX.sizeFor = function (image, opts) {
+    var iw = image.naturalWidth || image.width;
+    var ih = image.naturalHeight || image.height;
+    var scale = opts && opts.scale ? opts.scale : 1;
+    if (opts && opts.maxDim) {
+      scale = Math.min(scale, opts.maxDim / Math.max(iw, ih));
+    }
+    scale = Math.min(scale, TX.MAX_RENDER_DIM / Math.max(iw, ih));
+    if (isFinite(TX.MAX_RENDER_AREA)) {
+      scale = Math.min(scale, Math.sqrt(TX.MAX_RENDER_AREA / (iw * ih)));
+    }
+    return {
+      scale: scale,
+      w: Math.max(1, Math.round(iw * scale)),
+      h: Math.max(1, Math.round(ih * scale)),
+      imageW: iw,
+      imageH: ih
+    };
+  };
+
+  TX.render = function (image, layers, opts) {
+    opts = opts || {};
+    var size = TX.sizeFor(image, opts);
+    var canvas = U.makeCanvas(size.w, size.h);
+    var ctx = U.ctx2d(canvas);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(image, 0, 0, size.w, size.h);
+
+    var img = U.fromCanvas(canvas);
+    var env = {
+      w: size.w,
+      h: size.h,
+      scale: size.scale,
+      quality: opts.quality || 'full',
+      seed: 1,
+      px: function (v) { return v * env.scale; }
+    };
+
+    var skipped = [];
+    var t0 = (performance && performance.now) ? performance.now() : Date.now();
+    (layers || []).forEach(function (layer) {
+      if (!layer.enabled) return;
+      var def = TX.effects[layer.type];
+      if (!def) return;
+      // A GPU layer with no WebGL2 is skipped rather than approximated: an
+      // export that quietly differs from the preview is worse than a layer
+      // that visibly does nothing, and the app reports the shortfall.
+      if (def.gpu && !(TX.gl && TX.gl.available())) {
+        skipped.push(def.name);
+        return;
+      }
+      env.seed = layer.seed || 1;
+      var result;
+      try {
+        result = def.apply(img, layer.params, env);
+      } catch (err) {
+        console.error('effect "' + layer.type + '" failed:', err);
+        return;
+      }
+      if (!result || result.width !== img.width || result.height !== img.height) {
+        skipped.push(def.name);
+        return;
+      }
+      U.composite(img, result, (layer.amount === undefined ? 100 : layer.amount) / 100, layer.blend);
+    });
+    var t1 = (performance && performance.now) ? performance.now() : Date.now();
+
+    ctx.putImageData(img, 0, 0);
+    canvas.renderMs = Math.round(t1 - t0);
+    canvas.skipped = skipped;
+    canvas.renderScale = size.scale;
+    return canvas;
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Starting points. Each preset is just a stack, so anything here can be
+   pulled apart and re-tuned once it is loaded. */
+(function (TX) {
+  'use strict';
+
+  function L(type, params, extra) {
+    return Object.assign({ type: type, params: params || {} }, extra || {});
+  }
+
+  TX.presets = [
+    {
+      name: 'Newsprint',
+      swatch: 'repeating-radial-gradient(circle at 3px 3px, #1a1a1a 0 1.4px, #ece7dc 1.6px 5px)',
+      layers: [
+        L('adjust', { contrast: 26, saturation: 0, gamma: 1.05 }),
+        L('halftone', { cell: 5, angle: 45, shape: 'dot', mode: 'mono', weight: 1.05, ink: '#1a1a1a', paper: '#ece7dc' }),
+        L('grain', { amount: 22, size: 1, response: 'midtones' })
+      ]
+    },
+    {
+      name: 'Riso zine',
+      swatch: 'linear-gradient(120deg, #ff4f39, #f5efe1 45%, #1c4fa1)',
+      layers: [
+        L('adjust', { contrast: 12, saturation: 115 }),
+        L('riso', { ink1: '#ff4f39', ink2: '#1c4fa1', paper: '#f5efe1', misreg: 3, texture: 'grain', grain: 30, grainSize: 2.4 }),
+        L('paper', { scale: 60, contrast: 20, fiber: 25, relief: 25, tint: '#f7f1e4' }, { amount: 60 })
+      ]
+    },
+    {
+      name: 'Terminal',
+      swatch: 'linear-gradient(180deg, #050a07, #14e08a)',
+      layers: [
+        L('adjust', { contrast: 34, saturation: 0 }),
+        L('ascii', { cell: 7, aspect: 1.7, ramp: 'standard', colorMode: 'ink', ink: '#14e08a', paper: '#050a07' }),
+        L('grain', { amount: 14, size: 1, response: 'midtones' })
+      ]
+    },
+    {
+      name: 'Photocopy',
+      swatch: 'linear-gradient(160deg, #f4f2ec 30%, #141414)',
+      layers: [
+        L('adjust', { contrast: 55, gamma: 0.95, saturation: 0 }),
+        L('dither', { method: 'atkinson', levels: 2, pixel: 1, mode: 'mono', ink: '#141414', paper: '#f4f2ec' }),
+        L('grain', { amount: 20, size: 1.2, response: 'shadows' })
+      ]
+    },
+    {
+      name: 'Oil study',
+      swatch: 'conic-gradient(from 40deg, #8a5a2b, #c9a227, #4c6b3c, #8a5a2b)',
+      layers: [
+        L('oil', { radius: 7, passes: 2, edge: 16 }),
+        L('adjust', { saturation: 118, contrast: 8 }),
+        L('paper', { scale: 70, contrast: 22, fiber: 20, relief: 30 }, { amount: 55 })
+      ]
+    },
+    {
+      name: 'Watercolour',
+      swatch: 'radial-gradient(circle at 30% 30%, #7fb2c9, #f7f2e6 70%)',
+      layers: [
+        L('watercolor', { smooth: 5, bleed: 10, levels: 9, edge: 50, granulation: 35 }),
+        L('paper', { scale: 55, contrast: 25, fiber: 35, relief: 30, tint: '#f7f2e6' }, { amount: 70 }),
+        L('vignette', { amount: 24, radius: 82, softness: 60 })
+      ]
+    },
+    {
+      name: 'Pointillist',
+      swatch: 'repeating-conic-gradient(#e0563f 0 25%, #f4efe3 0 50%) 0 0 / 6px 6px',
+      layers: [
+        L('adjust', { saturation: 132, contrast: 10 }),
+        L('stipple', { density: 2600, size: 2.2, jitter: 90, colorMode: 'source', weight: 1.1, paper: '#f4efe3' }),
+        L('paper', { scale: 50, contrast: 18, fiber: 25, relief: 20 }, { amount: 45 })
+      ]
+    },
+    {
+      name: 'Comic ink',
+      swatch: 'repeating-linear-gradient(45deg, #14181f 0 1.5px, #f6f2e8 1.5px 5px)',
+      layers: [
+        L('adjust', { contrast: 22, saturation: 0 }),
+        L('crosshatch', { spacing: 9, thickness: 1.5, levels: 3, angle: 40, wobble: 25, ink: '#14181f', paper: '#f6f2e8' }),
+        L('chroma', { distance: 2.5, angle: 20, mode: 'rgb' }, { amount: 35 })
+      ]
+    },
+    {
+      name: 'Cyanotype',
+      swatch: 'linear-gradient(160deg, #dfe7e4, #0b2a4a)',
+      layers: [
+        L('adjust', { contrast: 16, saturation: 0 }),
+        L('duotone', { shadow: '#0b2a4a', highlight: '#dfe7e4', midpoint: 48, spread: 112 }),
+        L('grain', { amount: 26, size: 1.3, response: 'midtones' }),
+        L('paper', { scale: 45, contrast: 30, fiber: 40, relief: 35, tint: '#e8ece6' }, { amount: 65 }),
+        L('vignette', { amount: 30, radius: 78, softness: 55 })
+      ]
+    },
+    {
+      name: '8-bit',
+      swatch: 'repeating-linear-gradient(90deg, #ff4f39 0 4px, #1c4fa1 4px 8px, #f2c000 8px 12px)',
+      layers: [
+        L('adjust', { saturation: 122, contrast: 16 }),
+        L('dither', { method: 'bayer4', levels: 3, pixel: 4, mode: 'rgb' })
+      ]
+    },
+    {
+      name: 'Letterpress',
+      swatch: 'linear-gradient(150deg, #f2ecdd 55%, #1b1a17)',
+      layers: [
+        L('adjust', { contrast: 30, saturation: 0 }),
+        L('threshold', { level: 52, softness: 9, dark: '#1b1a17', light: '#f2ecdd' }),
+        L('paper', { scale: 40, contrast: 35, fiber: 45, relief: 55, tint: '#f2ecdd' }, { amount: 80 }),
+        L('vignette', { amount: 18, radius: 85, softness: 60 })
+      ]
+    },
+    {
+      name: 'Fluted',
+      swatch: 'repeating-linear-gradient(90deg, #2b3a5c 0 3px, #8fa7cf 3px 6px, #e8d2b4 6px 9px)',
+      layers: [
+        L('adjust', { contrast: 10, saturation: 108 }),
+        L('fluted', { width: 30, depth: 30, angle: 0, profile: 'round', seam: 34 }),
+        L('grain', { amount: 16, size: 1.2, response: 'midtones' })
+      ]
+    },
+    {
+      name: 'Topographic',
+      swatch: 'repeating-radial-gradient(circle at 60% 40%, #14181f 0 1px, #f4efe2 1px 7px)',
+      layers: [
+        L('adjust', { contrast: 14 }),
+        L('contour', { levels: 16, thickness: 1.2, smooth: 35, mode: 'lines' }),
+        L('paper', { scale: 50, contrast: 22, fiber: 30, relief: 25, tint: '#f6f1e5' }, { amount: 55 }),
+        L('vignette', { amount: 20, radius: 85, softness: 60 })
+      ]
+    },
+    {
+      name: 'Afterglow',
+      swatch: 'linear-gradient(120deg, #1b1035, #c2443f 55%, #ffd79a)',
+      layers: [
+        L('gradientmap', { shadow: '#1b1035', mid: '#c2443f', highlight: '#ffd79a', midpoint: 48, contrast: 115 }),
+        L('bloom', { threshold: 58, radius: 55, intensity: 130, tint: '#ffd9a8' }),
+        L('aberration', { amount: 12, falloff: 1.4, barrel: 0 }),
+        L('grain', { amount: 18, size: 1.1, response: 'midtones' })
+      ]
+    },
+    {
+      name: 'Misprint',
+      swatch: 'linear-gradient(90deg, #e6007e, #00a8e8 50%, #ffe800)',
+      layers: [
+        L('chroma', { distance: 7, angle: 15, mode: 'rgb' }),
+        L('halftone', { cell: 4, mode: 'cmyk', weight: 1.1, shape: 'dot', paper: '#fbf8f2' }, { amount: 88 }),
+        L('grain', { amount: 18, size: 1, response: 'midtones' })
+      ]
+    }
+  ];
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* DOM construction. This module never touches app state directly — every
+   interaction goes back out through the handlers passed to it. */
+(function (TX) {
+  'use strict';
+  var U = TX.util;
+  var ui = TX.ui = {};
+
+  function el(tag, className, text) {
+    var n = document.createElement(tag);
+    if (className) n.className = className;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  ui.el = el;
+
+  function formatValue(param, value) {
+    if (param.type !== 'range') return String(value);
+    var v = Number(value);
+    var decimals = (param.step && param.step < 1) ? (String(param.step).split('.')[1] || '').length : 0;
+    return v.toFixed(decimals) + (param.unit || '');
+  }
+
+  /* ---------------------------------------------------------- library ---- */
+  ui.buildLibrary = function (host, onAdd) {
+    host.innerHTML = '';
+    TX.byGroup().forEach(function (g) {
+      var group = el('div', 'lib-group');
+      group.appendChild(el('h3', 'lib-group-title', g.group));
+      g.items.forEach(function (def) {
+        var btn = el('button', 'lib-item');
+        btn.type = 'button';
+        var left = el('span');
+        var title = el('span', 'name', def.name);
+        if (def.gpu) title.appendChild(el('span', 'gpu-chip', 'GPU'));
+        left.appendChild(title);
+        if (def.desc) left.appendChild(el('span', 'desc', def.desc));
+        btn.appendChild(left);
+        btn.appendChild(el('span', 'plus', '+'));
+        btn.addEventListener('click', function () { onAdd(def.id); });
+        group.appendChild(btn);
+      });
+      host.appendChild(group);
+    });
+  };
+
+  /* ---------------------------------------------------------- presets ---- */
+  ui.buildPresets = function (host, presets, onPick) {
+    host.innerHTML = '';
+    presets.forEach(function (preset, i) {
+      var btn = el('button', 'preset');
+      btn.type = 'button';
+      var sw = el('span', 'swatch');
+      sw.style.background = preset.swatch;
+      btn.appendChild(sw);
+      btn.appendChild(document.createTextNode(preset.name));
+      btn.addEventListener('click', function () { onPick(i); });
+      host.appendChild(btn);
+    });
+  };
+
+  /* ------------------------------------------------------------ stack ---- */
+
+  function rangeControl(param, value, handlers, layer) {
+    var wrap = el('div', 'ctrl');
+    var label = el('div', 'ctrl-label');
+    label.appendChild(el('span', null, param.label));
+    var val = el('span', 'ctrl-value', formatValue(param, value));
+    label.appendChild(val);
+    wrap.appendChild(label);
+
+    var input = document.createElement('input');
+    input.type = 'range';
+    input.min = param.min; input.max = param.max; input.step = param.step;
+    input.value = value;
+    input.addEventListener('input', function () {
+      val.textContent = formatValue(param, input.value);
+      handlers.onParam(layer.uid, param.key, Number(input.value), true);
+    });
+    input.addEventListener('change', function () {
+      handlers.onParam(layer.uid, param.key, Number(input.value), false);
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function selectControl(param, value, handlers, layer) {
+    var wrap = el('div', 'ctrl');
+    wrap.appendChild(el('div', 'ctrl-label')).appendChild(el('span', null, param.label));
+    var sel = document.createElement('select');
+    param.options.forEach(function (o) {
+      var opt = document.createElement('option');
+      opt.value = o.value; opt.textContent = o.label;
+      sel.appendChild(opt);
+    });
+    sel.value = value;
+    sel.addEventListener('change', function () {
+      handlers.onParam(layer.uid, param.key, sel.value, false);
+    });
+    wrap.appendChild(sel);
+    return wrap;
+  }
+
+  function colorControl(param, value, handlers, layer) {
+    var wrap = el('div', 'ctrl row');
+    var label = el('div', 'ctrl-label');
+    label.appendChild(el('span', null, param.label));
+    wrap.appendChild(label);
+    var input = document.createElement('input');
+    input.type = 'color';
+    input.className = 'swatch-input';
+    input.value = value;
+    input.addEventListener('input', function () {
+      handlers.onParam(layer.uid, param.key, input.value, true);
+    });
+    input.addEventListener('change', function () {
+      handlers.onParam(layer.uid, param.key, input.value, false);
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function toggleControl(param, value, handlers, layer) {
+    var wrap = el('div', 'ctrl row');
+    var label = el('div', 'ctrl-label');
+    label.appendChild(el('span', null, param.label));
+    wrap.appendChild(label);
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = !!value;
+    input.addEventListener('change', function () {
+      handlers.onParam(layer.uid, param.key, input.checked, false);
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function textControl(param, value, handlers, layer) {
+    var wrap = el('div', 'ctrl');
+    wrap.appendChild(el('div', 'ctrl-label')).appendChild(el('span', null, param.label));
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.value = value;
+    input.spellcheck = false;
+    input.addEventListener('input', function () {
+      handlers.onParam(layer.uid, param.key, input.value, true);
+    });
+    input.addEventListener('change', function () {
+      handlers.onParam(layer.uid, param.key, input.value, false);
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  var CONTROLS = {
+    range: rangeControl, select: selectControl, color: colorControl,
+    toggle: toggleControl, text: textControl
+  };
+
+  function toolButton(glyph, title, className, onClick) {
+    var b = el('button', className || null, glyph);
+    b.type = 'button';
+    b.title = title;
+    b.setAttribute('aria-label', title);
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      onClick();
+    });
+    return b;
+  }
+
+  ui.renderStack = function (host, layers, handlers) {
+    host.innerHTML = '';
+    layers.forEach(function (layer, index) {
+      var def = TX.effects[layer.type];
+      if (!def) return;
+
+      var card = el('div', 'layer' + (layer.open ? ' open' : '') + (layer.enabled ? '' : ' disabled'));
+
+      var head = el('div', 'layer-head');
+      var main = el('div', 'layer-head-main');
+      main.appendChild(el('span', 'chev', '›'));
+      main.appendChild(el('span', 'layer-name', def.name));
+      if (def.gpu) main.appendChild(el('span', 'gpu-chip', 'GPU'));
+      main.appendChild(el('span', 'layer-group', def.group));
+      head.appendChild(main);
+
+      var tools = el('div', 'layer-tools');
+      tools.appendChild(toolButton(layer.enabled ? '◉' : '○',
+        layer.enabled ? 'Mute layer' : 'Unmute layer', null,
+        function () { handlers.onToggle(layer.uid); }));
+      tools.appendChild(toolButton('↑', 'Move up', null, function () { handlers.onMove(layer.uid, -1); }));
+      tools.appendChild(toolButton('↓', 'Move down', null, function () { handlers.onMove(layer.uid, 1); }));
+      tools.appendChild(toolButton('✕', 'Remove layer', 'danger', function () { handlers.onRemove(layer.uid); }));
+      head.appendChild(tools);
+      head.addEventListener('click', function () { handlers.onOpen(layer.uid, !layer.open); });
+      card.appendChild(head);
+
+      var body = el('div', 'layer-body');
+
+      if (def.gpu && !(TX.gl && TX.gl.available())) {
+        card.classList.add('layer-blocked');
+        var warn = el('div', 'layer-warning');
+        warn.textContent = 'This layer needs WebGL2, which this browser did not '
+          + 'provide. It is skipped in both the preview and the export.';
+        body.appendChild(warn);
+      }
+
+      body.appendChild(rangeControl(
+        { key: '__amount', label: 'Opacity', type: 'range', min: 0, max: 100, step: 1, unit: '%' },
+        layer.amount, { onParam: function (uid, _k, v, live) { handlers.onMeta(uid, 'amount', v, live); } }, layer));
+
+      body.appendChild(selectControl(
+        {
+          key: '__blend', label: 'Blend', type: 'select',
+          options: U.blendModes.map(function (m) {
+            return { value: m, label: m.replace('-', ' ').replace(/^\w/, function (s) { return s.toUpperCase(); }) };
+          })
+        },
+        layer.blend, { onParam: function (uid, _k, v) { handlers.onMeta(uid, 'blend', v, false); } }, layer));
+
+      def.params.forEach(function (param) {
+        if (param.showIf && !param.showIf(layer.params)) return;
+        var build = CONTROLS[param.type];
+        if (!build) return;
+        body.appendChild(build(param, layer.params[param.key], handlers, layer));
+      });
+
+      if (usesSeed(def)) {
+        var reseed = el('div', 'ctrl row');
+        var lab = el('div', 'ctrl-label');
+        lab.appendChild(el('span', null, 'Noise seed'));
+        reseed.appendChild(lab);
+        var btn = el('button', 'btn tiny ghost', 'Reseed');
+        btn.type = 'button';
+        btn.addEventListener('click', function () { handlers.onReseed(layer.uid); });
+        reseed.appendChild(btn);
+        body.appendChild(reseed);
+      }
+
+      card.appendChild(body);
+      host.appendChild(card);
+      void index;
+    });
+  };
+
+  /* Effects that consume env.seed benefit from a reseed button. */
+  var SEEDED = { grain: 1, paper: 1, riso: 1, stipple: 1, dither: 1, watercolor: 1, crosshatch: 1 };
+  function usesSeed(def) { return !!SEEDED[def.id]; }
+
+  /* ------------------------------------------------------------ toast ---- */
+  var toastTimer = null;
+  ui.toast = function (message) {
+    var node = document.getElementById('toast');
+    node.textContent = message;
+    node.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { node.classList.remove('show'); }, 2200);
+  };
+})(window.TX = window.TX || {});
+</script>
+<script>
+/* Application wiring: state, history, rendering cadence, file I/O. */
+(function (TX) {
+  'use strict';
+  var U = TX.util, ui = TX.ui;
+
+  var PREVIEW_CAP = 1600;      // never render a preview larger than this
+  var PREVIEW_FLOOR = 640;     // ...nor smaller than this
+  var DETAIL_CAP = 4000;       // ...unless fine screens need image resolution
+  var DETAIL_BUDGET = 9e6;     // and only for images small enough to afford it
+  var DETAIL_MIN_PX = 3;       // a feature needs this many render pixels to be
+                               // drawn as it will appear in the exported file
+  var DRAFT_FACTOR = 0.6;      // extra downscale while a control is dragging
+  var STORAGE_KEY = 'textures-studio.stack.v1';
+  var ZOOMS = ['fit', 0.25, 0.5, 1, 2, 4];
+
+  /* Options the host page can set through the URL, so a portfolio can frame the
+     studio with a look already loaded:
+       ?embed=1          compact chrome, fullscreen button, pop-out link
+       ?preset=newsprint start on a named preset
+       ?sample=0         start empty instead of with the built-in sample */
+  var options = (function () {
+    var q = {};
+    try {
+      new URLSearchParams(window.location.search).forEach(function (v, k) {
+        q[k.toLowerCase()] = v;
+      });
+    } catch (err) { /* no URL API */ }
+    var framed = false;
+    try { framed = window.self !== window.top; } catch (err) { framed = true; }
+    return {
+      embed: q.embed === '1' || q.embed === 'true' || framed,
+      preset: q.preset || '',
+      sample: q.sample !== '0' && q.sample !== 'false'
+    };
+  })();
+  TX.options = options;
+
+  var state = {
+    image: null,
+    imageName: 'image',
+    layers: [],
+    zoom: 'fit',
+    lastScale: 1,
+    previewFaithful: true,
+    previewFinest: Infinity,
+    compare: false,
+    split: 50
+  };
+
+  var history = { past: [], future: [] };
+  var pendingSnapshot = null;   // taken at the start of a live drag
+  var frame = null;
+  var frameQuality = 'full';
+  var lastRender = null;
+
+  var dom = {};
+  ['stage', 'stage-scroll', 'viewport', 'canvas-out', 'canvas-src', 'compare-handle',
+   'dropzone', 'file-input', 'library', 'preset-list', 'stack', 'stack-empty', 'meta',
+   'zoom-label', 'export-scale', 'toast', 'export-sheet', 'mobile-tabs',
+   'mtab-count', 'dz-title', 'dz-sub'].forEach(function (id) {
+    dom[id] = document.getElementById(id);
+  });
+  var outCtx = dom['canvas-out'].getContext('2d');
+  var srcCtx = dom['canvas-src'].getContext('2d');
+
+  /* ------------------------------------------------------------ history -- */
+  function snapshot() {
+    return JSON.stringify(state.layers);
+  }
+  function commit(prev) {
+    if (prev === undefined || prev === null) return;
+    if (prev === snapshot()) return;
+    history.past.push(prev);
+    if (history.past.length > 60) history.past.shift();
+    history.future.length = 0;
+    updateHistoryButtons();
+  }
+  function flushPending() {
+    if (pendingSnapshot !== null) {
+      commit(pendingSnapshot);
+      pendingSnapshot = null;
+    }
+  }
+  function restore(json) {
+    state.layers = JSON.parse(json);
+    renderStack();
+    scheduleRender('full');
+    persist();
+  }
+  function undo() {
+    flushPending();
+    if (!history.past.length) return;
+    history.future.push(snapshot());
+    restore(history.past.pop());
+    updateHistoryButtons();
+  }
+  function redo() {
+    if (!history.future.length) return;
+    history.past.push(snapshot());
+    restore(history.future.pop());
+    updateHistoryButtons();
+  }
+  function updateHistoryButtons() {
+    document.getElementById('btn-undo').disabled = !history.past.length;
+    document.getElementById('btn-redo').disabled = !history.future.length;
+  }
+
+  function persist() {
+    try { localStorage.setItem(STORAGE_KEY, snapshot()); } catch (e) { /* private mode */ }
+  }
+  function restorePersisted() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      var layers = JSON.parse(raw);
+      if (!Array.isArray(layers) || !layers.length) return false;
+      state.layers = layers
+        .filter(function (l) { return TX.effects[l.type]; })
+        .map(function (l) {
+          // Fill in any parameter added since the stack was saved.
+          return TX.makeLayer(l.type, {
+            params: l.params, amount: l.amount, blend: l.blend,
+            enabled: l.enabled, open: false
+          });
+        });
+      return state.layers.length > 0;
+    } catch (e) { return false; }
+  }
+
+  /* ------------------------------------------------------------- render -- */
+  var settleTimer = null;
+  function scheduleRender(quality) {
+    frameQuality = quality;
+    if (frame !== null) return;
+    frame = requestAnimationFrame(function () {
+      frame = null;
+      var q = frameQuality;
+      draw(q);
+      clearTimeout(settleTimer);
+      // A draft frame is always followed by a full one once the UI settles.
+      if (q === 'draft') settleTimer = setTimeout(function () { scheduleRender('full'); }, 200);
+    });
+  }
+
+  /* Render the preview at roughly the size it will actually be shown, so a
+     phone isn't asked to push four times the pixels it can display. Zooming in
+     asks for more, up to the cap, so inspecting grain at 100% still shows real
+     detail rather than an upscale. */
+  /* Usable room inside the stage, with its padding taken off. The padding
+     grows when a bottom sheet is open, so this shrinks to the visible strip. */
+  function stageAvail() {
+    var el = dom['stage-scroll'];
+    var box = el.getBoundingClientRect();
+    var cs = getComputedStyle(el);
+    var padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    var padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    return {
+      w: Math.max(80, box.width - padX),
+      h: Math.max(80, box.height - padY)
+    };
+  }
+
+  /* The finest feature the stack draws, in image pixels. A 1px dither is the
+     extreme case: nothing below the render resolution can be represented. */
+  function stackDetail() {
+    var finest = Infinity;
+    state.layers.forEach(function (layer) {
+      if (!layer.enabled) return;
+      var def = TX.effects[layer.type];
+      if (!def || typeof def.detail !== 'function') return;
+      var d = def.detail(layer.params);
+      if (typeof d === 'number' && d > 0 && d < finest) finest = d;
+    });
+    return finest;
+  }
+
+  /* `quality` matters: only the settled pass pays for image-resolution
+     rendering, so dragging a slider stays responsive. */
+  function previewMax(quality) {
+    var avail = stageAvail();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var zoom = state.zoom === 'fit' ? 1 : Math.max(1, state.zoom);
+    var wanted = Math.max(avail.w, avail.h, 320) * dpr * zoom;
+    var base = Math.round(U.clamp(wanted, PREVIEW_FLOOR, PREVIEW_CAP));
+    if (!state.image) return base;
+
+    /* A screen finer than the preview can resolve gets drawn at preview
+       resolution instead, which makes it look coarser on screen than it will
+       ever be in the file — the preview promises a texture the export cannot
+       keep. Render at image resolution instead and let the browser scale the
+       result down, so what is on screen is a true view of the exported file. */
+    var iw = state.image.naturalWidth || state.image.width;
+    var ih = state.image.naturalHeight || state.image.height;
+    if (quality === 'draft') return base;
+
+    var longest = Math.max(iw, ih);
+    var finest = stackDetail();
+    if (finest * (base / longest) < DETAIL_MIN_PX && iw * ih <= DETAIL_BUDGET) {
+      base = Math.max(base, Math.min(longest, DETAIL_CAP));
+    }
+    return base;
+  }
+
+  function draw(quality) {
+    if (!state.image) return;
+    var base = previewMax(quality);
+    var maxDim = quality === 'draft' ? base * DRAFT_FACTOR : base;
+    var out;
+    try {
+      out = TX.render(state.image, state.layers, { maxDim: maxDim, quality: quality });
+    } catch (err) {
+      console.error(err);
+      ui.toast('Render failed — see the console');
+      return;
+    }
+    lastRender = out;
+    // Below roughly 1.5 render pixels a feature cannot be drawn as it will
+    // appear in the file; past the detail budget the preview cannot afford to
+    // render at image resolution, so it stays an approximation.
+    if (quality !== 'draft') {
+      var finest = stackDetail();
+      state.previewFaithful = !isFinite(finest) || finest * (out.renderScale || 1) >= DETAIL_MIN_PX;
+      state.previewFinest = finest;
+    }
+    var c = dom['canvas-out'];
+    if (c.width !== out.width || c.height !== out.height) {
+      c.width = out.width; c.height = out.height;
+      var s = dom['canvas-src'];
+      s.width = out.width; s.height = out.height;
+      srcCtx.imageSmoothingQuality = 'high';
+      srcCtx.clearRect(0, 0, out.width, out.height);
+      srcCtx.drawImage(state.image, 0, 0, out.width, out.height);
+    }
+    outCtx.clearRect(0, 0, c.width, c.height);
+    outCtx.drawImage(out, 0, 0);
+    applyZoom();
+    updateMeta(out);
+  }
+
+  function updateMeta(out) {
+    var iw = state.image.naturalWidth || state.image.width;
+    var ih = state.image.naturalHeight || state.image.height;
+    var pct = Math.round((out.renderScale || 1) * 100);
+    dom.meta.textContent = iw + ' × ' + ih + ' · preview ' + pct + '% · ' + out.renderMs + ' ms';
+  }
+
+  /* Display size is a fraction of the source image, never of the render
+     buffer. The buffer's resolution changes with the preview budget, so
+     scaling off it made the picture jump whenever a re-render landed, and made
+     "100%" mean something different at every zoom level. */
+  function applyZoom() {
+    var c = dom['canvas-out'], s = dom['canvas-src'];
+    if (!c.width || !state.image) return;
+    var iw = state.image.naturalWidth || state.image.width;
+    var ih = state.image.naturalHeight || state.image.height;
+    var z = state.zoom;
+    var scale;
+    if (z === 'fit') {
+      var avail = stageAvail();
+      scale = Math.min(avail.w / iw, avail.h / ih, 1);
+    } else {
+      scale = z;
+    }
+    state.lastScale = scale;
+    var w = Math.round(iw * scale), h = Math.round(ih * scale);
+    [c, s].forEach(function (canvas) {
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+    });
+    dom.viewport.style.width = w + 'px';
+    dom.viewport.style.height = h + 'px';
+    dom['zoom-label'].textContent = z === 'fit' ? 'Fit' : Math.round(z * 100) + '%';
+  }
+
+  /* -------------------------------------------------------------- stack -- */
+  var handlers = {
+    onToggle: function (uid) {
+      flushPending();
+      var prev = snapshot();
+      var layer = find(uid);
+      if (!layer) return;
+      layer.enabled = !layer.enabled;
+      commit(prev); renderStack(); scheduleRender('full'); persist();
+    },
+    onRemove: function (uid) {
+      flushPending();
+      var prev = snapshot();
+      state.layers = state.layers.filter(function (l) { return l.uid !== uid; });
+      commit(prev); renderStack(); scheduleRender('full'); persist();
+    },
+    onMove: function (uid, dir) {
+      flushPending();
+      var i = state.layers.findIndex(function (l) { return l.uid === uid; });
+      var j = i + dir;
+      if (i < 0 || j < 0 || j >= state.layers.length) return;
+      var prev = snapshot();
+      var tmp = state.layers[i];
+      state.layers[i] = state.layers[j];
+      state.layers[j] = tmp;
+      commit(prev); renderStack(); scheduleRender('full'); persist();
+    },
+    onOpen: function (uid, open) {
+      var layer = find(uid);
+      if (!layer) return;
+      layer.open = open;
+      renderStack();
+    },
+    onParam: function (uid, key, value, live) {
+      var layer = find(uid);
+      if (!layer) return;
+      var prev = beginEdit(live);
+      layer.params[key] = value;
+      if (!live) {
+        endEdit(prev);
+        renderStack();   // showIf visibility may have changed
+      }
+      scheduleRender(live ? 'draft' : 'full');
+    },
+    onMeta: function (uid, key, value, live) {
+      var layer = find(uid);
+      if (!layer) return;
+      var prev = beginEdit(live);
+      layer[key] = value;
+      if (!live) endEdit(prev);
+      scheduleRender(live ? 'draft' : 'full');
+    },
+    onReseed: function (uid) {
+      flushPending();
+      var prev = snapshot();
+      var layer = find(uid);
+      if (!layer) return;
+      layer.seed = (Math.random() * 1e9) | 0;
+      commit(prev); scheduleRender('full'); persist();
+    }
+  };
+
+  /* Edits arrive either as a live stream (a slider drag: many `live` calls then
+     one commit) or as a single committed change (a select, a checkbox). Both
+     land one entry in the history, taken from before the first mutation. */
+  function beginEdit(live) {
+    if (live) {
+      if (pendingSnapshot === null) pendingSnapshot = snapshot();
+      return null;
+    }
+    return pendingSnapshot === null ? snapshot() : null;
+  }
+  function endEdit(prev) {
+    if (pendingSnapshot !== null) flushPending();
+    else commit(prev);
+    persist();
+  }
+
+  function find(uid) {
+    return state.layers.find(function (l) { return l.uid === uid; });
+  }
+
+  function renderStack() {
+    var scroll = dom.stack.scrollTop;
+    ui.renderStack(dom.stack, state.layers, handlers);
+    dom.stack.scrollTop = scroll;
+    dom['stack-empty'].style.display = state.layers.length ? 'none' : 'block';
+    dom['mtab-count'].textContent = state.layers.length;
+    dom['mtab-count'].hidden = state.layers.length === 0;
+  }
+
+  /* On a phone the two rails are bottom sheets; at most one is open, and the
+     tab bar is the only way in or out. On desktop this state is inert. */
+  var openPanel = null;
+
+  function setPanel(name) {
+    openPanel = openPanel === name ? null : name;
+    ['presets', 'library', 'stack'].forEach(function (key) {
+      document.body.classList.toggle('nav-' + key, openPanel === key);
+    });
+    Array.prototype.forEach.call(dom['mobile-tabs'].querySelectorAll('.mtab'), function (tab) {
+      tab.setAttribute('aria-expanded', String(tab.dataset.panel === openPanel));
+    });
+    // Opening *and* closing a sheet changes how much stage is usable, because
+    // the open state adds the sheet's height as stage padding.
+    if (state.zoom === 'fit') applyZoom();
+  }
+
+  function addEffect(id) {
+    flushPending();
+    var prev = snapshot();
+    state.layers.forEach(function (l) { l.open = false; });
+    state.layers.push(TX.makeLayer(id));
+    commit(prev);
+    renderStack();
+    scheduleRender('full');
+    persist();
+    dom.stack.scrollTop = dom.stack.scrollHeight;
+    if (openPanel === 'library') setPanel('stack');
+  }
+
+  function applyPreset(index, quiet) {
+    var preset = TX.presets[index];
+    if (!preset) return;
+    flushPending();
+    var prev = snapshot();
+    state.layers = preset.layers.map(function (spec) {
+      return TX.makeLayer(spec.type, { params: spec.params, amount: spec.amount, blend: spec.blend, open: false });
+    });
+    commit(prev);
+    renderStack();
+    scheduleRender('full');
+    persist();
+    if (openPanel === 'presets') setPanel(null);
+    if (!quiet) ui.toast(preset.name + ' loaded');
+  }
+
+  function shuffle() {
+    flushPending();
+    var prev = snapshot();
+    if (!state.layers.length) {
+      var pool = TX.effectList.filter(function (d) { return d.group !== 'Tone'; });
+      var pick = pool[(Math.random() * pool.length) | 0];
+      state.layers = [TX.makeLayer('adjust', { open: false }), TX.makeLayer(pick.id, { open: false })];
+    }
+    state.layers.forEach(function (layer) {
+      var def = TX.effects[layer.type];
+      layer.seed = (Math.random() * 1e9) | 0;
+      def.params.forEach(function (p) {
+        if (p.type === 'range') {
+          // Bias towards the middle of the range so results stay usable.
+          var t = (Math.random() + Math.random()) / 2;
+          var v = p.min + (p.max - p.min) * t;
+          layer.params[p.key] = p.step >= 1 ? Math.round(v) : Math.round(v / p.step) * p.step;
+        } else if (p.type === 'select' && Math.random() < 0.5) {
+          layer.params[p.key] = p.options[(Math.random() * p.options.length) | 0].value;
+        } else if (p.type === 'toggle' && Math.random() < 0.3) {
+          layer.params[p.key] = !layer.params[p.key];
+        }
+      });
+    });
+    commit(prev);
+    renderStack();
+    scheduleRender('full');
+    persist();
+  }
+
+  /* --------------------------------------------------------------- files -- */
+  function loadFile(file) {
+    if (!file || !/^image\//.test(file.type)) {
+      ui.toast('That file is not an image');
+      return;
+    }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      URL.revokeObjectURL(url);
+      setImage(img, file.name.replace(/\.[^.]+$/, ''));
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      ui.toast('Could not decode that image');
+    };
+    img.src = url;
+  }
+
+  function setImage(img, name) {
+    state.image = img;
+    state.imageName = name || 'image';
+    dom.stage.classList.remove('empty');
+    dom['canvas-out'].width = 0;   // force the compare canvas to be redrawn
+    scheduleRender('full');
+  }
+
+  /* A procedural stand-in so the studio is usable with no file at hand. */
+  function sampleImage() {
+    var w = 1280, h = 860;
+    var c = U.makeCanvas(w, h), ctx = c.getContext('2d');
+
+    var sky = ctx.createLinearGradient(0, 0, 0, h * 0.75);
+    sky.addColorStop(0, '#20304f');
+    sky.addColorStop(0.45, '#7d6a86');
+    sky.addColorStop(0.8, '#e0a06a');
+    sky.addColorStop(1, '#f7d9a8');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    var sun = ctx.createRadialGradient(w * 0.68, h * 0.44, 4, w * 0.68, h * 0.44, 190);
+    sun.addColorStop(0, 'rgba(255,250,230,1)');
+    sun.addColorStop(0.25, 'rgba(255,214,150,0.85)');
+    sun.addColorStop(1, 'rgba(255,190,120,0)');
+    ctx.fillStyle = sun;
+    ctx.beginPath(); ctx.arc(w * 0.68, h * 0.44, 190, 0, Math.PI * 2); ctx.fill();
+
+    // Ridgelines, back to front, each a shade darker.
+    var bands = [
+      { y: 0.60, amp: 46, color: '#7b7290' },
+      { y: 0.68, amp: 62, color: '#5b5c7c' },
+      { y: 0.78, amp: 80, color: '#3f4362' },
+      { y: 0.90, amp: 54, color: '#262a44' }
+    ];
+    bands.forEach(function (band, bi) {
+      ctx.fillStyle = band.color;
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (var x = 0; x <= w; x += 8) {
+        var t = x / w * (3 + bi);
+        var y = band.y * h
+          - Math.sin(t * 2.1 + bi) * band.amp
+          - Math.sin(t * 5.3 + bi * 2) * band.amp * 0.35;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fill();
+    });
+
+    // A tonal step wedge — makes it obvious what a screen is doing to gradients.
+    var steps = 12;
+    for (var i = 0; i < steps; i++) {
+      var v = Math.round(255 * i / (steps - 1));
+      ctx.fillStyle = 'rgb(' + v + ',' + v + ',' + v + ')';
+      ctx.fillRect(40 + i * 46, h - 96, 46, 56);
+    }
+    ctx.fillStyle = '#e8452f';
+    ctx.beginPath(); ctx.arc(200, 190, 62, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#2f8fbf';
+    ctx.beginPath(); ctx.arc(300, 240, 46, 0, Math.PI * 2); ctx.fill();
+
+    var img = new Image();
+    img.onload = function () { setImage(img, 'sample'); };
+    img.src = c.toDataURL('image/png');
+  }
+
+  var exportUrl = null;
+  var exportBlob = null;
+  var exportName = 'image.png';
+
+  /* When the page runs inside a host that mediates file saves, route the
+     export through it; a plain anchor download is inert there. Everywhere
+     else (a local file, your own server) the anchor is the whole story. */
+  var downloads = null;
+  var downloadsPending = null;
+  (function resolveDownloads() {
+    try {
+      if (window.claude && typeof window.claude.use === 'function') {
+        downloadsPending = window.claude.use('downloads').then(
+          function (api) { downloads = api; return api; },
+          function () { return null; }
+        );
+      }
+    } catch (err) { /* no host capabilities here */ }
+  })();
+
+  /* Saving a file is the one thing browsers disagree about most, so the app
+     tries routes in the order that each environment actually supports:
+
+       capability — the embedding host mediates the save. The only route that
+                    works inside the artifact viewer, where a page-initiated
+                    download is inert and Web Share is blocked by permissions
+                    policy.
+       anchor     — a plain download. Correct on every desktop browser and on
+                    Android, and the right default: a desktop share sheet is a
+                    poor way to save a file.
+       share      — navigator.share with a File. On iOS this is the only route
+                    to "Save to Photos", because WebKit ignores `download`.
+
+     Earlier this preferred share over anchor everywhere it existed, which on
+     Windows meant a blocked share sheet and no fallback at all. */
+
+  function shareableFile(blob, name) {
+    try {
+      if (!navigator.canShare || !navigator.share || typeof File !== 'function') return null;
+      var file = new File([blob], name, { type: 'image/png' });
+      return navigator.canShare({ files: [file] }) ? file : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /* WebKit on iOS (and iPadOS, which reports itself as a Mac) ignores an
+     anchor's download attribute, so there the share sheet has to come first. */
+  function ignoresAnchorDownload() {
+    var ua = navigator.userAgent || '';
+    if (/iP(hone|od|ad)/.test(ua)) return true;
+    return navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  }
+
+  /* Resolve the host capability, waiting briefly when it is still loading, but
+     never hanging the save behind it. */
+  function hostDownloads(timeoutMs) {
+    if (downloads) return Promise.resolve(downloads);
+    if (!downloadsPending) return Promise.resolve(null);
+    return Promise.race([
+      downloadsPending,
+      new Promise(function (resolve) {
+        setTimeout(function () { resolve(downloads); }, timeoutMs);
+      })
+    ]);
+  }
+
+  /* Drive the download from a detached link. Clicking the visible button would
+     re-enter this handler, which cancels the default action. */
+  function anchorSave(url, name) {
+    if (!url) return;
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    link.rel = 'noopener';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function capabilitySave(api, url, blob, name) {
+    return api.save({ filename: name, data: blob }).then(function () {
+      ui.toast('Saved ' + name);
+    }, function (err) {
+      var code = err && err.code;
+      if (code === 'declined') { ui.toast('Save cancelled'); return; }
+      if (code === 'too_large') { ui.toast('Too large to save — try 1× scale'); return; }
+      // Anything else is the host being unable rather than the viewer saying
+      // no, so fall through to whatever the browser itself can do.
+      return browserSave(url, blob, name);
+    });
+  }
+
+  /* Whatever happens, the button does something and says something. The
+     press-and-hold guidance is the floor: the finished image is on screen, so
+     the viewer always has a way to keep it. */
+  function browserSave(url, blob, name) {
+    var file = shareableFile(blob, name);
+
+    if (ignoresAnchorDownload() && file) {
+      return navigator.share({ files: [file] }).then(function () {
+        ui.toast('Shared');
+      }, function (err) {
+        // Dismissing the sheet is a normal outcome, not a failure.
+        if (err && err.name === 'AbortError') return;
+        anchorSave(url, name);
+        ui.toast('Press and hold the image above to save it');
+      });
+    }
+
+    anchorSave(url, name);
+    // A page cannot tell whether a download actually started, so point at the
+    // fallback rather than claiming success.
+    ui.toast(ignoresAnchorDownload()
+      ? 'Press and hold the image above to save it'
+      : 'Saving ' + name + ' — if nothing happens, right-click the image');
+    return undefined;
+  }
+
+  function saveExport(e) {
+    e.preventDefault();
+    if (!exportBlob) return;
+    var blob = exportBlob, name = exportName, url = exportUrl;
+
+    if (downloads) { capabilitySave(downloads, url, blob, name); return; }
+
+    // Where the anchor is ignored, the share sheet is the only route and it has
+    // to run inside the click: awaiting anything first loses the user
+    // activation that Safari requires.
+    if (ignoresAnchorDownload() && shareableFile(blob, name)) {
+      browserSave(url, blob, name);
+      return;
+    }
+
+    hostDownloads(2500).then(function (api) {
+      if (api) return capabilitySave(api, url, blob, name);
+      return browserSave(url, blob, name);
+    });
+  }
+
+  /* The save affordance has to describe what it will actually do. */
+  function detailWarning() {
+    if (state.previewFaithful) return '';
+    var px = state.previewFinest;
+    return '<br><b>Fine detail:</b> the smallest feature in this stack is about ' +
+      (px < 1.05 ? '1 pixel' : Math.round(px) + ' pixels') + ' wide. It is in the file, ' +
+      'but it only shows at 100% — viewed smaller it averages into flat tone. ' +
+      'Raise the pixel or cell size to keep it visible.';
+  }
+
+  function describeSave(api) {
+    var save = document.getElementById('sheet-save');
+    var note = document.getElementById('sheet-note');
+    if (!api && ignoresAnchorDownload()) {
+      save.textContent = 'Save to Photos';
+      note.innerHTML = 'Opens the share sheet — choose <b>Save Image</b>. ' +
+        'You can also press and hold the picture above and save it from there.' + detailWarning();
+    } else {
+      save.textContent = 'Save PNG';
+      note.innerHTML = 'If the file doesn\'t appear, right-click the image above ' +
+        '(press and hold on touch) and choose <b>Save image</b>.' + detailWarning();
+    }
+  }
+
+  /* Filenames travel to a filesystem that may not accept everything a photo
+     name contains — Windows rejects \ / : * ? " < > | outright. */
+  function safeFileName(base) {
+    var cleaned = String(base || 'image')
+      .replace(/[\\/:*?"<>|\u0000-\u001f]+/g, '-')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/^[.\-]+|[.\-]+$/g, '')
+      .slice(0, 80);
+    return (cleaned || 'image') + '-textured.png';
+  }
+
+  function exportImage() {
+    if (!state.image) return;
+    var scale = Number(dom['export-scale'].value) || 1;
+    ui.toast('Rendering export…');
+    // Yield a frame so the toast paints before the render blocks the thread.
+    setTimeout(function () {
+      var canvas;
+      try {
+        canvas = TX.render(state.image, state.layers, { scale: scale, quality: 'full' });
+      } catch (err) {
+        console.error(err);
+        ui.toast('Export failed — the image may be too large. Try 1× scale.');
+        return;
+      }
+      canvas.toBlob(function (blob) {
+        if (!blob) {
+          ui.toast('Export failed — the image may be too large. Try 1× scale.');
+          return;
+        }
+        if (exportUrl) URL.revokeObjectURL(exportUrl);
+        exportUrl = URL.createObjectURL(blob);
+        exportBlob = blob;
+        exportName = safeFileName(state.imageName);
+
+        document.getElementById('sheet-img').src = exportUrl;
+        document.getElementById('sheet-meta').textContent =
+          canvas.width + ' × ' + canvas.height + ' · PNG · ' + Math.round(blob.size / 1024) + ' KB';
+        var save = document.getElementById('sheet-save');
+        save.href = exportUrl;
+        save.download = exportName;
+
+        // Show the sheet straight away, then settle the label once we know
+        // whether a host capability is going to answer.
+        describeSave(downloads);
+        dom['export-sheet'].hidden = false;
+
+        // Settle the label once we know whether a host capability will answer.
+        // The save itself always waits for the button: a download started
+        // automatically cannot be verified, and when one does go through it
+        // duplicates the file the viewer then asks for.
+        hostDownloads(1500).then(describeSave);
+      }, 'image/png');
+    }, 30);
+  }
+
+  function closeExportSheet() {
+    dom['export-sheet'].hidden = true;
+  }
+
+  /* ---------------------------------------------------------------- init -- */
+  function init() {
+    // Touch devices are the ones with the hard canvas ceiling (see
+    // TX.MAX_RENDER_AREA); leave desktop exports unconstrained.
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+      TX.MAX_RENDER_AREA = 16.0e6;   // under 4096² with room for rounding
+    }
+
+    ui.buildLibrary(dom.library, addEffect);
+    ui.buildPresets(dom['preset-list'], TX.presets, applyPreset);
+    if (!restorePersisted()) {
+      state.layers = TX.presets[0].layers.map(function (spec) {
+        return TX.makeLayer(spec.type, { params: spec.params, amount: spec.amount, blend: spec.blend, open: false });
+      });
+    }
+    renderStack();
+    updateHistoryButtons();
+
+    document.getElementById('btn-open').addEventListener('click', function () { dom['file-input'].click(); });
+    document.getElementById('dz-browse').addEventListener('click', function () { dom['file-input'].click(); });
+    document.getElementById('btn-sample').addEventListener('click', sampleImage);
+    document.getElementById('dz-sample').addEventListener('click', sampleImage);
+    document.getElementById('btn-export').addEventListener('click', exportImage);
+    document.getElementById('sheet-close').addEventListener('click', closeExportSheet);
+    document.getElementById('sheet-save').addEventListener('click', saveExport);
+    dom['export-sheet'].addEventListener('click', function (e) {
+      if (e.target === dom['export-sheet']) closeExportSheet();
+    });
+    document.getElementById('btn-undo').addEventListener('click', undo);
+    document.getElementById('btn-redo').addEventListener('click', redo);
+    document.getElementById('btn-randomize').addEventListener('click', shuffle);
+    document.getElementById('btn-reset').addEventListener('click', function () {
+      flushPending();
+      var prev = snapshot();
+      state.layers = [];
+      commit(prev); renderStack(); scheduleRender('full'); persist();
+    });
+    document.getElementById('btn-copy').addEventListener('click', function () {
+      var json = JSON.stringify(state.layers.map(function (l) {
+        return { type: l.type, enabled: l.enabled, amount: l.amount, blend: l.blend, params: l.params };
+      }), null, 2);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(json).then(
+          function () { ui.toast('Stack copied as JSON'); },
+          function () { ui.toast('Clipboard blocked — logged to console'); console.log(json); }
+        );
+      } else {
+        console.log(json);
+        ui.toast('Stack logged to console');
+      }
+    });
+
+    dom['file-input'].addEventListener('change', function (e) {
+      if (e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+      e.target.value = '';
+    });
+
+    /* drag & drop */
+    var dragDepth = 0;
+    window.addEventListener('dragenter', function (e) {
+      e.preventDefault();
+      dragDepth++;
+      dom.dropzone.classList.add('active');
+    });
+    window.addEventListener('dragover', function (e) { e.preventDefault(); });
+    window.addEventListener('dragleave', function () {
+      if (--dragDepth <= 0) { dragDepth = 0; dom.dropzone.classList.remove('active'); }
+    });
+    window.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dragDepth = 0;
+      dom.dropzone.classList.remove('active');
+      var dt = e.dataTransfer;
+      if (dt && dt.files && dt.files[0]) loadFile(dt.files[0]);
+    });
+
+    /* paste */
+    window.addEventListener('paste', function (e) {
+      var items = e.clipboardData && e.clipboardData.items;
+      if (!items) return;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') === 0) {
+          loadFile(items[i].getAsFile());
+          e.preventDefault();
+          return;
+        }
+      }
+    });
+
+    /* zoom */
+    function setZoom(value) {
+      var before = previewMax();
+      state.zoom = value;
+      applyZoom();
+      if (state.image && previewMax() !== before) scheduleRender('full');
+    }
+    function stepZoom(dir) {
+      var steps = ZOOMS.slice(1);
+      var current = state.zoom === 'fit' ? state.lastScale : state.zoom;
+      var next;
+      if (dir > 0) {
+        next = steps.find(function (z) { return z > current + 0.001; });
+        if (next === undefined) next = steps[steps.length - 1];
+      } else {
+        var lower = steps.filter(function (z) { return z < current - 0.001; });
+        next = lower.length ? lower[lower.length - 1] : 'fit';
+      }
+      setZoom(next);
+    }
+    document.getElementById('zoom-in').addEventListener('click', function () { stepZoom(1); });
+    document.getElementById('zoom-out').addEventListener('click', function () { stepZoom(-1); });
+    document.getElementById('zoom-label').addEventListener('click', function () {
+      setZoom(state.zoom === 'fit' ? 1 : 'fit');
+    });
+    // A resize or rotation changes both the fit scale and the useful preview
+    // resolution; the re-render is debounced because it is the expensive half.
+    var lastPreviewMax = 0;
+    var resizeTimer = null;
+    function onViewportChange() {
+      if (state.zoom === 'fit') applyZoom();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        var now = previewMax();
+        if (state.image && Math.abs(now - lastPreviewMax) / (lastPreviewMax || 1) > 0.15) {
+          lastPreviewMax = now;
+          scheduleRender('full');
+        }
+      }, 240);
+    }
+    window.addEventListener('resize', onViewportChange);
+    window.addEventListener('orientationchange', onViewportChange);
+
+    /* Pinch to zoom, anchored on the midpoint between the two fingers, plus
+       double tap to toggle between fit and 100%. One finger still pans through
+       the scroller's own scrolling. */
+    var scroller = dom['stage-scroll'];
+    var pointers = new Map();
+    var pinch = null;
+    var pinchSettle = null;
+
+    function pinchGeometry() {
+      var pts = Array.from(pointers.values());
+      var dx = pts[0].x - pts[1].x, dy = pts[0].y - pts[1].y;
+      return {
+        dist: Math.max(1, Math.hypot(dx, dy)),
+        midX: (pts[0].x + pts[1].x) / 2,
+        midY: (pts[0].y + pts[1].y) / 2
+      };
+    }
+
+    scroller.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' || !state.image) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 2) {
+        clearTimeout(pinchSettle);
+        var g = pinchGeometry();
+        pinch = {
+          dist: g.dist,
+          base: state.zoom === 'fit' ? state.lastScale : state.zoom,
+          prevMax: previewMax()
+        };
+      }
+    });
+
+    scroller.addEventListener('pointermove', function (e) {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (!pinch || pointers.size !== 2) return;
+      e.preventDefault();
+
+      var g = pinchGeometry();
+      // Where the midpoint sits on the image, before the scale changes.
+      var before = dom.viewport.getBoundingClientRect();
+      var fx = (g.midX - before.left) / (before.width || 1);
+      var fy = (g.midY - before.top) / (before.height || 1);
+
+      state.zoom = U.clamp(pinch.base * (g.dist / pinch.dist), 0.08, 8);
+      applyZoom();
+
+      // Put that same point back under the fingers.
+      var after = dom.viewport.getBoundingClientRect();
+      scroller.scrollLeft += (after.left + fx * after.width) - g.midX;
+      scroller.scrollTop += (after.top + fy * after.height) - g.midY;
+    }, { passive: false });
+
+    function releasePointer(e) {
+      pointers.delete(e.pointerId);
+      if (pinch && pointers.size < 2) {
+        var prevMax = pinch.prevMax;
+        pinch = null;
+        // Re-render only when the zoom actually changed the useful resolution,
+        // and not immediately: a full render blocks the main thread long enough
+        // to swallow a tap that follows the pinch, so let the gesture settle.
+        if (previewMax() !== prevMax) {
+          clearTimeout(pinchSettle);
+          pinchSettle = setTimeout(function () { scheduleRender('full'); }, 340);
+        }
+      }
+    }
+    scroller.addEventListener('pointerup', releasePointer);
+    scroller.addEventListener('pointercancel', releasePointer);
+
+    var lastTap = 0, lastTapX = 0, lastTapY = 0;
+    dom.viewport.addEventListener('pointerup', function (e) {
+      // This listener runs before releasePointer on the ancestor scroller, so
+      // the finger that produced this event is still in the map: anything
+      // above one pointer is a pinch, not a tap.
+      if (e.pointerType === 'mouse' || pointers.size > 1) return;
+      var now = Date.now();
+      var near = Math.abs(e.clientX - lastTapX) < 32 && Math.abs(e.clientY - lastTapY) < 32;
+      if (now - lastTap < 400 && near) {
+        setZoom(state.zoom === 'fit' ? 1 : 'fit');
+        lastTap = 0;
+      } else {
+        lastTap = now; lastTapX = e.clientX; lastTapY = e.clientY;
+      }
+    });
+
+    /* compare */
+    var toggle = document.getElementById('compare-toggle');
+    toggle.addEventListener('change', function () {
+      state.compare = toggle.checked;
+      dom.viewport.classList.toggle('compare', state.compare);
+    });
+    var dragging = false;
+    function setSplit(clientX) {
+      var box = dom.viewport.getBoundingClientRect();
+      var pct = U.clamp((clientX - box.left) / box.width * 100, 0, 100);
+      state.split = pct;
+      dom.viewport.style.setProperty('--split', pct + '%');
+    }
+    dom['compare-handle'].addEventListener('pointerdown', function (e) {
+      dragging = true;
+      dom['compare-handle'].setPointerCapture(e.pointerId);
+      setSplit(e.clientX);
+    });
+    dom['compare-handle'].addEventListener('pointermove', function (e) {
+      if (dragging) setSplit(e.clientX);
+    });
+    dom['compare-handle'].addEventListener('pointerup', function () { dragging = false; });
+    dom.viewport.style.setProperty('--split', '50%');
+
+    /* keyboard */
+    var peeking = false;
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !dom['export-sheet'].hidden) { closeExportSheet(); return; }
+      if (!dom['export-sheet'].hidden) return;
+      var typing = /^(input|textarea|select)$/i.test(e.target.tagName);
+      if (e.code === 'Space' && !typing) {
+        if (!peeking) { peeking = true; dom.viewport.classList.add('peek'); }
+        e.preventDefault();
+        return;
+      }
+      var meta = e.metaKey || e.ctrlKey;
+      if (meta && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) redo(); else undo();
+        return;
+      }
+      if (typing || meta) return;
+      if (e.key.toLowerCase() === 'e') { e.preventDefault(); exportImage(); }
+      if (e.key.toLowerCase() === 'r') { e.preventDefault(); shuffle(); }
+      if (e.key.toLowerCase() === 'o') { e.preventDefault(); dom['file-input'].click(); }
+      if (e.key.toLowerCase() === 'f') { e.preventDefault(); toggleFullscreen(); }
+    });
+    window.addEventListener('keyup', function (e) {
+      if (e.code === 'Space') { peeking = false; dom.viewport.classList.remove('peek'); }
+    });
+
+    Array.prototype.forEach.call(dom['mobile-tabs'].querySelectorAll('.mtab'), function (tab) {
+      tab.setAttribute('aria-expanded', 'false');
+      tab.addEventListener('click', function () { setPanel(tab.dataset.panel); });
+    });
+    // Tapping the canvas dismisses whichever sheet is up.
+    dom.stage.addEventListener('pointerdown', function () {
+      if (openPanel) setPanel(null);
+    });
+
+    // Nothing can be dragged in from a touch device, so say what does work.
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+      dom['dz-title'].textContent = 'Add a photo to get started';
+      dom['dz-sub'].innerHTML = '';
+      var pick = ui.el('button', 'linkbtn', 'choose a photo');
+      var demo = ui.el('button', 'linkbtn', 'use a sample');
+      pick.type = demo.type = 'button';
+      pick.addEventListener('click', function () { dom['file-input'].click(); });
+      demo.addEventListener('click', sampleImage);
+      dom['dz-sub'].appendChild(pick);
+      dom['dz-sub'].appendChild(document.createTextNode(' · '));
+      dom['dz-sub'].appendChild(demo);
+    }
+
+    dom.stage.classList.add('empty');
+
+    if (options.embed) startEmbed();
+  }
+
+  /* Framed in another page the studio is a showcase first: it opens on
+     something rather than an empty dropzone, and gains a way to go fullscreen
+     and a way out to its own tab. */
+  function startEmbed() {
+    document.body.classList.add('is-embed');
+
+    var popout = document.getElementById('btn-popout');
+    try {
+      var url = new URL(window.location.href);
+      url.searchParams.delete('embed');
+      popout.href = url.toString();
+    } catch (err) {
+      popout.href = window.location.href;
+    }
+
+    var fs = document.getElementById('btn-fullscreen');
+    var root = document.documentElement;
+    if (!root.requestFullscreen && !root.webkitRequestFullscreen) {
+      fs.style.display = 'none';
+    } else {
+      fs.addEventListener('click', toggleFullscreen);
+    }
+
+    if (options.preset) {
+      var i = TX.presets.findIndex(function (p) {
+        return p.name.toLowerCase().replace(/[^a-z0-9]/g, '') ===
+               options.preset.toLowerCase().replace(/[^a-z0-9]/g, '');
+      });
+      if (i >= 0) applyPreset(i, true);
+    }
+    if (options.sample) sampleImage();
+  }
+
+  function toggleFullscreen() {
+    var root = document.documentElement;
+    var doc = document;
+    var active = doc.fullscreenElement || doc.webkitFullscreenElement;
+    try {
+      if (active) (doc.exitFullscreen || doc.webkitExitFullscreen).call(doc);
+      else (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+    } catch (err) {
+      ui.toast('Fullscreen was blocked by the page hosting this frame');
+    }
+  }
+
+  /* Exposed for debugging from the console: TX.app.state, TX.app.render('full') */
+  TX.app = {
+    state: state, render: scheduleRender, addEffect: addEffect,
+    applyPreset: applyPreset, exportNameFor: safeFileName
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})(window.TX = window.TX || {});
+</script>
+</body>
+</html>

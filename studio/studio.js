@@ -333,7 +333,7 @@
   const current = () => state.posts.find((p) => p.id === state.selected);
   const subFor = (p) => (p && p.substack ? (state.substack.items || []).find((s) => s.url === p.substack) : null);
   const titleOf = (p) => (p.substack ? (subFor(p) || {}).title || p.substack : p.title) || 'Untitled';
-  const TYPE_LABEL = { project: 'Project', image: 'Image', writing: 'Writing' };
+  const TYPE_LABEL = { project: 'Project', image: 'Image', tool: 'Tool', writing: 'Writing' };
   const STATUS_LABEL = { published: 'Live', draft: 'Draft', archived: 'Archived' };
 
   function newPost(type) {
@@ -342,6 +342,8 @@
     const extra = {
       project: { client: '', role: '', tags: [], summary: '', body: '', credits: '', media: [] },
       image: { tags: [], body: '', size: 'small', media: [] },
+      tool: { tags: [], summary: '', body: '', process: '', live: '', repo: '', embed: '',
+        credits: 'Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code', media: [] },
       writing: { date: new Date().toISOString().slice(0, 10), summary: '', body: '', url: '', media: [] },
     }[type];
     const p = { ...base, ...extra };
@@ -654,6 +656,18 @@
           ${field('summary', 'One line', p.summary, '', 'shown first when the project opens')}
           ${area('body', 'Description', p.body, 7, 'a blank line starts a new paragraph')}
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Photography: Name')}
+          ${slugField}
+        </div>${mediaManager(p)}`;
+      } else if (p.type === 'tool') {
+        body = `<div class="fields">
+          ${common}
+          <div class="row">${field('tags', 'What it does', (p.tags || []).join(', '), '', 'e.g. 3D rendering, Lighting')}${field('year', 'Year', p.year, 'inputmode="numeric" class="short"')}</div>
+          ${field('summary', 'One line', p.summary, '', 'what it is, for someone skimming')}
+          <div class="row">${field('live', 'Try-it link', p.live, 'type="url" placeholder="https://…"', 'where the working tool lives')}${field('repo', 'Source link', p.repo, 'type="url" placeholder="https://github.com/…"', 'optional')}</div>
+          ${field('embed', 'Open on the page', p.embed, 'placeholder="/tools/…/?embed=1"', 'optional — a link that can run inside the project page')}
+          ${area('body', 'What it is', p.body, 6, 'a blank line starts a new paragraph')}
+          ${area('process', 'How it was made', p.process, 6, 'the problem, what you directed, what the AI wrote, what you judged')}
+          ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Built with: Claude Code')}
           ${slugField}
         </div>${mediaManager(p)}`;
       } else if (p.type === 'image') {

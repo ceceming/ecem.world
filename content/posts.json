@@ -1,6 +1,77 @@
 {
   "posts": [
     {
+      "id": "t1rndr",
+      "type": "tool",
+      "status": "draft",
+      "slug": "obj-render-studio",
+      "title": "OBJ Render Studio",
+      "year": "2026",
+      "tags": [
+        "3D rendering",
+        "Lighting",
+        "Product imagery"
+      ],
+      "summary": "A browser-based render studio that lights 3D models the way a photographer lights a set.",
+      "live": "https://ceceming.github.io/Obj_renderer_environment/",
+      "repo": "https://github.com/ceceming/Obj_renderer_environment",
+      "embed": "",
+      "body": "The hard part of getting a usable image out of a 3D file is not the geometry — it is the light. The studio is built around that: 25 lighting rigs drawn from real photographic setups, every source movable, resizable and re-colourable, so the highlight on a glossy surface is the actual shape of the softbox you placed.\n\nDrop in a model, art-direct light and camera, and export a cut-out PNG, a print-resolution still, a frame sequence, or a linear EXR for grading. A command-line version renders the same scenes headlessly, up to 6K, for batches.",
+      "process": "I built it with Claude Code. I set the brief and the standards — photographic lighting rigs, physically based materials, outputs a designer actually uses — and judged every build by eye against renders I would accept in client work. Claude Code wrote the code; I directed what it should do, what it should look like, and what was not good enough yet.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/tools/obj-render-studio-render.webp",
+          "w": 898,
+          "h": 898,
+          "alt": "A glossy white knot rendered under a studio softbox"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/obj-render-studio.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The render studio's interface: model controls on the left, the render in the centre"
+        }
+      ]
+    },
+    {
+      "id": "t2txtr",
+      "type": "tool",
+      "status": "draft",
+      "slug": "textures-studio",
+      "title": "Textures Studio",
+      "year": "2026",
+      "tags": [
+        "Image editing",
+        "Print textures"
+      ],
+      "summary": "A tactile image-filter studio: stack print, paper and painterly textures on any image, live.",
+      "live": "tools/textures/",
+      "repo": "",
+      "embed": "tools/textures/?embed=1",
+      "body": "Drop in an image and stack textures on it — halftone, riso, newsprint, letterpress, cyanotype, grain, glyphs — tuning every parameter live, then export a full-resolution PNG. It runs entirely in the browser: nothing is uploaded, the pixels never leave the page.\n\nIt began as a way to give digital images the texture of the printed matter I love, without a round trip through a print shop or a heavy desktop app.",
+      "process": "I built it with Claude Code. I defined the textures by reference to real print processes, set the look of the interface, and tested each filter against how the real thing looks on paper, sending it back until it did. Claude Code wrote the code; the taste and the decisions are mine.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/tools/textures-studio-result.webp",
+          "w": 996,
+          "h": 668,
+          "alt": "A landscape rendered as a halftone print with grain"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/textures-studio.webp",
+          "w": 1500,
+          "h": 940,
+          "alt": "The Textures Studio interface: presets on the left, the image in the centre, the filter stack on the right"
+        }
+      ]
+    },
+    {
       "id": "s2b8m3",
       "type": "image",
       "status": "published",

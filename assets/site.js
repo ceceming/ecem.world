@@ -137,13 +137,16 @@
       b.setAttribute('aria-pressed', String(t === filter));
     });
 
-    const work = posts.filter((p) => p.type !== 'writing' && (filter === 'all' || filter === p.type));
-    const words = filter === 'all' || filter === 'writing' ? writingIndex : [];
-    slot('index').innerHTML =
-      (work.length ? `<p class="group">Work</p>` + work.map((p) => `
+    const work = posts.filter((p) => p.type !== 'writing' && p.type !== 'tool' && (filter === 'all' || filter === p.type));
+    const tools = posts.filter((p) => p.type === 'tool' && (filter === 'all' || filter === 'tool'));
+    const row = (p) => `
         <a href="#/${esc(p.slug)}" data-goto="${esc(p.slug)}">
           <span>${esc(p.title)}${badge(p)}</span><span>${esc((p.tags || [])[0] || '')}</span><span>${esc(p.year)}</span>
-        </a>`).join('') : '') +
+        </a>`;
+    const words = filter === 'all' || filter === 'writing' ? writingIndex : [];
+    slot('index').innerHTML =
+      (work.length ? `<p class="group">Work</p>` + work.map(row).join('') : '') +
+      (tools.length ? `<p class="group">Tools <span class="more">— built with AI</span></p>` + tools.map(row).join('') : '') +
       (words.length ? `<p class="group">Writing</p>` + words.map((p) => `
         <a class="is-writing" ${linkFor(p)}>
           <span>${esc(p.title)}</span><span>${p.date ? esc(fmtDate(p.date)) : ''}</span>
@@ -183,7 +186,8 @@
           </a></article>`;
       }
 
-      const isProject = p.type === 'project';
+      // A tool is shown like a project, with a way to try it in its caption.
+      const isProject = p.type === 'project' || p.type === 'tool';
       const media = isProject ? p.media.slice(0, 3) : p.media.slice(0, 1);
       const extra = isProject && p.media.length > 3 ? `<span class="more"> +${p.media.length - 3}</span>` : '';
       const mid = p.tags.join(', ');
@@ -200,8 +204,18 @@
           <span class="c-mid">${esc(isProject ? p.tags.join(', ') : '')}</span>
           <span>${esc(p.year)}${!isProject && mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
         </div>
+        ${p.type === 'tool' ? tryLinks(p, 'try-line') : ''}
       </article>`;
     }).join('');
+  }
+
+  // "Try it ↗" and "Source ↗" for a tool, as a caption line or as buttons.
+  function tryLinks(p, cls) {
+    const links = [
+      p.live ? `<a href="${esc(p.live)}" target="_blank" rel="noopener">Try it ↗</a>` : '',
+      p.repo ? `<a href="${esc(p.repo)}" target="_blank" rel="noopener">Source ↗</a>` : '',
+    ].filter(Boolean);
+    return links.length ? `<p class="${cls}">${links.join('')}</p>` : '';
   }
 
   /* ── A project, opened ───────────────────────────────────────────── */
@@ -237,19 +251,24 @@
       </div></div>`;
     } else {
       title = [`<b>${esc(p.title)}</b>`, esc(p.year || '')].filter(Boolean).join(' · ');
-      const list = posts.filter((q) => q.type === 'project');
+      const list = posts.filter((q) => q.type === p.type);
+      const isTool = p.type === 'tool';
       const i = list.indexOf(p);
       const next = list[(i + 1) % list.length];
-      body = `<div class="sheet-media">${p.media.map((m, k) => frame(m, k < 2)).join('')}</div>
+      body = `${isTool ? `<div class="tool-head">${p.summary ? `<p class="tool-summary">${esc(p.summary)}</p>` : ''}${tryLinks(p, 'try-buttons')}</div>` : ''}
+        ${isTool && p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
+          <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
+        <div class="sheet-media">${p.media.map((m, k) => frame(m, k < 2)).join('')}</div>
         <div class="sheet-text">
           <div>
             <h2>${esc(p.title)}</h2>
-            ${p.summary ? `<div class="prose"><p>${esc(p.summary)}</p></div>` : ''}
+            ${p.summary && !isTool ? `<div class="prose"><p>${esc(p.summary)}</p></div>` : ''}
             <div class="prose">${prose(p.body)}</div>
+            ${isTool && p.process ? `<h2 class="sub">How it was made</h2><div class="prose">${prose(p.process)}</div>` : ''}
           </div>
           <div>
             ${p.role ? `<dl><dt>Role</dt><dd>${esc(p.role)}</dd></dl>` : ''}
-            ${p.tags.length ? `<dl><dt>Disciplines</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
+            ${p.tags.length ? `<dl><dt>${isTool ? 'What it does' : 'Disciplines'}</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
             ${credits(p.credits)}
           </div>
         </div>
@@ -258,6 +277,17 @@
 
     slot('sheet-title').innerHTML = title;
     slot('sheet-body').innerHTML = body;
+
+    // The tool itself is only loaded when asked for, so opening the page
+    // costs nothing until someone wants to play.
+    const live = slot('sheet-body').querySelector('.tool-live');
+    if (live) {
+      live.querySelector('.tool-open').addEventListener('click', () => {
+        live.innerHTML = `<iframe src="${esc(live.dataset.embed)}" title="${esc(p.title)}" loading="lazy"
+          allow="fullscreen; clipboard-write; web-share" allowfullscreen></iframe>`;
+        live.classList.add('is-open');
+      });
+    }
     document.title = `${p.title} — Ecem Öztürk`;
     if (!sheet.open) sheet.showModal();
     sheet.scrollTop = 0;
@@ -314,7 +344,7 @@
     }
     const p = posts.find((q) => q.slug === h);
     if (!p) return closeSheet();
-    if (p.type === 'project') return openSheet(p);
+    if (p.type === 'project' || p.type === 'tool') return openSheet(p);
     // A standalone image has nothing more to open: bring it into view.
     closeSheet();
     const el = document.getElementById(`p-${p.slug}`);

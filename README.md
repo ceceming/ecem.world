@@ -32,6 +32,12 @@ anywhere else. It needs a token with **Contents: Read and write** on this repo
 sign-in screen says how to make one. Every **Publish** is one commit; Pages
 puts it live about a minute later.
 
+- **Tools** (fourth kind): a vibe-coded design tool, shown like a project with
+  *Try it ↗* / *Source ↗* links, an optional *Try it here* that runs the tool
+  inside its page (loaded only on click), and a *How it was made* section.
+  The Textures Studio is copied into `tools/textures/` from the private repo
+  `ceceming/my-own-texture-studio` (its `docs/index.html`, one self-contained
+  file) — re-copy it when that tool changes.
 - **Three kinds of entry.** *Project* (any number of images, GIFs, MP4s or
   Vimeo/YouTube links; the first three show in the feed, all of them in the
   opened project), *Image* (one standalone piece, small or large), and
