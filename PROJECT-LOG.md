@@ -226,6 +226,14 @@ refused too, which means the container was still enforcing the allowlist it
 started with. **Add the domains first, then start a fresh session** — that
 session reads this file and has the context to carry on.
 
+**Tried again from a fresh session on 13 October 2026, and still blocked.**
+All four still get 403 to CONNECT. The built-in WebFetch tool does not get
+around it either: it fails DNS for every host, `example.com` included, so it
+is held by the same policy. Web search does not index any of the four sites
+either. So the domains are **not** in the allowlist this session started with.
+Either they were never saved, or the save did not take. Check the
+environment's Allowed domains list itself before starting another session.
+
 To unblock, either:
 
 1. Add the four domains under **Allowed domains** in the environment's network
