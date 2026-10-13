@@ -83,6 +83,13 @@
       "media": [
         {
           "type": "image",
+          "src": "media/t2txtr/texturingtool-8hp8.webp",
+          "w": 966,
+          "h": 668,
+          "alt": ""
+        },
+        {
+          "type": "image",
           "src": "media/tools/textures-studio-result.webp",
           "w": 996,
           "h": 668,
