@@ -1,6 +1,28 @@
 {
   "posts": [
     {
+      "id": "ks6duw",
+      "type": "image",
+      "status": "draft",
+      "slug": "light-design",
+      "title": "Light design",
+      "year": "2026",
+      "tags": [
+        "Rhino"
+      ],
+      "body": "",
+      "size": "large",
+      "media": [
+        {
+          "type": "gif",
+          "src": "media/ks6duw/glyph-brick-left-45-light-to-dark-y1dj.gif",
+          "w": 800,
+          "h": 1000,
+          "alt": ""
+        }
+      ]
+    },
+    {
       "id": "s2b8m3",
       "type": "image",
       "status": "published",
