@@ -3,15 +3,15 @@
     {
       "id": "ks6duw",
       "type": "image",
-      "status": "draft",
-      "slug": "light-design",
-      "title": "Light design",
+      "status": "published",
+      "slug": "glyph-light",
+      "title": "Glyph light",
       "year": "2026",
       "tags": [
-        "Rhino"
+        "Light design"
       ],
       "body": "",
-      "size": "large",
+      "size": "small",
       "media": [
         {
           "type": "gif",
