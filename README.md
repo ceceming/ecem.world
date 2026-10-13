@@ -4,6 +4,15 @@ Portfolio site: a pinned panel (the drifting chrome "e", the bio, an index of
 the work, the contact menu) beside a feed of projects, standalone images and
 writing. The old coming-soon page is kept at `coming-soon.html`.
 
+## Changing CSS or JavaScript: bump the version
+
+`index.html` and `studio/index.html` load their stylesheet and script as
+`site.css?v=20261014a`. GitHub Pages tells browsers to keep files for 10
+minutes, and phones often keep them longer, so a new page could arrive with
+an old stylesheet and script — new buttons, old behaviour. **Whenever
+`assets/site.*` or `studio/studio.*` changes, change the `?v=` value** (any
+new value works; the date plus a letter is the convention).
+
 ## Content, and the studio
 
 Nothing about the work is hard-coded. The site is drawn from three files:
