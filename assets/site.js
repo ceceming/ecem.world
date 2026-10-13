@@ -142,7 +142,7 @@
     slot('index').innerHTML =
       (work.length ? `<p class="group">Work</p>` + work.map((p) => `
         <a href="#/${esc(p.slug)}" data-goto="${esc(p.slug)}">
-          <span>${esc(p.title)}${badge(p)}</span><span>${esc(p.client || (p.tags || [])[0] || '')}</span><span>${esc(p.year)}</span>
+          <span>${esc(p.title)}${badge(p)}</span><span>${esc((p.tags || [])[0] || '')}</span><span>${esc(p.year)}</span>
         </a>`).join('') : '') +
       (words.length ? `<p class="group">Writing</p>` + words.map((p) => `
         <a class="is-writing" ${linkFor(p)}>
@@ -186,7 +186,7 @@
       const isProject = p.type === 'project';
       const media = isProject ? p.media.slice(0, 3) : p.media.slice(0, 1);
       const extra = isProject && p.media.length > 3 ? `<span class="more"> +${p.media.length - 3}</span>` : '';
-      const mid = [p.tags.join(', '), isProject ? p.client : ''].filter(Boolean).join(' — ');
+      const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
       // The row's combined ratio caps its height at ~78% of the window, so a
       // single wide image does not fill the screen edge to edge.
@@ -198,7 +198,6 @@
         <div class="caption">
           <span>${esc(p.title)}${extra}${badge(p)}</span>
           <span class="c-mid">${esc(isProject ? p.tags.join(', ') : '')}</span>
-          <span class="c-mid">${esc(isProject ? (p.client || '') : '')}</span>
           <span>${esc(p.year)}${!isProject && mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
         </div>
       </article>`;
@@ -236,7 +235,7 @@
         ${p.url ? `<p><a href="${esc(p.url)}" target="_blank" rel="noopener" class="more">Originally on Substack ↗</a></p>` : ''}
       </div></div>`;
     } else {
-      title = [`<b>${esc(p.title)}</b>`, esc(p.client || ''), esc(p.year || '')].filter(Boolean).join(' · ');
+      title = [`<b>${esc(p.title)}</b>`, esc(p.year || '')].filter(Boolean).join(' · ');
       const list = posts.filter((q) => q.type === 'project');
       const i = list.indexOf(p);
       const next = list[(i + 1) % list.length];

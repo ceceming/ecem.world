@@ -648,7 +648,7 @@
       if (p.type === 'project') {
         body = `<div class="fields">
           ${common}
-          <div class="row">${field('client', 'Client', p.client, '', 'or "Self-initiated"')}${field('year', 'Year', p.year, 'inputmode="numeric" class="short"')}</div>
+          <div class="row">${field('client', 'Client', p.client, '', 'for your records — not shown on the site')}${field('year', 'Year', p.year, 'inputmode="numeric" class="short"')}</div>
           <div class="row">${field('role', 'Role', p.role, '', 'e.g. Art direction, 3D')}${field('tags', 'Disciplines', (p.tags || []).join(', '), '', 'comma between')}</div>
           ${field('summary', 'One line', p.summary, '', 'shown first when the project opens')}
           ${area('body', 'Description', p.body, 7, 'a blank line starts a new paragraph')}

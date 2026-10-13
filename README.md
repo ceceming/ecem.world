@@ -27,6 +27,8 @@ puts it live about a minute later.
   Vimeo/YouTube links; the first three show in the feed, all of them in the
   opened project), *Image* (one standalone piece, small or large), and
   *Writing* (written here, or a Substack post placed in the feed).
+- **Client is private.** A project's Client field is kept in the studio for
+  your records and never shown on the site.
 - **Three statuses.** *Live* is on the site. *Draft* and *Archived* stay in
   `posts.json` but are never shown. The repo is public, so drafts are
   readable on GitHub by anyone who looks — accepted.
