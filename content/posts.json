@@ -1,0 +1,90 @@
+{
+  "posts": [
+    {
+      "id": "s1a7k2",
+      "type": "project",
+      "status": "published",
+      "slug": "sample-project-one",
+      "title": "Sample project one",
+      "year": "2026",
+      "client": "Client name",
+      "role": "Art direction",
+      "tags": ["Brand", "Packaging"],
+      "summary": "A placeholder to show how a project with several images sits in the feed.",
+      "body": "This is sample text. Replace it in the studio, or archive this entry once real work is in.\n\nA project can hold any number of images, GIFs and videos, each kept at its own ratio. The first three show in the feed; all of them show when the project is opened.",
+      "credits": "Photography: Name Surname\nDesigned at: Studio",
+      "media": [
+        { "type": "image", "src": "media/samples/a-1.webp", "w": 1600, "h": 2000, "alt": "" },
+        { "type": "image", "src": "media/samples/a-2.webp", "w": 1600, "h": 2000, "alt": "" },
+        { "type": "image", "src": "media/samples/a-3.webp", "w": 2000, "h": 1125, "alt": "" }
+      ]
+    },
+    {
+      "id": "s2b8m3",
+      "type": "image",
+      "status": "published",
+      "slug": "sample-standalone-image",
+      "title": "Sample standalone image",
+      "year": "2026",
+      "tags": ["Rhino", "Blender"],
+      "summary": "",
+      "body": "",
+      "size": "small",
+      "media": [
+        { "type": "image", "src": "media/samples/d-1.webp", "w": 1600, "h": 2000, "alt": "" }
+      ]
+    },
+    {
+      "id": "s3c9n4",
+      "type": "writing",
+      "status": "published",
+      "slug": "the-mighty-return-of-the-handmade",
+      "substack": "https://luckbug.substack.com/p/the-mighty-return-of-the-handmade"
+    },
+    {
+      "id": "s4d0p5",
+      "type": "project",
+      "status": "published",
+      "slug": "sample-project-two",
+      "title": "Sample project two",
+      "year": "2025",
+      "client": "Self-initiated",
+      "role": "Creator & art director",
+      "tags": ["VR", "3D"],
+      "summary": "",
+      "body": "Sample text.",
+      "credits": "",
+      "media": [
+        { "type": "image", "src": "media/samples/b-1.webp", "w": 2000, "h": 1125, "alt": "" },
+        { "type": "image", "src": "media/samples/b-2.webp", "w": 1500, "h": 1500, "alt": "" },
+        { "type": "image", "src": "media/samples/b-3.webp", "w": 1125, "h": 2000, "alt": "" }
+      ]
+    },
+    {
+      "id": "s5e1q6",
+      "type": "image",
+      "status": "published",
+      "slug": "sample-image-two",
+      "title": "Sample image two",
+      "year": "2025",
+      "tags": ["Machine knitting"],
+      "size": "small",
+      "media": [
+        { "type": "image", "src": "media/samples/e-1.webp", "w": 1500, "h": 1500, "alt": "" }
+      ]
+    },
+    {
+      "id": "s6f2r7",
+      "type": "image",
+      "status": "draft",
+      "slug": "sample-draft",
+      "title": "A draft — not on the site",
+      "year": "2026",
+      "tags": [],
+      "size": "large",
+      "media": [
+        { "type": "image", "src": "media/samples/c-1.webp", "w": 1600, "h": 1200, "alt": "" }
+      ]
+    }
+  ]
+}

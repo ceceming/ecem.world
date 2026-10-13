@@ -1,0 +1,13 @@
+// Cloudflare Workers settings — used ONLY for preview links of branches.
+// The real site, ecem.world, is still served by GitHub Pages from `main`.
+// The site is plain files, so there is no Worker code: Cloudflare just
+// serves this folder as it is.
+{
+  "name": "ecem-world",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "."
+  },
+  "workers_dev": true,
+  "preview_urls": true
+}

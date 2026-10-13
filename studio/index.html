@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Studio — ecem.world</title>
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+
+<!--
+  The studio: where the site's content is seen, ordered and filled in.
+
+  It is a page like any other — there is no server. It reads and writes the
+  content/ folder of the GitHub repo directly, with a token only you hold.
+  Without that token this page can see nothing that is not already public
+  and change nothing at all. Every "Publish" is one commit to the branch, and
+  GitHub Pages puts it live about a minute later.
+-->
+
+<!-- ── Sign in ──────────────────────────────────────────────────────── -->
+<section id="signin" class="signin" hidden>
+  <form id="signin-form">
+    <h1>ecem.world <span>studio</span></h1>
+    <p>Paste your GitHub access token. It is kept in this browser only, and is
+      what lets this page save to the site.</p>
+
+    <label>Access token
+      <input name="token" type="password" autocomplete="off" spellcheck="false" required
+             placeholder="github_pat_…">
+    </label>
+
+    <details>
+      <summary>Repository</summary>
+      <label>Owner <input name="owner" spellcheck="false"></label>
+      <label>Repository <input name="repo" spellcheck="false"></label>
+      <label>Branch <input name="branch" spellcheck="false"></label>
+    </details>
+
+    <button type="submit" class="primary">Open the studio</button>
+    <p class="error" id="signin-error" role="alert"></p>
+
+    <details class="help">
+      <summary>How to make a token (once, 2 minutes)</summary>
+      <ol>
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Settings → Fine-grained tokens → Generate new token</a>.</li>
+        <li>Name it <i>ecem.world studio</i>. Expiration: up to a year.</li>
+        <li>Repository access: <b>Only select repositories</b> → <b>ceceming/ecem.world</b>.</li>
+        <li>Permissions → Repository permissions:
+          <b>Contents: Read and write</b>, and
+          <b>Actions: Read and write</b> (only for the "Check Substack now" button).</li>
+        <li>Generate, copy, paste above. Do this once per device.</li>
+      </ol>
+    </details>
+  </form>
+</section>
+
+<!-- ── The studio ───────────────────────────────────────────────────── -->
+<div id="app" class="app" hidden>
+  <header class="top">
+    <a class="brand" href="../" target="_blank" rel="noopener">ecem.world <span>studio</span></a>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="library" aria-selected="true">Library</button>
+      <button type="button" role="tab" data-tab="substack" aria-selected="false">Substack</button>
+      <button type="button" role="tab" data-tab="site" aria-selected="false">Site</button>
+    </nav>
+    <div class="actions">
+      <span class="status" id="status" aria-live="polite"></span>
+      <button type="button" id="preview">Preview</button>
+      <button type="button" id="discard" hidden>Discard</button>
+      <button type="button" id="publish" class="primary" disabled>Publish</button>
+      <button type="button" id="signout" class="quiet" title="Sign out of this browser">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Library: the list on the left IS the site's order. -->
+  <section class="view library" data-view="library">
+    <div class="list-pane">
+      <div class="list-tools">
+        <div class="chips" id="type-filter">
+          <button type="button" data-type="all" aria-pressed="true">All</button>
+          <button type="button" data-type="project" aria-pressed="false">Projects</button>
+          <button type="button" data-type="image" aria-pressed="false">Images</button>
+          <button type="button" data-type="writing" aria-pressed="false">Writing</button>
+        </div>
+        <div class="chips" id="status-filter">
+          <button type="button" data-status="all" aria-pressed="true">Any</button>
+          <button type="button" data-status="published" aria-pressed="false">Live</button>
+          <button type="button" data-status="draft" aria-pressed="false">Drafts</button>
+          <button type="button" data-status="archived" aria-pressed="false">Archived</button>
+        </div>
+        <div class="new">
+          <button type="button" data-new="project" class="primary">+ Project</button>
+          <button type="button" data-new="image">+ Image</button>
+          <button type="button" data-new="writing">+ Writing</button>
+        </div>
+      </div>
+      <p class="hint">Drag to reorder — top of the list is top of the site. Or select one and press Alt + ↑ / ↓.</p>
+      <ol class="list" id="list"></ol>
+    </div>
+    <div class="edit-pane" id="editor"></div>
+  </section>
+
+  <section class="view" data-view="substack" hidden>
+    <div class="page">
+      <div class="page-head">
+        <h2>Substack</h2>
+        <p class="muted" id="sync-info"></p>
+        <button type="button" id="sync-now">Check Substack now</button>
+      </div>
+      <div class="settings-row">
+        <label class="check"><input type="checkbox" id="sub-show"> Show my Substack posts on the site (in the index and under Writing)</label>
+        <label>When someone opens a post
+          <select id="sub-mode">
+            <option value="link">Send them to Substack</option>
+            <option value="repost">Show the full text here (all posts)</option>
+          </select>
+        </label>
+      </div>
+      <p class="hint">New posts arrive on their own within the hour. To place one in the main feed among your work, choose <b>Add to feed</b>; it then appears in the Library to be ordered like anything else.</p>
+      <table class="subs" id="subs"></table>
+    </div>
+  </section>
+
+  <section class="view" data-view="site" hidden>
+    <div class="page">
+      <h2>Site</h2>
+      <form id="site-form" class="fields">
+        <label>Name <input name="name"></label>
+        <label>Bio <span class="muted">— the paragraph pinned beside the work. Third person, one or two sentences.</span>
+          <textarea name="bio" rows="4"></textarea></label>
+        <label>Currently <span class="muted">— optional, one line under the bio</span>
+          <input name="currently" placeholder="e.g. Currently art directing for …"></label>
+        <label>Email <input name="email" type="email"></label>
+      </form>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="studio.js"></script>
+</body>
+</html>

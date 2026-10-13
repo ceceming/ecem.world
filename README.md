@@ -1,7 +1,48 @@
 # ecem.world
 
-Portfolio site. Right now it is a coming-soon page: a 3D chrome "e" monogram
-drifting on a black field with "coming soon" underneath.
+Portfolio site: a pinned panel (the drifting chrome "e", the bio, an index of
+the work, the contact menu) beside a feed of projects, standalone images and
+writing. The old coming-soon page is kept at `coming-soon.html`.
+
+## Content, and the studio
+
+Nothing about the work is hard-coded. The site is drawn from three files:
+
+| File | What it holds | Who writes it |
+|---|---|---|
+| `content/posts.json` | Every project, image and writing entry, **in site order** | The studio |
+| `content/site.json` | Name, bio, "currently", email, Substack settings | The studio |
+| `content/substack.json` | The luckbug Substack posts | `.github/workflows/substack.yml`, hourly |
+| `media/<post id>/` | Images, GIFs, videos and video posters | The studio |
+
+**[`/studio/`](https://ecem.world/studio/)** is where content is seen, ordered
+and filled in. It is a static page that talks to the GitHub API with a
+fine-grained token kept in the browser — no server, no database, no account
+anywhere else. It needs a token with **Contents: Read and write** on this repo
+(and **Actions: Read and write** for its "Check Substack now" button); the
+sign-in screen says how to make one. Every **Publish** is one commit; Pages
+puts it live about a minute later.
+
+- **Three kinds of entry.** *Project* (any number of images, GIFs, MP4s or
+  Vimeo/YouTube links; the first three show in the feed, all of them in the
+  opened project), *Image* (one standalone piece, small or large), and
+  *Writing* (written here, or a Substack post placed in the feed).
+- **Three statuses.** *Live* is on the site. *Draft* and *Archived* stay in
+  `posts.json` but are never shown. The repo is public, so drafts are
+  readable on GitHub by anyone who looks — accepted.
+- **Uploads are processed in the browser.** Photos are resized to 2400px on
+  the long edge and saved as WebP. Video is stored as is (keep it under
+  25 MB; GitHub refuses 100 MB); a poster frame is grabbed automatically.
+- **Preview** opens the real site fed the studio's unpublished copy, drafts
+  included and badged. It updates as you type.
+- **Unpublished text survives a closed tab** (kept in the browser);
+  unpublished *files* do not, and the studio says so.
+- `/studio/?branch=name` works on another branch, to try things safely.
+
+**Substack** is pulled hourly by the workflow (`tools/sync-substack.mjs`, no
+dependencies). Posts are merged, never removed, so older posts stay after
+they fall off the RSS feed. On the studio's Substack tab each post can be
+hidden, opened in full here instead of on Substack, or added to the main feed.
 
 **What we decided and why** lives in a separate, private repo,
 `ceceming/ecem-world-notes` (`PROJECT-LOG.md` and `REFERENCE-STUDY.md`).
@@ -20,7 +61,9 @@ place and live. Read this before replacing it: the raw Meshy export was
 
 | | |
 |---|---|
-| `index.html` | The coming-soon page: black, Helvetica, glyph centred |
+| `index.html` | The portfolio — `assets/site.css`, `assets/site.js` |
+| `coming-soon.html` | The previous coming-soon page, kept |
+| `studio/` | The private editor for `content/` (see above) |
 | `model.html` | The same glyph on a fully transparent background, on its own |
 | `assets/scene.js` | The 3D scene and the whole animation |
 | `model/` | `model.glb` — the chrome "e", optimised for the web |
