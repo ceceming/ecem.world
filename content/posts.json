@@ -19,21 +19,22 @@
       "embed": "virtual-nostalgia/",
       "media": [
         {
+          "type": "video",
+          "src": "media/vnost/202610140308-3-bx1m.mp4",
+          "w": 1280,
+          "h": 720,
+          "alt": "",
+          "poster": "media/vnost/202610140308-3-bx1m-poster.webp",
+          "feed": true,
+          "size": "m"
+        },
+        {
           "type": "image",
           "src": "media/vnost/keychain-rmv-bcg-titlehead-ticket-jakc.webp",
           "w": 1800,
           "h": 1300,
           "alt": "",
           "size": "m",
-          "feed": false
-        },
-        {
-          "type": "video",
-          "src": "media/vnost/202610140308-1-1-rm3q.mp4",
-          "w": 1280,
-          "h": 720,
-          "alt": "",
-          "poster": "media/vnost/202610140308-1-1-rm3q-poster.webp",
           "feed": true
         },
         {
