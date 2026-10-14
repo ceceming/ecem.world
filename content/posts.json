@@ -1,6 +1,21 @@
 {
   "posts": [
     {
+      "id": "fch45q",
+      "type": "project",
+      "status": "draft",
+      "slug": "untitled-project",
+      "title": "",
+      "year": "2026",
+      "client": "",
+      "role": "",
+      "tags": [],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": []
+    },
+    {
       "id": "18quen",
       "type": "project",
       "status": "published",
@@ -39,7 +54,7 @@
     {
       "id": "52yppi",
       "type": "project",
-      "status": "published",
+      "status": "draft",
       "slug": "fasulye-branding",
       "title": "Fasulye Branding",
       "year": "2026",
@@ -96,7 +111,6 @@
           "h": 720,
           "alt": "",
           "poster": "media/vnost/202610140308-1-1-rm3q-poster.webp",
-          "size": "m",
           "feed": true
         },
         {
@@ -122,7 +136,7 @@
     {
       "id": "s2b8m3",
       "type": "image",
-      "status": "published",
+      "status": "draft",
       "slug": "a-mediterranean-summer-can-be-exercised-anywhere-postcard",
       "title": "Postcard design ",
       "year": "2026",
