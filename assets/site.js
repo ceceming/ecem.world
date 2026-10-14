@@ -207,7 +207,7 @@
       // The row's combined ratio caps its height at ~78% of the window, so a
       // single wide image does not fill the screen edge to edge.
       const r = media.reduce((sum, m) => sum + (m.w && m.h ? m.w / m.h : 16 / 9), 0) || 1;
-      const frames = `<div class="frames" style="--r:${r.toFixed(4)}">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      const frames = `<div class="frames" style="--r:${r.toFixed(4)};--n:${Math.max(0, media.length - 1)}">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
         return `<article class="item ${p.type}${small}" id="p-${esc(p.slug)}">
