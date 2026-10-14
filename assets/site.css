@@ -109,7 +109,7 @@ html.intro .panel { border-right-color: transparent; }
 
 .bio {
   margin: 0;
-  font-size: var(--t-large);
+  font-size: 13px;   /* 2px under --t-large */
   line-height: 1.38;
   letter-spacing: 0;
   text-wrap: pretty;
