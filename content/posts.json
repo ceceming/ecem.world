@@ -90,6 +90,16 @@
           "feed": true
         },
         {
+          "type": "video",
+          "src": "media/vnost/202610140308-1-1-rm3q.mp4",
+          "w": 1280,
+          "h": 720,
+          "alt": "",
+          "poster": "media/vnost/202610140308-1-1-rm3q-poster.webp",
+          "size": "m",
+          "feed": true
+        },
+        {
           "type": "image",
           "src": "media/vnost/catalogue-intro.webp",
           "w": 1920,
