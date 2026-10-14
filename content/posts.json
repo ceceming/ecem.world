@@ -82,31 +82,30 @@
       "media": [
         {
           "type": "image",
-          "src": "media/vnost/loader.webp",
-          "w": 1920,
-          "h": 1080,
-          "alt": "Virtual Nostalgia: the loading screen, a keychain USB stick with an Iznik-tile pattern beside a \"Virtual Nostalgia\" tag"
-        },
-        {
-          "type": "image",
-          "src": "media/vnost/catalogue-spread.webp",
-          "w": 1920,
-          "h": 1080,
-          "alt": "The catalogue open in the scanned room: a Pippi Longstocking notebook, a lace tablecloth drawer, a side table and a hand-painted mirror"
+          "src": "media/vnost/keychain-rmv-bcg-titlehead-ticket-jakc.webp",
+          "w": 1800,
+          "h": 1300,
+          "alt": "",
+          "size": "m",
+          "feed": true
         },
         {
           "type": "image",
           "src": "media/vnost/catalogue-intro.webp",
           "w": 1920,
           "h": 1080,
-          "alt": "The catalogue intro page, with the keychain, a Game Boy and the scanned house"
+          "alt": "The catalogue intro page, with the keychain, a Game Boy and the scanned house",
+          "size": "m",
+          "feed": true
         },
         {
           "type": "image",
-          "src": "media/vnost/mirror.webp",
+          "src": "media/vnost/catalogue-spread.webp",
           "w": 1920,
           "h": 1080,
-          "alt": "The hand-painted mirror lifted out of the room, with its story beneath"
+          "alt": "The catalogue open in the scanned room: a Pippi Longstocking notebook, a lace tablecloth drawer, a side table and a hand-painted mirror",
+          "size": "m",
+          "feed": true
         }
       ]
     },
