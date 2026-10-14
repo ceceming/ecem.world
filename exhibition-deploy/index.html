@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Virtual Nostalgia</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --peach:#ecc5ae; --coral:#f38a80; --mint:#6cc5a3; --ink:#5b3b38; --glass:rgba(255,246,240,.82); }
+  * { box-sizing:border-box; }
+  html, body { height:100%; margin:0; }
+  body { background:#e9d9cf; color:var(--ink); font:14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow:hidden; -webkit-user-select:none; user-select:none; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  #stage { position:fixed; inset:0; }
+
+  /* ---------- loader ---------- */
+  #loader { position:fixed; inset:0; z-index:50; display:grid; place-items:center; align-content:center; gap:22px;
+            background:linear-gradient(160deg, var(--peach) 0%, #f2a898 55%, var(--coral) 100%); transition:opacity .8s ease, visibility .8s; }
+  #loader.gone { opacity:0; visibility:hidden; pointer-events:none; }
+  #logo { width:min(78vw, 720px); height:auto; filter:drop-shadow(0 18px 24px #7a2f2a40); animation:float 5s ease-in-out infinite; }
+  @keyframes float { 50% { transform:translateY(-8px) rotate(-.6deg); } }
+  #intro { width:min(86vw, 640px); min-height:3.6em; display:grid; place-items:center; text-align:center; color:#fff; font:italic 400 clamp(19px, 2.6vw, 26px)/1.35 Georgia, "Times New Roman", serif; letter-spacing:.01em; text-shadow:0 1px 14px #b4554c66; }
+  #introText { opacity:0; transform:translateY(8px); transition:opacity .55s ease, transform .55s ease; }
+  #introText.in { opacity:1; transform:none; }
+  #introText.last { font-style:normal; letter-spacing:.2em; text-transform:uppercase; font-size:clamp(13px, 1.7vw, 16px); font-family:system-ui, sans-serif; }
+  #bar { width:min(70vw, 420px); height:3px; background:#ffffff55; border-radius:3px; overflow:hidden; }
+  #barfill { height:100%; width:0; background:#fff; transition:width .9s ease; }
+  #enter { padding:12px 34px; border:1.5px solid #fff; border-radius:999px; background:transparent; color:#fff; cursor:pointer;
+           letter-spacing:.18em; text-transform:uppercase; font-size:13px; transition:background .2s, color .2s, opacity .3s; opacity:.85; }
+  #loader.ready #enter { opacity:1; box-shadow:0 0 0 4px #ffffff22; }
+  #enter:hover { background:#fff; color:var(--coral); opacity:1; }
+
+  /* ---------- tactile paper layer over the camera ----------
+     Real paper scan (ambientCG Paper001, CC0) laid over the 3D view with blend modes: grain (overlay), warm paper white (multiply),
+     lifted blacks (screen, like ink on matte stock), soft edge fall-off. Pure compositor work, no extra WebGL passes. */
+  :root { --tile:512px; --grain:.8; --paperwhite:.28; --lift:.05; --vig:.10; }
+  #stage { transition:filter .4s; }
+  body:not(.grain-off) #stage { filter:saturate(.92) contrast(.97) brightness(1.05) sepia(.05); }
+  .tx { position:fixed; inset:0; pointer-events:none; transition:opacity .4s; }
+  .tx.grain { background:url(textures/paper-grain.webp?v=4) 0 0 / var(--tile) var(--tile) repeat; mix-blend-mode:overlay; opacity:var(--grain); }
+  .tx.white { background:#f3ead8; mix-blend-mode:multiply; opacity:var(--paperwhite); }
+  .tx.lift { background:#3a2c22; mix-blend-mode:screen; opacity:var(--lift); }
+  .tx.vig { background:radial-gradient(ellipse at 50% 46%, #0000 52%, #3b2412 130%); mix-blend-mode:multiply; opacity:calc(var(--vig) * 3.2); }
+  body.grain-off .tx { opacity:0; }
+
+  /* ---------- ui ---------- */
+  .pill { background:var(--glass); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:999px; box-shadow:0 2px 14px #0002; }
+  #places { position:fixed; top:14px; left:14px; right:14px; display:flex; gap:6px; flex-wrap:wrap; pointer-events:none; }
+  #places button { pointer-events:auto; border:0; padding:8px 14px; border-radius:999px; background:var(--glass); backdrop-filter:blur(8px); box-shadow:0 2px 10px #0002; transition:background .2s, color .2s; }
+  #places button.on { background:var(--coral); color:#fff; }
+  body:not([data-mode=explore]) #places { opacity:.0; pointer-events:none; }
+  #places { transition:opacity .3s; }
+  #hint { position:fixed; top:58px; left:0; right:0; text-align:center; font-size:12px; letter-spacing:.04em; color:#fff; text-shadow:0 1px 6px #0007; pointer-events:none; padding:0 16px; }
+  #bottom { position:fixed; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%); display:flex; gap:8px; align-items:center; padding:6px 10px; max-width:calc(100vw - 20px); }
+  #bottom > div { display:none; align-items:center; gap:6px; }
+  body[data-mode=explore] #tbExplore, body[data-mode=read] #tbRead, body[data-mode=inspect] #tbInspect { display:flex; }
+  #bottom button { flex:none; white-space:nowrap; border:0; min-width:36px; height:36px; padding:0 12px; border-radius:999px; background:transparent; font-size:15px; }
+  #bottom button:hover:not(:disabled) { background:#0001; } #bottom button:disabled { opacity:.3; cursor:default; }
+  #bottom .cta { background:var(--coral); color:#fff; font-size:13px; padding:0 16px; } #bottom .cta:hover:not(:disabled) { background:#e97a70; }
+  #label, #rlabel { min-width:88px; text-align:center; font-variant-numeric:tabular-nums; font-size:13px; }
+  #paper { position:fixed; left:14px; bottom:max(16px, env(safe-area-inset-bottom)); display:flex; align-items:center; gap:8px; padding:6px 12px 6px 14px; font-size:12px; letter-spacing:.06em; }
+  #paper button { width:22px; height:22px; min-width:0; padding:0; border-radius:50%; border:2px solid transparent; cursor:pointer; box-shadow:0 0 0 1px #0003 inset; transition:transform .15s, border-color .15s; }
+  #paper button[data-paper=green] { background:linear-gradient(160deg, #a5dec1, #55c19a); }
+  #paper button[data-paper=cream] { background:#ecebe0; }
+  #paper button:hover { transform:scale(1.12); } #paper button.on { border-color:var(--coral); }
+  #gpanel { position:fixed; left:14px; bottom:max(58px, calc(env(safe-area-inset-bottom) + 58px)); display:none; flex-direction:column; gap:8px; padding:12px 14px; border-radius:16px; font-size:12px; width:236px; }
+  #gpanel.open { display:flex; }
+  #gpanel label { display:grid; grid-template-columns:70px 1fr 38px; align-items:center; gap:8px; }
+  #gpanel output { text-align:right; font-variant-numeric:tabular-nums; }
+  #gpanel input[type=range] { width:100%; accent-color:var(--coral); }
+  #gpanel small { opacity:.65; line-height:1.3; }
+  body[data-mode=inspect] #gpanel { display:none; }
+  #paper .sep { width:1px; height:16px; background:#0003; }
+  #paper button.txt { width:auto; height:24px; padding:0 10px; border-radius:999px; background:transparent; border:1.5px solid #0003; color:var(--ink); font:inherit; font-size:12px; letter-spacing:.04em; box-shadow:none; }
+  #paper button.txt.on { background:var(--coral); border-color:var(--coral); color:#fff; }
+  body[data-mode=inspect] #paper { display:none; }
+  #tip { position:fixed; left:0; top:0; z-index:5; pointer-events:none; opacity:0; transition:opacity .15s; background:var(--glass); padding:5px 11px; border-radius:999px; font-size:12px; white-space:nowrap; box-shadow:0 2px 10px #0002; }
+  #caption { position:fixed; left:50%; bottom:78px; transform:translate(-50%, 10px); width:min(560px, calc(100vw - 28px)); padding:14px 20px; border-radius:18px; text-align:center; opacity:0; pointer-events:none; transition:opacity .35s, transform .35s;
+             background:var(--glass); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow:0 4px 24px #0003; }
+  #caption.on { opacity:1; transform:translate(-50%, 0); }
+  #capTitle { margin:0 0 6px; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#3f9f80; }
+  #capText { margin:0; font-size:13px; line-height:1.5; max-height:26vh; overflow:auto; -webkit-user-select:text; user-select:text; }
+  #capText:empty { display:none; }
+  #fade { position:fixed; inset:0; background:#2a1a1a; opacity:0; pointer-events:none; transition:opacity .28s ease; z-index:20; }
+  #fade.on { opacity:1; pointer-events:auto; }
+</style>
+</head>
+<body data-mode="explore">
+<div id="stage"></div>
+<i class="tx white"></i><i class="tx grain"></i><i class="tx lift"></i><i class="tx vig"></i>
+
+<div id="places" aria-label="Places"></div>
+<div id="hint"></div>
+<div id="tip"></div>
+<div id="caption" role="status"><h2 id="capTitle"></h2><p id="capText"></p></div>
+
+<div id="bottom" class="pill" role="toolbar" aria-label="Controls">
+  <div id="tbExplore">
+    <button id="rprev" aria-label="Previous object">‹</button><span id="rlabel">Objects</span><button id="rnext" aria-label="Next object">›</button>
+    <button id="open" class="cta">Open catalogue</button>
+  </div>
+  <div id="tbRead">
+    <button id="pprev" aria-label="Previous page">‹</button><span id="label"></span><button id="pnext" aria-label="Next page">›</button>
+    <button id="zout" aria-label="Zoom out">−</button><button id="zin" aria-label="Zoom in">+</button>
+    <button id="close" class="cta">Back to the room</button>
+  </div>
+  <div id="tbInspect"><button id="putback" class="cta">Put it back</button></div>
+</div>
+
+<div id="paper" class="pill" role="group" aria-label="Catalogue paper colour">
+  <span>Paper</span>
+  <button data-paper="green" aria-label="Green paper" title="Green paper"></button>
+  <button data-paper="cream" aria-label="Cream paper" title="Cream paper"></button>
+  <span class="sep"></span>
+  <button id="grainbtn" class="txt on" aria-label="Paper texture on or off" title="Paper texture (T)">Texture</button>
+  <button id="gearbtn" class="txt" aria-label="Texture settings" title="Texture size and opacity">⚙</button>
+</div>
+<div id="gpanel" class="pill" role="group" aria-label="Texture settings">
+  <label>Grain size <input id="gsize" type="range" min="25" max="150" step="1" value="50"><output id="gsizev">50%</output></label>
+  <label>Opacity <input id="gop" type="range" min="0" max="100" step="1" value="80"><output id="gopv">80%</output></label>
+  <small>Smaller % = finer grain. Both values are saved in the address bar.<br><span id="gbuild"></span></small>
+</div>
+
+<div id="fade"></div>
+
+<div id="loader">
+  <img id="logo" src="textures/titlehead.webp" alt="Virtual Nostalgia">
+  <div id="intro" aria-live="polite"><span id="introText"></span></div>
+  <div id="bar"><div id="barfill"></div></div>
+  <button id="enter">Enter</button>
+</div>
+
+<script src="./intro.js"></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/jsm/" } }</script>
+<script type="module" src="./exhibition.js"></script>
+</body>
+</html>
