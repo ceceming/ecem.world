@@ -230,10 +230,12 @@ html.intro .panel { border-right-color: transparent; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: 10px;
-  margin-top: 8px;
-  padding-bottom: 7px;
+  margin-top: 10px;
+  padding-bottom: 9px;
   border-bottom: 1px solid var(--rule);
   color: var(--dim);
+  font-size: var(--t-large);   /* 15px, was 12px */
+  line-height: 1.35;
 }
 
 .caption > :first-child { color: var(--fg); }
@@ -386,7 +388,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
    natural height (the 0fr → 1fr grid-row trick animates "auto" height). */
 .toggle { display: block; cursor: pointer; }
 .caption.toggle { display: grid; color: var(--dim); }
-.caption .sign { display: inline-block; width: 1em; margin-left: 8px; text-align: center; color: var(--dim); transition: transform 300ms ease; }
+.caption .sign { display: inline-block; width: 1em; margin-left: 10px; font-size: 20px; line-height: 0.8; vertical-align: -1px; text-align: center; color: var(--dim); transition: transform 300ms ease; }
 .caption .sign::before { content: "+"; }
 .item.is-open .caption .sign { transform: rotate(45deg); color: var(--fg); }
 @media (hover: hover) { .caption.toggle:hover .sign { color: var(--fg); } }
@@ -427,6 +429,32 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .item:not(.is-open) .frame.extra { display: none; }
 .item.is-open .frame.extra { animation: extra-in 500ms ease both; }
 @keyframes extra-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── Full size ───────────────────────────────────────────────────────── */
+.frame:has(img), .frame:has(video) { cursor: zoom-in; }
+#lightbox {
+  width: 100vw;
+  height: 100dvh;
+  margin: 0;
+  padding: 24px;
+  display: none;
+  place-items: center;
+  background: transparent;
+  cursor: zoom-out;
+  overflow: hidden;
+}
+#lightbox[open] { display: grid; animation: lb-in 250ms ease; }
+#lightbox::backdrop { background: rgba(0, 0, 0, 0.82); animation: lb-in 250ms ease; }
+#lightbox img, #lightbox video {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 48px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: default;
+}
+@keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
 
 /* Tools: a way to try them, everywhere they appear. */
 .try-line { margin: 6px 0 0; display: flex; gap: 16px; }

@@ -312,7 +312,32 @@
     }
   }
 
+  /* ── Full size ─────────────────────────────────────────────────────── */
+
+  const lightbox = $('#lightbox');
+
+  function showFull(frameEl) {
+    const img = frameEl.querySelector('img');
+    const vid = frameEl.querySelector('video');
+    if (!img && !vid) return false;            // embeds play where they are
+    lightbox.innerHTML = img
+      ? `<img src="${esc(img.currentSrc || img.src)}" alt="${esc(img.alt)}">`
+      : `<video src="${esc(vid.currentSrc || vid.src)}" autoplay loop playsinline controls></video>`;
+    if (vid) lightbox.querySelector('video').muted = vid.muted;
+    lightbox.showModal();
+    return true;
+  }
+
+  lightbox.addEventListener('click', (e) => {
+    if (!e.target.closest('img, video')) lightbox.close();
+  });
+  lightbox.addEventListener('close', () => { lightbox.innerHTML = ''; });
+
   slot('feed').addEventListener('click', (e) => {
+    // A tap on an image shows it full size (and does not open or close its
+    // project — the caption does that).
+    const f = e.target.closest('.frame');
+    if (f && showFull(f)) { e.preventDefault(); return; }
     const n = e.target.closest('.note-toggle');
     if (n) {
       const item = n.closest('.item');
