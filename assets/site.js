@@ -148,7 +148,7 @@
     const words = filter === 'all' || filter === 'writing' ? writingIndex : [];
     slot('index').innerHTML =
       (work.length ? `<p class="group">Work</p>` + work.map(row).join('') : '') +
-      (tools.length ? `<p class="group">Tools <span class="more">— built with AI</span></p>` + tools.map(row).join('') : '') +
+      (tools.length ? `<p class="group">Tools <span class="more">— vibe coded</span></p>` + tools.map(row).join('') : '') +
       (words.length ? `<p class="group">Writing</p>` + words.map((p) => `
         <a class="is-writing" ${linkFor(p)}>
           <span>${esc(p.title)}</span><span>${p.date ? esc(fmtDate(p.date)) : ''}</span>
