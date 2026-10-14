@@ -1,6 +1,29 @@
 {
   "posts": [
     {
+      "id": "mj4l27",
+      "type": "image",
+      "status": "published",
+      "slug": "glyph-light-2",
+      "title": "Glyph Light",
+      "year": "2026",
+      "tags": [
+        "Light Design"
+      ],
+      "body": "",
+      "size": "small",
+      "media": [
+        {
+          "type": "gif",
+          "src": "media/mj4l27/glyph-brick-a-front-90-p9dq.gif",
+          "w": 800,
+          "h": 1000,
+          "alt": "",
+          "size": "m"
+        }
+      ]
+    },
+    {
       "id": "vnost",
       "type": "project",
       "status": "published",
@@ -66,7 +89,8 @@
           "src": "media/ks6duw/glyph-brick-b-left-45-vers1-animasyon-291s.gif",
           "w": 800,
           "h": 1000,
-          "alt": ""
+          "alt": "",
+          "size": "m"
         }
       ],
       "noteBeside": true
