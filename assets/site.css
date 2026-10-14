@@ -397,11 +397,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .details-inner > :first-child { margin-top: 28px; }
 .details .sheet-text { margin-top: 40px; }
 .details .lead { margin: 0 0 1.1em; font-size: 20px; line-height: 1.35; max-width: 34em; }
-.details .try-buttons { margin-bottom: 18px; }
 .fold {
   display: flex; justify-content: space-between; align-items: center;
-  width: 100%; min-height: 48px; margin: 36px 0 8px; padding: 12px 18px;
-  border: 1px solid var(--faint); border-radius: 10px;
+  width: 100%; margin: 36px 0 8px; padding: 6px 12px;
+  border: 1px solid var(--rule); border-radius: 0;
   font-size: var(--t-large); font-style: italic; color: var(--fg); text-align: left;
 }
 
@@ -451,17 +450,16 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
 /* ── Read more ───────────────────────────────────────────────────────
    The only thing that opens a project (or a folded note): unmistakable on
-   a phone, a full-width 44px target, italic words over a solid line. */
+   a phone, a full-width slim box with square corners. */
 .more-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-height: 48px;
   margin-top: 10px;
-  padding: 12px 18px;
-  border: 1px solid var(--faint);   /* the same thin box as "Try it here" */
-  border-radius: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--rule);    /* a hairline box, square corners */
+  border-radius: 0;
   font-size: var(--t-large);
   font-style: italic;
   color: var(--fg);
@@ -518,16 +516,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
 /* Tools: a way to try them, everywhere they appear. */
 .try-line { margin: 6px 0 0; display: flex; gap: 16px; }
-.try-line a, .try-buttons a { color: var(--fg); border-bottom: 1px solid var(--faint); }
-.try-line a:hover, .try-buttons a:hover { border-bottom-color: var(--fg); }
+.try-line a { color: var(--fg); border-bottom: 1px solid var(--faint); }
+.try-line a:hover { border-bottom-color: var(--fg); }
 .tool-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin: 0 0 24px; }
 .tool-summary { margin: 0; font-size: 20px; line-height: 1.35; max-width: 36em; }
-.try-buttons { margin: 0; display: flex; gap: 20px; font-size: var(--t-large); }
-.tool-live { margin: 0 0 var(--gap); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
-.tool-live .tool-open { width: 100%; padding: 22px; text-align: left; font-size: var(--t-large); }
-.tool-live .tool-open:hover { background: #0d0d0d; }
-.tool-live.is-open { border: 0; }
-.tool-live iframe { display: block; width: 100%; height: min(760px, 82vh); border: 0; border-radius: 10px; background: #111; }
 .sheet-text h2.sub { margin-top: 2.2em; }
 
 /* Reposted writing reads as a column of text, not a project. */

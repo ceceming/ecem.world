@@ -667,7 +667,7 @@
           <div class="row">${field('role', 'Role', p.role, '', 'e.g. Art direction, 3D')}${field('tags', 'Disciplines', (p.tags || []).join(', '), '', 'comma between')}</div>
           ${field('summary', 'One line', p.summary, '', 'shown first when the project opens')}
           ${area('body', 'Description', p.body, 7, 'a blank line starts a new paragraph')}
-          <div class="row">${field('live', 'Try-it link', p.live, 'placeholder="https://… or virtual-nostalgia/"', 'optional — for a project people can open and use')}${field('embed', 'Open on the page', p.embed, 'placeholder="virtual-nostalgia/"', 'optional — runs inside the project, loaded only on click')}</div>
+          <div class="row">${field('live', 'Try-it link', p.live, 'placeholder="https://… or virtual-nostalgia/"', 'optional — for a project people can open and use')}</div>
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Photography: Name')}
           ${slugField}
         </div>${mediaManager(p)}`;
@@ -677,7 +677,6 @@
           <div class="row">${field('tags', 'What it does', (p.tags || []).join(', '), '', 'e.g. 3D rendering, Lighting')}${field('year', 'Year', p.year, 'inputmode="numeric" class="short"')}</div>
           ${field('summary', 'One line', p.summary, '', 'what it is, for someone skimming')}
           <div class="row">${field('live', 'Try-it link', p.live, 'type="url" placeholder="https://…"', 'where the working tool lives')}${field('repo', 'Source link', p.repo, 'type="url" placeholder="https://github.com/…"', 'optional')}</div>
-          ${field('embed', 'Open on the page', p.embed, 'placeholder="/tools/…/?embed=1"', 'optional — a link that can run inside the project page')}
           ${area('body', 'What it is', p.body, 6, 'a blank line starts a new paragraph')}
           ${area('process', 'How it was made', p.process, 6, 'the problem, what you directed, what the AI wrote, what you judged')}
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Built with: Claude Code')}

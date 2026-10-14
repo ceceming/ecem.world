@@ -267,8 +267,6 @@
   function detailsHtml(p) {
     const isTool = p.type === 'tool';
     return `
-      ${p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
-        <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
       <div class="sheet-text">
         <div>
           ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
@@ -276,7 +274,6 @@
           ${isTool && p.process ? `<h2 class="sub">How it was made</h2><div class="prose">${prose(p.process)}</div>` : ''}
         </div>
         <div>
-          ${tryLinks(p, 'try-buttons')}
           ${p.role ? `<dl><dt>Role</dt><dd>${esc(p.role)}</dd></dl>` : ''}
           ${p.tags.length ? `<dl><dt>${isTool ? 'What it does' : 'Disciplines'}</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
           ${credits(p.credits)}
@@ -296,15 +293,6 @@
     const inner = item.querySelector('.details-inner');
     if (open && !inner.childElementCount) {
       inner.innerHTML = detailsHtml(p);
-      // The tool itself loads only when asked for.
-      const live = inner.querySelector('.tool-live');
-      if (live) {
-        live.querySelector('.tool-open').addEventListener('click', () => {
-          live.innerHTML = `<iframe src="${esc(live.dataset.embed)}" title="${esc(p.title)}" loading="lazy"
-            allow="fullscreen; clipboard-write; web-share" allowfullscreen></iframe>`;
-          live.classList.add('is-open');
-        });
-      }
     }
     item.classList.toggle('is-open', open);
     item.querySelectorAll('[aria-expanded]').forEach((a) => a.setAttribute('aria-expanded', String(open)));
