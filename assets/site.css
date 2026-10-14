@@ -382,19 +382,19 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .details-inner { min-height: 0; overflow: hidden; }
 .details-inner > :first-child { margin-top: 28px; }
 .details-inner > *,
-.more-frames > .frame {
+.details .more-frames > .frame {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 300ms ease, transform 300ms ease;
 }
 .item.is-open .details-inner > *,
-.item.is-open .more-frames > .frame {
+.item.is-open .details .more-frames > .frame {
   opacity: 1;
   transform: none;
   transition: opacity 900ms ease, transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* One after another: each extra image, then the text, then Close. */
-.item.is-open .more-frames > .frame { transition-delay: calc(150ms + var(--i, 0) * 90ms); }
+.item.is-open .details .more-frames > .frame { transition-delay: calc(150ms + var(--i, 0) * 90ms); }
 .item.is-open .details-inner > .sheet-text { transition-delay: 300ms; }
 .item.is-open .details-inner > .fold { transition-delay: 450ms; }
 
@@ -422,6 +422,18 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
    folded under the caption behind "Note +", using the same unfolding as
    projects. */
 .item.has-note { grid-column: span 2; }
+
+/* A Works post with several images: all of them in one sliding row, across
+   the full width. Its note, if it has one, folds under the caption behind a
+   "Note" bar that stays in place (it reads "Close" while open). */
+.item.has-gallery { grid-column: span 2; }
+.item.has-gallery .carousel { margin-top: 0; }
+.item.image .more-bar { max-height: 60px; }
+.item.image.is-open .more-bar {
+  max-height: 60px; padding-top: 6px; padding-bottom: 6px; border-bottom-width: 1px;
+  opacity: 1; pointer-events: auto;
+}
+.item.image .details-inner > .note { margin: 14px 0 4px; font-size: var(--t-large); color: var(--fg); }
 .with-note { display: flex; gap: 28px; align-items: flex-start; }
 .with-note .frames { flex: 1 1 auto; }
 .with-note .note { flex: 0 0 min(300px, 34%); }

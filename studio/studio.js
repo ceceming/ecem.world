@@ -650,7 +650,7 @@
     const one = p.type === 'image';
     return `<div class="media-block">
       <div class="block-head"><span>${one ? 'Images' : 'Images, GIFs and video'}</span>
-        <span class="muted">${one ? 'The first one is shown in the feed. Any others open under it as a sliding row (“2 more”). Drag to reorder.' : 'Drag to reorder. Tick “In the feed” for the pieces shown before the project is opened (until you choose, the first three); the rest appear when it is opened.'}</span></div>
+        <span class="muted">${one ? 'One image, or several: several show together as a sliding row, in this order (drag to reorder). With several, the note folds under the caption behind a “Note” bar.' : 'Drag to reorder. Tick “In the feed” for the pieces shown before the project is opened (until you choose, the first three); the rest appear when it is opened.'}</span></div>
       <ol class="tiles" id="tiles">${p.media.map((m, i) => mediaTile(m, i, p.media.length, p)).join('')}</ol>
       <div class="drop" id="drop">
         <p>Drop files here, or <label class="linkish">choose files<input type="file" id="file" multiple

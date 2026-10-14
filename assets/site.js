@@ -204,6 +204,22 @@
       // load once it is opened (see detailsHtml).
       const frames = `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
+      if (!isProject && p.media.length > 1) {
+        // Several images: every one of them in a sliding row, the first
+        // included. The note, when there is one, folds under the caption.
+        const note = (p.body || '').trim();
+        return `<article class="item ${p.type} has-gallery" id="p-${esc(p.slug)}">
+          ${carousel(p.media, eager)}
+          <div class="caption">
+            <span>${esc(p.title)}${badge(p)}</span>
+            <span class="c-mid"></span>
+            <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
+          </div>
+          ${note ? `${moreBar('', `d-${esc(p.slug)}`, esc(p.slug), 'Note')}
+          <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>` : ''}
+        </article>`;
+      }
+
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked
         // in the studio; otherwise laid over the image itself, behind a small
@@ -220,9 +236,6 @@
             <span class="c-mid"></span>
             <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
-          ${p.media.length > 1 ? `${moreBar('', `d-${esc(p.slug)}`, esc(p.slug), `${p.media.length - 1} more`)}
-          <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>` : ''}
-
         </article>`;
       }
 
@@ -239,6 +252,7 @@
         <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>
       </article>`;
     }).join('');
+    slot('feed').querySelectorAll('.carousel').forEach(initCarousel);
   }
 
   // The pieces shown before a project is opened. Chosen per image in the
@@ -252,18 +266,29 @@
   // Everything a project shows once opened: the pieces not already in the
   // feed, its text and credits, and for a tool a way to try it.
   // A row of pieces that slides sideways, with arrows (see slide()).
-  const carousel = (list) => `<div class="carousel">
-      <div class="frames more-frames">${list.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>
+  const carousel = (list, eager = false) => `<div class="carousel">
+      <div class="frames more-frames">${list.map((m, i) => frame(m, eager && i < 2).replace('style="', `style="--i:${i};`)).join('')}</div>
       <button type="button" class="car-prev" aria-label="Previous images">←</button>
       <button type="button" class="car-next" aria-label="More images">→</button>
     </div>`;
 
+  // Arrows show only where there is somewhere to go.
+  function initCarousel(car) {
+    const strip = car.querySelector('.more-frames');
+    const sync = () => {
+      const end = strip.scrollWidth - strip.clientWidth;
+      car.classList.toggle('at-start', strip.scrollLeft <= 4);
+      car.classList.toggle('at-end', strip.scrollLeft >= end - 4);
+    };
+    strip.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    strip.querySelectorAll('img').forEach((im) => im.addEventListener('load', sync));
+    sync();
+  }
+
   function detailsHtml(p) {
-    // A single image's other images: just the sliding row, then Close.
-    if (p.type === 'image') {
-      return `${carousel(p.media.slice(1))}
-        <button type="button" class="fold" data-toggle="${esc(p.slug)}">Close <span aria-hidden="true">↑</span></button>`;
-    }
+    // A Works post's note, folded under its caption.
+    if (p.type === 'image') return `<div class="note prose">${paras(p.body)}</div>`;
     const isTool = p.type === 'tool';
     const shown = new Set(feedMedia(p));
     const extra = p.media.filter((m) => !shown.has(m));
@@ -304,19 +329,7 @@
     const inner = item.querySelector('.details-inner');
     if (open && !inner.childElementCount) {
       inner.innerHTML = detailsHtml(p);
-      const car = inner.querySelector('.carousel');
-      if (car) {
-        const strip = car.querySelector('.more-frames');
-        const sync = () => {
-          const end = strip.scrollWidth - strip.clientWidth;
-          car.classList.toggle('at-start', strip.scrollLeft <= 4);
-          car.classList.toggle('at-end', strip.scrollLeft >= end - 4);
-        };
-        strip.addEventListener('scroll', sync, { passive: true });
-        window.addEventListener('resize', sync);
-        strip.querySelectorAll('img').forEach((im) => im.addEventListener('load', sync));
-        sync();
-      }
+      inner.querySelectorAll('.carousel').forEach(initCarousel);
     }
     item.classList.toggle('is-open', open);
     item.querySelectorAll('[aria-expanded]').forEach((a) => a.setAttribute('aria-expanded', String(open)));
@@ -535,7 +548,7 @@
     }
     const p = posts.find((q) => q.slug === h);
     if (!p) return closeSheet();
-    if (p.type === 'project' || p.type === 'tool' || (p.type === 'image' && p.media.length > 1)) { closeSheet(); return setOpen(p.slug, true, { scroll: true }); }
+    if (p.type === 'project' || p.type === 'tool' || (p.type === 'image' && p.media.length > 1 && (p.body || '').trim())) { closeSheet(); return setOpen(p.slug, true, { scroll: true }); }
     // A standalone image has nothing more to open: bring it into view.
     closeSheet();
     const el = document.getElementById(`p-${p.slug}`);
