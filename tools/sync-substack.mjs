@@ -119,8 +119,8 @@ async function fromService(feed) {
     const text = entities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
     return {
       id: i.guid || i.link,
-      title: (i.title || '').trim(),
-      subtitle: (i.description || '').trim(),
+      title: entities(i.title || '').trim(),
+      subtitle: entities(i.description || '').trim(),
       url: i.link,
       date: isoSeconds(`${i.pubDate.replace(' ', 'T')}Z`),
       image: (i.enclosure && i.enclosure.link) || i.thumbnail || '',
@@ -153,8 +153,10 @@ async function main() {
   const SHOWN = ['title', 'subtitle', 'url', 'date', 'image'];
   for (const post of fresh) {
     const old = byId.get(post.id);
-    // The RSS and the API disagree on curly quotes; that is not a change.
-    const same = (x, y) => String(x).replace(/[“”"‘’']/g, '') === String(y).replace(/[“”"‘’']/g, '');
+    // The three routes write the same post slightly differently (curly
+    // quotes, &amp;, %2F in image links); none of that is a change.
+    const norm = (x) => { let v = entities(String(x)); try { v = decodeURIComponent(v); } catch { /* keep */ } return v.replace(/[“”"‘’']/g, '').trim(); };
+    const same = (x, y) => norm(x) === norm(y);
     const changed = !old || SHOWN.some((k) => !same(old[k], post[k])) || (old.via === post.via && old.html !== post.html) || !old.html;
     if (changed) byId.set(post.id, post);
   }
