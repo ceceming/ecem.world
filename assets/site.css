@@ -101,10 +101,10 @@ html.intro .panel { border-right-color: transparent; }
 
 .name {
   margin: 0 0 10px;
-  font-size: var(--t-small);
+  font-size: calc(var(--t-small) * 1.5);   /* 18px */
   font-weight: 400;
   letter-spacing: 0.12em;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .bio {
@@ -240,9 +240,9 @@ html.intro .panel { border-right-color: transparent; }
 
 .caption > :first-child { color: var(--fg); }
 .item.is-small .caption,
-.item.image .caption { grid-template-columns: minmax(0, 1fr) auto; }
-.item.is-small .caption .c-mid,
-.item.image .caption .c-mid { display: none; }
+.item.image .caption { grid-template-columns: minmax(0, 1fr) auto auto; }
+.item.is-small .caption .c-mid:empty,
+.item.image .caption .c-mid:empty { display: none; }
 
 .more { color: var(--faint); }
 
@@ -400,6 +400,23 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .fold { display: block; margin: 36px 0 8px; color: var(--dim); }
 .fold:hover { color: var(--fg); }
 
+/* A single image's note. Beside the image when chosen in the studio (the
+   piece then takes the full width, so the image keeps its size); otherwise
+   folded under the caption behind "Note +", using the same unfolding as
+   projects. */
+.item.has-note { grid-column: span 2; }
+.with-note { display: flex; gap: 28px; align-items: flex-start; }
+.with-note .frames { flex: 1 1 auto; }
+.with-note .note { flex: 0 0 min(300px, 34%); }
+.note { margin: 0; color: var(--dim); font-size: var(--t-small); line-height: 1.55; max-width: 34em; }
+.note p { margin: 0 0 0.9em; }
+.item.image .details-inner > .note { margin: 12px 0 4px; }
+.note-toggle { color: var(--dim); }
+.note-toggle:hover, .item.is-open .note-toggle { color: var(--fg); }
+.note-toggle .sign { display: inline-block; width: 1em; margin-left: 4px; text-align: center; transition: transform 300ms ease; }
+.note-toggle .sign::before { content: "+"; }
+.item.is-open .note-toggle .sign { transform: rotate(45deg); }
+
 /* Tools: a way to try them, everywhere they appear. */
 .try-line { margin: 6px 0 0; display: flex; gap: 16px; }
 .try-line a, .try-buttons a { color: var(--fg); border-bottom: 1px solid var(--faint); }
@@ -449,7 +466,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   .filters { margin-top: 22px; }
 
   .feed { margin: 0; grid-template-columns: minmax(0, 1fr); gap: 48px; padding-bottom: 90px; }
-  .item, .item.is-small, .item.writing { grid-column: auto; }
+  .item, .item.is-small, .item.writing, .item.has-note { grid-column: auto; }
+  .with-note { flex-direction: column; gap: 12px; }
+  .with-note .note { flex: none; }
+  .with-note .frames { flex: none; width: 100%; }
 
   /* Three across is too small to read on a phone: a project's frames
      wrap, two to a row, each still at its own ratio. */
@@ -458,6 +478,8 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
   .caption { grid-template-columns: minmax(0, 1fr) auto; }
   .caption .c-mid { display: none; }
+  .item.image .caption { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .item.image .caption .c-mid:not(:empty) { display: block; }
 
   .sheet-text { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }

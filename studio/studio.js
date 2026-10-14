@@ -690,6 +690,7 @@
           <label>Space in the feed <span class="muted">— small sits beside another piece; large spans the width. The image's own S / M / L is set on it below.</span>
             <select name="size"><option value="small" ${p.size !== 'large' ? 'selected' : ''}>Small</option><option value="large" ${p.size === 'large' ? 'selected' : ''}>Large</option></select></label>
           ${area('body', 'Note', p.body, 3, 'optional')}
+          <label class="check"><input type="checkbox" name="noteBeside" ${p.noteBeside ? 'checked' : ''}> Show the note right next to the image <span class="muted">— off: folded away behind “Note +” under the image</span></label>
           ${slugField}
         </div>${mediaManager(p)}`;
       } else {
@@ -826,7 +827,7 @@
       p.media[+t.closest('.tile').dataset.i].alt = t.value;
       return changed({ list: false });
     }
-    if (!t.name) return;
+    if (!t.name || t.type === 'checkbox') return;   // tick boxes are handled on change
     if (t.name === 'tags') p.tags = t.value.split(',').map((s) => s.trim()).filter(Boolean);
     else p[t.name] = t.value;
 
@@ -849,6 +850,7 @@
       changed({ editor: true });
     }
     if (t.name === 'size') { p.size = t.value; changed(); }
+    if (t.name === 'noteBeside') { p.noteBeside = t.checked; changed(); }
     if (t.dataset.m === 'feed') {
       // Turn the default (first three) into explicit choices, then apply this one.
       const i = +t.closest('.tile').dataset.i;

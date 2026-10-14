@@ -216,13 +216,18 @@
       const frames = `<div class="frames" style="--r:${r.toFixed(4)};--n:${Math.max(0, media.length - 1)};--sz:${sz}">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
-        return `<article class="item ${p.type}${small}" id="p-${esc(p.slug)}">
-          ${frames}
+        // A single image's note: beside the image when "noteBeside" is ticked
+        // in the studio, otherwise folded behind "Note +" in the caption.
+        const note = (p.body || '').trim();
+        const beside = note && p.noteBeside;
+        return `<article class="item ${p.type}${beside ? ' has-note' : small}" id="p-${esc(p.slug)}">
+          ${beside ? `<div class="with-note">${frames}<div class="note prose">${prose(note)}</div></div>` : frames}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
-            <span class="c-mid"></span>
+            <span class="c-mid">${note && !beside ? `<button type="button" class="note-toggle" aria-expanded="false" aria-controls="n-${esc(p.slug)}">Note<span class="sign" aria-hidden="true"></span></button>` : ''}</span>
             <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
+          ${note && !beside ? `<div class="details" id="n-${esc(p.slug)}"><div class="details-inner"><div class="note prose">${prose(note)}</div></div></div>` : ''}
         </article>`;
       }
 
@@ -308,6 +313,12 @@
   }
 
   slot('feed').addEventListener('click', (e) => {
+    const n = e.target.closest('.note-toggle');
+    if (n) {
+      const item = n.closest('.item');
+      n.setAttribute('aria-expanded', String(item.classList.toggle('is-open')));
+      return;
+    }
     const t = e.target.closest('[data-toggle]');
     if (!t) return;
     e.preventDefault();
