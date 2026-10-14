@@ -690,7 +690,7 @@
           <label>Space in the feed <span class="muted">— small sits beside another piece; large spans the width. The image's own S / M / L is set on it below.</span>
             <select name="size"><option value="small" ${p.size !== 'large' ? 'selected' : ''}>Small</option><option value="large" ${p.size === 'large' ? 'selected' : ''}>Large</option></select></label>
           ${area('body', 'Note', p.body, 3, 'optional')}
-          <label class="check"><input type="checkbox" name="noteBeside" ${p.noteBeside ? 'checked' : ''}> Show the note right next to the image <span class="muted">— off: folded away behind “Note +” under the image</span></label>
+          <label class="check"><input type="checkbox" name="noteBeside" ${p.noteBeside ? 'checked' : ''}> Show the note right next to the image <span class="muted">— off: it sits on the image itself, behind a small + in the corner</span></label>
           ${slugField}
         </div>${mediaManager(p)}`;
       } else {

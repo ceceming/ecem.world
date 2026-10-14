@@ -220,18 +220,21 @@
 
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked
-        // in the studio, otherwise folded behind the "Read more" bar.
+        // in the studio; otherwise laid over the image itself, behind a small
+        // + in its corner (− folds it again), like a note on a moodboard.
         const note = (p.body || '').trim();
         const beside = note && p.noteBeside;
         return `<article class="item ${p.type}${beside ? ' has-note' : small}" id="p-${esc(p.slug)}">
-          ${beside ? `<div class="with-note">${frames}<div class="note prose">${prose(note)}</div></div>` : frames}
+          ${beside ? `<div class="with-note">${frames}<div class="note prose">${prose(note)}</div></div>`
+            : note ? frames.replace(/<\/div><\/div>$/, `<div class="note-over" id="n-${esc(p.slug)}"><div class="prose">${prose(note)}</div></div>
+                <button type="button" class="note-pm" aria-expanded="false" aria-controls="n-${esc(p.slug)}" aria-label="Show the note"></button></div></div>`)
+            : frames}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
             <span class="c-mid"></span>
             <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
-          ${note && !beside ? moreBar('note-toggle', `n-${esc(p.slug)}`, '') : ''}
-          ${note && !beside ? `<div class="details" id="n-${esc(p.slug)}"><div class="details-inner"><div class="note prose">${prose(note)}</div></div></div>` : ''}
+
         </article>`;
       }
 
@@ -339,6 +342,14 @@
   slot('feed').addEventListener('click', (e) => {
     // A tap on an image shows it full size (and does not open or close its
     // project — the caption does that).
+    const pm = e.target.closest('.note-pm');
+    if (pm) {
+      const on = pm.closest('.frame').classList.toggle('note-open');
+      pm.setAttribute('aria-expanded', String(on));
+      pm.setAttribute('aria-label', on ? 'Hide the note' : 'Show the note');
+      return;
+    }
+    if (e.target.closest('.note-over')) return;   // reading the note, not opening the image
     const f = e.target.closest('.frame');
     if (f && showFull(f)) { e.preventDefault(); return; }
     const n = e.target.closest('.note-toggle');
