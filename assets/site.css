@@ -492,7 +492,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 @media (hover: hover) { .note-pm:hover { background: rgba(0, 0, 0, 0.85); } }
 
 /* Tools: a way to try them, everywhere they appear. */
-.try-line { margin: 6px 0 0; display: flex; gap: 16px; }
+.try-line { margin: 8px 0 0; display: flex; gap: 20px; font-size: var(--t-large); }   /* same as the title */
 .try-line a { color: var(--fg); border-bottom: 1px solid var(--faint); }
 .try-line a:hover { border-bottom-color: var(--fg); }
 .tool-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin: 0 0 24px; }
