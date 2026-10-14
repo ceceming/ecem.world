@@ -1,6 +1,6 @@
 {
   "name": "Ecem Ozturk",
-  "bio": "Ecem [pronounced A-Gem] is a designer and art director based in Toronto. Her practice moves between brand identity, editorial direction and immersive 3D. She holds a BA in Design, concentrating in Interior Design & an MDes in Digital Futures. Her interests circle tactility, objects and memory in a tech-infused world.",
+  "bio": "Ecem [ pronounced A-Gem ] is a designer and art director based in Toronto. Her practice moves between brand identity, editorial direction and immersive 3D.\n\nShe holds a BA in Design & an MDes in Digital Futures. Her interests circle tactility, objects and memory in a tech-infused world.",
   "currently": "",
   "email": "hello@ecem.world",
   "substack": {
@@ -10,12 +10,13 @@
     "reposted": [],
     "url": "https://luckbug.substack.com"
   },
-  "about": "",
+  "about": "Obsessed with finding new worlds to enter, Ecem almost always has three unfinished books rotating in her tote bag.\nShe has lived in Istanbul for most of her life, then left home for university. First to New York, then to Milan; she has established two different lives in two different continents before she was 20. \nHer BA degree in Milan concentrated on Interior Design. Her thesis, an interior design project with a book design to conclude. \nAfter exploring mobile game industry in Istanbul, she decided to attend OCAD for a Masters in Design. \nThis brought her to Toronto, where she now calls home. \n",
   "portrait": {
     "bw": "media/about/portrait-bw.webp",
     "color": "media/about/portrait-color.webp",
     "w": 1333,
     "h": 2000,
     "alt": "Ecem Öztürk, sitting on a studio floor"
-  }
+  },
+  "aboutHero": "Chronically online, hands on & playful."
 }

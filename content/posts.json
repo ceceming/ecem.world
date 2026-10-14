@@ -14,19 +14,10 @@
       ],
       "summary": "A 3D virtual archive of my grandmother's house in Istanbul.",
       "body": "In a quiet neighbourhood in Istanbul, I spent my childhood in my grandmother's house. I later 3D scanned it, in an attempt to simulate my memories virtually.\n\nEnter my virtual archive: walk through the rooms, spin the objects, and turn the pages of a catalogue of things I remember.",
-      "credits": "3D scan of my grandmother's house · objects modelled with Meshy from my own catalogue artwork & graphic design · paper texture: ambientCG Paper001 (CC0) · Three.js ",
+      "credits": "3D scan of my grandmother's house · objects modelled with Meshy from my own catalogue artwork · paper texture: ambientCG Paper001 (CC0) · Three.js (MIT)",
       "live": "virtual-nostalgia/",
       "embed": "virtual-nostalgia/",
       "media": [
-        {
-          "type": "video",
-          "src": "media/vnost/202610140308-3-bx1m.mp4",
-          "w": 1280,
-          "h": 720,
-          "alt": "",
-          "poster": "media/vnost/202610140308-3-bx1m-poster.webp",
-          "feed": true
-        },
         {
           "type": "image",
           "src": "media/vnost/keychain-rmv-bcg-titlehead-ticket-jakc.webp",
@@ -35,6 +26,15 @@
           "alt": "",
           "size": "m",
           "feed": false
+        },
+        {
+          "type": "video",
+          "src": "media/vnost/202610140308-1-1-rm3q.mp4",
+          "w": 1280,
+          "h": 720,
+          "alt": "",
+          "poster": "media/vnost/202610140308-1-1-rm3q-poster.webp",
+          "feed": true
         },
         {
           "type": "image",
