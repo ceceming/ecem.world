@@ -229,3 +229,6 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--d
   .fields .row { grid-template-columns: 1fr; }
   .subs th:nth-child(1), .subs td:nth-child(1) { display: none; }
 }
+
+.infeed { display: flex; align-items: center; gap: 6px; padding: 6px 8px 0; color: var(--dim); font-size: 12px; cursor: pointer; }
+.infeed input { width: auto; margin: 0; }

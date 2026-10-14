@@ -584,7 +584,15 @@
       `<button type="button" role="radio" data-status-set="${s}" aria-checked="${p.status === s}">${STATUS_LABEL[s]}</button>`).join('')}</div>`;
   }
 
-  function mediaTile(m, i, n) {
+  // Which pieces show in the feed before a project is opened. Mirrors
+  // feedMedia() in assets/site.js: explicit choices, else the first three.
+  function inFeed(p, i) {
+    if (!p.media.some((m) => typeof m.feed === 'boolean')) return i < 3;
+    const any = p.media.some((m) => m.feed);
+    return any ? !!p.media[i].feed : i === 0;
+  }
+
+  function mediaTile(m, i, n, p) {
     let inner;
     if (m.type === 'video') inner = `<video src="${esc(mediaUrl(m.src))}" ${m.poster ? `poster="${esc(mediaUrl(m.poster))}"` : ''} muted loop playsinline autoplay></video>`;
     else if (m.type === 'embed') inner = `<span class="t-txt">▶ ${esc(m.src.replace(/^https?:\/\/(www\.)?/, '').slice(0, 28))}</span>`;
@@ -601,6 +609,7 @@
           <button type="button" data-m="remove" aria-label="Remove">×</button>
         </span>
       </div>
+      ${p && p.type !== 'image' ? `<label class="infeed"><input type="checkbox" data-m="feed" ${inFeed(p, i) ? 'checked' : ''}> In the feed</label>` : ''}
       <input class="alt" data-m="alt" value="${esc(m.alt)}" placeholder="Describe it (for screen readers)">
     </li>`;
   }
@@ -609,8 +618,8 @@
     const one = p.type === 'image';
     return `<div class="media-block">
       <div class="block-head"><span>${one ? 'The image' : 'Images, GIFs and video'}</span>
-        <span class="muted">${one ? 'One piece. Uploading another replaces it.' : 'Drag to reorder. The first three show in the feed; all show when the project is opened.'}</span></div>
-      <ol class="tiles" id="tiles">${p.media.map((m, i) => mediaTile(m, i, p.media.length)).join('')}</ol>
+        <span class="muted">${one ? 'One piece. Uploading another replaces it.' : 'Drag to reorder. Tick “In the feed” for the pieces shown before the project is opened (until you choose, the first three); the rest appear when it is opened.'}</span></div>
+      <ol class="tiles" id="tiles">${p.media.map((m, i) => mediaTile(m, i, p.media.length, p)).join('')}</ol>
       <div class="drop" id="drop">
         <p>Drop files here, or <label class="linkish">choose files<input type="file" id="file" ${one ? '' : 'multiple'}
           accept="image/*,video/mp4,video/webm,video/quicktime,.heic" hidden></label>.</p>
@@ -834,6 +843,14 @@
       changed({ editor: true });
     }
     if (t.name === 'size') { p.size = t.value; changed(); }
+    if (t.dataset.m === 'feed') {
+      // Turn the default (first three) into explicit choices, then apply this one.
+      const i = +t.closest('.tile').dataset.i;
+      const now = p.media.map((m, k) => inFeed(p, k));   // read all before writing any
+      p.media.forEach((m, k) => { m.feed = now[k]; });
+      p.media[i].feed = t.checked;
+      changed({ editor: true });
+    }
     if (t.id === 'file') addFiles(t.files, p);
   });
 

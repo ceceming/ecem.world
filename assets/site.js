@@ -186,10 +186,11 @@
           </a></article>`;
       }
 
-      // A tool is shown like a project, with a way to try it in its caption.
+      // Projects and tools open in place: a click unfolds the rest of the
+      // project below its caption, another click folds it away again.
       const isProject = p.type === 'project' || p.type === 'tool';
-      const media = isProject ? p.media.slice(0, 3) : p.media.slice(0, 1);
-      const extra = isProject && p.media.length > 3 ? `<span class="more"> +${p.media.length - 3}</span>` : '';
+      const media = isProject ? feedMedia(p) : p.media.slice(0, 1);
+      const hidden = isProject ? p.media.length - media.length : 0;
       const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
       // The row's combined ratio caps its height at ~78% of the window, so a
@@ -197,17 +198,101 @@
       const r = media.reduce((sum, m) => sum + (m.w && m.h ? m.w / m.h : 16 / 9), 0) || 1;
       const frames = `<div class="frames" style="--r:${r.toFixed(4)}">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
-      return `<article class="item ${p.type}${small}" id="p-${esc(p.slug)}">
-        ${isProject ? `<a href="#/${esc(p.slug)}" aria-label="${esc(p.title)}">${frames}</a>` : frames}
-        <div class="caption">
-          <span>${esc(p.title)}${extra}${badge(p)}</span>
-          <span class="c-mid">${esc(isProject ? p.tags.join(', ') : '')}</span>
-          <span>${esc(p.year)}${!isProject && mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
-        </div>
+      if (!isProject) {
+        return `<article class="item ${p.type}${small}" id="p-${esc(p.slug)}">
+          ${frames}
+          <div class="caption">
+            <span>${esc(p.title)}${badge(p)}</span>
+            <span class="c-mid"></span>
+            <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
+          </div>
+        </article>`;
+      }
+
+      const toggle = `href="#/${esc(p.slug)}" data-toggle="${esc(p.slug)}" aria-expanded="false" aria-controls="d-${esc(p.slug)}"`;
+      return `<article class="item ${p.type}" id="p-${esc(p.slug)}">
+        <a class="toggle" ${toggle} aria-label="${esc(p.title)}">${frames}</a>
+        <a class="caption toggle" ${toggle}>
+          <span>${esc(p.title)}${hidden ? `<span class="more"> +${hidden}</span>` : ''}${badge(p)}</span>
+          <span class="c-mid">${esc(p.tags.join(', '))}</span>
+          <span>${esc(p.year)}<span class="sign" aria-hidden="true"></span></span>
+        </a>
         ${p.type === 'tool' ? tryLinks(p, 'try-line') : ''}
+        <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>
       </article>`;
     }).join('');
   }
+
+  // The pieces shown before a project is opened. Chosen per image in the
+  // studio ("In feed"); until any is chosen, the first three.
+  function feedMedia(p) {
+    if (!p.media.some((m) => typeof m.feed === 'boolean')) return p.media.slice(0, 3);
+    const chosen = p.media.filter((m) => m.feed);
+    return chosen.length ? chosen : p.media.slice(0, 1);
+  }
+
+  // Everything a project shows once opened: the pieces not already in the
+  // feed, its text and credits, and for a tool a way to try it.
+  function detailsHtml(p) {
+    const isTool = p.type === 'tool';
+    const shown = new Set(feedMedia(p));
+    const rest = p.media.filter((m) => !shown.has(m));
+    return `
+      ${isTool && p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
+        <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
+      ${rest.length ? `<div class="more-media">${rest.map((m) => frame(m, false)).join('')}</div>` : ''}
+      <div class="sheet-text">
+        <div>
+          ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
+          <div class="prose">${prose(p.body)}</div>
+          ${isTool && p.process ? `<h2 class="sub">How it was made</h2><div class="prose">${prose(p.process)}</div>` : ''}
+        </div>
+        <div>
+          ${isTool ? tryLinks(p, 'try-buttons') : ''}
+          ${p.role ? `<dl><dt>Role</dt><dd>${esc(p.role)}</dd></dl>` : ''}
+          ${p.tags.length ? `<dl><dt>${isTool ? 'What it does' : 'Disciplines'}</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
+          ${credits(p.credits)}
+        </div>
+      </div>
+      <button type="button" class="fold" data-toggle="${esc(p.slug)}">Close <span aria-hidden="true">↑</span></button>`;
+  }
+
+  function setOpen(slug, open, { scroll = false } = {}) {
+    const p = posts.find((q) => q.slug === slug);
+    const item = document.getElementById(`p-${slug}`);
+    if (!p || !item) return;
+    const inner = item.querySelector('.details-inner');
+    if (open && !inner.childElementCount) {
+      inner.innerHTML = detailsHtml(p);
+      // The tool itself loads only when asked for.
+      const live = inner.querySelector('.tool-live');
+      if (live) {
+        live.querySelector('.tool-open').addEventListener('click', () => {
+          live.innerHTML = `<iframe src="${esc(live.dataset.embed)}" title="${esc(p.title)}" loading="lazy"
+            allow="fullscreen; clipboard-write; web-share" allowfullscreen></iframe>`;
+          live.classList.add('is-open');
+        });
+      }
+    }
+    item.classList.toggle('is-open', open);
+    item.querySelectorAll('[aria-expanded]').forEach((a) => a.setAttribute('aria-expanded', String(open)));
+    // The address follows what is open, so it can be copied and shared,
+    // without adding a step to the back button for every click.
+    const want = open ? `#/${slug}` : '';
+    if (location.hash !== want) history.replaceState(null, '', location.pathname + location.search + want);
+    // Folding a long project away from below: bring its top back into view.
+    if (scroll || (!open && item.getBoundingClientRect().top < 0)) {
+      item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  slot('feed').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-toggle]');
+    if (!t) return;
+    e.preventDefault();
+    const item = document.getElementById(`p-${t.dataset.toggle}`);
+    setOpen(t.dataset.toggle, !item.classList.contains('is-open'));
+  });
 
   // "Try it ↗" and "Source ↗" for a tool, as a caption line or as buttons.
   function tryLinks(p, cls) {
@@ -218,7 +303,7 @@
     return links.length ? `<p class="${cls}">${links.join('')}</p>` : '';
   }
 
-  /* ── A project, opened ───────────────────────────────────────────── */
+  /* ── Writing and About, opened over the page ──────────────────────── */
 
   const sheet = $('#sheet');
 
@@ -249,45 +334,11 @@
         <div class="prose">${p.fromSubstack ? cleanSubstack(p.html) : prose(p.body)}</div>
         ${p.url ? `<p><a href="${esc(p.url)}" target="_blank" rel="noopener" class="more">Originally on Substack ↗</a></p>` : ''}
       </div></div>`;
-    } else {
-      title = [`<b>${esc(p.title)}</b>`, esc(p.year || '')].filter(Boolean).join(' · ');
-      const list = posts.filter((q) => q.type === p.type);
-      const isTool = p.type === 'tool';
-      const i = list.indexOf(p);
-      const next = list[(i + 1) % list.length];
-      body = `${isTool ? `<div class="tool-head">${p.summary ? `<p class="tool-summary">${esc(p.summary)}</p>` : ''}${tryLinks(p, 'try-buttons')}</div>` : ''}
-        ${isTool && p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
-          <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
-        <div class="sheet-media">${p.media.map((m, k) => frame(m, k < 2)).join('')}</div>
-        <div class="sheet-text">
-          <div>
-            <h2>${esc(p.title)}</h2>
-            ${p.summary && !isTool ? `<div class="prose"><p>${esc(p.summary)}</p></div>` : ''}
-            <div class="prose">${prose(p.body)}</div>
-            ${isTool && p.process ? `<h2 class="sub">How it was made</h2><div class="prose">${prose(p.process)}</div>` : ''}
-          </div>
-          <div>
-            ${p.role ? `<dl><dt>Role</dt><dd>${esc(p.role)}</dd></dl>` : ''}
-            ${p.tags.length ? `<dl><dt>${isTool ? 'What it does' : 'Disciplines'}</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
-            ${credits(p.credits)}
-          </div>
-        </div>
-        ${i > -1 && list.length > 1 ? `<nav class="sheet-next"><a href="#/">Index</a><a href="#/${esc(next.slug)}">Next: ${esc(next.title)} →</a></nav>` : ''}`;
     }
 
     slot('sheet-title').innerHTML = title;
     slot('sheet-body').innerHTML = body;
 
-    // The tool itself is only loaded when asked for, so opening the page
-    // costs nothing until someone wants to play.
-    const live = slot('sheet-body').querySelector('.tool-live');
-    if (live) {
-      live.querySelector('.tool-open').addEventListener('click', () => {
-        live.innerHTML = `<iframe src="${esc(live.dataset.embed)}" title="${esc(p.title)}" loading="lazy"
-          allow="fullscreen; clipboard-write; web-share" allowfullscreen></iframe>`;
-        live.classList.add('is-open');
-      });
-    }
     document.title = `${p.title} — Ecem Öztürk`;
     if (!sheet.open) sheet.showModal();
     sheet.scrollTop = 0;
@@ -344,7 +395,7 @@
     }
     const p = posts.find((q) => q.slug === h);
     if (!p) return closeSheet();
-    if (p.type === 'project' || p.type === 'tool') return openSheet(p);
+    if (p.type === 'project' || p.type === 'tool') { closeSheet(); return setOpen(p.slug, true, { scroll: true }); }
     // A standalone image has nothing more to open: bring it into view.
     closeSheet();
     const el = document.getElementById(`p-${p.slug}`);
@@ -355,6 +406,15 @@
   }
 
   window.addEventListener('hashchange', route);
+  slot('index').addEventListener('click', (e) => {
+    const a = e.target.closest('[data-goto]');
+    if (!a) return;
+    const p = posts.find((q) => q.slug === a.dataset.goto);
+    if (!p || (p.type !== 'project' && p.type !== 'tool')) return;
+    e.preventDefault();
+    closeSheet();
+    setOpen(p.slug, true, { scroll: true });
+  });
 
   document.querySelectorAll('[data-filter]').forEach((b) => b.addEventListener('click', () => {
     filter = b.dataset.filter;
