@@ -208,7 +208,8 @@
           "src": "media/t3site/renderingotol-copy-t545.webp",
           "w": 966,
           "h": 668,
-          "alt": ""
+          "alt": "",
+          "feed": true
         },
         {
           "type": "image",
@@ -224,7 +225,7 @@
           "w": 1600,
           "h": 1000,
           "alt": "The studio's library: entries in site order on the left, the selected entry's form on the right",
-          "feed": false
+          "feed": true
         },
         {
           "type": "image",
