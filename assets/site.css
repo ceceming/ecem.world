@@ -34,7 +34,7 @@
   --max-h: 512px;
   --max-w: 826px;
 
-  --mark: 84px;      /* the drifting "e" */
+  --mark: 92px;      /* the drifting "e" */
   --big: min(42vmin, 205px);  /* the "e" on the coming-soon page, and at the start */
 }
 
@@ -522,7 +522,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
    dropped, as Nik's site does on a phone — the feed is the index there. */
 
 @media (max-width: 860px) {
-  :root { --pad: 14px; --mark: 72px; }
+  :root { --pad: 14px; --mark: 79px; }
 
   .panel { position: static; width: auto; border: 0; padding-bottom: 0; }
   .spacer { display: none; }
