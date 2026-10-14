@@ -132,6 +132,52 @@
           "alt": "The Textures Studio interface: presets on the left, the image in the centre, the filter stack on the right"
         }
       ]
+    },
+    {
+      "id": "t3site",
+      "type": "tool",
+      "status": "draft",
+      "slug": "ecem-world-and-its-studio",
+      "title": "ecem.world and its studio",
+      "year": "2026",
+      "tags": [
+        "Web design",
+        "Content system",
+        "Publishing"
+      ],
+      "summary": "This website, and the private studio behind it where I add, order and publish projects, images and writing.",
+      "live": "https://ecem.world",
+      "repo": "https://github.com/ceceming/ecem.world",
+      "embed": "",
+      "body": "Two halves. The public site: black, one typeface, a pinned panel with the bio and an index, and a feed of work in which every piece keeps its own proportions and a project unfolds in place.\n\nThe studio, which only I can use: a library where I drag projects into the order the site shows them, mark them draft, live or archived, upload images and video (resized in the browser before they are saved), preview the real site with unpublished changes, and publish everything in one step. My Substack posts arrive on their own every hour, and I decide which appear and whether they open here or on Substack.\n\nThere is no server and no database: the site is a handful of files, the content is three of them, and publishing is a single commit to GitHub.",
+      "process": "I built it with Claude Code, in conversation. I started from four portfolios I admire, had them studied for layout, measurements and how each introduces its work, and decided from that what mine should do. From there I directed every step and judged each one in the browser: the pinned panel, the opening animation of the chrome \"e\", the About portrait that turns to colour on hover, hiding client names from the public site, replacing the project pop-up with projects that unfold in place. Claude Code wrote the code and tested it; I decided what it should be, and sent back what was not right.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/tools/ecem-world-site.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The ecem.world home page: the bio and index on the left, the feed of work on the right",
+          "feed": true
+        },
+        {
+          "type": "image",
+          "src": "media/tools/ecem-world-studio.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The studio's library: entries in site order on the left, the selected entry's form on the right",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/tools/ecem-world-substack.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The studio's Substack tab: synced posts, each with show and full-text options",
+          "feed": false
+        }
+      ]
     }
   ]
 }

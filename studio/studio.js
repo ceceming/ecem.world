@@ -171,6 +171,7 @@
     state.removed.clear();
     offerRestore();
     if (!state.selected && state.posts[0]) state.selected = state.posts[0].id;
+    status('');
     renderAll();
   }
 
