@@ -191,7 +191,6 @@
       // project below its caption, another click folds it away again.
       const isProject = p.type === 'project' || p.type === 'tool';
       const media = isProject ? feedMedia(p) : p.media.slice(0, 1);
-      const hidden = isProject ? p.media.length - media.length : 0;
       const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
       // A project's row holds all its media; the pieces not chosen for the
@@ -229,11 +228,10 @@
       return `<article class="item ${p.type}" id="p-${esc(p.slug)}">
         ${frames}
         <div class="caption">
-          <span>${esc(p.title)}${hidden ? `<span class="more"> +${hidden}</span>` : ''}${badge(p)}</span>
+          <span>${esc(p.title)}${badge(p)}${p.live || p.repo ? tryLinks(p, 'try-line', 'span') : ''}</span>
           <span class="c-mid">${esc(p.tags.join(', '))}</span>
           <span>${esc(p.year)}</span>
         </div>
-        ${p.live || p.repo ? tryLinks(p, 'try-line') : ''}
         ${moreBar('', `d-${esc(p.slug)}`, esc(p.slug))}
         <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>
       </article>`;
@@ -348,12 +346,12 @@
   }
 
   // "Try it ↗" and "Source ↗" for a tool, as a caption line or as buttons.
-  function tryLinks(p, cls) {
+  function tryLinks(p, cls, tag = 'p') {
     const links = [
       p.live ? `<a href="${esc(p.live)}" target="_blank" rel="noopener">Try it ↗</a>` : '',
       p.repo ? `<a href="${esc(p.repo)}" target="_blank" rel="noopener">Source ↗</a>` : '',
     ].filter(Boolean);
-    return links.length ? `<p class="${cls}">${links.join('')}</p>` : '';
+    return links.length ? `<${tag} class="${cls}">${links.join('')}</${tag}>` : '';
   }
 
   /* ── Writing and About, opened over the page ──────────────────────── */
