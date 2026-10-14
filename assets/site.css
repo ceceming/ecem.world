@@ -425,8 +425,36 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .note p { margin: 0 0 0.9em; }
 .item.image .details-inner > .note { margin: 12px 0 4px; }
 
-/* The images held back from the feed, at the top of the opened project. */
-.more-frames { margin-top: 28px; }
+/* The images held back from the feed, at the top of the opened project:
+   one row, all the same height, that slides sideways (arrows, a swipe or
+   a trackpad), settling on an image each time. */
+.carousel { position: relative; margin-top: 28px; }
+.more-frames {
+  --car-h: min(440px, 56vh);
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.more-frames::-webkit-scrollbar { display: none; }
+.more-frames > .frame {
+  width: min(calc(var(--car-h) * var(--r)), 88%);
+  scroll-snap-align: start;
+}
+.car-prev, .car-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; display: grid; place-items: center;
+  background: rgba(0, 0, 0, 0.62); border: 1px solid var(--rule);
+  color: var(--fg); font-size: 20px;
+  transition: opacity 250ms ease, background 200ms ease;
+}
+.car-prev { left: 10px; }
+.car-next { right: 10px; }
+.car-prev:hover, .car-next:hover { background: rgba(0, 0, 0, 0.85); }
+.carousel.at-start .car-prev, .carousel.at-end .car-next { opacity: 0; pointer-events: none; }
 
 /* ── Full size ───────────────────────────────────────────────────────── */
 .frame:has(img), .frame:has(video) { cursor: zoom-in; }

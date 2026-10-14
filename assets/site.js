@@ -247,7 +247,11 @@
     const shown = new Set(feedMedia(p));
     const extra = p.media.filter((m) => !shown.has(m));
     return `
-      ${extra.length ? `<div class="frames more-frames">${extra.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>` : ''}
+      ${extra.length ? `<div class="carousel">
+        <div class="frames more-frames">${extra.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>
+        <button type="button" class="car-prev" aria-label="Previous images">←</button>
+        <button type="button" class="car-next" aria-label="More images">→</button>
+      </div>` : ''}
       <div class="sheet-text">
         <div>
           ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
@@ -263,6 +267,15 @@
       <button type="button" class="fold" data-toggle="${esc(p.slug)}">Close <span aria-hidden="true">↑</span></button>`;
   }
 
+  // The opened project's extra images: one row that slides, image by image.
+  function slide(car, dir) {
+    const strip = car.querySelector('.more-frames');
+    const x = strip.scrollLeft;
+    const lefts = [...strip.children].map((f) => f.offsetLeft - strip.firstElementChild.offsetLeft);
+    const to = dir > 0 ? lefts.find((l) => l > x + 4) : [...lefts].reverse().find((l) => l < x - 4);
+    strip.scrollTo({ left: to === undefined ? (dir > 0 ? strip.scrollWidth : 0) : to, behavior: 'smooth' });
+  }
+
   function setOpen(slug, open, { scroll = false } = {}) {
     const p = posts.find((q) => q.slug === slug);
     if (!p) return;
@@ -274,6 +287,19 @@
     const inner = item.querySelector('.details-inner');
     if (open && !inner.childElementCount) {
       inner.innerHTML = detailsHtml(p);
+      const car = inner.querySelector('.carousel');
+      if (car) {
+        const strip = car.querySelector('.more-frames');
+        const sync = () => {
+          const end = strip.scrollWidth - strip.clientWidth;
+          car.classList.toggle('at-start', strip.scrollLeft <= 4);
+          car.classList.toggle('at-end', strip.scrollLeft >= end - 4);
+        };
+        strip.addEventListener('scroll', sync, { passive: true });
+        window.addEventListener('resize', sync);
+        strip.querySelectorAll('img').forEach((im) => im.addEventListener('load', sync));
+        sync();
+      }
     }
     item.classList.toggle('is-open', open);
     item.querySelectorAll('[aria-expanded]').forEach((a) => a.setAttribute('aria-expanded', String(open)));
@@ -366,6 +392,8 @@
       return;
     }
     if (e.target.closest('.note-over')) return;   // reading the note, not opening the image
+    const step = e.target.closest('.car-prev, .car-next');
+    if (step) { slide(step.closest('.carousel'), step.classList.contains('car-next') ? 1 : -1); return; }
     const f = e.target.closest('.frame');
     if (f && showFull(f)) { e.preventDefault(); return; }
     const n = e.target.closest('.note-toggle');
