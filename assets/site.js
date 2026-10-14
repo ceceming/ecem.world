@@ -220,29 +220,32 @@
 
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked
-        // in the studio, otherwise folded behind "Note +" in the caption.
+        // in the studio, otherwise folded behind the "Read more" bar.
         const note = (p.body || '').trim();
         const beside = note && p.noteBeside;
         return `<article class="item ${p.type}${beside ? ' has-note' : small}" id="p-${esc(p.slug)}">
           ${beside ? `<div class="with-note">${frames}<div class="note prose">${prose(note)}</div></div>` : frames}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
-            <span class="c-mid">${note && !beside ? `<button type="button" class="note-toggle" aria-expanded="false" aria-controls="n-${esc(p.slug)}">Note<span class="sign" aria-hidden="true"></span></button>` : ''}</span>
+            <span class="c-mid"></span>
             <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
+          ${note && !beside ? moreBar('note-toggle', `n-${esc(p.slug)}`, '') : ''}
           ${note && !beside ? `<div class="details" id="n-${esc(p.slug)}"><div class="details-inner"><div class="note prose">${prose(note)}</div></div></div>` : ''}
         </article>`;
       }
 
-      const toggle = `href="#/${esc(p.slug)}" data-toggle="${esc(p.slug)}" aria-expanded="false" aria-controls="d-${esc(p.slug)}"`;
+      // Images are for looking at (a tap shows one full size); the project
+      // opens only from its "Read more" bar, so the two can't be confused.
       return `<article class="item ${p.type}" id="p-${esc(p.slug)}">
-        <a class="toggle" ${toggle} aria-label="${esc(p.title)}">${frames}</a>
-        <a class="caption toggle" ${toggle}>
+        ${frames}
+        <div class="caption">
           <span>${esc(p.title)}${hidden ? `<span class="more"> +${hidden}</span>` : ''}${badge(p)}</span>
           <span class="c-mid">${esc(p.tags.join(', '))}</span>
-          <span>${esc(p.year)}<span class="sign" aria-hidden="true"></span></span>
-        </a>
+          <span>${esc(p.year)}</span>
+        </div>
         ${p.live || p.repo ? tryLinks(p, 'try-line') : ''}
+        ${moreBar('', `d-${esc(p.slug)}`, esc(p.slug))}
         <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>
       </article>`;
     }).join('');
@@ -350,6 +353,14 @@
     const item = document.getElementById(`p-${t.dataset.toggle}`);
     setOpen(t.dataset.toggle, !item.classList.contains('is-open'));
   });
+
+  // The one control that opens and closes a project or a folded note: a
+  // full-width bar, "Read more" in italics over a solid line.
+  function moreBar(cls, controls, slug) {
+    return `<button type="button" class="more-bar ${cls}" ${slug ? `data-toggle="${slug}"` : ''} aria-expanded="false" aria-controls="${controls}">
+      <span class="when-closed">Read more</span><span class="when-open">Close</span><span class="arrow" aria-hidden="true">↓</span>
+    </button>`;
+  }
 
   // "Try it ↗" and "Source ↗" for a tool, as a caption line or as buttons.
   function tryLinks(p, cls) {
