@@ -146,7 +146,7 @@
         "Graphic Design"
       ],
       "summary": "",
-      "body": "Made for the Substack post \"A Mediterranean summer can be exercised anywhere.\". Generated 3D models using photos I took during my Bodrum summer trip, as a keepsake of what I kept close during my time there. ",
+      "body": "Made for the Substack post \"A Mediterranean summer can be exercised anywhere.\". Generated 3D models using photos I took during my Bodrum summer trip, as a keepsake of what I wanted to keep forever from my time there. ",
       "size": "small",
       "media": [
         {
@@ -154,7 +154,32 @@
           "src": "media/s2b8m3/d7159cf7-f0a7-4ae9-a7f1-c895a92b90fc-146-0ykn.webp",
           "w": 1460,
           "h": 2103,
-          "alt": ""
+          "alt": "",
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/s2b8m3/64d5d0b7-2b86-4406-a1a6-3201dc9d6388-1-1-69pv.webp",
+          "w": 2048,
+          "h": 1535,
+          "alt": "",
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/s2b8m3/bc1453f9-699b-44db-b3a9-8022056fe659-1-1-vxl4.webp",
+          "w": 2048,
+          "h": 1536,
+          "alt": "",
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/s2b8m3/fbf2f64a-1551-4594-8b75-7827ffea7b38-1-1-18y5.webp",
+          "w": 1536,
+          "h": 2048,
+          "alt": "",
+          "size": "m"
         }
       ],
       "slugTouched": true
