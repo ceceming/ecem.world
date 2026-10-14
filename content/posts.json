@@ -6,7 +6,7 @@
       "status": "published",
       "slug": "virtual-nostalgia",
       "title": "Virtual Nostalgia",
-      "year": "",
+      "year": "2026",
       "client": "Self-initiated",
       "role": "Concept, 3D scanning, art direction",
       "tags": [
@@ -47,13 +47,6 @@
           "w": 1920,
           "h": 1080,
           "alt": "The hand-painted mirror lifted out of the room, with its story beneath"
-        },
-        {
-          "type": "image",
-          "src": "media/vnost/armchair.webp",
-          "w": 1920,
-          "h": 1080,
-          "alt": "The walnut armchair with velvet upholstery, turned in the room, with its story beneath"
         }
       ]
     },
@@ -193,7 +186,7 @@
     {
       "id": "t3site",
       "type": "tool",
-      "status": "draft",
+      "status": "published",
       "slug": "ecem-world-and-its-studio",
       "title": "ecem.world and its studio",
       "year": "2026",
@@ -210,6 +203,13 @@
       "process": "I built it with Claude Code, in conversation. I started from four portfolios I admire, had them studied for layout, measurements and how each introduces its work, and decided from that what mine should do. From there I directed every step and judged each one in the browser: the pinned panel, the opening animation of the chrome \"e\", the About portrait that turns to colour on hover, hiding client names from the public site, replacing the project pop-up with projects that unfold in place. Claude Code wrote the code and tested it; I decided what it should be, and sent back what was not right.",
       "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
       "media": [
+        {
+          "type": "image",
+          "src": "media/t3site/renderingotol-copy-t545.webp",
+          "w": 966,
+          "h": 668,
+          "alt": ""
+        },
         {
           "type": "image",
           "src": "media/tools/ecem-world-site.webp",
