@@ -94,7 +94,7 @@
           "src": "media/18quen/glyph-brick-b-left-45-vers1-animasyon-8yxt.gif",
           "w": 800,
           "h": 1000,
-          "alt": "",
+          "alt": "light design plastic semi-opaque shell in the shape of a rectangular prism. a metal frame holds the light source and allows screws to hang on the wall.",
           "size": "m",
           "feed": true
         },
@@ -103,9 +103,17 @@
           "src": "media/18quen/image-1791961486107-72q1.webp",
           "w": 1600,
           "h": 2000,
-          "alt": "",
+          "alt": "light design plastic semi-opaque shell in the shape of a rectangular prism. a metal frame holds the light source and allows screws to hang on the wall.",
           "size": "m",
           "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/18quen/glyph-brick-drawing-t88v.webp",
+          "w": 953,
+          "h": 1082,
+          "alt": "",
+          "size": "m"
         }
       ]
     },
