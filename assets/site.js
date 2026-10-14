@@ -69,6 +69,10 @@
 
   // One piece of media, sized by its own ratio. Video is muted, looping,
   // autoplaying and control-free, as on every reference site.
+  // Each image's size, chosen in the studio: a share of the largest an
+  // image may show (--max-w × --max-h in site.css). Unset = large.
+  const SIZE = { s: 0.5, m: 0.75, l: 1 };
+
   function frame(m, eager) {
     const r = (m.w && m.h) ? m.w / m.h : (m.type === 'embed' ? 16 / 9 : 1);
     let inner;
@@ -82,7 +86,7 @@
       inner = `<img src="${esc(src(m.src))}" alt="${esc(m.alt)}" ${eager ? '' : 'loading="lazy"'} decoding="async"
         width="${m.w || ''}" height="${m.h || ''}" onload="this.classList.add('loaded')">`;
     }
-    return `<div class="frame" style="--r:${r.toFixed(4)}">${inner}</div>`;
+    return `<div class="frame" style="--r:${r.toFixed(4)};--sz:${SIZE[m.size] || 1}">${inner}</div>`;
   }
 
   const badge = (p) => (PREVIEW && p.status !== 'published' ? `<span class="badge">${esc(p.status)}</span>` : '');
@@ -207,7 +211,9 @@
       // The row's combined ratio caps its height at ~78% of the window, so a
       // single wide image does not fill the screen edge to edge.
       const r = media.reduce((sum, m) => sum + (m.w && m.h ? m.w / m.h : 16 / 9), 0) || 1;
-      const frames = `<div class="frames" style="--r:${r.toFixed(4)};--n:${Math.max(0, media.length - 1)}">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      // A row shares one height, so it takes the size of its largest image.
+      const sz = Math.max(...media.map((m) => SIZE[m.size] || 1), 0.5);
+      const frames = `<div class="frames" style="--r:${r.toFixed(4)};--n:${Math.max(0, media.length - 1)};--sz:${sz}">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
         return `<article class="item ${p.type}${small}" id="p-${esc(p.slug)}">

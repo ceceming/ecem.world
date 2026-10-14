@@ -222,7 +222,8 @@ html.intro .panel { border-right-color: transparent; }
 
 /* --r on the row is the sum of its frames' ratios and --n its number of
    gaps, so capping the row's width also caps its height at --max-h. */
-.frames { max-width: min(var(--max-w), calc(var(--max-h) * var(--r) + var(--gap) * var(--n, 0))); }
+/* --sz is the image size chosen in the studio: 1 large, 0.75 medium, 0.5 small. */
+.frames { max-width: min(calc(var(--max-w) * var(--sz, 1)), calc(var(--max-h) * var(--sz, 1) * var(--r) + var(--gap) * var(--n, 0))); }
 
 .frame img { opacity: 0; transition: opacity 500ms ease; }
 .frame img.loaded { opacity: 1; }
@@ -394,7 +395,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .details .sheet-text { margin-top: 40px; }
 .details .lead { margin: 0 0 1.1em; font-size: 20px; line-height: 1.35; max-width: 34em; }
 .more-media { display: grid; gap: var(--gap); }
-.more-media .frame { flex: none; width: 100%; max-width: min(var(--max-w), calc(var(--max-h) * var(--r))); }
+.more-media .frame { flex: none; width: 100%; max-width: min(calc(var(--max-w) * var(--sz, 1)), calc(var(--max-h) * var(--sz, 1) * var(--r))); }
 .details .try-buttons { margin-bottom: 18px; }
 .fold { display: block; margin: 36px 0 8px; color: var(--dim); }
 .fold:hover { color: var(--fg); }
@@ -437,7 +438,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
 @media (max-width: 860px) {
   .frames { max-width: none; }
-  .item.image .frames { max-width: calc(var(--max-h) * var(--r)); }
+  .item.image .frames { max-width: calc(var(--max-h) * var(--sz, 1) * var(--r)); }
   :root { --pad: 14px; --mark: 72px; }
 
   .panel { position: static; width: auto; border: 0; padding-bottom: 0; }

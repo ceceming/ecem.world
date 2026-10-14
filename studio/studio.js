@@ -610,6 +610,8 @@
           <button type="button" data-m="remove" aria-label="Remove">×</button>
         </span>
       </div>
+      <div class="sizes" role="radiogroup" aria-label="Size">${[['s', 'S', 'Small'], ['m', 'M', 'Medium'], ['l', 'L', 'Large']].map(([v, t, name]) =>
+        `<button type="button" role="radio" data-m="size" data-size="${v}" title="${name}" aria-checked="${(m.size || 'l') === v}">${t}</button>`).join('')}</div>
       ${p && p.type !== 'image' ? `<label class="infeed"><input type="checkbox" data-m="feed" ${inFeed(p, i) ? 'checked' : ''}> In the feed</label>` : ''}
       <input class="alt" data-m="alt" value="${esc(m.alt)}" placeholder="Describe it (for screen readers)">
     </li>`;
@@ -685,7 +687,7 @@
         body = `<div class="fields">
           ${common}
           <div class="row">${field('tags', 'Medium', (p.tags || []).join(', '), '', 'e.g. Rhino, Blender')}${field('year', 'Year', p.year, 'inputmode="numeric" class="short"')}</div>
-          <label>Size in the feed <span class="muted">— small sits beside another piece; large spans the width</span>
+          <label>Space in the feed <span class="muted">— small sits beside another piece; large spans the width. The image's own S / M / L is set on it below.</span>
             <select name="size"><option value="small" ${p.size !== 'large' ? 'selected' : ''}>Small</option><option value="large" ${p.size === 'large' ? 'selected' : ''}>Large</option></select></label>
           ${area('body', 'Note', p.body, 3, 'optional')}
           ${slugField}
@@ -880,6 +882,11 @@
       return changed({ editor: true });
     }
     const tile = b.closest('.tile');
+    if (tile && b.dataset.m === 'size') {
+      const m = p.media[+tile.dataset.i];
+      if (b.dataset.size === 'l') delete m.size; else m.size = b.dataset.size;   // large is the default
+      return changed({ editor: true });
+    }
     if (tile && b.dataset.m) {
       const i = +tile.dataset.i;
       if (b.dataset.m === 'remove') { forgetFile(p.media[i]); p.media.splice(i, 1); }
