@@ -87,7 +87,7 @@
           "h": 1300,
           "alt": "",
           "size": "m",
-          "feed": true
+          "feed": false
         },
         {
           "type": "video",
@@ -106,7 +106,7 @@
           "h": 1080,
           "alt": "The catalogue intro page, with the keychain, a Game Boy and the scanned house",
           "size": "m",
-          "feed": true
+          "feed": false
         },
         {
           "type": "image",
@@ -115,7 +115,7 @@
           "h": 1080,
           "alt": "The catalogue open in the scanned room: a Pippi Longstocking notebook, a lace tablecloth drawer, a side table and a hand-painted mirror",
           "size": "m",
-          "feed": true
+          "feed": false
         }
       ]
     },
