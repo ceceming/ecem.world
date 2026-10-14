@@ -208,12 +208,7 @@
       const hidden = isProject ? p.media.length - media.length : 0;
       const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
-      // The row's combined ratio caps its height at ~78% of the window, so a
-      // single wide image does not fill the screen edge to edge.
-      const r = media.reduce((sum, m) => sum + (m.w && m.h ? m.w / m.h : 16 / 9), 0) || 1;
-      // A row shares one height, so it takes the size of its largest image.
-      const sz = Math.max(...media.map((m) => SIZE[m.size] || 1), 0.5);
-      const frames = `<div class="frames" style="--r:${r.toFixed(4)};--n:${Math.max(0, media.length - 1)};--sz:${sz}">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      const frames = `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked

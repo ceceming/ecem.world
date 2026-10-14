@@ -196,15 +196,16 @@ html.intro .panel { border-right-color: transparent; }
 .item { grid-column: span 2; min-width: 0; }
 .item.is-small, .item.writing { grid-column: span 1; }
 
-/* A row of media at equal height: each frame grows in proportion to its own
-   width ÷ height, so nothing is cropped and the row lines up top and bottom. */
-.frames { display: flex; gap: var(--gap); }
+/* Each piece of media sizes itself: as large as its S / M / L allows
+   (--sz × the --max-w by --max-h box), never wider than the column, at its
+   own ratio so nothing is cropped. Pieces that fit side by side share a
+   line; the rest continue on the next. */
+.frames { display: flex; flex-wrap: wrap; gap: var(--gap); align-items: flex-start; }
 
 .frame {
   position: relative;
-  /* Grow in proportion to its ratio. ×100 so a row whose ratios add up to
-     less than 1 (one tall image) still fills its width. */
-  flex: calc(var(--r) * 100) 1 0;
+  flex: none;
+  width: min(100%, calc(var(--max-w) * var(--sz, 1)), calc(var(--max-h) * var(--sz, 1) * var(--r)));
   aspect-ratio: var(--r);
   min-width: 0;
   background: var(--tile);
@@ -220,10 +221,7 @@ html.intro .panel { border-right-color: transparent; }
   border: 0;
 }
 
-/* --r on the row is the sum of its frames' ratios and --n its number of
-   gaps, so capping the row's width also caps its height at --max-h. */
-/* --sz is the image size chosen in the studio: 1 large, 0.75 medium, 0.5 small. */
-.frames { max-width: min(calc(var(--max-w) * var(--sz, 1)), calc(var(--max-h) * var(--sz, 1) * var(--r) + var(--gap) * var(--n, 0))); }
+
 
 .frame img { opacity: 0; transition: opacity 500ms ease; }
 .frame img.loaded { opacity: 1; }
@@ -454,8 +452,6 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
    dropped, as Nik's site does on a phone — the feed is the index there. */
 
 @media (max-width: 860px) {
-  .frames { max-width: none; }
-  .item.image .frames { max-width: calc(var(--max-h) * var(--sz, 1) * var(--r)); }
   :root { --pad: 14px; --mark: 72px; }
 
   .panel { position: static; width: auto; border: 0; padding-bottom: 0; }
@@ -473,8 +469,6 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
   /* Three across is too small to read on a phone: a project's frames
      wrap, two to a row, each still at its own ratio. */
-  .item.project .frames { flex-wrap: wrap; }
-  .item.project .frame { flex-basis: calc(40% * var(--r)); }
 
   .caption { grid-template-columns: minmax(0, 1fr) auto; }
   .caption .c-mid { display: none; }
