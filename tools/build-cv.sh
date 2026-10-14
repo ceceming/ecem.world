@@ -104,7 +104,7 @@ print("  text layer: name, roles and bullets all extract cleanly")
 # the page itself.
 writer = pypdf.PdfWriter(clone_from=path)
 writer.add_metadata({
-    "/Title": "Ecem Ozturk — Art Director — CV",
+    "/Title": "Ecem Ozturk — Designer & Art Director — CV",
     "/Author": "Ecem Ozturk",
     "/Subject": "Curriculum vitae",
     "/Keywords": ("art direction, brand identity, visual identity, editorial design, "
