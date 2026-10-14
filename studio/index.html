@@ -7,7 +7,7 @@
 <title>Studio — ecem.world</title>
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="studio.css?v=20261014p">
+<link rel="stylesheet" href="studio.css?v=20261015l">
 </head>
 <body>
 
@@ -133,10 +133,17 @@
       <h2>Site</h2>
       <form id="site-form" class="fields">
         <label>Name <input name="name"></label>
-        <label>Bio <span class="muted">— the paragraph pinned beside the work. Third person, one or two sentences.</span>
+        <label>Bio <span class="muted">— pinned beside the work. Each Enter starts a new paragraph.</span>
           <textarea name="bio" rows="4"></textarea></label>
-        <label>About page <span class="muted">— the longer text beside your photo, under the bio. A blank line starts a new paragraph.</span>
+        <h3 class="sub">About page</h3>
+        <label>Big text <span class="muted">— at the top, beside your photo. Left empty, the bio is used. Each Enter starts a new paragraph.</span>
+          <textarea name="aboutHero" rows="4"></textarea></label>
+        <label>Big text size <span class="muted">— in px (now 20)</span>
+          <input name="aboutHeroSize" type="number" min="10" max="120" step="1" placeholder="20" class="short"></label>
+        <label>Body text <span class="muted">— under the big text. Each Enter starts a new paragraph.</span>
           <textarea name="about" rows="8"></textarea></label>
+        <label>Body text size <span class="muted">— in px (now 15)</span>
+          <input name="aboutSize" type="number" min="10" max="60" step="1" placeholder="15" class="short"></label>
         <label>Currently <span class="muted">— optional, one line under the bio</span>
           <input name="currently" placeholder="e.g. Currently art directing for …"></label>
         <label>Email <input name="email" type="email"></label>
@@ -147,6 +154,6 @@
 
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="studio.js?v=20261015b"></script>
+<script src="studio.js?v=20261015l"></script>
 </body>
 </html>

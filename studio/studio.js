@@ -735,7 +735,7 @@
 
   function renderSite() {
     const f = $('#site-form');
-    ['name', 'bio', 'about', 'currently', 'email'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] || ''; });
+    ['name', 'bio', 'aboutHero', 'aboutHeroSize', 'about', 'aboutSize', 'currently', 'email'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] ?? ''; });
   }
 
   function renderAll() {
@@ -979,7 +979,9 @@
   });
 
   $('#site-form').addEventListener('input', (e) => {
-    state.site[e.target.name] = e.target.value;
+    const el = e.target;
+    // Sizes are numbers; an empty box means "the usual size".
+    state.site[el.name] = el.type === 'number' ? (el.value === '' ? '' : Number(el.value)) : el.value;
     changed({ list: false });
   });
 

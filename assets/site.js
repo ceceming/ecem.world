@@ -47,6 +47,13 @@
     .map((p) => `<p>${esc(p).replace(/\n/g, '<br>')
       .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')}</p>`).join('');
 
+  // Short texts set in the studio (the bio, the About page): every Enter
+  // starts a new paragraph.
+  const paras = (text) => String(text || '').split(/\n+/).map((l) => l.trim()).filter(Boolean)
+    .map((l) => `<p>${esc(l)}</p>`).join('');
+  // A size typed in the studio, in px, kept within reason.
+  const px = (n, lo, hi) => (Number(n) >= lo && Number(n) <= hi ? `${Number(n)}px` : '');
+
   // "Label: Name" per line → a definition list.
   const credits = (text) => {
     const rows = String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
@@ -129,7 +136,7 @@
 
   function renderPanel() {
     if (site.name) slot('name').textContent = site.name;
-    slot('bio').textContent = site.bio || '';
+    slot('bio').innerHTML = paras(site.bio);
     const cur = slot('currently');
     cur.hidden = !site.currently;
     cur.textContent = site.currently || '';
@@ -477,8 +484,8 @@
         <img class="color" src="${esc(src(pic.color))}" alt="" aria-hidden="true" loading="lazy">
       </figure>` : ''}
       <div class="about-text">
-        <p class="lead">${esc(site.bio || '')}</p>
-        <div class="prose">${prose(site.about)}</div>
+        <div class="lead" style="${px(site.aboutHeroSize, 10, 120) ? `--hero:${px(site.aboutHeroSize, 10, 120)}` : ''}">${paras(site.aboutHero || site.bio)}</div>
+        ${site.about ? `<div class="prose" style="${px(site.aboutSize, 10, 60) ? `--body:${px(site.aboutSize, 10, 60)}` : ''}">${paras(site.about)}</div>` : ''}
         <dl>
           ${site.email ? `<dt>Contact</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd>` : ''}
           <dt>Newsletter</dt><dd><a href="${esc((site.substack && site.substack.url) || 'https://luckbug.substack.com')}" target="_blank" rel="noopener">luck bug, on Substack ↗</a></dd>
