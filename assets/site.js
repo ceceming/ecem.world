@@ -193,15 +193,9 @@
       const media = isProject ? feedMedia(p) : p.media.slice(0, 1);
       const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
-      // A project's row holds all its media; the pieces not chosen for the
-      // feed are marked "extra" and appear in the same row, where they fit,
-      // only once it is opened (hidden ones don't load until then).
-      const shownSet = new Set(media);
-      const frames = isProject
-        // The feed's pieces first, so opening never pushes in above what is
-        // already on screen; then the rest, in their order.
-        ? `<div class="frames">${media.map((m) => frame(m, eager)).join('')}${p.media.filter((m) => !shownSet.has(m)).map((m) => frame(m, false).replace('class="frame"', 'class="frame extra"')).join('')}</div>`
-        : `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      // The pieces not chosen for the feed wait inside the project and only
+      // load once it is opened (see detailsHtml).
+      const frames = `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked
@@ -250,7 +244,10 @@
   // feed, its text and credits, and for a tool a way to try it.
   function detailsHtml(p) {
     const isTool = p.type === 'tool';
+    const shown = new Set(feedMedia(p));
+    const extra = p.media.filter((m) => !shown.has(m));
     return `
+      ${extra.length ? `<div class="frames more-frames">${extra.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>` : ''}
       <div class="sheet-text">
         <div>
           ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
@@ -287,6 +284,12 @@
     // Folding a long project away from below: bring its top back into view.
     if (scroll || (!open && item.getBoundingClientRect().top < 0)) {
       item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (open) {
+      // Opened from low on the screen: glide up with it, so the unfolding is
+      // seen rather than happening below the fold.
+      const cap = item.querySelector('.caption').getBoundingClientRect();
+      const aim = innerHeight * 0.3;
+      if (cap.top > aim) window.scrollBy({ top: cap.top - aim, behavior: 'smooth' });
     }
   }
 
@@ -294,22 +297,63 @@
 
   const lightbox = $('#lightbox');
 
+  // A gallery of every image and video in the piece (the feed's and, once
+  // opened, the rest), stepped through with the arrows, the arrow keys or a
+  // swipe. A click or tap outside the image (or Escape) puts the page back.
+  let gallery = [];
+  let at = 0;
+
   function showFull(frameEl) {
-    const img = frameEl.querySelector('img');
-    const vid = frameEl.querySelector('video');
-    if (!img && !vid) return false;            // embeds play where they are
-    lightbox.innerHTML = img
-      ? `<img src="${esc(img.currentSrc || img.src)}" alt="${esc(img.alt)}">`
-      : `<video src="${esc(vid.currentSrc || vid.src)}" autoplay loop playsinline controls></video>`;
-    if (vid) lightbox.querySelector('video').muted = vid.muted;
+    const isMedia = (f) => f.querySelector('img, video');
+    if (!isMedia(frameEl)) return false;       // embeds play where they are
+    const item = frameEl.closest('.item');
+    gallery = [...(item || frameEl).querySelectorAll('.frame')].filter(isMedia);
+    at = Math.max(0, gallery.indexOf(frameEl));
+    lightbox.innerHTML = `<div class="lb-stage"></div>${gallery.length > 1 ? `
+      <button type="button" class="lb-prev" aria-label="Previous">←</button>
+      <button type="button" class="lb-next" aria-label="Next">→</button>
+      <p class="lb-count"></p>` : ''}`;
+    showAt(at);
     lightbox.showModal();
+    lightbox.focus();   // not the ← button, so no ring shows on it
     return true;
   }
 
+  function showAt(i) {
+    at = (i + gallery.length) % gallery.length;
+    const f = gallery[at];
+    const img = f.querySelector('img');
+    const vid = f.querySelector('video');
+    const stage = lightbox.querySelector('.lb-stage');
+    stage.innerHTML = img
+      ? `<img src="${esc(img.getAttribute('src'))}" alt="${esc(img.alt)}">`
+      : `<video src="${esc(vid.getAttribute('src'))}" autoplay loop playsinline controls></video>`;
+    if (vid) stage.querySelector('video').muted = vid.muted;
+    const count = lightbox.querySelector('.lb-count');
+    if (count) count.textContent = `${at + 1} / ${gallery.length}`;
+  }
+
   lightbox.addEventListener('click', (e) => {
+    if (swiped) { swiped = false; return; }
+    if (e.target.closest('.lb-prev')) return showAt(at - 1);
+    if (e.target.closest('.lb-next')) return showAt(at + 1);
     if (!e.target.closest('img, video')) lightbox.close();
   });
-  lightbox.addEventListener('close', () => { lightbox.innerHTML = ''; });
+  lightbox.addEventListener('keydown', (e) => {
+    if (gallery.length < 2) return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showAt(at - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); showAt(at + 1); }
+  });
+  let touchX = null;
+  let swiped = false;   // a swipe is not also a tap that closes
+  lightbox.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (touchX === null || gallery.length < 2) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 40) { swiped = true; showAt(at + (dx < 0 ? 1 : -1)); }
+  });
+  lightbox.addEventListener('close', () => { lightbox.innerHTML = ''; gallery = []; });
 
   slot('feed').addEventListener('click', (e) => {
     // A tap on an image shows it full size (and does not open or close its
