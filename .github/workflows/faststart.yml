@@ -1,0 +1,35 @@
+# After a video is published from the studio, moves its index to the front
+# so it starts playing while it downloads (tools/faststart.sh). A copy, not
+# a re-encode: the picture is untouched. Commits only when a file changed.
+name: Videos play while loading
+
+on:
+  push:
+    branches: [main]
+    paths: ['media/**.mp4', 'media/**.m4v', 'media/**.mov', 'media/**.MP4', 'media/**.MOV']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: faststart
+  cancel-in-progress: false
+
+jobs:
+  faststart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - id: fix
+        run: bash tools/faststart.sh
+      - name: Commit if changed
+        if: steps.fix.outputs.changed == '1'
+        run: |
+          git config user.name  "video-faststart"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add media
+          git commit -m "Videos: index to the front, so they play while loading"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

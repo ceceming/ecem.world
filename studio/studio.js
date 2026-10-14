@@ -189,15 +189,47 @@
     });
   }
 
+  // Puts "mine" (edits made on top of "base") onto "theirs" (what has been
+  // published since). Only what was actually changed here is carried over:
+  // a post or setting left alone here keeps its newer published version, so
+  // an old tab can never quietly undo work published from somewhere else.
+  // Where both changed the same post, the one being published now wins.
+  function mergeWork(base, mine, theirs) {
+    const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    const basePosts = new Map((base.posts || []).map((p) => [p.id, p]));
+    const minePosts = new Map(mine.posts.map((p) => [p.id, p]));
+    let posts = (theirs.posts || []).filter((p) => !(basePosts.has(p.id) && !minePosts.has(p.id)));  // deleted here
+    mine.posts.forEach((p, i) => {
+      if (basePosts.has(p.id) && same(p, basePosts.get(p.id))) return;   // untouched here
+      const at = posts.findIndex((q) => q.id === p.id);
+      if (at >= 0) posts[at] = p; else posts.splice(Math.min(i, posts.length), 0, p);
+    });
+    // Reordered here: that order wins for the posts this tab knew about.
+    const order = (list) => list.map((p) => p.id).filter((id) => basePosts.has(id) && minePosts.has(id)).join();
+    if (order(mine.posts) !== order(base.posts || [])) {
+      const rank = new Map(mine.posts.map((p, i) => [p.id, i]));
+      posts = posts.map((p, i) => ({ p, k: rank.has(p.id) ? rank.get(p.id) : i - 0.5 }))
+        .sort((a, b) => a.k - b.k).map((x) => x.p);
+    }
+    const site = { ...(theirs.site || {}) };
+    new Set([...Object.keys(base.site || {}), ...Object.keys(mine.site || {})]).forEach((k) => {
+      if (!same((mine.site || {})[k], (base.site || {})[k])) site[k] = mine.site[k];
+    });
+    return { posts, site };
+  }
+
   function offerRestore() {
     const w = store.get(WORK_KEY);
     if (!w || w.branch !== cfg.branch) return;
     const when = new Date(w.at).toLocaleString();
-    const note = w.base !== state.saved ? '\n\nThe site has been published since then, so restoring will overwrite those newer changes.' : '';
+    const newer = w.base !== state.saved;
+    const note = newer ? '\n\nThe site has been published since then. Only what you changed is put back; everything newer is kept.' : '';
     if (!confirm(`You have unpublished changes from ${when}. Restore them?${note}`)) return store.del(WORK_KEY);
     const lost = new Set(w.pendingPaths || []);
-    state.posts = w.posts.map((p) => ({ ...p, media: (p.media || []).filter((m) => !lost.has(m.src)) }));
-    state.site = w.site;
+    const mine = { posts: w.posts.map((p) => ({ ...p, media: (p.media || []).filter((m) => !lost.has(m.src)) })), site: w.site };
+    const m = newer ? mergeWork(JSON.parse(w.base), mine, { posts: state.posts, site: state.site }) : mine;
+    state.posts = m.posts;
+    state.site = m.site;
     if (lost.size) toast(`${lost.size} unpublished file(s) could not be kept — add them again.`, 6000);
   }
 
@@ -210,14 +242,15 @@
       status('Checking…');
       const head = (await gh(`/git/ref/heads/${encodeURIComponent(cfg.branch)}`)).object.sha;
 
-      // Changed elsewhere since this page loaded? Say so rather than overwrite silently.
-      for (const path of [POSTS, SITE]) {
-        const cur = await gh(`/contents/${path}${ref()}`).catch(() => null);
-        if (cur && state.shas[path] && cur.sha !== state.shas[path]) {
-          if (!confirm(`${path} was changed somewhere else since you opened the studio.\n\nPublish anyway and replace those changes with yours?`)) {
-            status('Not published.'); return;
-          }
-        }
+      // Published from somewhere else (another tab, another device) since this
+      // page loaded? Then add these changes on top of that, never replace it.
+      const [rp, rs] = await Promise.all([readJson(POSTS), readJson(SITE)]);
+      if ((rp.sha && rp.sha !== state.shas[POSTS]) || (rs.sha && rs.sha !== state.shas[SITE])) {
+        const m = mergeWork(JSON.parse(state.saved), { posts: state.posts, site: state.site },
+          { posts: (rp.data && rp.data.posts) || [], site: rs.data || {} });
+        state.posts = m.posts;
+        state.site = m.site;
+        toast('The site was published from somewhere else meanwhile — those changes are kept, and yours are added to them.', 7000);
       }
 
       const baseTree = (await gh(`/git/commits/${head}`)).tree.sha;
