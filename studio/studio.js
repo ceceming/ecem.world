@@ -555,10 +555,6 @@
     for (const f of list) {
       try {
         const m = await ingest(f, post);
-        if (post.type === 'image' && post.media.length) {
-          post.media.forEach(forgetFile);
-          post.media = [];
-        }
         post.media.push(m);
         changed({ editor: true });
       } catch (err) {
@@ -653,11 +649,11 @@
   function mediaManager(p) {
     const one = p.type === 'image';
     return `<div class="media-block">
-      <div class="block-head"><span>${one ? 'The image' : 'Images, GIFs and video'}</span>
-        <span class="muted">${one ? 'One piece. Uploading another replaces it.' : 'Drag to reorder. Tick “In the feed” for the pieces shown before the project is opened (until you choose, the first three); the rest appear when it is opened.'}</span></div>
+      <div class="block-head"><span>${one ? 'Images' : 'Images, GIFs and video'}</span>
+        <span class="muted">${one ? 'The first one is shown in the feed. Any others open under it as a sliding row (“2 more”). Drag to reorder.' : 'Drag to reorder. Tick “In the feed” for the pieces shown before the project is opened (until you choose, the first three); the rest appear when it is opened.'}</span></div>
       <ol class="tiles" id="tiles">${p.media.map((m, i) => mediaTile(m, i, p.media.length, p)).join('')}</ol>
       <div class="drop" id="drop">
-        <p>Drop files here, or <label class="linkish">choose files<input type="file" id="file" ${one ? '' : 'multiple'}
+        <p>Drop files here, or <label class="linkish">choose files<input type="file" id="file" multiple
           accept="image/*,video/mp4,video/webm,video/quicktime,.heic" hidden></label>.</p>
         <p class="muted">Photos are resized to ${IMAGE_MAX}px and saved as WebP. Video: MP4 under 25 MB is best; for longer films, use a Vimeo or YouTube link.</p>
         ${one ? '' : '<button type="button" id="add-embed">Add video link</button>'}

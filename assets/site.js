@@ -220,6 +220,8 @@
             <span class="c-mid"></span>
             <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
+          ${p.media.length > 1 ? `${moreBar('', `d-${esc(p.slug)}`, esc(p.slug), `${p.media.length - 1} more`)}
+          <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>` : ''}
 
         </article>`;
       }
@@ -249,16 +251,24 @@
 
   // Everything a project shows once opened: the pieces not already in the
   // feed, its text and credits, and for a tool a way to try it.
+  // A row of pieces that slides sideways, with arrows (see slide()).
+  const carousel = (list) => `<div class="carousel">
+      <div class="frames more-frames">${list.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>
+      <button type="button" class="car-prev" aria-label="Previous images">←</button>
+      <button type="button" class="car-next" aria-label="More images">→</button>
+    </div>`;
+
   function detailsHtml(p) {
+    // A single image's other images: just the sliding row, then Close.
+    if (p.type === 'image') {
+      return `${carousel(p.media.slice(1))}
+        <button type="button" class="fold" data-toggle="${esc(p.slug)}">Close <span aria-hidden="true">↑</span></button>`;
+    }
     const isTool = p.type === 'tool';
     const shown = new Set(feedMedia(p));
     const extra = p.media.filter((m) => !shown.has(m));
     return `
-      ${extra.length ? `<div class="carousel">
-        <div class="frames more-frames">${extra.map((m, i) => frame(m, false).replace('style="', `style="--i:${i};`)).join('')}</div>
-        <button type="button" class="car-prev" aria-label="Previous images">←</button>
-        <button type="button" class="car-next" aria-label="More images">→</button>
-      </div>` : ''}
+      ${extra.length ? carousel(extra) : ''}
       <div class="sheet-text">
         <div>
           ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
@@ -418,9 +428,9 @@
 
   // The one control that opens and closes a project or a folded note: a
   // full-width bar, "Read more" in italics over a solid line.
-  function moreBar(cls, controls, slug) {
+  function moreBar(cls, controls, slug, label = 'Read more') {
     return `<button type="button" class="more-bar ${cls}" ${slug ? `data-toggle="${slug}"` : ''} aria-expanded="false" aria-controls="${controls}">
-      <span class="when-closed">Read more</span><span class="when-open">Close</span><span class="arrow" aria-hidden="true">↓</span>
+      <span class="when-closed">${esc(label)}</span><span class="when-open">Close</span><span class="arrow" aria-hidden="true">↓</span>
     </button>`;
   }
 
@@ -525,7 +535,7 @@
     }
     const p = posts.find((q) => q.slug === h);
     if (!p) return closeSheet();
-    if (p.type === 'project' || p.type === 'tool') { closeSheet(); return setOpen(p.slug, true, { scroll: true }); }
+    if (p.type === 'project' || p.type === 'tool' || (p.type === 'image' && p.media.length > 1)) { closeSheet(); return setOpen(p.slug, true, { scroll: true }); }
     // A standalone image has nothing more to open: bring it into view.
     closeSheet();
     const el = document.getElementById(`p-${p.slug}`);
