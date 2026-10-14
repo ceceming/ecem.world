@@ -14,6 +14,10 @@
  * linked out to Substack, is decided in the studio (/studio/) and stored in
  * content/site.json — never here, so this script can never undo a choice.
  *
+ * Substack refuses GitHub's servers (a Cloudflare "Just a moment..." page,
+ * 403), so on GitHub the feed and the API both fail and the posts come via
+ * rss2json.com. From an ordinary connection the feed itself works.
+ *
  * No dependencies: Substack's feed is regular enough that a few patterns read
  * it reliably, and this keeps the workflow to a bare `node` call.
  */
@@ -104,10 +108,33 @@ async function fromApi(base) {
   return posts;
 }
 
+// Third route: rss2json.com reads the feed from its own servers, which
+// Substack does not challenge, and hands it back as JSON. Free, no key, and
+// refreshed about hourly — the same rhythm as this script.
+async function fromService(feed) {
+  const data = JSON.parse(await get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`));
+  if (data.status !== 'ok' || !data.items || !data.items.length) throw new Error(`rss2json: ${data.message || 'no posts'}`);
+  return data.items.map((i) => {
+    const html = i.content || '';
+    const text = entities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+    return {
+      id: i.guid || i.link,
+      title: (i.title || '').trim(),
+      subtitle: (i.description || '').trim(),
+      url: i.link,
+      date: isoSeconds(`${i.pubDate.replace(' ', 'T')}Z`),
+      image: (i.enclosure && i.enclosure.link) || i.thumbnail || '',
+      excerpt: text.slice(0, 280).replace(/\s\S*$/, '') + (text.length > 280 ? '…' : ''),
+      html,
+      via: 'rss2json',
+    };
+  });
+}
+
 async function main() {
   let fresh;
   const tries = /^https?:/.test(FEED)
-    ? [() => fromRss(FEED), () => fromApi(new URL(FEED).origin)]
+    ? [() => fromRss(FEED), () => fromApi(new URL(FEED).origin), () => fromService(FEED)]
     : [() => fromRss(FEED)];
   for (const attempt of tries) {
     try { fresh = await attempt(); break; } catch (err) { console.log(`Could not read: ${err.message}`); }
