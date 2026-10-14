@@ -258,6 +258,20 @@
     color: var(--ink-soft);
   }
 
+  /* Several roles under one employer (or one freelance practice): the
+     employer is the h3, each role an h4 with its own dates. */
+  .entry h4 {
+    margin: 6pt 0 0;
+    font-size: var(--t-body);
+    font-weight: 700;
+    letter-spacing: 0.012em;
+    line-height: 1.35;
+  }
+  .entry h4 .org { font-weight: 400; }
+  .entry h4 .bar { padding: 0 0.42em; color: var(--rule); font-weight: 400; }
+  .entry h3 + .meta + h4 { margin-top: 4pt; }
+  .entry h4 + .meta { margin-top: 1.5pt; }
+
   /* ── Education ──────────────────────────────────────────────────────── */
   .edu { margin-bottom: 7pt; break-inside: avoid; page-break-inside: avoid; }
   .edu:last-child { margin-bottom: 0; }
@@ -395,23 +409,23 @@
     <h2>Professional Experience</h2>
 
     <div class="entry">
-      <h3>Freelance Designer &amp; Graphic Designer<span
-        class="bar">|</span><span class="org">Independent</span></h3>
-      <p class="meta">Remote<span class="sep">·</span>Toronto, ON<span class="sep">·</span>2023 – Present</p>
+      <h3>Independent Practice<span class="bar">|</span><span class="org">Freelance</span></h3>
+      <p class="meta">Toronto, ON<span class="sep">·</span>Remote<span class="sep">·</span>2023 – Present</p>
+
+      <h4>Graphic Designer<span class="bar">|</span><span class="org">Master Ev Gereçleri</span></h4>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>June 2025 – Present</p>
+      <ul>
+        <li>Design packaging for kitchen-appliance and cosmetics lines sold in Turkish and Chinese markets, adapting it to each.</li>
+        <li>Take artwork through prepress with manufacturers in Turkey and China, keeping colour and finishes consistent from proof to print.</li>
+        <li>Design e-commerce storefronts, product pages, and catalogues with one recognisable look online and in print.</li>
+      </ul>
+
+      <h4>Designer &amp; Art Director<span class="bar">|</span><span class="org">Brand &amp; e-commerce clients</span></h4>
+      <p class="meta">2023 – Present</p>
       <ul>
         <li>Designed and built Shopify-integrated e-commerce websites and an Amazon brand presence — shaping visual identity, layout, and conversion-focused product pages.</li>
-        <li>Created packaging design for home-appliance product lines, taking artwork from concept through to print-ready production.</li>
         <li>Produced e-commerce-ready product photography and a full suite of marketing collateral — catalogues, flyers, banners, and social media content — with a consistent brand look across channels.</li>
         <li>Designed sales pitch decks and presentation materials supporting client sales and market-expansion efforts.</li>
-      </ul>
-    </div>
-
-    <div class="entry">
-      <h3>Project Coordinator<span class="bar">|</span><span class="org">Vretta Inc.</span></h3>
-      <p class="meta">Toronto, ON, Canada<span class="sep">·</span>February 2026 – June 2026</p>
-      <ul>
-        <li>Coordinated delivery of a digital assessment tool for Canadian K–12 schools, running weekly stakeholder meetings and keeping design, product, and engineering teams aligned to schedule.</li>
-        <li>Managed timelines, documentation, and cross-functional communication across the full project lifecycle.</li>
       </ul>
     </div>
 
@@ -429,41 +443,28 @@
 
   <section>
     <div class="entry">
-      <h3>Graphic Designer<span
-        class="bar">|</span><span class="org">Master Ev Gereçleri — Freelance</span></h3>
-      <p class="meta">Istanbul, Turkey<span class="sep">·</span>June 2025 – Present</p>
+      <h3>Project Coordinator<span class="bar">|</span><span class="org">Vretta Inc.</span></h3>
+      <p class="meta">Toronto, ON<span class="sep">·</span>February 2026 – June 2026</p>
       <ul>
-        <li>Design packaging for kitchen-appliance and cosmetics lines sold in Turkish and Chinese markets, adapting it to each.</li>
-        <li>Take artwork through prepress with manufacturers in Turkey and China, keeping colour and finishes consistent from proof to print.</li>
-        <li>Design e-commerce storefronts, product pages, and catalogues with one recognisable look online and in print.</li>
+        <li>Coordinated delivery of a digital assessment tool for Canadian K–12 schools, running weekly stakeholder meetings and keeping design, product, and engineering teams aligned to schedule.</li>
+        <li>Managed timelines, documentation, and cross-functional communication across the full project lifecycle.</li>
       </ul>
     </div>
 
     <div class="entry">
-      <h3>Creator &amp; Art Director — Anatolian Futures: A Feminist Folklore (VR)<span
-        class="bar">|</span><span class="org">OCAD University</span></h3>
-      <p class="meta">Toronto, ON, Canada<span class="sep">·</span>September 2024 – March 2025<span class="sep">·</span>Defended April 2025</p>
-      <ul>
-        <li>Directed the full creative vision of an immersive VR experience in Unity — narrative, world-building, visual identity, and interaction design.</li>
-        <li>Designed environments, 3D assets, and UI systems for a cohesive immersive aesthetic.</li>
-        <li>Engineered interactive systems with AI-assisted C# scripting, balancing creative intent against technical performance and hardware constraints.</li>
-        <li>Iterated the experience through user testing and feedback loops, from prototype to public technical defense.</li>
-      </ul>
-    </div>
+      <h3>Passion Punch Studio<span class="bar">|</span><span class="org">Mobile games</span></h3>
+      <p class="meta">Istanbul, Turkey<span class="sep">·</span>December 2022 – July 2023</p>
 
-    <div class="entry">
-      <h3>Associate Product Designer<span class="bar">|</span><span class="org">Passion Punch Studio</span></h3>
-      <p class="meta">Istanbul, Turkey<span class="sep">·</span>April 2023 – July 2023</p>
+      <h4>Associate Product Designer</h4>
+      <p class="meta">April 2023 – July 2023</p>
       <ul>
-        <li>Designed UI/UX and brand assets for a mobile gaming platform, aligning visual and product direction across Design, Product, and Engineering.</li>
+        <li>Designed UI/UX and brand assets for a mobile gaming platform, aligning Design, Product, and Engineering.</li>
         <li>Maintained visual and design-system consistency across features and brand rollouts within Agile sprints (Asana).</li>
         <li>Ran QA reviews to keep visual and technical execution cohesive across multidisciplinary teams.</li>
       </ul>
-    </div>
 
-    <div class="entry">
-      <h3>Game Design Intern<span class="bar">|</span><span class="org">Passion Punch Studio</span></h3>
-      <p class="meta">Istanbul, Turkey<span class="sep">·</span>December 2022 – March 2023</p>
+      <h4>Game Design Intern</h4>
+      <p class="meta">December 2022 – March 2023</p>
       <ul>
         <li>Reworked UI/UX and core gameplay flows for a match-3 title, smoothing friction to improve session quality and retention.</li>
         <li>Translated product goals into wireframes and design assets for clean hand-off to engineering.</li>
@@ -484,6 +485,21 @@
   </section>
 
   <section>
+    <h2>Selected Projects</h2>
+
+    <div class="entry">
+      <h3>Designer &amp; Art Director<span class="bar">|</span><span class="org">Anatolian Futures: A Feminist Folklore (VR)</span></h3>
+      <p class="meta">MDes thesis, OCAD University<span class="sep">·</span>Toronto, ON<span class="sep">·</span>September 2024 – March 2025<span class="sep">·</span>Defended April 2025</p>
+      <ul>
+        <li>Directed an immersive VR experience in Unity end to end — narrative, world-building, visual identity, and interaction.</li>
+        <li>Designed environments, 3D assets, and UI systems for a cohesive immersive aesthetic.</li>
+        <li>Engineered interactive systems with AI-assisted C# scripting, balancing creative intent against hardware limits.</li>
+        <li>Iterated the experience through user testing and feedback loops, from prototype to public technical defense.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
     <h2>Education &amp; Certifications</h2>
 
     <div class="edu">
@@ -501,10 +517,10 @@
     </div>
 
     <div class="edu">
-      <h3>Industrial Design<span class="bar">|</span><span
+      <h3>Foundation Year, Industrial Design<span class="bar">|</span><span
         class="where">Pratt Institute, New York, NY</span><span class="bar">|</span><span
         class="when">2018 – 2019</span></h3>
-      <p>Foundation year, before relocating to Milan.</p>
+      <p>Before relocating to Milan.</p>
     </div>
 
     <div class="edu">
