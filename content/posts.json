@@ -10,9 +10,7 @@
       "client": "Self-initiated",
       "role": "Concept, 3D scanning, art direction",
       "tags": [
-        "3D scanning",
-        "Interactive archive",
-        "Three.js"
+        "Interactive Archive"
       ],
       "summary": "A 3D virtual archive of my grandmother's house in Istanbul.",
       "body": "In a quiet neighbourhood in Istanbul, I spent my childhood in my grandmother's house. I later 3D scanned it, in an attempt to simulate my memories virtually.\n\nEnter my virtual archive: walk through the rooms, spin the objects, and turn the pages of a catalogue of things I remember.",
