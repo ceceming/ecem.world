@@ -35,7 +35,7 @@
           "h": 1300,
           "alt": "",
           "size": "m",
-          "feed": true
+          "feed": false
         },
         {
           "type": "image",
