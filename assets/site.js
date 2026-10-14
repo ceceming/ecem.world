@@ -54,6 +54,10 @@
   // A size typed in the studio, in px, kept within reason.
   const px = (n, lo, hi) => (Number(n) >= lo && Number(n) <= hi ? `${Number(n)}px` : '');
 
+  // "@ecem.zip", "ecem.zip" or a full link → the profile's address.
+  const igUrl = (h) => (/^https?:/.test(h) ? h : `https://www.instagram.com/${String(h).replace(/^@/, '').trim()}/`);
+  const igName = (h) => `@${String(h).replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/^@|\/$/g, '')}`;
+
   // "Label: Name" per line → a definition list.
   const credits = (text) => {
     const rows = String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
@@ -141,6 +145,7 @@
     cur.hidden = !site.currently;
     cur.textContent = site.currently || '';
     if (site.email) { const a = slot('email'); a.textContent = site.email; a.href = `mailto:${site.email}`; }
+    if (site.instagram) slot('instagram').href = igUrl(site.instagram);
 
     const count = (t) => (t === 'writing' ? writingIndex.length : posts.filter((p) => p.type === t).length);
     document.querySelectorAll('[data-filter]').forEach((b) => {
@@ -511,6 +516,7 @@
         ${site.about ? `<div class="prose" style="${px(site.aboutSize, 10, 60) ? `--body:${px(site.aboutSize, 10, 60)}` : ''}">${paras(site.about)}</div>` : ''}
         <dl>
           ${site.email ? `<dt>Contact</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd>` : ''}
+          ${site.instagram ? `<dt>Instagram</dt><dd><a href="${esc(igUrl(site.instagram))}" target="_blank" rel="noopener">${esc(igName(site.instagram))} ↗</a></dd>` : ''}
           <dt>Newsletter</dt><dd><a href="${esc((site.substack && site.substack.url) || 'https://luckbug.substack.com')}" target="_blank" rel="noopener">luck bug, on Substack ↗</a></dd>
           <dt>CV</dt><dd><a href="cv/">View or download</a></dd>
         </dl>
