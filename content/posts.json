@@ -23,14 +23,16 @@
           "src": "media/18quen/glyph-brick-b-left-45-vers1-animasyon-8yxt.gif",
           "w": 800,
           "h": 1000,
-          "alt": ""
+          "alt": "",
+          "size": "m"
         },
         {
-          "type": "gif",
-          "src": "media/18quen/glyph-brick-a-front-90-9rf7.gif",
-          "w": 800,
-          "h": 1000,
-          "alt": ""
+          "type": "image",
+          "src": "media/18quen/image-1791961486107-72q1.webp",
+          "w": 1600,
+          "h": 2000,
+          "alt": "",
+          "size": "m"
         }
       ]
     },
