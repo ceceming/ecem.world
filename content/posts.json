@@ -1,6 +1,32 @@
 {
   "posts": [
     {
+      "id": "52yppi",
+      "type": "project",
+      "status": "draft",
+      "slug": "fasulye-branding",
+      "title": "Fasulye Branding",
+      "year": "2026",
+      "client": "",
+      "role": "Art Direction, Graphic Design",
+      "tags": [
+        "Art Direction"
+      ],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/52yppi/fasulye-black-h100.webp",
+          "w": 2400,
+          "h": 1799,
+          "alt": "",
+          "size": "s"
+        }
+      ]
+    },
+    {
       "id": "vnost",
       "type": "project",
       "status": "published",
