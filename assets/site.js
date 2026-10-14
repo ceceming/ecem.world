@@ -168,7 +168,8 @@
   function renderFeed() {
     const shown = filter === 'writing'
       ? writingIndex
-      : posts.filter((p) => filter === 'all' || p.type === filter);
+      // Tools are left out of "All": they show only under Tools.
+      : posts.filter((p) => (filter === 'all' && p.type !== 'tool') || p.type === filter);
 
     if (!shown.length) {
       slot('feed').innerHTML = `<p class="empty">Nothing here yet.</p>`;
@@ -261,8 +262,12 @@
 
   function setOpen(slug, open, { scroll = false } = {}) {
     const p = posts.find((q) => q.slug === slug);
+    if (!p) return;
+    // A tool is not in the "All" feed; opening one (from the index or a
+    // link) switches to Tools first so there is something to unfold.
+    if (!document.getElementById(`p-${slug}`) && p.type === 'tool') { filter = 'tool'; render(); }
     const item = document.getElementById(`p-${slug}`);
-    if (!p || !item) return;
+    if (!item) return;
     const inner = item.querySelector('.details-inner');
     if (open && !inner.childElementCount) {
       inner.innerHTML = detailsHtml(p);
