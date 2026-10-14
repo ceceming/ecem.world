@@ -53,7 +53,9 @@
     if (!rows.length) return '';
     return `<dl>${rows.map((r) => {
       const i = r.indexOf(':');
-      return i > 0 ? `<dt>${esc(r.slice(0, i))}</dt><dd>${esc(r.slice(i + 1).trim())}</dd>` : `<dd>${esc(r)}</dd>`;
+      // "Label: Name" only when the label is short; a sentence that happens
+      // to contain a colon stays one line.
+      return i > 0 && i <= 32 && !/·/.test(r.slice(0, i)) ? `<dt>${esc(r.slice(0, i))}</dt><dd>${esc(r.slice(i + 1).trim())}</dd>` : `<dd>${esc(r)}</dd>`;
     }).join('')}</dl>`;
   };
 
@@ -217,7 +219,7 @@
           <span class="c-mid">${esc(p.tags.join(', '))}</span>
           <span>${esc(p.year)}<span class="sign" aria-hidden="true"></span></span>
         </a>
-        ${p.type === 'tool' ? tryLinks(p, 'try-line') : ''}
+        ${p.live || p.repo ? tryLinks(p, 'try-line') : ''}
         <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>
       </article>`;
     }).join('');
@@ -238,7 +240,7 @@
     const shown = new Set(feedMedia(p));
     const rest = p.media.filter((m) => !shown.has(m));
     return `
-      ${isTool && p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
+      ${p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
         <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
       ${rest.length ? `<div class="more-media">${rest.map((m) => frame(m, false)).join('')}</div>` : ''}
       <div class="sheet-text">
@@ -248,7 +250,7 @@
           ${isTool && p.process ? `<h2 class="sub">How it was made</h2><div class="prose">${prose(p.process)}</div>` : ''}
         </div>
         <div>
-          ${isTool ? tryLinks(p, 'try-buttons') : ''}
+          ${tryLinks(p, 'try-buttons')}
           ${p.role ? `<dl><dt>Role</dt><dd>${esc(p.role)}</dd></dl>` : ''}
           ${p.tags.length ? `<dl><dt>${isTool ? 'What it does' : 'Disciplines'}</dt><dd>${esc(p.tags.join(', '))}</dd></dl>` : ''}
           ${credits(p.credits)}

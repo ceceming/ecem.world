@@ -1,6 +1,63 @@
 {
   "posts": [
     {
+      "id": "vnost",
+      "type": "project",
+      "status": "draft",
+      "slug": "virtual-nostalgia",
+      "title": "Virtual Nostalgia",
+      "year": "",
+      "client": "Self-initiated",
+      "role": "Concept, 3D scanning, art direction",
+      "tags": [
+        "3D scanning",
+        "Interactive archive",
+        "Three.js"
+      ],
+      "summary": "A 3D virtual archive of my grandmother's house in Istanbul.",
+      "body": "In a quiet neighbourhood in Istanbul, I spent my childhood in my grandmother's house. I later 3D scanned it, in an attempt to simulate my memories virtually.\n\nEnter my virtual archive: walk through the rooms, spin the objects, and turn the pages of a catalogue of things I remember.",
+      "credits": "3D scan of my grandmother's house · objects modelled with Meshy from my own catalogue artwork · paper texture: ambientCG Paper001 (CC0) · Three.js (MIT)",
+      "live": "virtual-nostalgia/",
+      "embed": "virtual-nostalgia/",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/vnost/loader.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "Virtual Nostalgia: the loading screen, a keychain USB stick with an Iznik-tile pattern beside a \"Virtual Nostalgia\" tag"
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/catalogue-spread.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "The catalogue open in the scanned room: a Pippi Longstocking notebook, a lace tablecloth drawer, a side table and a hand-painted mirror"
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/catalogue-intro.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "The catalogue intro page, with the keychain, a Game Boy and the scanned house"
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/mirror.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "The hand-painted mirror lifted out of the room, with its story beneath"
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/armchair.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "The walnut armchair with velvet upholstery, turned in the room, with its story beneath"
+        }
+      ]
+    },
+    {
       "id": "ks6duw",
       "type": "image",
       "status": "published",

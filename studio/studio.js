@@ -665,6 +665,7 @@
           <div class="row">${field('role', 'Role', p.role, '', 'e.g. Art direction, 3D')}${field('tags', 'Disciplines', (p.tags || []).join(', '), '', 'comma between')}</div>
           ${field('summary', 'One line', p.summary, '', 'shown first when the project opens')}
           ${area('body', 'Description', p.body, 7, 'a blank line starts a new paragraph')}
+          <div class="row">${field('live', 'Try-it link', p.live, 'placeholder="https://… or virtual-nostalgia/"', 'optional — for a project people can open and use')}${field('embed', 'Open on the page', p.embed, 'placeholder="virtual-nostalgia/"', 'optional — runs inside the project, loaded only on click')}</div>
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Photography: Name')}
           ${slugField}
         </div>${mediaManager(p)}`;
