@@ -194,7 +194,7 @@ html.intro .panel { border-right-color: transparent; }
 }
 
 .item { grid-column: span 2; min-width: 0; }
-.item.is-small, .item.writing { grid-column: span 1; }
+.item.is-small { grid-column: span 1; }
 
 /* Each piece of media sizes itself: as large as its S / M / L allows
    (--sz × the --max-w by --max-h box), never wider than the column, at its
@@ -245,15 +245,24 @@ html.intro .panel { border-right-color: transparent; }
 .more { color: var(--faint); }
 
 /* Writing: text, not a picture of text. */
-.writing a.card { display: block; padding-top: 8px; border-top: 1px solid var(--rule); }
-.writing .w-meta { color: var(--dim); display: flex; justify-content: space-between; }
-.writing h2 { margin: 18px 0 8px; font-size: var(--t-large); font-weight: 400; line-height: 1.3; }
-.writing p { margin: 0; color: var(--dim); max-width: 40em; }
-/* 320×192: twice as wide and 1.2× as tall as the first 160px square. The
-   picture is cropped to fit, never stretched. Shrinks on narrow screens. */
-.writing .w-cover { margin-top: 18px; width: 100%; max-width: 320px; aspect-ratio: 320 / 192; background: var(--tile); }
+/* Writing reads as a list: one full-width row each, the cover on the left
+   and everything else beside it. Without a cover the text takes the row. */
+.writing a.card {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  grid-template-areas: "cover meta" "cover title" "cover sub" "cover go";
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: 28px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.writing a.card.no-cover { grid-template-columns: minmax(0, 1fr); grid-template-areas: "meta" "title" "sub" "go"; }
+.writing .w-meta { grid-area: meta; color: var(--dim); display: flex; justify-content: space-between; }
+.writing h2 { grid-area: title; margin: 14px 0 10px; font-size: 26px; font-weight: 400; line-height: 1.2; letter-spacing: -0.005em; }
+.writing p { grid-area: sub; margin: 0; color: var(--dim); font-size: var(--t-large); line-height: 1.4; max-width: 40em; }
+.writing .w-cover { grid-area: cover; width: 100%; aspect-ratio: 320 / 192; background: var(--tile); }
 .writing .w-cover img { width: 100%; height: 100%; object-fit: cover; }
-.writing .go { display: inline-block; margin-top: 14px; color: var(--fg); }
+.writing .go { grid-area: go; align-self: end; justify-self: start; margin-top: 16px; color: var(--fg); }
 
 @media (hover: hover) {
   .item a { transition: opacity 200ms ease; }
@@ -463,6 +472,11 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 
   .feed { margin: 0; grid-template-columns: minmax(0, 1fr); gap: 48px; padding-bottom: 90px; }
   .item, .item.is-small, .item.writing, .item.has-note { grid-column: auto; }
+  /* A phone keeps the list shape with a smaller cover. */
+  .writing a.card { grid-template-columns: 112px minmax(0, 1fr); column-gap: 14px; grid-template-areas: "meta meta" "cover title" "cover sub" "cover go"; }
+  .writing .w-meta { margin-bottom: 10px; }
+  .writing h2 { font-size: 19px; margin-top: 0; }
+  .writing p { font-size: var(--t-small); }
   .with-note { flex-direction: column; gap: 12px; }
   .with-note .note { flex: none; }
   .with-note .frames { flex: none; width: 100%; }

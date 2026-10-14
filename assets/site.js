@@ -192,7 +192,7 @@
       const eager = i < 2;
       if (p.type === 'writing') {
         return `<article class="item writing" id="w-${esc(p.slug)}">
-          <a class="card" ${linkFor(p)}>
+          <a class="card${p.image ? '' : ' no-cover'}" ${linkFor(p)}>
             <div class="w-meta"><span>${p.fromSubstack ? 'Substack' : 'Writing'}${badge(p)}</span><span>${p.date ? esc(fmtDate(p.date)) : ''}</span></div>
             <h2>${esc(p.title)}</h2>
             ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
