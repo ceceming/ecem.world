@@ -166,10 +166,18 @@
   /* ── The feed ─────────────────────────────────────────────────────── */
 
   function renderFeed() {
-    const shown = filter === 'writing'
+    let shown = filter === 'writing'
       ? writingIndex
       // Tools are left out of "All": they show only under Tools.
       : posts.filter((p) => (filter === 'all' && p.type !== 'tool') || p.type === filter);
+
+    // Substack posts join "All" after the ordered work, newest first — new
+    // ones included as they sync — unless turned off in the studio. A post
+    // already placed in the feed by hand keeps its place and is not repeated.
+    if (filter === 'all' && (site.substack || {}).feed !== false) {
+      const placed = new Set(posts.filter((p) => p.fromSubstack).map((p) => p.url));
+      shown = shown.concat(writingIndex.filter((w) => w.fromSubstack && !placed.has(w.url)));
+    }
 
     if (!shown.length) {
       slot('feed').innerHTML = `<p class="empty">Nothing here yet.</p>`;

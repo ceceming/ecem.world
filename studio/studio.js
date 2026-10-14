@@ -710,6 +710,8 @@
     const items = state.substack.items || [];
     const inFeed = new Set(state.posts.filter((p) => p.substack).map((p) => p.substack));
     $('#sub-show').checked = sub.show !== false;
+    $('#sub-feed').checked = sub.feed !== false;
+    $('#sub-feed').disabled = sub.show === false;
     $('#sub-mode').value = sub.mode || 'link';
     $('#sync-info').textContent = state.substack.synced
       ? `${items.length} posts · last change picked up ${new Date(state.substack.synced).toLocaleString()}`
@@ -932,7 +934,8 @@
 
   /* ── Events: Substack and Site ────────────────────────────────────── */
 
-  $('#sub-show').addEventListener('change', (e) => { state.site.substack.show = e.target.checked; changed(); });
+  $('#sub-show').addEventListener('change', (e) => { state.site.substack.show = e.target.checked; changed(); renderSubstack(); });
+  $('#sub-feed').addEventListener('change', (e) => { state.site.substack.feed = e.target.checked; changed(); });
   $('#sub-mode').addEventListener('change', (e) => { state.site.substack.mode = e.target.value; changed(); renderSubstack(); });
 
   $('#subs').addEventListener('change', (e) => {
