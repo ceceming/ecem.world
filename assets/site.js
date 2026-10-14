@@ -33,7 +33,7 @@
 
   const src = (path) => (/^(https?:|blob:|data:)/.test(path) ? path : mediaBase + path);
 
-  // 18.09.26 — short enough to sit in the index column without truncating.
+  // 18.09.26 — short and even.
   const fmtDate = (iso) => {
     const d = new Date(iso);
     const two = (n) => String(n).padStart(2, '0');
@@ -120,7 +120,7 @@
       .filter(Boolean);
 
     writingIndex = sub.show === false ? [] : feed.filter(visible).map((s) => asWriting(s, {}));
-    // Writing written here rather than on Substack joins the index too.
+    // Writing written here rather than on Substack counts too.
     posts.filter((p) => p.type === 'writing' && !p.fromSubstack).forEach((p) => writingIndex.push(p));
     writingIndex.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
   }
@@ -143,20 +143,6 @@
       b.setAttribute('aria-pressed', String(t === filter));
     });
 
-    const work = posts.filter((p) => p.type !== 'writing' && p.type !== 'tool' && (filter === 'all' || filter === p.type));
-    const tools = posts.filter((p) => p.type === 'tool' && (filter === 'all' || filter === 'tool'));
-    const row = (p) => `
-        <a href="#/${esc(p.slug)}" data-goto="${esc(p.slug)}">
-          <span>${esc(p.title)}${badge(p)}</span><span>${esc((p.tags || [])[0] || '')}</span><span>${esc(p.year)}</span>
-        </a>`;
-    const words = filter === 'all' || filter === 'writing' ? writingIndex : [];
-    slot('index').innerHTML =
-      (work.length ? `<p class="group">Work</p>` + work.map(row).join('') : '') +
-      (tools.length ? `<p class="group">Tools <span class="more">— vibe coded</span></p>` + tools.map(row).join('') : '') +
-      (words.length ? `<p class="group">Writing</p>` + words.map((p) => `
-        <a class="is-writing" ${linkFor(p)}>
-          <span>${esc(p.title)}</span><span>${p.date ? esc(fmtDate(p.date)) : ''}</span>
-        </a>`).join('') : '');
   }
 
   // Projects open over the page. Writing opens here when reposted, otherwise
@@ -285,7 +271,7 @@
   function setOpen(slug, open, { scroll = false } = {}) {
     const p = posts.find((q) => q.slug === slug);
     if (!p) return;
-    // A tool is not in the "All" feed; opening one (from the index or a
+    // A tool is not in the "All" feed; opening one (from a
     // link) switches to Tools first so there is something to unfold.
     if (!document.getElementById(`p-${slug}`) && p.type === 'tool') { filter = 'tool'; render(); }
     const item = document.getElementById(`p-${slug}`);
@@ -473,15 +459,6 @@
   }
 
   window.addEventListener('hashchange', route);
-  slot('index').addEventListener('click', (e) => {
-    const a = e.target.closest('[data-goto]');
-    if (!a) return;
-    const p = posts.find((q) => q.slug === a.dataset.goto);
-    if (!p || (p.type !== 'project' && p.type !== 'tool')) return;
-    e.preventDefault();
-    closeSheet();
-    setOpen(p.slug, true, { scroll: true });
-  });
 
   document.querySelectorAll('[data-filter]').forEach((b) => b.addEventListener('click', () => {
     filter = b.dataset.filter;
