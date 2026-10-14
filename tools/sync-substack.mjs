@@ -33,6 +33,9 @@ const entities = (s) => s
   .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 
+// Both sources, to the second, so switching between them is not a change.
+const isoSeconds = (d) => new Date(d).toISOString().replace(/\.\d{3}Z$/, '.000Z');
+
 function parse(xml) {
   return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(([, item]) => {
     const url = entities(tag(item, 'link'));
@@ -41,29 +44,93 @@ function parse(xml) {
     const text = entities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
     return {
       id: entities(tag(item, 'guid')) || url,
-      title: entities(tag(item, 'title')),
-      subtitle: entities(tag(item, 'description')),
+      title: entities(tag(item, 'title')).trim(),
+      subtitle: entities(tag(item, 'description')).trim(),
       url,
-      date: new Date(tag(item, 'pubDate')).toISOString(),
+      date: isoSeconds(tag(item, 'pubDate')),
       image: enclosure ? entities(enclosure[1]) : '',
       excerpt: text.slice(0, 280).replace(/\s\S*$/, '') + (text.length > 280 ? '…' : ''),
       html,
+      via: 'rss',
     };
   });
 }
 
+// Substack sometimes answers requests from cloud servers (like GitHub's)
+// with a challenge page instead of the feed. So: look like a browser, say
+// exactly what came back when it fails, and fall back to Substack's own JSON
+// API before giving up.
+const HEADERS = {
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36',
+  accept: 'application/rss+xml, application/xml, application/json;q=0.9, */*;q=0.8',
+};
+
+async function get(url) {
+  const res = await fetch(url, { headers: HEADERS });
+  const body = await res.text();
+  if (!res.ok) throw new Error(`${url} answered ${res.status} (${res.headers.get('content-type')}): ${body.slice(0, 160).replace(/\s+/g, ' ')}`);
+  return body;
+}
+
+async function fromRss(url) {
+  const xml = /^https?:/.test(url) ? await get(url) : await readFile(url, 'utf8');
+  const posts = parse(xml);
+  if (!posts.length) throw new Error(`${url} returned no posts: ${xml.slice(0, 160).replace(/\s+/g, ' ')}`);
+  return posts;
+}
+
+async function fromApi(base) {
+  const list = JSON.parse(await get(`${base}/api/v1/archive?sort=new&limit=30`));
+  const posts = [];
+  for (const a of list) {
+    if (a.audience && a.audience !== 'everyone') continue;   // paid posts stay on Substack
+    let html = '';
+    try { html = JSON.parse(await get(`${base}/api/v1/posts/${a.slug}`)).body_html || ''; } catch { /* keep the card without text */ }
+    const text = entities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+    const url = a.canonical_url || `${base}/p/${a.slug}`;
+    posts.push({
+      id: url,
+      title: (a.title || '').trim(),
+      subtitle: (a.subtitle || '').trim(),
+      url,
+      date: isoSeconds(a.post_date),
+      image: a.cover_image || '',
+      excerpt: text.slice(0, 280).replace(/\s\S*$/, '') + (text.length > 280 ? '…' : ''),
+      html,
+      via: 'api',
+    });
+  }
+  if (!posts.length) throw new Error(`${base} API returned no public posts`);
+  return posts;
+}
+
 async function main() {
-  const xml = /^https?:/.test(FEED)
-    ? await (await fetch(FEED, { headers: { 'user-agent': 'ecem.world substack sync' } })).text()
-    : await readFile(FEED, 'utf8');
-  const fresh = parse(xml);
-  if (!fresh.length) throw new Error('Feed had no posts — refusing to touch the file.');
+  let fresh;
+  const tries = /^https?:/.test(FEED)
+    ? [() => fromRss(FEED), () => fromApi(new URL(FEED).origin)]
+    : [() => fromRss(FEED)];
+  for (const attempt of tries) {
+    try { fresh = await attempt(); break; } catch (err) { console.log(`Could not read: ${err.message}`); }
+  }
+  if (!fresh) {
+    // Not a reason to email anyone every hour: the posts already on the
+    // site stay as they are, and the next run tries again.
+    console.log('::warning::Substack could not be read this time; content/substack.json left as it was.');
+    return;
+  }
 
   let previous = { items: [] };
   try { previous = JSON.parse(await readFile(OUT, 'utf8')); } catch { /* first run */ }
 
   const byId = new Map(previous.items.map((p) => [p.id, p]));
-  for (const post of fresh) byId.set(post.id, post);
+  const SHOWN = ['title', 'subtitle', 'url', 'date', 'image'];
+  for (const post of fresh) {
+    const old = byId.get(post.id);
+    // The RSS and the API disagree on curly quotes; that is not a change.
+    const same = (x, y) => String(x).replace(/[“”"‘’']/g, '') === String(y).replace(/[“”"‘’']/g, '');
+    const changed = !old || SHOWN.some((k) => !same(old[k], post[k])) || (old.via === post.via && old.html !== post.html) || !old.html;
+    if (changed) byId.set(post.id, post);
+  }
   const items = [...byId.values()].sort((a, b) => b.date.localeCompare(a.date));
 
   if (JSON.stringify(items) === JSON.stringify(previous.items)) {
