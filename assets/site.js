@@ -208,7 +208,15 @@
       const hidden = isProject ? p.media.length - media.length : 0;
       const mid = p.tags.join(', ');
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
-      const frames = `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      // A project's row holds all its media; the pieces not chosen for the
+      // feed are marked "extra" and appear in the same row, where they fit,
+      // only once it is opened (hidden ones don't load until then).
+      const shownSet = new Set(media);
+      const frames = isProject
+        // The feed's pieces first, so opening never pushes in above what is
+        // already on screen; then the rest, in their order.
+        ? `<div class="frames">${media.map((m) => frame(m, eager)).join('')}${p.media.filter((m) => !shownSet.has(m)).map((m) => frame(m, false).replace('class="frame"', 'class="frame extra"')).join('')}</div>`
+        : `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject) {
         // A single image's note: beside the image when "noteBeside" is ticked
@@ -252,12 +260,9 @@
   // feed, its text and credits, and for a tool a way to try it.
   function detailsHtml(p) {
     const isTool = p.type === 'tool';
-    const shown = new Set(feedMedia(p));
-    const rest = p.media.filter((m) => !shown.has(m));
     return `
       ${p.embed ? `<div class="tool-live" data-embed="${esc(p.embed)}">
         <button type="button" class="tool-open">Try it here <span class="more">— opens the tool on this page</span></button></div>` : ''}
-      ${rest.length ? `<div class="more-media">${rest.map((m) => frame(m, false)).join('')}</div>` : ''}
       <div class="sheet-text">
         <div>
           ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
