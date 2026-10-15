@@ -1,30 +1,6 @@
 {
   "posts": [
     {
-      "id": "9gotii",
-      "type": "image",
-      "status": "published",
-      "slug": "mushroom",
-      "title": "Mushroom",
-      "year": "2026",
-      "tags": [
-        "Illustration"
-      ],
-      "body": "",
-      "size": "small",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/9gotii/mushroom-d2t5.mp4",
-          "w": 720,
-          "h": 960,
-          "alt": "",
-          "poster": "media/9gotii/mushroom-d2t5-poster.webp",
-          "size": "m"
-        }
-      ]
-    },
-    {
       "id": "vnost",
       "type": "project",
       "status": "published",
@@ -122,6 +98,30 @@
           "w": 953,
           "h": 1082,
           "alt": "",
+          "size": "m"
+        }
+      ]
+    },
+    {
+      "id": "9gotii",
+      "type": "image",
+      "status": "published",
+      "slug": "mushroom",
+      "title": "Mushroom",
+      "year": "2026",
+      "tags": [
+        "Illustration"
+      ],
+      "body": "",
+      "size": "small",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/9gotii/mushroom-d2t5.mp4",
+          "w": 720,
+          "h": 960,
+          "alt": "",
+          "poster": "media/9gotii/mushroom-d2t5-poster.webp",
           "size": "m"
         }
       ]
