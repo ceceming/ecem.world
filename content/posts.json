@@ -105,7 +105,7 @@
     {
       "id": "9gotii",
       "type": "image",
-      "status": "published",
+      "status": "draft",
       "slug": "mushroom",
       "title": "Mushroom",
       "year": "2026",
@@ -192,6 +192,42 @@
         }
       ],
       "slugTouched": true
+    },
+    {
+      "id": "xxtr4k",
+      "type": "project",
+      "status": "draft",
+      "slug": "cafe-project",
+      "title": "Cafe Project",
+      "year": "2021",
+      "client": "",
+      "role": "Interior Designer",
+      "tags": [
+        "Interior Design",
+        "Rendering",
+        "Technical Drawing"
+      ],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/xxtr4k/screenshot-2025-10-19-at-6-15-40-pm-nwbb.webp",
+          "w": 2398,
+          "h": 1346,
+          "alt": "",
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/xxtr4k/screenshot-2025-10-19-at-6-27-06-pm-z5oy.webp",
+          "w": 1200,
+          "h": 1434,
+          "alt": "",
+          "size": "m"
+        }
+      ]
     },
     {
       "id": "t1rndr",
