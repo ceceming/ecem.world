@@ -217,8 +217,7 @@
           ${carousel(p.media, eager)}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
-            <span class="c-mid"></span>
-            <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
+            <span class="c-end">${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
           ${note ? `${moreBar('', `d-${esc(p.slug)}`, esc(p.slug), 'Note')}
           <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>` : ''}
@@ -238,8 +237,7 @@
             : frames}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
-            <span class="c-mid"></span>
-            <span>${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
+            <span class="c-end">${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
           </div>
         </article>`;
       }
@@ -250,8 +248,7 @@
         ${frames}
         <div class="caption">
           <span>${esc(p.title)}${badge(p)}${p.live || p.repo ? tryLinks(p, 'try-line', 'span') : ''}</span>
-          <span class="c-mid">${esc(p.tags.join(', '))}</span>
-          <span>${esc(p.year)}</span>
+          <span class="c-end">${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
         </div>
         ${moreBar('', `d-${esc(p.slug)}`, esc(p.slug))}
         <div class="details" id="d-${esc(p.slug)}"><div class="details-inner"></div></div>

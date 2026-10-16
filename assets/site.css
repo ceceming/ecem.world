@@ -205,10 +205,14 @@ html.intro .panel { border-right-color: transparent; }
 .frame img { opacity: 0; transition: opacity 500ms ease; }
 .frame img.loaded { opacity: 1; }
 
+/* One caption for everything: the title on the left; the year and, after
+   it, the discipline on the right ("2026 · Graphic Design"). Long lines wrap
+   on both sides rather than push each other out. */
 .caption {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
   margin-top: 10px;
   padding-bottom: 9px;
   border-bottom: 1px solid var(--rule);
@@ -218,10 +222,8 @@ html.intro .panel { border-right-color: transparent; }
 }
 
 .caption > :first-child { color: var(--fg); }
-.item.is-small .caption,
-.item.image .caption { grid-template-columns: minmax(0, 1fr) auto auto; }
-.item.is-small .caption .c-mid:empty,
-.item.image .caption .c-mid:empty { display: none; }
+.caption > :first-child { flex: 0 1 auto; max-width: 70%; }
+.caption .c-end { flex: 1 1 0; min-width: 0; text-align: right; }
 
 .more { color: var(--faint); }
 
@@ -621,7 +623,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   .filters { margin-top: 22px; }
 
   .feed { margin: 0; grid-template-columns: minmax(0, 1fr); gap: 48px; padding-bottom: 90px; }
-  .item, .item.is-small, .item.writing, .item.has-note { grid-column: auto; }
+  .item, .item.is-small, .item.writing, .item.has-note, .item.has-gallery { grid-column: auto; }
   /* A phone keeps the list shape with a smaller cover. */
   .writing a.card { grid-template-columns: 112px minmax(0, 1fr); column-gap: 14px; grid-template-areas: "meta meta" "cover title" "cover sub" "cover go"; }
   .writing .w-meta { margin-bottom: 10px; }
@@ -634,10 +636,6 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   /* Three across is too small to read on a phone: a project's frames
      wrap, two to a row, each still at its own ratio. */
 
-  .caption { grid-template-columns: minmax(0, 1fr) auto; }
-  .caption .c-mid { display: none; }
-  .item.image .caption { grid-template-columns: minmax(0, 1fr) auto auto; }
-  .item.image .caption .c-mid:not(:empty) { display: block; }
 
   .sheet-text { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
