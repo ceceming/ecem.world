@@ -21,7 +21,7 @@
   --rule: rgba(255, 255, 255, 0.16);   /* hairlines */
   --tile: #111;                        /* where media is still loading */
 
-  --font: Helvetica, "Helvetica Neue", "HelveticaNeue", Arial, sans-serif;
+  --font: "Jost", Helvetica, Arial, sans-serif;
   --t-small: 12px;   /* everything but the bio */
   --t-large: 15px;   /* the bio, and titles inside a project */
 

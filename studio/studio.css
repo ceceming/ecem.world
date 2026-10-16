@@ -13,7 +13,7 @@
   --live: #9be29b;
   --draft: #e8c46a;
   --danger: #ff7a6e;
-  --font: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --font: "Jost", Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
