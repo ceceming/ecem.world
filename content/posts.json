@@ -1,6 +1,21 @@
 {
   "posts": [
     {
+      "id": "yr8k0v",
+      "type": "project",
+      "status": "draft",
+      "slug": "sticky-bloom",
+      "title": "Sticky Bloom",
+      "year": "2025",
+      "client": "",
+      "role": "",
+      "tags": [],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": []
+    },
+    {
       "id": "0dd3tm",
       "type": "project",
       "status": "draft",
