@@ -1,6 +1,36 @@
 {
   "posts": [
     {
+      "id": "0dd3tm",
+      "type": "project",
+      "status": "draft",
+      "slug": "kirmizi-zaman-pop-up-interactive-book",
+      "title": "Kirmizi Zaman pop up interactive book",
+      "year": "2026",
+      "client": "",
+      "role": "",
+      "tags": [],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": []
+    },
+    {
+      "id": "l0u7js",
+      "type": "project",
+      "status": "draft",
+      "slug": "osseous-branding",
+      "title": "Osseous Branding",
+      "year": "2026",
+      "client": "",
+      "role": "",
+      "tags": [],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": []
+    },
+    {
       "id": "vnost",
       "type": "project",
       "status": "published",
