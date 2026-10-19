@@ -79,23 +79,50 @@
           "h": 1300,
           "alt": "",
           "size": "m",
-          "feed": false
+          "feed": true
         },
         {
           "type": "image",
-          "src": "media/vnost/catalogue-intro.webp",
+          "src": "media/vnost/20-kitchen-window-view-6nup.webp",
           "w": 1920,
           "h": 1080,
-          "alt": "The catalogue intro page, with the keychain, a Game Boy and the scanned house",
+          "alt": "",
           "size": "m",
           "feed": false
         },
         {
           "type": "image",
-          "src": "media/vnost/catalogue-spread.webp",
-          "w": 1920,
-          "h": 1080,
-          "alt": "The catalogue open in the scanned room: a Pippi Longstocking notebook, a lace tablecloth drawer, a side table and a hand-painted mirror",
+          "src": "media/vnost/17-object-ceiling-lamp-2-gg88.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": "",
+          "size": "m",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/07-catalogue-page-turning-2-s1gi.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": "",
+          "size": "m",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/10-catalogue-back-page-intro-2-chgi.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": "",
+          "size": "m",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/11-catalogue-gameboy-childhood-photo-2-3ysc.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": "",
           "size": "m",
           "feed": false
         }
