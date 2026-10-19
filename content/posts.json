@@ -79,7 +79,7 @@
           "h": 1300,
           "alt": "",
           "size": "s",
-          "feed": true
+          "feed": false
         },
         {
           "type": "image",
