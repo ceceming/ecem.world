@@ -311,6 +311,62 @@
       ]
     },
     {
+      "id": "ac60z4",
+      "type": "project",
+      "status": "published",
+      "slug": "public-library-renovation",
+      "title": "Public Library Renovation",
+      "year": "2021",
+      "client": "",
+      "role": "Interior Designer",
+      "tags": [
+        "Interior Design",
+        "Rendering",
+        "Technical Drawing"
+      ],
+      "summary": "",
+      "body": "Completed as part of NABA Milano Bachelor's studies.",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/ac60z4/screenshot-2025-10-19-at-6-55-01-pm-ne9w.webp",
+          "w": 1594,
+          "h": 898,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/ac60z4/screenshot-2025-10-19-at-6-55-47-pm-2erf.webp",
+          "w": 2392,
+          "h": 1340,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/ac60z4/screenshot-2025-10-19-at-6-55-12-pm-b3od.webp",
+          "w": 1272,
+          "h": 716,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/ac60z4/screenshot-2025-10-19-at-6-54-52-pm-3pkh.webp",
+          "w": 1596,
+          "h": 890,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        }
+      ]
+    },
+    {
       "id": "t1rndr",
       "type": "tool",
       "status": "published",
