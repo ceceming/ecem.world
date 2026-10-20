@@ -499,6 +499,17 @@
     sheet.scrollTop = 0;
   }
 
+  // The About page's two lists, side by side: one item per line in the studio.
+  function lists(cols) {
+    const items = (t) => String(t || '').split('\n').map((l) => l.trim()).filter(Boolean);
+    const shown = cols.filter(([, t]) => items(t).length);
+    if (!shown.length) return '';
+    return `<div class="about-lists">${shown.map(([label, t]) => `<div>
+        <p class="label">${esc(label)}</p>
+        <ul>${items(t).map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
+      </div>`).join('')}</div>`;
+  }
+
   function openAbout() {
     const pic = site.portrait;
     sheet.classList.remove('is-writing');
@@ -511,6 +522,7 @@
       <div class="about-text">
         <div class="lead" style="${px(site.aboutHeroSize, 10, 120) ? `--hero:${px(site.aboutHeroSize, 10, 120)}` : ''}">${paras(site.aboutHero || site.bio)}</div>
         ${site.about ? `<div class="prose" style="${px(site.aboutSize, 10, 60) ? `--body:${px(site.aboutSize, 10, 60)}` : ''}">${paras(site.about)}</div>` : ''}
+        ${lists([['Tools', site.aboutTools], ['Capabilities', site.aboutCapabilities]])}
         <dl>
           ${site.email ? `<dt>Contact</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd>` : ''}
           ${site.instagram ? `<dt>Instagram</dt><dd><a href="${esc(igUrl(site.instagram))}" target="_blank" rel="noopener">${esc(igName(site.instagram))} ↗</a></dd>` : ''}

@@ -764,7 +764,7 @@
 
   function renderSite() {
     const f = $('#site-form');
-    ['name', 'bio', 'aboutHero', 'aboutHeroSize', 'about', 'aboutSize', 'currently', 'email', 'instagram'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] ?? ''; });
+    ['name', 'bio', 'aboutHero', 'aboutHeroSize', 'about', 'aboutSize', 'currently', 'email', 'instagram', 'aboutTools', 'aboutCapabilities'].forEach((k) => { if (document.activeElement !== f[k]) f[k].value = state.site[k] ?? ''; });
   }
 
   function renderAll() {

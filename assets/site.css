@@ -360,6 +360,9 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .about-text .lead p:last-child { margin-bottom: 0; }
 .about-text .prose { font-size: var(--body, var(--t-large)); line-height: 1.5; max-width: 34em; }
 .about-text .prose p { margin: 0 0 1em; }
+.about-lists { margin: 32px 0 0; padding-top: 10px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; max-width: 34em; }
+.about-lists .label { margin: 0 0 8px; color: var(--faint); }
+.about-lists ul { margin: 0; padding: 0; list-style: none; font-size: var(--t-large); line-height: 1.55; }
 .about-text dl { margin: 32px 0 0; padding-top: 10px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 7em 1fr; gap: 6px 12px; }
 .about-text dt { color: var(--faint); }
 .about-text dd { margin: 0; }
@@ -640,6 +643,9 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   .sheet-text { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .about-text { position: static; }
+  .about-lists { gap: 0 14px; }
+  .about-lists ul { font-size: 13px; white-space: nowrap; }
+  .about-lists li { overflow: hidden; text-overflow: ellipsis; }
   .about-text .lead { font-size: calc(var(--hero, 20px) * 0.85); }
 }
 
