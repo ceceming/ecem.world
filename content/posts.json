@@ -33,7 +33,7 @@
     {
       "id": "l0u7js",
       "type": "project",
-      "status": "draft",
+      "status": "published",
       "slug": "osseous-branding",
       "title": "Osseous Branding",
       "year": "2026",
@@ -43,7 +43,16 @@
       "summary": "",
       "body": "",
       "credits": "",
-      "media": []
+      "media": [
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
+        }
+      ]
     },
     {
       "id": "vnost",
