@@ -3,17 +3,29 @@
     {
       "id": "yr8k0v",
       "type": "project",
-      "status": "draft",
+      "status": "published",
       "slug": "sticky-bloom",
       "title": "Sticky Bloom",
       "year": "2025",
       "client": "",
-      "role": "",
-      "tags": [],
+      "role": "Designer",
+      "tags": [
+        "Graphic Design",
+        "Animation",
+        "Vibe Coding"
+      ],
       "summary": "",
       "body": "",
       "credits": "",
-      "media": []
+      "media": [
+        {
+          "type": "image",
+          "src": "media/yr8k0v/sticky-bloom-logo-jf1z.webp",
+          "w": 2048,
+          "h": 2048,
+          "alt": ""
+        }
+      ]
     },
     {
       "id": "0dd3tm",
