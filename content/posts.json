@@ -378,14 +378,16 @@
           "src": "media/cz76jq/screenshot-2025-10-19-at-6-53-46-pm-qv6h.webp",
           "w": 1600,
           "h": 1138,
-          "alt": ""
+          "alt": "",
+          "size": "m"
         },
         {
           "type": "image",
           "src": "media/cz76jq/screenshot-2025-10-19-at-6-53-55-pm-qxo6.webp",
           "w": 1594,
           "h": 1142,
-          "alt": ""
+          "alt": "",
+          "size": "m"
         }
       ]
     },
