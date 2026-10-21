@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "id": "yr8k0v",
-      "type": "project",
-      "status": "published",
-      "slug": "sticky-bloom",
-      "title": "Sticky Bloom",
-      "year": "2025",
-      "client": "",
-      "role": "Designer",
-      "tags": [
-        "Graphic Design",
-        "Animation",
-        "Vibe Coding"
-      ],
-      "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
-      "body": "",
-      "credits": "",
-      "media": [
-        {
-          "type": "image",
-          "src": "media/yr8k0v/sticky-bloom-logo-jf1z.webp",
-          "w": 2048,
-          "h": 2048,
-          "alt": "",
-          "size": "s"
-        }
-      ]
-    },
-    {
       "id": "0dd3tm",
       "type": "project",
       "status": "draft",
@@ -42,42 +14,6 @@
       "body": "",
       "credits": "",
       "media": []
-    },
-    {
-      "id": "l0u7js",
-      "type": "project",
-      "status": "published",
-      "slug": "osseous-branding",
-      "title": "Osseous Branding",
-      "year": "2026",
-      "client": "",
-      "role": "Designer, Art Director",
-      "tags": [
-        "Art Direction",
-        "Branding",
-        "Animation"
-      ],
-      "summary": "",
-      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
-      "credits": "",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
-        },
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp"
-        }
-      ]
     },
     {
       "id": "vnost",
@@ -163,6 +99,34 @@
       ]
     },
     {
+      "id": "yr8k0v",
+      "type": "project",
+      "status": "published",
+      "slug": "sticky-bloom",
+      "title": "Sticky Bloom",
+      "year": "2025",
+      "client": "",
+      "role": "Designer",
+      "tags": [
+        "Graphic Design",
+        "Product",
+        "Vibe Coding"
+      ],
+      "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
+      "body": "",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/yr8k0v/sticky-bloom-logo-jf1z.webp",
+          "w": 2048,
+          "h": 2048,
+          "alt": "",
+          "size": "s"
+        }
+      ]
+    },
+    {
       "id": "18quen",
       "type": "project",
       "status": "published",
@@ -205,6 +169,41 @@
           "h": 1082,
           "alt": "",
           "size": "m"
+        }
+      ]
+    },
+    {
+      "id": "l0u7js",
+      "type": "project",
+      "status": "published",
+      "slug": "osseous-branding",
+      "title": "Osseous Branding",
+      "year": "2026",
+      "client": "",
+      "role": "Designer, Art Director",
+      "tags": [
+        "Art Direction",
+        "Branding"
+      ],
+      "summary": "",
+      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp"
         }
       ]
     },
