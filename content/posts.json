@@ -286,6 +286,40 @@
       "slugTouched": true
     },
     {
+      "id": "97d7iz",
+      "type": "project",
+      "status": "draft",
+      "slug": "memory-altered",
+      "title": "Memory Altered",
+      "year": "2022",
+      "client": "",
+      "role": "Art Director, Designer",
+      "tags": [
+        "Art Direction",
+        "3D Modelling",
+        "Rendering"
+      ],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/97d7iz/screenshot-2025-10-19-at-6-28-14-pm-9v1z.webp",
+          "w": 1112,
+          "h": 1384,
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "media/97d7iz/screenshot-2025-10-19-at-6-41-09-pm-oy8j.webp",
+          "w": 1106,
+          "h": 1386,
+          "alt": ""
+        }
+      ]
+    },
+    {
       "id": "xxtr4k",
       "type": "project",
       "status": "published",
@@ -300,7 +334,7 @@
         "Technical Drawing"
       ],
       "summary": "",
-      "body": "",
+      "body": "Completed as part of NABA Milano Bachelor's studies.",
       "credits": "",
       "media": [
         {
@@ -318,6 +352,40 @@
           "h": 1434,
           "alt": "",
           "size": "m"
+        }
+      ]
+    },
+    {
+      "id": "cz76jq",
+      "type": "project",
+      "status": "draft",
+      "slug": "tiny-house",
+      "title": "Tiny House",
+      "year": "2020",
+      "client": "",
+      "role": "Interior Designer",
+      "tags": [
+        "Interior Design",
+        "3D Modelling",
+        "Rendering"
+      ],
+      "summary": "",
+      "body": "Completed as part of NABA Milano Bachelor's studies.",
+      "credits": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/cz76jq/screenshot-2025-10-19-at-6-53-46-pm-qv6h.webp",
+          "w": 1600,
+          "h": 1138,
+          "alt": ""
+        },
+        {
+          "type": "image",
+          "src": "media/cz76jq/screenshot-2025-10-19-at-6-53-55-pm-qxo6.webp",
+          "w": 1594,
+          "h": 1142,
+          "alt": ""
         }
       ]
     },
