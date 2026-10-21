@@ -14,7 +14,7 @@
         "Animation",
         "Vibe Coding"
       ],
-      "summary": "",
+      "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
       "body": "",
       "credits": "",
       "media": [
@@ -23,7 +23,8 @@
           "src": "media/yr8k0v/sticky-bloom-logo-jf1z.webp",
           "w": 2048,
           "h": 2048,
-          "alt": ""
+          "alt": "",
+          "size": "s"
         }
       ]
     },
