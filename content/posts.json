@@ -35,13 +35,13 @@
       "media": [
         {
           "type": "video",
-          "src": "media/vnost/202610140308-3-bx1m.mp4",
+          "src": "media/vnost/2x8cb2yrjjsp4ksczzye9q-owa5.mp4",
           "w": 1280,
           "h": 720,
           "alt": "",
-          "poster": "media/vnost/202610140308-3-bx1m-poster.webp",
-          "feed": true,
-          "size": "m"
+          "poster": "media/vnost/2x8cb2yrjjsp4ksczzye9q-owa5-poster.webp",
+          "size": "m",
+          "feed": true
         },
         {
           "type": "image",
