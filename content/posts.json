@@ -516,7 +516,7 @@
           "w": 898,
           "h": 898,
           "alt": "A glossy white knot rendered under a studio softbox",
-          "feed": true,
+          "feed": false,
           "size": "m"
         },
         {
@@ -564,7 +564,7 @@
           "w": 996,
           "h": 668,
           "alt": "A landscape rendered as a halftone print with grain",
-          "feed": true,
+          "feed": false,
           "size": "m"
         },
         {
@@ -613,7 +613,7 @@
           "w": 1600,
           "h": 1000,
           "alt": "The ecem.world home page: the bio and index on the left, the feed of work on the right",
-          "feed": true,
+          "feed": false,
           "size": "m"
         },
         {
@@ -622,7 +622,7 @@
           "w": 1600,
           "h": 1000,
           "alt": "The studio's library: entries in site order on the left, the selected entry's form on the right",
-          "feed": true,
+          "feed": false,
           "size": "m"
         }
       ]
