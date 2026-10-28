@@ -236,8 +236,9 @@ html.intro .panel { border-right-color: transparent; }
   grid-template-areas: "cover meta" "cover title" "cover sub" "cover go";
   grid-template-rows: auto auto auto 1fr;
   column-gap: 28px;
-  padding-top: 12px;
+  padding: 12px 0 14px;
   border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);   /* closes the post, like a caption's line */
 }
 .writing a.card.no-cover { grid-template-columns: minmax(0, 1fr); grid-template-areas: "meta" "title" "sub" "go"; }
 .writing .w-meta { grid-area: meta; color: var(--dim); display: flex; justify-content: space-between; }
