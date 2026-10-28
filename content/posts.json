@@ -144,6 +144,15 @@
           "alt": "",
           "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-c16m-poster.webp",
           "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-flower-states-45y2.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-flower-states-45y2-poster.webp",
+          "feed": true
         }
       ]
     },
@@ -197,8 +206,8 @@
       "id": "l0u7js",
       "type": "project",
       "status": "published",
-      "slug": "osseous-branding",
-      "title": "Osseous Branding",
+      "slug": "osseous-branding-work-in-progress",
+      "title": "Osseous Branding #WORK-IN-PROGRESS",
       "year": "2026",
       "client": "",
       "role": "Designer, Art Director",
