@@ -462,7 +462,8 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 }
 .more-frames::-webkit-scrollbar { display: none; }
 .more-frames > .frame {
-  width: min(calc(var(--car-h) * var(--r)), 88%);
+  /* S / M / L from the studio: half, three-quarter or full row height. */
+  width: min(calc(var(--car-h) * var(--sz, 1) * var(--r)), 88%);
   scroll-snap-align: start;
 }
 .car-prev, .car-next {

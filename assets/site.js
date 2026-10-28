@@ -170,8 +170,7 @@
   function renderFeed() {
     let shown = filter === 'writing'
       ? writingIndex
-      // Tools are left out of "All": they show only under Tools.
-      : posts.filter((p) => (filter === 'all' && p.type !== 'tool') || p.type === filter);
+      : posts.filter((p) => filter === 'all' || p.type === filter);
 
     // Substack posts join "All" after the ordered work, newest first — new
     // ones included as they sync — unless turned off in the studio. A post
