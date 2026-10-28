@@ -45,13 +45,13 @@
         },
         {
           "type": "video",
-          "src": "media/vnost/pqdeuz5vfiigiauchd0voa-p46c.mp4",
-          "w": 1920,
-          "h": 1080,
+          "src": "media/vnost/version-11-pcrs.mp4",
+          "w": 1080,
+          "h": 1920,
           "alt": "",
-          "poster": "media/vnost/pqdeuz5vfiigiauchd0voa-p46c-poster.webp",
-          "feed": true,
-          "size": "m"
+          "poster": "media/vnost/version-11-pcrs-poster.webp",
+          "size": "m",
+          "feed": true
         },
         {
           "type": "image",
