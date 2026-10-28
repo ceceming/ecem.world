@@ -320,6 +320,152 @@
       "slugTouched": true
     },
     {
+      "id": "t2txtr",
+      "type": "tool",
+      "status": "published",
+      "slug": "textures-studio",
+      "title": "Textures Studio",
+      "year": "2026",
+      "tags": [
+        "Image editing",
+        "Print textures"
+      ],
+      "summary": "A tactile image-filter studio: stack print, paper and painterly textures on any image, live.",
+      "live": "tools/textures/",
+      "repo": "",
+      "embed": "tools/textures/?embed=1",
+      "body": "Drop in an image and stack textures on it — halftone, riso, newsprint, letterpress, cyanotype, grain, glyphs — tuning every parameter live, then export a full-resolution PNG. It runs entirely in the browser: nothing is uploaded, the pixels never leave the page.\n\nIt began as a way to give digital images the texture of the printed matter I love, without a round trip through a print shop or a heavy desktop app.",
+      "process": "I built it with Claude Code. I defined the textures by reference to real print processes, set the look of the interface, and tested each filter against how the real thing looks on paper, sending it back until it did. Claude Code wrote the code; the taste and the decisions are mine.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/t2txtr/texturingtool-8hp8.webp",
+          "w": 966,
+          "h": 668,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/textures-studio-result.webp",
+          "w": 996,
+          "h": 668,
+          "alt": "A landscape rendered as a halftone print with grain",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/textures-studio.webp",
+          "w": 1500,
+          "h": 940,
+          "alt": "The Textures Studio interface: presets on the left, the image in the centre, the filter stack on the right",
+          "feed": true,
+          "size": "m"
+        }
+      ]
+    },
+    {
+      "id": "t1rndr",
+      "type": "tool",
+      "status": "published",
+      "slug": "obj-render-studio",
+      "title": "OBJ Render Studio",
+      "year": "2026",
+      "tags": [
+        "3D rendering",
+        "Lighting",
+        "Product imagery"
+      ],
+      "summary": "A browser-based render studio that lights 3D models the way a photographer lights a set.",
+      "live": "https://ceceming.github.io/Obj_renderer_environment/",
+      "repo": "https://github.com/ceceming/Obj_renderer_environment",
+      "embed": "",
+      "body": "The hard part of getting a usable image out of a 3D file is not the geometry — it is the light. The studio is built around that: 25 lighting rigs drawn from real photographic setups, every source movable, resizable and re-colourable, so the highlight on a glossy surface is the actual shape of the softbox you placed.\n\nDrop in a model, art-direct light and camera, and export a cut-out PNG, a print-resolution still, a frame sequence, or a linear EXR for grading. A command-line version renders the same scenes headlessly, up to 6K, for batches.",
+      "process": "I built it with Claude Code. I set the brief and the standards — photographic lighting rigs, physically based materials, outputs a designer actually uses — and judged every build by eye against renders I would accept in client work. Claude Code wrote the code; I directed what it should do, what it should look like, and what was not good enough yet.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/t1rndr/renderingotol-wb7r.webp",
+          "w": 966,
+          "h": 668,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/obj-render-studio-render.webp",
+          "w": 898,
+          "h": 898,
+          "alt": "A glossy white knot rendered under a studio softbox",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/obj-render-studio.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The render studio's interface: model controls on the left, the render in the centre",
+          "feed": true,
+          "size": "m"
+        }
+      ]
+    },
+    {
+      "id": "t3site",
+      "type": "tool",
+      "status": "published",
+      "slug": "ecem-world-and-its-studio",
+      "title": "ecem.world and its studio",
+      "year": "2026",
+      "tags": [
+        "Web design",
+        "Content system",
+        "Publishing"
+      ],
+      "summary": "This website, and the private studio behind it where I add, order and publish projects, images and writing.",
+      "live": "https://ecem.world",
+      "repo": "https://github.com/ceceming/ecem.world",
+      "embed": "",
+      "body": "Two halves. The public site: black, one typeface, a pinned panel with the bio and an index, and a feed of work in which every piece keeps its own proportions and a project unfolds in place.\n\nThe studio, which only I can use: a library where I drag projects into the order the site shows them, mark them draft, live or archived, upload images and video (resized in the browser before they are saved), preview the real site with unpublished changes, and publish everything in one step. My Substack posts arrive on their own every hour, and I decide which appear and whether they open here or on Substack.\n\nThere is no server and no database: the site is a handful of files, the content is three of them, and publishing is a single commit to GitHub.",
+      "process": "I built it with Claude Code, in conversation. I started from four portfolios I admire, had them studied for layout, measurements and how each introduces its work, and decided from that what mine should do. From there I directed every step and judged each one in the browser: the pinned panel, the opening animation of the chrome \"e\", the About portrait that turns to colour on hover, hiding client names from the public site, replacing the project pop-up with projects that unfold in place. Claude Code wrote the code and tested it; I decided what it should be, and sent back what was not right.",
+      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
+      "media": [
+        {
+          "type": "image",
+          "src": "media/t3site/renderingotol-copy-t545.webp",
+          "w": 966,
+          "h": 668,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/ecem-world-site.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The ecem.world home page: the bio and index on the left, the feed of work on the right",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/tools/ecem-world-studio.webp",
+          "w": 1600,
+          "h": 1000,
+          "alt": "The studio's library: entries in site order on the left, the selected entry's form on the right",
+          "feed": false,
+          "size": "m"
+        }
+      ]
+    },
+    {
       "id": "97d7iz",
       "type": "project",
       "status": "published",
@@ -476,152 +622,6 @@
           "w": 1596,
           "h": 890,
           "alt": "",
-          "feed": false,
-          "size": "m"
-        }
-      ]
-    },
-    {
-      "id": "t1rndr",
-      "type": "tool",
-      "status": "published",
-      "slug": "obj-render-studio",
-      "title": "OBJ Render Studio",
-      "year": "2026",
-      "tags": [
-        "3D rendering",
-        "Lighting",
-        "Product imagery"
-      ],
-      "summary": "A browser-based render studio that lights 3D models the way a photographer lights a set.",
-      "live": "https://ceceming.github.io/Obj_renderer_environment/",
-      "repo": "https://github.com/ceceming/Obj_renderer_environment",
-      "embed": "",
-      "body": "The hard part of getting a usable image out of a 3D file is not the geometry — it is the light. The studio is built around that: 25 lighting rigs drawn from real photographic setups, every source movable, resizable and re-colourable, so the highlight on a glossy surface is the actual shape of the softbox you placed.\n\nDrop in a model, art-direct light and camera, and export a cut-out PNG, a print-resolution still, a frame sequence, or a linear EXR for grading. A command-line version renders the same scenes headlessly, up to 6K, for batches.",
-      "process": "I built it with Claude Code. I set the brief and the standards — photographic lighting rigs, physically based materials, outputs a designer actually uses — and judged every build by eye against renders I would accept in client work. Claude Code wrote the code; I directed what it should do, what it should look like, and what was not good enough yet.",
-      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
-      "media": [
-        {
-          "type": "image",
-          "src": "media/t1rndr/renderingotol-wb7r.webp",
-          "w": 966,
-          "h": 668,
-          "alt": "",
-          "feed": true,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/obj-render-studio-render.webp",
-          "w": 898,
-          "h": 898,
-          "alt": "A glossy white knot rendered under a studio softbox",
-          "feed": false,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/obj-render-studio.webp",
-          "w": 1600,
-          "h": 1000,
-          "alt": "The render studio's interface: model controls on the left, the render in the centre",
-          "feed": true,
-          "size": "m"
-        }
-      ]
-    },
-    {
-      "id": "t2txtr",
-      "type": "tool",
-      "status": "published",
-      "slug": "textures-studio",
-      "title": "Textures Studio",
-      "year": "2026",
-      "tags": [
-        "Image editing",
-        "Print textures"
-      ],
-      "summary": "A tactile image-filter studio: stack print, paper and painterly textures on any image, live.",
-      "live": "tools/textures/",
-      "repo": "",
-      "embed": "tools/textures/?embed=1",
-      "body": "Drop in an image and stack textures on it — halftone, riso, newsprint, letterpress, cyanotype, grain, glyphs — tuning every parameter live, then export a full-resolution PNG. It runs entirely in the browser: nothing is uploaded, the pixels never leave the page.\n\nIt began as a way to give digital images the texture of the printed matter I love, without a round trip through a print shop or a heavy desktop app.",
-      "process": "I built it with Claude Code. I defined the textures by reference to real print processes, set the look of the interface, and tested each filter against how the real thing looks on paper, sending it back until it did. Claude Code wrote the code; the taste and the decisions are mine.",
-      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
-      "media": [
-        {
-          "type": "image",
-          "src": "media/t2txtr/texturingtool-8hp8.webp",
-          "w": 966,
-          "h": 668,
-          "alt": "",
-          "feed": true,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/textures-studio-result.webp",
-          "w": 996,
-          "h": 668,
-          "alt": "A landscape rendered as a halftone print with grain",
-          "feed": false,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/textures-studio.webp",
-          "w": 1500,
-          "h": 940,
-          "alt": "The Textures Studio interface: presets on the left, the image in the centre, the filter stack on the right",
-          "feed": true,
-          "size": "m"
-        }
-      ]
-    },
-    {
-      "id": "t3site",
-      "type": "tool",
-      "status": "published",
-      "slug": "ecem-world-and-its-studio",
-      "title": "ecem.world and its studio",
-      "year": "2026",
-      "tags": [
-        "Web design",
-        "Content system",
-        "Publishing"
-      ],
-      "summary": "This website, and the private studio behind it where I add, order and publish projects, images and writing.",
-      "live": "https://ecem.world",
-      "repo": "https://github.com/ceceming/ecem.world",
-      "embed": "",
-      "body": "Two halves. The public site: black, one typeface, a pinned panel with the bio and an index, and a feed of work in which every piece keeps its own proportions and a project unfolds in place.\n\nThe studio, which only I can use: a library where I drag projects into the order the site shows them, mark them draft, live or archived, upload images and video (resized in the browser before they are saved), preview the real site with unpublished changes, and publish everything in one step. My Substack posts arrive on their own every hour, and I decide which appear and whether they open here or on Substack.\n\nThere is no server and no database: the site is a handful of files, the content is three of them, and publishing is a single commit to GitHub.",
-      "process": "I built it with Claude Code, in conversation. I started from four portfolios I admire, had them studied for layout, measurements and how each introduces its work, and decided from that what mine should do. From there I directed every step and judged each one in the browser: the pinned panel, the opening animation of the chrome \"e\", the About portrait that turns to colour on hover, hiding client names from the public site, replacing the project pop-up with projects that unfold in place. Claude Code wrote the code and tested it; I decided what it should be, and sent back what was not right.",
-      "credits": "Designed and directed by: Ecem Öztürk\nBuilt with: Claude Code",
-      "media": [
-        {
-          "type": "image",
-          "src": "media/t3site/renderingotol-copy-t545.webp",
-          "w": 966,
-          "h": 668,
-          "alt": "",
-          "feed": true,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/ecem-world-site.webp",
-          "w": 1600,
-          "h": 1000,
-          "alt": "The ecem.world home page: the bio and index on the left, the feed of work on the right",
-          "feed": false,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/tools/ecem-world-studio.webp",
-          "w": 1600,
-          "h": 1000,
-          "alt": "The studio's library: entries in site order on the left, the selected entry's form on the right",
           "feed": false,
           "size": "m"
         }
