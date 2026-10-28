@@ -50,8 +50,8 @@
           "h": 1920,
           "alt": "",
           "poster": "media/vnost/version-11-pcrs-poster.webp",
-          "size": "m",
-          "feed": true
+          "feed": true,
+          "size": "m"
         },
         {
           "type": "image",
