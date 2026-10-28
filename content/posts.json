@@ -44,15 +44,6 @@
           "feed": true
         },
         {
-          "type": "image",
-          "src": "media/vnost/keychain-rmvt-bcg-titlehead-ticket-a3y2.webp",
-          "w": 1800,
-          "h": 1300,
-          "alt": "",
-          "size": "m",
-          "feed": true
-        },
-        {
           "type": "video",
           "src": "media/vnost/pqdeuz5vfiigiauchd0voa-p46c.mp4",
           "w": 1920,
@@ -64,18 +55,9 @@
         },
         {
           "type": "image",
-          "src": "media/vnost/20-kitchen-window-view-6nup.webp",
-          "w": 1920,
-          "h": 1080,
-          "alt": "",
-          "size": "m",
-          "feed": false
-        },
-        {
-          "type": "image",
-          "src": "media/vnost/17-object-ceiling-lamp-2-gg88.webp",
-          "w": 1080,
-          "h": 1350,
+          "src": "media/vnost/keychain-rmvt-bcg-titlehead-ticket-a3y2.webp",
+          "w": 1800,
+          "h": 1300,
           "alt": "",
           "size": "m",
           "feed": false
@@ -106,15 +88,33 @@
           "alt": "",
           "size": "m",
           "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/17-object-ceiling-lamp-2-gg88.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": "",
+          "size": "m",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/vnost/20-kitchen-window-view-6nup.webp",
+          "w": 1920,
+          "h": 1080,
+          "alt": "",
+          "size": "m",
+          "feed": false
         }
       ]
     },
     {
       "id": "yr8k0v",
       "type": "project",
-      "status": "draft",
-      "slug": "sticky-bloom",
-      "title": "Sticky Bloom",
+      "status": "published",
+      "slug": "sticky-bloom-macos-app",
+      "title": "Sticky Bloom MacOS App",
       "year": "2025",
       "client": "",
       "role": "Designer",
@@ -124,16 +124,26 @@
         "Vibe Coding"
       ],
       "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
-      "body": "",
+      "body": "Vibe coded using Claude Code. \nThe logo and the animations carry the sticky notes app concept further. ",
       "credits": "",
       "media": [
         {
-          "type": "image",
-          "src": "media/yr8k0v/sticky-bloom-logo-jf1z.webp",
-          "w": 2048,
-          "h": 2048,
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-logo-360-etcf.mp4",
+          "w": 1080,
+          "h": 1920,
           "alt": "",
-          "size": "s"
+          "poster": "media/yr8k0v/sticky-bloom-logo-360-etcf-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-app-demo-v2-web-c16m.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-c16m-poster.webp",
+          "feed": true
         }
       ]
     },
