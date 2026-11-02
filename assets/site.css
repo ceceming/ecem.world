@@ -637,6 +637,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
   .with-note { flex-direction: column; gap: 12px; }
   .with-note .note { flex: none; }
   .with-note .frames { flex: none; width: 100%; }
+  /* On a phone every piece in the feed spans the column, edge to edge, one
+     under another, whatever its S / M / L or shape: an easy vertical scroll.
+     (The sliding rows keep their own sizes, so the next image peeks in.) */
+  .frames:not(.more-frames) > .frame { width: 100%; }
 
   /* Three across is too small to read on a phone: a project's frames
      wrap, two to a row, each still at its own ratio. */
