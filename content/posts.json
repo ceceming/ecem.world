@@ -143,6 +143,116 @@
       ]
     },
     {
+      "id": "dq2oqb",
+      "type": "project",
+      "status": "draft",
+      "slug": "selected-notebook-pages",
+      "title": "Selected Notebook Pages",
+      "year": "2026",
+      "client": "",
+      "role": "",
+      "tags": [
+        "Sketching",
+        "3D Printing"
+      ],
+      "summary": "",
+      "body": "Sketching process can include 3D printing!",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/dq2oqb/202611020358-1-mpk0.mp4",
+          "w": 720,
+          "h": 1280,
+          "alt": "",
+          "poster": "media/dq2oqb/202611020358-1-mpk0-poster.webp",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-01-image-0001-1mdi.webp",
+          "w": 1532,
+          "h": 2400,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-10-image-0001-6504.webp",
+          "w": 1556,
+          "h": 2400,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-02-image-0001-5vpp.webp",
+          "w": 1536,
+          "h": 2400,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-06-image-0001-awig.webp",
+          "w": 1538,
+          "h": 2400,
+          "alt": "",
+          "feed": true,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-07-image-0001-mr1i.webp",
+          "w": 1487,
+          "h": 2400,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-03-image-0002-a2nk.webp",
+          "w": 1726,
+          "h": 2400,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-05-image-0001-sihz.webp",
+          "w": 1458,
+          "h": 2400,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-08-image-0001-x81c.webp",
+          "w": 1495,
+          "h": 2400,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        },
+        {
+          "type": "image",
+          "src": "media/dq2oqb/crafts-monship-page-09-image-0001-cbp9.webp",
+          "w": 1559,
+          "h": 2400,
+          "alt": "",
+          "feed": false,
+          "size": "m"
+        }
+      ]
+    },
+    {
       "id": "5k7rva",
       "type": "writing",
       "status": "published",
@@ -197,6 +307,41 @@
       ]
     },
     {
+      "id": "l0u7js",
+      "type": "project",
+      "status": "published",
+      "slug": "osseous-branding-work-in-progress",
+      "title": "Osseous Branding #WORK-IN-PROGRESS",
+      "year": "2026",
+      "client": "",
+      "role": "Designer, Art Director",
+      "tags": [
+        "Art Direction",
+        "Branding"
+      ],
+      "summary": "",
+      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp"
+        }
+      ]
+    },
+    {
       "id": "18quen",
       "type": "project",
       "status": "published",
@@ -239,41 +384,6 @@
           "h": 1082,
           "alt": "",
           "size": "m"
-        }
-      ]
-    },
-    {
-      "id": "l0u7js",
-      "type": "project",
-      "status": "published",
-      "slug": "osseous-branding-work-in-progress",
-      "title": "Osseous Branding #WORK-IN-PROGRESS",
-      "year": "2026",
-      "client": "",
-      "role": "Designer, Art Director",
-      "tags": [
-        "Art Direction",
-        "Branding"
-      ],
-      "summary": "",
-      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
-      "credits": "",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
-        },
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp"
         }
       ]
     },
