@@ -1,6 +1,39 @@
 {
   "posts": [
     {
+      "id": "mvoneg",
+      "type": "project",
+      "status": "draft",
+      "slug": "rosalissa-rose-water-cosmetics",
+      "title": "Rosalissa Rose Water Cosmetics",
+      "year": "2021-2026",
+      "client": "",
+      "role": "",
+      "tags": [
+        "Content"
+      ],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli-poster.webp"
+        },
+        {
+          "type": "image",
+          "src": "media/mvoneg/silky-textile-draft07-4x5crop-tbk5.webp",
+          "w": 1080,
+          "h": 1350,
+          "alt": ""
+        }
+      ]
+    },
+    {
       "id": "0dd3tm",
       "type": "project",
       "status": "draft",
