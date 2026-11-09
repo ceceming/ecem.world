@@ -609,6 +609,20 @@
   const area = (name, label, value, rows, hint = '') =>
     `<label>${label}${hint ? ` <span class="muted">— ${hint}</span>` : ''}<textarea name="${name}" rows="${rows}">${esc(value)}</textarea></label>`;
 
+  // How a post's images sit in the feed, and whether a gallery moves on its own.
+  const feedOptions = (p) => {
+    const layout = p.feedLayout || (p.type === 'image' ? 'gallery' : 'stack');
+    return `<div class="row">
+      <label>Images in the feed <span class="muted">— with more than one</span>
+        <select name="feedLayout">
+          <option value="stack" ${layout === 'stack' ? 'selected' : ''}>Stacked, one under another</option>
+          <option value="gallery" ${layout === 'gallery' ? 'selected' : ''}>Sliding gallery, side by side</option>
+        </select></label>
+      <label>Gallery moves on its own <span class="muted">— seconds per image; empty: only by hand</span>
+        <input name="autoplay" type="number" min="1" max="30" step="0.5" class="short" placeholder="off" value="${esc(p.autoplay ?? '')}"></label>
+    </div>`;
+  };
+
   function statusSwitch(p) {
     return `<div class="segmented" role="radiogroup" aria-label="Status">${['draft', 'published', 'archived'].map((s) =>
       `<button type="button" role="radio" data-status-set="${s}" aria-checked="${p.status === s}">${STATUS_LABEL[s]}</button>`).join('')}</div>`;
@@ -698,6 +712,7 @@
           ${area('body', 'Description', p.body, 7, 'a blank line starts a new paragraph')}
           <div class="row">${field('live', 'Try-it link', p.live, 'placeholder="https://… or virtual-nostalgia/"', 'optional — for a project people can open and use')}</div>
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Photography: Name')}
+          ${feedOptions(p)}
           ${slugField}
         </div>${mediaManager(p)}`;
       } else if (p.type === 'tool') {
@@ -709,6 +724,7 @@
           ${area('body', 'What it is', p.body, 6, 'a blank line starts a new paragraph')}
           ${area('process', 'How it was made', p.process, 6, 'the problem, what you directed, what the AI wrote, what you judged')}
           ${area('credits', 'Credits', p.credits, 3, 'one per line, e.g. Built with: Claude Code')}
+          ${feedOptions(p)}
           ${slugField}
         </div>${mediaManager(p)}`;
       } else if (p.type === 'image') {
@@ -719,6 +735,7 @@
             <select name="size"><option value="small" ${p.size !== 'large' ? 'selected' : ''}>Small</option><option value="large" ${p.size === 'large' ? 'selected' : ''}>Large</option></select></label>
           ${area('body', 'Note', p.body, 3, 'optional')}
           <label class="check"><input type="checkbox" name="noteBeside" ${p.noteBeside ? 'checked' : ''}> Show the note right next to the image <span class="muted">— off: it sits on the image itself, behind a small + in the corner</span></label>
+          ${feedOptions(p)}
           ${slugField}
         </div>${mediaManager(p)}`;
       } else {
@@ -879,6 +896,8 @@
     }
     if (t.name === 'size') { p.size = t.value; changed(); }
     if (t.name === 'noteBeside') { p.noteBeside = t.checked; changed(); }
+    if (t.name === 'feedLayout') { p.feedLayout = t.value; changed(); }
+    if (t.name === 'autoplay') { p.autoplay = t.value === '' ? '' : Number(t.value); changed(); }
     if (t.dataset.m === 'feed') {
       // Turn the default (first three) into explicit choices, then apply this one.
       const i = +t.closest('.tile').dataset.i;

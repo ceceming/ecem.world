@@ -206,14 +206,21 @@
       const small = p.type === 'image' && p.size !== 'large' ? ' is-small' : '';
       // The pieces not chosen for the feed wait inside the project and only
       // load once it is opened (see detailsHtml).
-      const frames = `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
+      // Set per post in the studio: stacked (one under another) or one sliding
+      // gallery, and whether that gallery moves on its own, every N seconds.
+      const layout = p.feedLayout || (p.type === 'image' ? 'gallery' : 'stack');
+      const auto = Number(p.autoplay) > 0 ? Math.min(30, Math.max(1, Number(p.autoplay))) : 0;
+      const frames = layout === 'gallery' && media.length > 1
+        ? carousel(media, eager, auto)
+        : `<div class="frames">${media.map((m) => frame(m, eager)).join('')}</div>`;
 
       if (!isProject && p.media.length > 1) {
-        // Several images: every one of them in a sliding row, the first
-        // included. The note, when there is one, folds under the caption.
+        // Several images: all of them, the first included, as a sliding
+        // gallery (or stacked, if chosen). The note, when there is one, folds
+        // under the caption.
         const note = (p.body || '').trim();
         return `<article class="item ${p.type} has-gallery" id="p-${esc(p.slug)}">
-          ${carousel(p.media, eager)}
+          ${layout === 'gallery' ? carousel(p.media, eager, auto) : `<div class="frames">${p.media.map((m) => frame(m, eager)).join('')}</div>`}
           <div class="caption">
             <span>${esc(p.title)}${badge(p)}</span>
             <span class="c-end">${esc(p.year)}${mid ? ` <span class="more">· ${esc(mid)}</span>` : ''}</span>
@@ -267,7 +274,7 @@
   // Everything a project shows once opened: the pieces not already in the
   // feed, its text and credits, and for a tool a way to try it.
   // A row of pieces that slides sideways, with arrows (see slide()).
-  const carousel = (list, eager = false) => `<div class="carousel">
+  const carousel = (list, eager = false, auto = 0) => `<div class="carousel"${auto ? ` data-auto="${auto}"` : ''}>
       <div class="frames more-frames">${list.map((m, i) => frame(m, eager && i < 2).replace('style="', `style="--i:${i};`)).join('')}</div>
       <button type="button" class="car-prev" aria-label="Previous images">←</button>
       <button type="button" class="car-next" aria-label="More images">→</button>
@@ -285,6 +292,21 @@
     window.addEventListener('resize', sync);
     strip.querySelectorAll('img').forEach((im) => im.addEventListener('load', sync));
     sync();
+
+    // A gallery set to move on its own: one image every N seconds, only
+    // while it is on screen, pausing while a pointer rests on it or a finger
+    // has just touched it. Never for someone who asked for less motion.
+    const secs = Number(car.dataset.auto);
+    if (!secs || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let visible = false, held = false, resume;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.4 }).observe(car);
+    car.addEventListener('mouseenter', () => { held = true; });
+    car.addEventListener('mouseleave', () => { held = false; });
+    strip.addEventListener('touchstart', () => { held = true; clearTimeout(resume); }, { passive: true });
+    strip.addEventListener('touchend', () => { resume = setTimeout(() => { held = false; }, 4000); }, { passive: true });
+    setInterval(() => {
+      if (visible && !held && !document.hidden && car.isConnected && !lightbox.open) slide(car, 1, true);
+    }, secs * 1000);
   }
 
   function detailsHtml(p) {
@@ -311,9 +333,14 @@
   }
 
   // The opened project's extra images: one row that slides, image by image.
-  function slide(car, dir) {
+  function slide(car, dir, wrap = false) {
     const strip = car.querySelector('.more-frames');
     const x = strip.scrollLeft;
+    // Moving on its own: from the end, glide back to the start.
+    if (wrap && dir > 0 && x >= strip.scrollWidth - strip.clientWidth - 4) {
+      strip.scrollTo({ left: 0, behavior: 'smooth' });
+      return;
+    }
     const lefts = [...strip.children].map((f) => f.offsetLeft - strip.firstElementChild.offsetLeft);
     const to = dir > 0 ? lefts.find((l) => l > x + 4) : [...lefts].reverse().find((l) => l < x - 4);
     strip.scrollTo({ left: to === undefined ? (dir > 0 ? strip.scrollWidth : 0) : to, behavior: 'smooth' });
