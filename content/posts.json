@@ -212,8 +212,8 @@
         },
         {
           "type": "image",
-          "src": "media/dq2oqb/crafts-monship-page-10-image-0001-6504.webp",
-          "w": 1556,
+          "src": "media/dq2oqb/crafts-monship-page-03-image-0002-a2nk.webp",
+          "w": 1726,
           "h": 2400,
           "alt": "",
           "feed": true,
@@ -239,20 +239,11 @@
         },
         {
           "type": "image",
-          "src": "media/dq2oqb/crafts-monship-page-07-image-0001-mr1i.webp",
-          "w": 1487,
+          "src": "media/dq2oqb/crafts-monship-page-10-image-0001-6504.webp",
+          "w": 1556,
           "h": 2400,
           "alt": "",
-          "feed": false,
-          "size": "m"
-        },
-        {
-          "type": "image",
-          "src": "media/dq2oqb/crafts-monship-page-03-image-0002-a2nk.webp",
-          "w": 1726,
-          "h": 2400,
-          "alt": "",
-          "feed": false,
+          "feed": true,
           "size": "m"
         },
         {
@@ -261,7 +252,7 @@
           "w": 1458,
           "h": 2400,
           "alt": "",
-          "feed": false,
+          "feed": true,
           "size": "m"
         },
         {
@@ -270,7 +261,7 @@
           "w": 1495,
           "h": 2400,
           "alt": "",
-          "feed": false,
+          "feed": true,
           "size": "m"
         },
         {
@@ -279,7 +270,7 @@
           "w": 1559,
           "h": 2400,
           "alt": "",
-          "feed": false,
+          "feed": true,
           "size": "m"
         }
       ],
