@@ -361,7 +361,8 @@
           "w": 1080,
           "h": 1920,
           "alt": "",
-          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp"
+          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp",
+          "feed": true
         },
         {
           "type": "video",
@@ -369,7 +370,8 @@
           "w": 540,
           "h": 960,
           "alt": "",
-          "poster": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5-poster.webp"
+          "poster": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5-poster.webp",
+          "feed": true
         },
         {
           "type": "video",
@@ -377,9 +379,20 @@
           "w": 1080,
           "h": 1920,
           "alt": "",
-          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp"
+          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9.mp4",
+          "w": 540,
+          "h": 960,
+          "alt": "",
+          "poster": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9-poster.webp",
+          "feed": true
         }
-      ]
+      ],
+      "feedLayout": "gallery"
     },
     {
       "id": "18quen",
