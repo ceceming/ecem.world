@@ -338,7 +338,9 @@
           "poster": "media/yr8k0v/sticky-bloom-flower-states-45y2-poster.webp",
           "feed": true
         }
-      ]
+      ],
+      "feedLayout": "gallery",
+      "autoplay": 2.5
     },
     {
       "id": "l0u7js",
