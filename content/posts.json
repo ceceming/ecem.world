@@ -109,16 +109,6 @@
           "feed": true
         },
         {
-          "type": "video",
-          "src": "media/vnost/version-11-pcrs.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/vnost/version-11-pcrs-poster.webp",
-          "feed": true,
-          "size": "m"
-        },
-        {
           "type": "image",
           "src": "media/vnost/keychain-rmvt-bcg-titlehead-ticket-a3y2.webp",
           "w": 1800,
@@ -126,6 +116,16 @@
           "alt": "",
           "size": "m",
           "feed": false
+        },
+        {
+          "type": "video",
+          "src": "media/vnost/version-11-pcrs.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/vnost/version-11-pcrs-poster.webp",
+          "feed": false,
+          "size": "m"
         },
         {
           "type": "image",
