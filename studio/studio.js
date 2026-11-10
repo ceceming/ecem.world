@@ -545,7 +545,15 @@
       if (poster) { m.poster = `${dir}${name}-poster.webp`; addPending(m.poster, poster); }
       return m;
     }
-    throw new Error(`${file.name}: not an image, GIF or video this site can show.`);
+    if (file.type === 'text/html' || /\.html?$/i.test(file.name)) {
+      // A self-contained HTML piece (one file, its images and scripts inside
+      // it or linked from the web). It runs in a sealed frame on the site.
+      if (file.size > 20e6) throw new Error(`${file.name} is ${fmtBytes(file.size)}. Keep an HTML piece under 20 MB.`);
+      const src = `${dir}${name}.html`;
+      addPending(src, file);
+      return { type: 'html', src, w: 16, h: 9, alt: '' };
+    }
+    throw new Error(`${file.name}: not an image, GIF, video or HTML file this site can show.`);
   }
 
   async function addFiles(files, post) {
@@ -640,13 +648,14 @@
     let inner;
     if (m.type === 'video') inner = `<video src="${esc(mediaUrl(m.src))}" ${m.poster ? `poster="${esc(mediaUrl(m.poster))}"` : ''} muted loop playsinline autoplay></video>`;
     else if (m.type === 'embed') inner = `<span class="t-txt">▶ ${esc(m.src.replace(/^https?:\/\/(www\.)?/, '').slice(0, 28))}</span>`;
+    else if (m.type === 'html') inner = `<iframe src="${esc(mediaUrl(m.src))}" sandbox="allow-scripts" loading="lazy" title="HTML piece" tabindex="-1"></iframe>`;
     else inner = `<img src="${esc(mediaUrl(m.src))}" alt="">`;
-    const tag = { image: '', gif: 'GIF', video: 'Video', embed: 'Link' }[m.type];
+    const tag = { image: '', gif: 'GIF', video: 'Video', embed: 'Link', html: 'HTML' }[m.type];
     const isNew = state.pending.has(m.src) ? '<i class="dot" title="Uploads when you publish"></i>' : '';
     return `<li class="tile" draggable="true" data-i="${i}">
       <div class="tile-media" style="aspect-ratio:${m.w || 16}/${m.h || 9}">${inner}</div>
       <div class="tile-bar">
-        <span>${isNew}${tag ? `${tag} · ` : ''}${m.w && m.type !== 'embed' ? `${m.w}×${m.h}` : ''}</span>
+        <span>${isNew}${tag ? `${tag} · ` : ''}${m.w && m.type !== 'embed' && m.type !== 'html' ? `${m.w}×${m.h}` : ''}</span>
         <span>
           <button type="button" data-m="left" ${i === 0 ? 'disabled' : ''} aria-label="Move earlier">←</button>
           <button type="button" data-m="right" ${i === n - 1 ? 'disabled' : ''} aria-label="Move later">→</button>
@@ -656,6 +665,8 @@
       <div class="sizes" role="radiogroup" aria-label="Size">${[['s', 'S', 'Small'], ['m', 'M', 'Medium'], ['l', 'L', 'Large']].map(([v, t, name]) =>
         `<button type="button" role="radio" data-m="size" data-size="${v}" title="${name}" aria-checked="${(m.size || 'l') === v}">${t}</button>`).join('')}</div>
       ${p && p.type !== 'image' ? `<label class="infeed"><input type="checkbox" data-m="feed" ${inFeed(p, i) ? 'checked' : ''}> In the feed</label>` : ''}
+      ${m.type === 'html' ? `<label class="ratio">Shape <select data-m="ratio">${[['16:9', 'Landscape 16:9'], ['4:3', '4:3'], ['1:1', 'Square'], ['4:5', 'Portrait 4:5'], ['9:16', 'Tall 9:16']].map(([v, t]) =>
+        `<option value="${v}" ${`${m.w}:${m.h}` === v ? 'selected' : ''}>${t}</option>`).join('')}</select></label>` : ''}
       <input class="alt" data-m="alt" value="${esc(m.alt)}" placeholder="Describe it (for screen readers)">
     </li>`;
   }
@@ -668,8 +679,8 @@
       <ol class="tiles" id="tiles">${p.media.map((m, i) => mediaTile(m, i, p.media.length, p)).join('')}</ol>
       <div class="drop" id="drop">
         <p>Drop files here, or <label class="linkish">choose files<input type="file" id="file" multiple
-          accept="image/*,video/mp4,video/webm,video/quicktime,.heic" hidden></label>.</p>
-        <p class="muted">Photos are resized to ${IMAGE_MAX}px and saved as WebP. Video: MP4 under 25 MB is best; for longer films, use a Vimeo or YouTube link.</p>
+          accept="image/*,video/mp4,video/webm,video/quicktime,.heic,.html,.htm,text/html" hidden></label>.</p>
+        <p class="muted">Photos are resized to ${IMAGE_MAX}px and saved as WebP. Video: MP4 under 25 MB is best; for longer films, use a Vimeo or YouTube link. HTML: one self-contained file; choose its shape on the tile.</p>
         ${one ? '' : '<button type="button" id="add-embed">Add video link</button>'}
       </div>
     </div>`;
@@ -897,6 +908,11 @@
     if (t.name === 'size') { p.size = t.value; changed(); }
     if (t.name === 'noteBeside') { p.noteBeside = t.checked; changed(); }
     if (t.name === 'feedLayout') { p.feedLayout = t.value; changed(); }
+    if (t.dataset.m === 'ratio') {
+      const m = p.media[+t.closest('.tile').dataset.i];
+      [m.w, m.h] = t.value.split(':').map(Number);
+      changed({ editor: true });
+    }
     if (t.name === 'autoplay') { p.autoplay = t.value === '' ? '' : Number(t.value); changed(); }
     if (t.dataset.m === 'feed') {
       // Turn the default (first three) into explicit choices, then apply this one.

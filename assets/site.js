@@ -90,6 +90,11 @@
     if (m.type === 'video') {
       inner = `<video src="${esc(src(m.src))}" ${m.poster ? `poster="${esc(src(m.poster))}"` : ''}
         autoplay muted loop playsinline preload="metadata" aria-label="${esc(m.alt)}"></video>`;
+    } else if (m.type === 'html') {
+      // An HTML piece runs sealed off from the site (no access to its pages
+      // or to the studio's sign-in), and loads only when scrolled near.
+      inner = `<iframe src="${esc(src(m.src))}" loading="lazy" sandbox="allow-scripts allow-pointer-lock allow-popups"
+        allow="fullscreen; autoplay" title="${esc(m.alt || 'Interactive piece')}"></iframe>`;
     } else if (m.type === 'embed') {
       inner = `<iframe src="${esc(embedUrl(m.src))}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture"
         title="${esc(m.alt || 'Video')}"></iframe>`;
