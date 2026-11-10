@@ -40,28 +40,32 @@
           "src": "media/mvoneg/products-200-draft02-z927.webp",
           "w": 1080,
           "h": 1920,
-          "alt": ""
+          "alt": "",
+          "feed": false
         },
         {
           "type": "image",
           "src": "media/mvoneg/products-material-draft02-ld46.webp",
           "w": 1080,
           "h": 1920,
-          "alt": ""
+          "alt": "",
+          "feed": false
         },
         {
           "type": "image",
           "src": "media/mvoneg/products-100-draft02-423q.webp",
           "w": 1080,
           "h": 1920,
-          "alt": ""
+          "alt": "",
+          "feed": false
         },
         {
           "type": "image",
           "src": "media/mvoneg/products-30-draft02-s3rx.webp",
           "w": 1080,
           "h": 1920,
-          "alt": ""
+          "alt": "",
+          "feed": false
         }
       ]
     },
