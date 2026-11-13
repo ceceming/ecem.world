@@ -84,11 +84,20 @@
   // image may show (--max-w × --max-h in site.css). Unset = large.
   const SIZE = { s: 0.5, m: 0.75, l: 1 };
 
+  // A phone-sized screen: lighter video copies.
+  const PHONE = matchMedia('(max-width: 860px)').matches;
+
   function frame(m, eager) {
     const r = (m.w && m.h) ? m.w / m.h : (m.type === 'embed' ? 16 / 9 : 1);
     let inner;
     if (m.type === 'video') {
-      inner = `<video src="${esc(src(m.src))}" ${m.poster ? `poster="${esc(src(m.poster))}"` : ''}
+      // Phones get the lighter copy (name-phone.mp4, made automatically when
+      // a video is published); if there is none yet, the original.
+      const full = src(m.src);
+      const light = PHONE && /\.(mp4|m4v|mov)$/i.test(m.src) && !/^https?:/.test(m.src)
+        ? full.replace(/\.(mp4|m4v|mov)$/i, '-phone.mp4') : full;
+      inner = `<video src="${esc(light)}" ${m.poster ? `poster="${esc(src(m.poster))}"` : ''}
+        ${light !== full ? `onerror="if(!this.dataset.full){this.dataset.full=1;this.src='${esc(full)}'}"` : ''}
         autoplay muted loop playsinline preload="metadata" aria-label="${esc(m.alt)}"></video>`;
     } else if (m.type === 'html') {
       // An HTML piece runs sealed off from the site (no access to its pages
@@ -302,7 +311,7 @@
     // while it is on screen, pausing while a pointer rests on it or a finger
     // has just touched it. Never for someone who asked for less motion.
     const secs = Number(car.dataset.auto);
-    if (!secs || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!secs || TOUCH.matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let visible = false, held = false, resume;
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.4 }).observe(car);
     car.addEventListener('mouseenter', () => { held = true; });
@@ -351,7 +360,11 @@
     strip.scrollTo({ left: to === undefined ? (dir > 0 ? strip.scrollWidth : 0) : to, behavior: 'smooth' });
   }
 
-  function setOpen(slug, open, { scroll = false } = {}) {
+  // Touch screens (phones, tablets): no pointer that hovers, a finger.
+  const TOUCH = matchMedia('(hover: none) and (pointer: coarse)');
+
+  // fromTap: opened or closed by the visitor's tap (not by the address).
+  function setOpen(slug, open, { scroll = false, fromTap = false } = {}) {
     const p = posts.find((q) => q.slug === slug);
     if (!p) return;
     // A tool is not in the "All" feed; opening one (from a
@@ -366,10 +379,18 @@
     }
     item.classList.toggle('is-open', open);
     item.querySelectorAll('[aria-expanded]').forEach((a) => a.setAttribute('aria-expanded', String(open)));
-    // The address follows what is open, so it can be copied and shared,
-    // without adding a step to the back button for every click.
+    // The address follows what is open, so it can be copied and shared. A
+    // tap that opens a project adds one step to the back button, so Back
+    // folds it again instead of leaving the site; closing it by tap takes
+    // that step back out.
     const want = open ? `#/${slug}` : '';
-    if (location.hash !== want) history.replaceState(null, '', location.pathname + location.search + want);
+    if (fromTap && open && location.hash !== want) {
+      history.pushState({ opened: slug }, '', location.pathname + location.search + want);
+    } else if (fromTap && !open && history.state && history.state.opened === slug) {
+      history.back();
+    } else if (fromTap && location.hash !== want) {
+      history.replaceState(null, '', location.pathname + location.search + want);
+    }
     // Folding a long project away from below: bring its top back into view.
     if (scroll || (!open && item.getBoundingClientRect().top < 0)) {
       item.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -458,7 +479,9 @@
     const step = e.target.closest('.car-prev, .car-next');
     if (step) { slide(step.closest('.carousel'), step.classList.contains('car-next') ? 1 : -1); return; }
     const f = e.target.closest('.frame');
-    if (f && showFull(f)) { e.preventDefault(); return; }
+    // On touch screens a tap on a picture does nothing: images already fill
+    // the phone's width, and the full-size view only got in the way.
+    if (f && !TOUCH.matches && showFull(f)) { e.preventDefault(); return; }
     const n = e.target.closest('.note-toggle');
     if (n) {
       const item = n.closest('.item');
@@ -469,7 +492,7 @@
     if (!t) return;
     e.preventDefault();
     const item = document.getElementById(`p-${t.dataset.toggle}`);
-    setOpen(t.dataset.toggle, !item.classList.contains('is-open'));
+    setOpen(t.dataset.toggle, !item.classList.contains('is-open'), { fromTap: true });
   });
 
   // The one control that opens and closes a project or a folded note: a
@@ -577,16 +600,28 @@
     document.title = 'Ecem Öztürk — ecem.world';
   }
 
+  // Closing About (or a piece of writing) takes its address back out: if it
+  // was reached from within the site, step back; if the page was opened on
+  // it, just clear it. Either way Back doesn't bring it up again.
+  let sheetFromNav = false;
   sheet.addEventListener('close', () => {
-    if (location.hash.length > 2) history.pushState(null, '', location.pathname + location.search);
+    if (location.hash.length <= 2) return;
+    if (sheetFromNav) history.back();
+    else history.replaceState(null, '', location.pathname + location.search);
   });
   $('[data-close]', sheet).addEventListener('click', closeSheet);
 
   /* ── Routing: #/slug and #/w/slug ─────────────────────────────────── */
 
-  function route() {
+  // fromNav: the address changed while on the site (a link, Back, Forward).
+  function route(fromNav = false) {
+    sheetFromNav = fromNav;
     const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
-    if (!h) return closeSheet();
+    if (!h) {
+      // Back to the plain feed: fold whatever is open.
+      document.querySelectorAll('.feed .item.is-open').forEach((it) => setOpen(it.id.slice(2), false));
+      return closeSheet();
+    }
     if (h === 'about') return openAbout();
     if (h.startsWith('w/')) {
       const p = writingIndex.find((q) => q.slug === h.slice(2)) || posts.find((q) => q.type === 'writing' && q.slug === h.slice(2));
@@ -604,7 +639,7 @@
     }
   }
 
-  window.addEventListener('hashchange', route);
+  window.addEventListener('hashchange', () => route(true));
 
   document.querySelectorAll('[data-filter]').forEach((b) => b.addEventListener('click', () => {
     filter = b.dataset.filter;
