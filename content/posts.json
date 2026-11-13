@@ -299,30 +299,37 @@
       "media": [
         {
           "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-logo-360-etcf.mp4",
-          "w": 1080,
-          "h": 1920,
+          "src": "media/yr8k0v/sticky-bloom-macbook-mockup-web-k9dr.mp4",
+          "w": 1920,
+          "h": 1080,
           "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-logo-360-etcf-poster.webp",
+          "poster": "media/yr8k0v/sticky-bloom-macbook-mockup-web-k9dr-poster.webp",
           "feed": true
         },
         {
           "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-app-demo-v2-web-c16m.mp4",
+          "src": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5.mp4",
           "w": 1080,
           "h": 1920,
           "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-c16m-poster.webp",
-          "feed": true
+          "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5-poster.webp",
+          "feed": false
         },
         {
           "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-flower-states-45y2.mp4",
+          "src": "media/yr8k0v/sticky-bloom-flower-states-zje4.mp4",
           "w": 1080,
           "h": 1920,
           "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-flower-states-45y2-poster.webp",
-          "feed": true
+          "poster": "media/yr8k0v/sticky-bloom-flower-states-zje4-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-logo-360-0u3e.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-logo-360-0u3e-poster.webp"
         }
       ],
       "feedLayout": "gallery",
@@ -403,13 +410,14 @@
       "credits": "",
       "media": [
         {
-          "type": "gif",
-          "src": "media/18quen/glyph-brick-b-left-45-vers1-animasyon-8yxt.gif",
+          "type": "video",
+          "src": "media/18quen/glyph-brick-b-left-45-vers1-animasyon-8yxt.mp4",
           "w": 800,
           "h": 1000,
           "alt": "light design plastic semi-opaque shell in the shape of a rectangular prism. a metal frame holds the light source and allows screws to hang on the wall.",
           "size": "m",
-          "feed": true
+          "feed": true,
+          "poster": "media/18quen/glyph-brick-b-left-45-vers1-animasyon-8yxt-poster.webp"
         },
         {
           "type": "image",

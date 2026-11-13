@@ -343,11 +343,18 @@ export async function createScene(container) {
     cancelAnimationFrame(frame);
   }
 
-  // Don't burn a phone battery animating a tab nobody is looking at.
+  // Don't burn a phone battery animating a tab nobody is looking at, or a
+  // logo that has scrolled off the screen.
+  let onScreen = true;
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
+    if (document.hidden || !onScreen) stop();
     else start();
   });
+  new IntersectionObserver(([e]) => {
+    onScreen = e.isIntersecting;
+    if (onScreen && !document.hidden) start();
+    else stop();
+  }).observe(container);
 
   stillPlease.addEventListener?.('change', () => {
     if (stillPlease.matches) {

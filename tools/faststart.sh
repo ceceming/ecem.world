@@ -11,7 +11,7 @@ while IFS= read -r -d '' f; do
   mdat=$(grep -obUa 'mdat' "$f" | head -1 | cut -d: -f1 || true)
   if [ -n "$moov" ] && [ -n "$mdat" ] && [ "$moov" -lt "$mdat" ]; then continue; fi
   tmp="$(mktemp --suffix=.mp4)"
-  ffmpeg -v error -y -i "$f" -map 0 -c copy -movflags +faststart "$tmp"
+  ffmpeg -nostdin -v error -y -i "$f" -map 0 -c copy -movflags +faststart "$tmp"
   mv "$tmp" "$f"
   echo "faststart: $f"
   changed=1

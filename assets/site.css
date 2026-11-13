@@ -480,7 +480,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); 
 .carousel.at-start .car-prev, .carousel.at-end .car-next { opacity: 0; pointer-events: none; }
 
 /* ── Full size ───────────────────────────────────────────────────────── */
-.frame:has(img), .frame:has(video) { cursor: zoom-in; }
+@media (hover: hover) { .frame:has(img), .frame:has(video) { cursor: zoom-in; } }
 #lightbox {
   width: 100vw;
   height: 100dvh;
