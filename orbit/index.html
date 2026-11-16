@@ -57,10 +57,12 @@
     letter-spacing: 0.08em; text-transform: uppercase;
     opacity: 0; transition: opacity 700ms ease;
     will-change: transform;
+    z-index: 8;
     padding: 8px;               /* a comfortable target for a finger */
-    margin: -8px;
   }
-  .settled .body.on { opacity: var(--o, 1); }
+  .settled .body.on { opacity: 1; }
+  /* The two main destinations: highlighted, the text staying white. */
+  .body.mark .label { background: #0f8a3c; padding: 2px 6px; }
   .body .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; transition: transform 200ms ease; }
   .body .label { transition: opacity 200ms ease; }
   /* Titles on the left half read toward the middle from the left. */
@@ -105,22 +107,21 @@
   /* ── What orbits where ─────────────────────────────────────────────
      ring: 0 innermost … 2 outermost. Links are placeholders for now. */
   const BODIES = [
-    { ring: 0, label: '[ PORTFOLIO ]' },
-    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]' },
-    { ring: 1, label: '[ @ECEM.ZIP ]' },
-    { ring: 1, label: '[ NEWSLETTER ]' },
-    { ring: 2, label: '[ BOOK A CALL ]' },
+    { ring: 0, label: '[ PORTFOLIO ]', mark: true },
+    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]', mark: true },
+    { ring: 1, label: '[ INSTAGRAM ]' },
     { ring: 2, label: '[ EMAIL ME ]' },
     { ring: 2, label: '[ CV ]' },
-    { ring: 2, label: '[ ABOUT ME ]' },
+    { ring: 2, label: '[ ME ]' },
   ];
 
-  /* Each orbit: size (as a share of the screen), how flat the tilt is, how
-     long one lap takes, and which way it turns. Inner orbits are quicker. */
+  /* Each orbit: its radius as a share of the screen's shorter side (a
+     phone held upright gets a little more), how many seconds one lap takes,
+     and which way it turns. Inner orbits are quicker; all of them slow. */
   const RINGS = [
-    { size: 0.44, lap: 70, dir: 1 },
-    { size: 0.68, lap: 100, dir: -1 },
-    { size: 0.92, lap: 140, dir: 1 },
+    { size: 0.17, phone: 0.21, lap: 150, dir: 1 },
+    { size: 0.27, phone: 0.32, lap: 220, dir: -1 },
+    { size: 0.37, phone: 0.43, lap: 300, dir: 1 },
   ];
 
   const root = document.documentElement;
@@ -137,7 +138,7 @@
     const k = onRing.indexOf(b);
     b.phase = (k / onRing.length) * Math.PI * 2 + b.ring * 0.9 + 0.35;
     const a = document.createElement('a');
-    a.className = 'body';
+    a.className = 'body' + (b.mark ? ' mark' : '');
     a.href = '#';
     a.addEventListener('click', (e) => e.preventDefault());   // preview only
     a.innerHTML = `<span class="dot"></span><span class="label"></span>`;
@@ -152,9 +153,8 @@
   function layout() {
     W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
     const portrait = H > W * 1.15;
-    const tilt = portrait ? 0.86 : 0.5;          // ry / rx
-    const maxRx = portrait ? W * 0.47 : Math.min(W * 0.46, (H * 0.48) / tilt);
-    radii = RINGS.map((r) => ({ rx: maxRx * r.size, ry: maxRx * r.size * tilt }));
+    const base = Math.min(W, H);
+    radii = RINGS.map((r) => { const rr = base * (portrait ? r.phone : r.size); return { rx: rr, ry: rr }; });
     ellipses.forEach((e, i) => {
       e.setAttribute('cx', cx); e.setAttribute('cy', cy);
       e.setAttribute('rx', radii[i].rx); e.setAttribute('ry', radii[i].ry);
@@ -189,7 +189,6 @@
       const ang = b.phase + (still ? 0 : (r.dir * b.t * Math.PI * 2) / r.lap);
       const x = cx + Math.cos(ang) * radii[b.ring].rx;
       const y = cy + Math.sin(ang) * radii[b.ring].ry;
-      const behind = Math.sin(ang) < 0;
       const el = els[i];
       // Titles run outward from the middle, unless that side has no room
       // left on the screen; then they run the other way.
@@ -200,12 +199,11 @@
       if (!flip && x + w - 12 > W - room && x - w + 12 >= room) flip = true;
       else if (flip && x - w + 12 < room && x + w - 12 <= W - room) flip = false;
       el.classList.toggle('flip', flip);
-      w = el.offsetWidth;
-      const h = el.offsetHeight;
-      const dotOffset = flip ? w - 8 - 4.5 : 8 + 4.5;
-      el.style.transform = `translate(${x - dotOffset}px, ${y - h / 2}px)`;
-      el.style.zIndex = behind ? 2 : 8;
-      el.style.setProperty('--o', behind ? 0.5 : 1);
+      // The dot's own centre goes exactly on the orbit.
+      const dot = el.firstElementChild;
+      const dx = dot.offsetLeft + dot.offsetWidth / 2;
+      const dy = dot.offsetTop + dot.offsetHeight / 2;
+      el.style.transform = `translate(${x - dx}px, ${y - dy}px)`;
     });
   }
   BODIES.forEach((b) => { b.t = 0; });
