@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- A preview of the new home page: not linked from anywhere, not indexed.
+     Everything below resolves from the site root, so the 3D logo finds its
+     model in /model/ just as it does on the home page. -->
+<base href="/">
+<meta name="robots" content="noindex, nofollow">
+<title>Ecem Öztürk — orbit (preview)</title>
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.ico?v=2" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
+<style>
+  :root {
+    --bg: #000;
+    --fg: #fff;
+    --ring: rgba(255, 255, 255, 0.22);
+    --font: "Jost", Helvetica, Arial, sans-serif;
+    --logo: 112px;             /* the "e" once it has settled in the middle */
+    --big: min(64vmin, 560px); /* the "e" during the opening */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); }
+  body { font: 400 13px/1.3 var(--font); overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  .sky { position: fixed; inset: 0; }
+
+  /* The logo: large first, then it settles, smaller, in the very middle. */
+  #stage {
+    position: absolute; left: 50%; top: 50%;
+    width: var(--big); height: var(--big);
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 5;
+  }
+  #stage canvas { display: block; width: 100% !important; height: 100% !important; }
+  .settled #stage { transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
+
+  /* The orbits: drawn as ellipses (a tilted circle), fading in one by one. */
+  svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  svg.rings ellipse { fill: none; stroke: var(--ring); stroke-width: 1; opacity: 0; transition: opacity 900ms ease; }
+  .settled svg.rings ellipse { opacity: 1; }
+  .settled svg.rings ellipse:nth-child(2) { transition-delay: 180ms; }
+  .settled svg.rings ellipse:nth-child(3) { transition-delay: 360ms; }
+
+  /* A point on an orbit, with its title right beside it, travelling with it.
+     Point and title are one link. Behind the logo (the far half of an orbit)
+     they dim and pass under it. */
+  .body {
+    position: absolute; left: 0; top: 0;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--fg); text-decoration: none; white-space: nowrap;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    opacity: 0; transition: opacity 700ms ease;
+    will-change: transform;
+    padding: 8px;               /* a comfortable target for a finger */
+    margin: -8px;
+  }
+  .settled .body.on { opacity: var(--o, 1); }
+  .body .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; transition: transform 200ms ease; }
+  .body .label { transition: opacity 200ms ease; }
+  /* Titles on the left half read toward the middle from the left. */
+  .body.flip { flex-direction: row-reverse; }
+  @media (hover: hover) {
+    .body:hover { opacity: 1 !important; }
+    .body:hover .dot { transform: scale(1.5); }
+  }
+
+  .hint { position: fixed; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); text-align: center; color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0; transition: opacity 900ms ease 1.2s; }
+  .settled .hint { opacity: 1; }
+
+  @media (max-width: 600px) {
+    :root { --logo: 84px; }
+    body { font-size: 11px; }
+    .body { gap: 7px; letter-spacing: 0.06em; white-space: normal; }
+    .body .label { max-width: calc(50vw - 30px); }
+    .body.flip .label { text-align: right; }
+    .body .dot { width: 7px; height: 7px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #stage, svg.rings ellipse, .body { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main class="sky" aria-label="ecem.world">
+  <div id="stage" aria-hidden="true"></div>
+  <svg class="rings" aria-hidden="true"><ellipse/><ellipse/><ellipse/></svg>
+  <nav id="bodies" aria-label="Pages"></nav>
+  <p class="hint">Preview — links not working yet</p>
+</main>
+
+<script type="importmap">
+{ "imports": { "three": "/vendor/three/three.module.js" } }
+</script>
+
+<script type="module">
+  import { createScene } from '/assets/scene.js?v=20261113a';
+
+  /* ── What orbits where ─────────────────────────────────────────────
+     ring: 0 innermost … 2 outermost. Links are placeholders for now. */
+  const BODIES = [
+    { ring: 0, label: '[ PORTFOLIO ]' },
+    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]' },
+    { ring: 1, label: '[ @ECEM.ZIP ]' },
+    { ring: 1, label: '[ NEWSLETTER ]' },
+    { ring: 2, label: '[ BOOK A CALL ]' },
+    { ring: 2, label: '[ EMAIL ME ]' },
+    { ring: 2, label: '[ CV ]' },
+    { ring: 2, label: '[ ABOUT ME ]' },
+  ];
+
+  /* Each orbit: size (as a share of the screen), how flat the tilt is, how
+     long one lap takes, and which way it turns. Inner orbits are quicker. */
+  const RINGS = [
+    { size: 0.44, lap: 70, dir: 1 },
+    { size: 0.68, lap: 100, dir: -1 },
+    { size: 0.92, lap: 140, dir: 1 },
+  ];
+
+  const root = document.documentElement;
+  const sky = document.querySelector('.sky');
+  const stage = document.getElementById('stage');
+  const nav = document.getElementById('bodies');
+  const ellipses = [...document.querySelectorAll('svg.rings ellipse')];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // The points and their titles. Spread evenly round each orbit, with the
+  // orbits offset from one another so no two titles start stacked.
+  const els = BODIES.map((b, i) => {
+    const onRing = BODIES.filter((x) => x.ring === b.ring);
+    const k = onRing.indexOf(b);
+    b.phase = (k / onRing.length) * Math.PI * 2 + b.ring * 0.9 + 0.35;
+    const a = document.createElement('a');
+    a.className = 'body';
+    a.href = '#';
+    a.addEventListener('click', (e) => e.preventDefault());   // preview only
+    a.innerHTML = `<span class="dot"></span><span class="label"></span>`;
+    a.querySelector('.label').textContent = b.label;
+    nav.appendChild(a);
+    return a;
+  });
+
+  // Geometry follows the screen: wide screens get flatter, wider orbits;
+  // a phone held upright gets rounder ones that fill its height.
+  let W, H, cx, cy, radii;
+  function layout() {
+    W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
+    const portrait = H > W * 1.15;
+    const tilt = portrait ? 0.86 : 0.5;          // ry / rx
+    const maxRx = portrait ? W * 0.47 : Math.min(W * 0.46, (H * 0.48) / tilt);
+    radii = RINGS.map((r) => ({ rx: maxRx * r.size, ry: maxRx * r.size * tilt }));
+    ellipses.forEach((e, i) => {
+      e.setAttribute('cx', cx); e.setAttribute('cy', cy);
+      e.setAttribute('rx', radii[i].rx); e.setAttribute('ry', radii[i].ry);
+    });
+    root.style.setProperty('--k', String(parseFloat(getComputedStyle(root).getPropertyValue('--logo')) / stage.offsetWidth));
+  }
+  addEventListener('resize', layout);
+  layout();
+
+  // Motion: one clock for everything; hovering a title holds its orbit still.
+  let t = 0, last = null;
+  const held = new Set();
+  els.forEach((el, i) => {
+    el.addEventListener('mouseenter', () => held.add(BODIES[i].ring));
+    el.addEventListener('mouseleave', () => held.delete(BODIES[i].ring));
+  });
+  const ringT = RINGS.map(() => 0);
+  function tick(now) {
+    if (last !== null) {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      RINGS.forEach((_, k) => { if (!held.has(k)) ringT[k] += dt; });
+    }
+    last = now;
+    BODIES.forEach((b) => { b.t = ringT[b.ring]; });
+    placeEach();
+    requestAnimationFrame(tick);
+  }
+  // Place every point where its orbit's clock says it is.
+  function placeEach() {
+    BODIES.forEach((b, i) => {
+      const r = RINGS[b.ring];
+      const ang = b.phase + (still ? 0 : (r.dir * b.t * Math.PI * 2) / r.lap);
+      const x = cx + Math.cos(ang) * radii[b.ring].rx;
+      const y = cy + Math.sin(ang) * radii[b.ring].ry;
+      const behind = Math.sin(ang) < 0;
+      const el = els[i];
+      // Titles run outward from the middle, unless that side has no room
+      // left on the screen; then they run the other way.
+      const room = 12;
+      let flip = x < cx;
+      el.classList.toggle('flip', flip);
+      let w = el.offsetWidth;
+      if (!flip && x + w - 12 > W - room && x - w + 12 >= room) flip = true;
+      else if (flip && x - w + 12 < room && x + w - 12 <= W - room) flip = false;
+      el.classList.toggle('flip', flip);
+      w = el.offsetWidth;
+      const h = el.offsetHeight;
+      const dotOffset = flip ? w - 8 - 4.5 : 8 + 4.5;
+      el.style.transform = `translate(${x - dotOffset}px, ${y - h / 2}px)`;
+      el.style.zIndex = behind ? 2 : 8;
+      el.style.setProperty('--o', behind ? 0.5 : 1);
+    });
+  }
+  BODIES.forEach((b) => { b.t = 0; });
+  placeEach();
+  requestAnimationFrame(tick);
+
+  // The opening: the logo large on black, then it settles in the middle, the
+  // orbits draw in, and the points arrive one by one.
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
+  await Promise.race([ready, wait(3500)]);
+  await wait(still ? 0 : 1100);
+  root.classList.add('settled');
+  els.forEach((el, i) => setTimeout(() => el.classList.add('on'), still ? 0 : 900 + i * 140));
+</script>
+</body>
+</html>
