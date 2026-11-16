@@ -40,12 +40,12 @@
   #stage canvas { display: block; width: 100% !important; height: 100% !important; }
   .settled #stage { transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
 
-  /* The orbits: drawn as ellipses (a tilted circle), fading in one by one. */
+  /* The orbits: circles on tilting planes, traced in script, fading in one by one. */
   svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-  svg.rings ellipse { fill: none; stroke: var(--ring); stroke-width: 1; opacity: 0; transition: opacity 900ms ease; }
-  .settled svg.rings ellipse { opacity: 1; }
-  .settled svg.rings ellipse:nth-child(2) { transition-delay: 180ms; }
-  .settled svg.rings ellipse:nth-child(3) { transition-delay: 360ms; }
+  svg.rings path { fill: none; stroke: var(--ring); stroke-width: 1; opacity: 0; transition: opacity 900ms ease; }
+  .settled svg.rings path { opacity: 1; }
+  .settled svg.rings path:nth-child(2) { transition-delay: 180ms; }
+  .settled svg.rings path:nth-child(3) { transition-delay: 360ms; }
 
   /* A point on an orbit, with its title right beside it, travelling with it.
      Point and title are one link. Behind the logo (the far half of an orbit)
@@ -60,9 +60,10 @@
     z-index: 8;
     padding: 8px;               /* a comfortable target for a finger */
   }
-  .settled .body.on { opacity: 1; }
+  .settled .body.on { opacity: var(--o, 1); }
   /* The two main destinations: highlighted, the text staying white. */
-  .body.mark .label { background: #0f8a3c; padding: 2px 6px; }
+  /* Its colour drifts slowly round the spectrum, deep enough for white text. */
+  .body.mark .label { background: var(--hl, #0f8a3c); padding: 2px 6px; }
   .body .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; transition: transform 200ms ease; }
   .body .label { transition: opacity 200ms ease; }
   /* Titles on the left half read toward the middle from the left. */
@@ -72,6 +73,11 @@
     .body:hover .dot { transform: scale(1.5); }
   }
 
+  /* Preview only: switch between ways the orbits can move. */
+  .feel { position: fixed; top: max(14px, env(safe-area-inset-top)); left: 16px; z-index: 20; display: flex; gap: 12px; align-items: baseline;
+          font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .feel button { font: inherit; letter-spacing: inherit; color: rgba(255,255,255,0.55); background: none; border: 0; padding: 6px 0; cursor: pointer; }
+  .feel button[aria-pressed="true"] { color: #fff; border-bottom: 1px solid #fff; }
   .hint { position: fixed; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); text-align: center; color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0; transition: opacity 900ms ease 1.2s; }
   .settled .hint { opacity: 1; }
 
@@ -84,7 +90,7 @@
     .body .dot { width: 7px; height: 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    #stage, svg.rings ellipse, .body { transition: none !important; }
+    #stage, svg.rings path, .body { transition: none !important; }
   }
 </style>
 </head>
@@ -92,9 +98,14 @@
 
 <main class="sky" aria-label="ecem.world">
   <div id="stage" aria-hidden="true"></div>
-  <svg class="rings" aria-hidden="true"><ellipse/><ellipse/><ellipse/></svg>
+  <svg class="rings" aria-hidden="true"><path/><path/><path/></svg>
   <nav id="bodies" aria-label="Pages"></nav>
   <p class="hint">Preview — links not working yet</p>
+  <div class="feel" role="group" aria-label="How the orbits move">Feel
+    <button type="button" data-feel="flat">Flat</button>
+    <button type="button" data-feel="drift">Drift</button>
+    <button type="button" data-feel="gyro">Gyro</button>
+  </div>
 </main>
 
 <script type="importmap">
@@ -128,7 +139,6 @@
   const sky = document.querySelector('.sky');
   const stage = document.getElementById('stage');
   const nav = document.getElementById('bodies');
-  const ellipses = [...document.querySelectorAll('svg.rings ellipse')];
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // The points and their titles. Spread evenly round each orbit, with the
@@ -147,67 +157,131 @@
     return a;
   });
 
-  // Geometry follows the screen: wide screens get flatter, wider orbits;
-  // a phone held upright gets rounder ones that fill its height.
-  let W, H, cx, cy, radii;
+  /* ── How the orbits can feel ──────────────────────────────────────
+     Each orbit is a circle on its own plane. That plane slowly tips forward
+     and back (x) and swings left and right (y), each orbit on its own slow
+     rhythm, so points travel toward you, grow and brighten, then recede,
+     dim and pass behind the logo.
+       flat:  the plain circles, no depth
+       drift: a gentle sway, as if floating
+       gyro:  orbits tilting freely, like a gyroscope */
+  const FEELS = {
+    flat:  { ax: 0,    ay: 0,    base: 0,    periods: [1, 1, 1] },
+    drift: { ax: 0.32, ay: 0.24, base: 0.18, periods: [46, 61, 77] },
+    gyro:  { ax: 1.05, ay: 0.85, base: 0.35, periods: [28, 36, 45] },
+  };
+  const feelButtons = [...document.querySelectorAll('.feel button')];
+  let feel = new URLSearchParams(location.search).get('feel');
+  try { feel = feel || localStorage.getItem('ecem.world:orbit-feel'); } catch (e) { /* storage blocked */ }
+  if (!FEELS[feel]) feel = 'drift';
+  function setFeel(f) {
+    feel = f;
+    feelButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.feel === f)));
+    try { localStorage.setItem('ecem.world:orbit-feel', f); } catch (e) { /* storage blocked */ }
+  }
+  feelButtons.forEach((b) => b.addEventListener('click', () => setFeel(b.dataset.feel)));
+  setFeel(feel);
+  // Changing feel eases over a couple of seconds instead of snapping.
+  const amp = { ax: FEELS[feel].ax, ay: FEELS[feel].ay, base: FEELS[feel].base };
+
+  // Sizes follow the screen; a phone held upright gets slightly larger orbits.
+  let W, H, cx, cy, radii, F;
   function layout() {
     W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
     const portrait = H > W * 1.15;
     const base = Math.min(W, H);
-    radii = RINGS.map((r) => { const rr = base * (portrait ? r.phone : r.size); return { rx: rr, ry: rr }; });
-    ellipses.forEach((e, i) => {
-      e.setAttribute('cx', cx); e.setAttribute('cy', cy);
-      e.setAttribute('rx', radii[i].rx); e.setAttribute('ry', radii[i].ry);
-    });
+    radii = RINGS.map((r) => base * (portrait ? r.phone : r.size));
+    F = radii[2] * 3.2;            // camera distance: how strong the perspective is
     root.style.setProperty('--k', String(parseFloat(getComputedStyle(root).getPropertyValue('--logo')) / stage.offsetWidth));
   }
   addEventListener('resize', layout);
   layout();
 
-  // Motion: one clock for everything; hovering a title holds its orbit still.
-  let t = 0, last = null;
+  // A point at angle `a` on orbit k, at that orbit's moment `t`: tipped onto
+  // its plane, then seen in perspective. Returns screen x, y, depth z
+  // (positive = toward you) and the perspective scale.
+  function project(k, a, t) {
+    const per = FEELS[feel].periods[k];
+    const ph = k * 2.1;
+    const tx = amp.base * (k % 2 ? -1 : 1) + amp.ax * Math.sin((2 * Math.PI * t) / per + ph);
+    const ty = amp.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
+    const r = radii[k];
+    let x = r * Math.cos(a), y = r * Math.sin(a), z = 0;
+    // tip forward/back round the horizontal axis
+    const y1 = y * Math.cos(tx), z1 = y * Math.sin(tx);
+    // swing round the vertical axis
+    const x2 = x * Math.cos(ty) + z1 * Math.sin(ty), z2 = -x * Math.sin(ty) + z1 * Math.cos(ty);
+    const s = F / (F - z2);
+    return { x: cx + x2 * s, y: cy + y1 * s, z: z2, s };
+  }
+
+  // Motion: each orbit keeps its own clock; hovering a title holds its orbit
+  // (turning and tilting) still so it is easy to click.
+  let last = null;
   const held = new Set();
   els.forEach((el, i) => {
     el.addEventListener('mouseenter', () => held.add(BODIES[i].ring));
     el.addEventListener('mouseleave', () => held.delete(BODIES[i].ring));
   });
   const ringT = RINGS.map(() => 0);
+  let clock = 0;
   function tick(now) {
     if (last !== null) {
       const dt = Math.min((now - last) / 1000, 0.05);
-      RINGS.forEach((_, k) => { if (!held.has(k)) ringT[k] += dt; });
+      if (!still) RINGS.forEach((_, k) => { if (!held.has(k)) ringT[k] += dt; });
+      clock += dt;
+      // ease the tilt amount toward the chosen feel
+      const goal = FEELS[feel];
+      const e = Math.min(1, dt * 1.2);
+      amp.ax += (goal.ax - amp.ax) * e; amp.ay += (goal.ay - amp.ay) * e; amp.base += (goal.base - amp.base) * e;
     }
     last = now;
-    BODIES.forEach((b) => { b.t = ringT[b.ring]; });
-    placeEach();
+    draw();
     requestAnimationFrame(tick);
   }
-  // Place every point where its orbit's clock says it is.
-  function placeEach() {
+
+  function draw() {
+    // The orbits themselves, traced through their tilted planes.
+    paths.forEach((path, k) => {
+      let d = '';
+      for (let n = 0; n <= 96; n++) {
+        const q = project(k, (n / 96) * Math.PI * 2, ringT[k]);
+        d += (n ? 'L' : 'M') + q.x.toFixed(1) + ' ' + q.y.toFixed(1);
+      }
+      path.setAttribute('d', d + 'Z');
+    });
+    // The highlight's colour: a slow, subtle drift round the spectrum.
+    const hue = (140 + clock * 2.4) % 360;   // one round of colours in about 2½ minutes
     BODIES.forEach((b, i) => {
       const r = RINGS[b.ring];
-      const ang = b.phase + (still ? 0 : (r.dir * b.t * Math.PI * 2) / r.lap);
-      const x = cx + Math.cos(ang) * radii[b.ring].rx;
-      const y = cy + Math.sin(ang) * radii[b.ring].ry;
+      const ang = b.phase + (r.dir * ringT[b.ring] * Math.PI * 2) / r.lap;
+      const q = project(b.ring, ang, ringT[b.ring]);
       const el = els[i];
       // Titles run outward from the middle, unless that side has no room
       // left on the screen; then they run the other way.
       const room = 12;
-      let flip = x < cx;
+      let flip = q.x < cx;
       el.classList.toggle('flip', flip);
       let w = el.offsetWidth;
-      if (!flip && x + w - 12 > W - room && x - w + 12 >= room) flip = true;
-      else if (flip && x - w + 12 < room && x + w - 12 <= W - room) flip = false;
+      if (!flip && q.x + w - 12 > W - room && q.x - w + 12 >= room) flip = true;
+      else if (flip && q.x - w + 12 < room && q.x + w - 12 <= W - room) flip = false;
       el.classList.toggle('flip', flip);
-      // The dot's own centre goes exactly on the orbit.
+      // The dot's own centre sits exactly on the orbit; nearer points are
+      // drawn larger and brighter, further ones smaller, dimmer and, once
+      // they are behind the middle, underneath the logo.
       const dot = el.firstElementChild;
       const dx = dot.offsetLeft + dot.offsetWidth / 2;
       const dy = dot.offsetTop + dot.offsetHeight / 2;
-      el.style.transform = `translate(${x - dx}px, ${y - dy}px)`;
+      const s = Math.max(0.7, Math.min(1.35, q.s));
+      el.style.transform = `translate(${q.x}px, ${q.y}px) scale(${s.toFixed(3)}) translate(${-dx}px, ${-dy}px)`;
+      const depth = Math.max(-1, Math.min(1, q.z / radii[2]));
+      el.style.setProperty('--o', Math.min(1, 0.82 + depth * 0.4).toFixed(3));
+      el.style.zIndex = q.z < 0 ? 2 : 8;
+      if (b.mark) el.style.setProperty('--hl', `hsl(${(hue + i * 22) % 360} 52% 34%)`);
     });
   }
-  BODIES.forEach((b) => { b.t = 0; });
-  placeEach();
+  const paths = [...document.querySelectorAll('svg.rings path')];
+  draw();
   requestAnimationFrame(tick);
 
   // The opening: the logo large on black, then it settles in the middle, the
