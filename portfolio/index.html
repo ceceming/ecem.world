@@ -18,7 +18,7 @@
 <meta property="og:description" content="Art director and designer, Toronto.">
 <meta property="og:url" content="https://ecem.world/portfolio/">
 
-<link rel="stylesheet" href="/assets/site.css?v=20261117b">
+<link rel="stylesheet" href="/assets/site.css?v=20261117c">
 
 <!-- The opening (see "The opening" in site.css): once per browser tab, and
      not when arriving on a project's link or in the studio's preview. If the
@@ -152,6 +152,29 @@
   }
 </script>
 
+<script>
+  // The corner logo leads back to the start: the page fades away around it,
+  // and the home page carries the logo from this corner back to the middle.
+  (function () {
+    var mark = document.querySelector('.mark');
+    if (!mark) return;
+    mark.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('ecem.world:return', String(Date.now())); } catch (err) { /* storage blocked */ }
+      document.documentElement.classList.add('departing');
+      var go = function () { location.href = mark.href; };
+      // On a phone scrolled down, bring the logo back into view first.
+      if (window.scrollY > 0 && innerWidth <= 860) { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(go, 700); }
+      else setTimeout(go, 420);
+    });
+    // Leaving the portfolio any other way (the browser's Back button): note
+    // the moment, so a home page loaded within a few seconds glides home too.
+    addEventListener('pagehide', function () {
+      try { if (!sessionStorage.getItem('ecem.world:return')) sessionStorage.setItem('ecem.world:return', String(Date.now())); } catch (err) { /* storage blocked */ }
+    });
+  })();
+</script>
 <script src="/assets/site.js?v=20261117a"></script>
 </body>
 </html>

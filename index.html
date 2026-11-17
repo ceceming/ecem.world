@@ -322,24 +322,33 @@
   // Into the portfolio: the logo travels to where the portfolio keeps it
   // (top left: 92px on wide screens, 79px on phones), the rest fades away,
   // then the portfolio opens around it.
+  function toCorner() {
+    const wide = innerWidth > 860;
+    const size = wide ? 92 : 79, left = wide ? 4 : 0, top = wide ? 8 : 4;
+    stage.style.left = `${left + size / 2}px`;
+    stage.style.top = `${top + size / 2}px`;
+    stage.style.transform = `translate(-50%, -50%) scale(${size / stage.offsetWidth})`;
+  }
+  // Back from the portfolio: the logo, starting in the portfolio's corner,
+  // glides back to the middle, then the orbits, links and title fade in.
+  function comeHome() {
+    stage.style.left = stage.style.top = stage.style.transform = '';
+    setTimeout(() => root.classList.remove('leaving'), 900);
+  }
   const portfolioLink = els[BODIES.findIndex((b) => b.href === '/portfolio/')];
   portfolioLink.addEventListener('click', (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || still) return;
     e.preventDefault();
-    const wide = innerWidth > 860;
-    const size = wide ? 92 : 79, left = wide ? 4 : 0, top = wide ? 8 : 4;
     root.classList.add('leaving');
-    stage.style.left = `${left + size / 2}px`;
-    stage.style.top = `${top + size / 2}px`;
-    stage.style.transform = `translate(-50%, -50%) scale(${size / stage.offsetWidth})`;
+    toCorner();
     try { sessionStorage.setItem('ecem.world:arrive', '1'); } catch (err) { /* storage blocked */ }
     setTimeout(() => { location.href = portfolioLink.href; }, 920);
   });
-  // Coming back with the browser's Back button: undo the leaving.
+  // Coming back with the browser's Back button to this same page (kept in
+  // memory, still in its "leaving" state): play the way out in reverse.
   addEventListener('pageshow', (e) => {
-    if (!e.persisted) return;
-    root.classList.remove('leaving');
-    stage.style.left = stage.style.top = stage.style.transform = '';
+    if (!e.persisted || !root.classList.contains('leaving')) return;
+    comeHome();
   });
 
   // The opening: the logo large on black, then it settles in the middle, the
@@ -352,9 +361,22 @@
     await Promise.race([ready, wait(3500)]);
     await wait(still ? 0 : 1100);
   } else {
-    // Coming back: straight to the settled view, no opening.
+    // Coming back: no opening. From the portfolio's logo, the logo starts in
+    // the portfolio's corner and glides home; otherwise straight to the
+    // settled view.
+    let returning = false;
+    try {
+      // Only a fresh note counts: straight back from the portfolio, not a
+      // visit to the CV or elsewhere first.
+      returning = Date.now() - Number(sessionStorage.getItem('ecem.world:return') || 0) < 5000;
+      sessionStorage.removeItem('ecem.world:return');
+    } catch (e) { /* storage blocked */ }
     root.classList.add('no-anim');
-    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-anim')));
+    if (returning && !still) { root.classList.add('leaving'); toCorner(); }
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      root.classList.remove('no-anim');
+      if (returning && !still) comeHome();
+    }));
   }
   root.classList.add('settled');
   els.forEach((el, i) => setTimeout(() => el.classList.add('on'), still || seen ? 0 : 900 + i * 140));
