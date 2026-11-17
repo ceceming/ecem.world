@@ -41,11 +41,11 @@
     position: absolute; left: 50%; top: 50%;
     width: var(--big); height: var(--big);
     transform: translate(-50%, -50%) scale(1);
-    transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1);
+    transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1), left 1400ms cubic-bezier(0.65, 0, 0.35, 1);
     z-index: 5;
   }
   #stage canvas { display: block; width: 100% !important; height: 100% !important; }
-  .settled #stage { transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
+  .settled #stage { left: var(--lx, 50%); transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
 
   /* ECEM'S WORLD, under the logo: large beneath it during the opening, then
      small beneath it once it has settled in the middle. */
@@ -54,9 +54,9 @@
     transform: translateX(-50%); margin: 0; z-index: 6;
     font-size: 15px; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; white-space: nowrap;
     padding-left: 0.32em;   /* balance the tracking after the last letter */
-    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
+    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), left 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
   }
-  .settled .title { top: calc(50% + var(--logo) / 2 + 6px); font-size: 10px; }
+  .settled .title { left: var(--lx, 50%); top: calc(50% + var(--logo) / 2 + 6px); font-size: 10px; }
 
   /* The orbits: circles on tilting planes, traced in script, fading in one by one. */
   svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
@@ -125,14 +125,15 @@
   import { createScene } from '/assets/scene.js?v=20261117a';
 
   /* ── What orbits where ─────────────────────────────────────────────
-     ring: 0 innermost … 2 outermost. */
+     ring: 0 innermost … 2 outermost. `at`: where the link stays on a phone,
+     in degrees round its orbit (0 = straight right of the logo, -90 = up). */
   const BODIES = [
-    { ring: 0, label: '[ PORTFOLIO ]', href: '/portfolio/', mark: true, big: true },
-    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]', href: '/merch/', mark: true },
-    { ring: 1, label: '[ INSTAGRAM ]', href: 'https://www.instagram.com/ecem.zip/', away: true },
-    { ring: 2, label: '[ EMAIL ME ]', href: 'mailto:hello@ecem.world' },
-    { ring: 2, label: '[ CV ]', href: '/cv/' },
-    { ring: 2, label: '[ ME ]', href: '/portfolio/#/about' },
+    { ring: 0, label: '[ PORTFOLIO ]', href: '/portfolio/', mark: true, big: true, at: -50 },
+    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]', href: '/merch/', mark: true, at: 45 },
+    { ring: 1, label: '[ INSTAGRAM ]', href: 'https://www.instagram.com/ecem.zip/', away: true, at: -74 },
+    { ring: 2, label: '[ EMAIL ME ]', href: 'mailto:hello@ecem.world', at: 62 },
+    { ring: 2, label: '[ CV ]', href: '/cv/', at: 40 },
+    { ring: 2, label: '[ ME ]', href: '/portfolio/#/about', at: -40 },
   ];
 
   /* Each orbit: its radius as a share of the screen's shorter side (a
@@ -182,9 +183,25 @@
   };
   // Sizes follow the screen; a phone held upright gets slightly larger orbits.
   let W, H, cx, cy, radii, F, tipScale = 1;
+  /* On a phone held upright the orbits are seen side-on: their centre, and
+     the logo, sit at the left edge of the screen; the orbits are large
+     circles whose right halves sweep across the screen and run off its edges,
+     and each link stays still at its own place on them. */
+  let phone = false;
   function layout() {
     W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
     const portrait = H > W * 1.15;
+    phone = portrait;
+    if (phone) {
+      const logoPx = parseFloat(getComputedStyle(root).getPropertyValue('--logo'));
+      cx = Math.max(logoPx / 2 + 22, W * 0.17);
+      radii = [0.24, 0.35, 0.44].map((f) => H * f);
+      F = 1e9;
+      root.style.setProperty('--lx', `${cx}px`);
+      root.style.setProperty('--k', String(logoPx / stage.offsetWidth));
+      return;
+    }
+    root.style.removeProperty('--lx');
     tipScale = portrait ? 0.72 : 1;   // upright phones: a little less tipped, so orbits keep some height
     const base = Math.min(W, H);
     radii = RINGS.map((r) => base * (portrait ? r.phone : r.size));
@@ -198,6 +215,7 @@
   // its plane, then seen in perspective. Returns screen x, y, depth z
   // (positive = toward you) and the perspective scale.
   function project(k, a, t) {
+    if (phone) return { x: cx + radii[k] * Math.cos(a), y: cy + radii[k] * Math.sin(a), z: 0, s: 1 };
     const per = DEPTH.period[k];
     const ph = k * 2.1;
     const tx = DEPTH.tip[k] * tipScale + DEPTH.sway.ax * Math.sin((2 * Math.PI * t) / per + ph);
@@ -247,7 +265,7 @@
     const hue = (140 + clock * 2.4) % 360;   // one round of colours in about 2½ minutes
     BODIES.forEach((b, i) => {
       const r = RINGS[b.ring];
-      const ang = b.phase + (r.dir * ringT[b.ring] * Math.PI * 2) / r.lap;
+      const ang = phone ? (b.at * Math.PI) / 180 : b.phase + (r.dir * ringT[b.ring] * Math.PI * 2) / r.lap;
       const q = project(b.ring, ang, ringT[b.ring]);
       const el = els[i];
       // Titles run outward from the middle, away from the logo. If that side
@@ -257,8 +275,13 @@
       const edge = 12, gap = 28;
       const outward = q.x >= cx ? W - edge - q.x - gap : q.x - edge - gap;
       const inward = q.x >= cx ? q.x - edge - gap : W - edge - q.x - gap;
-      const flip = (q.x < cx) !== (outward < 110);
-      label.style.maxWidth = `${Math.max(60, Math.floor(outward < 110 ? inward : outward))}px`;
+      // A title crosses to the other side only if it can't fit outward even
+      // when wrapped (short titles need only their own width).
+      label.style.maxWidth = 'none';
+      const need = Math.min(label.offsetWidth, 110);
+      const cross = outward < need;
+      const flip = (q.x < cx) !== cross;
+      label.style.maxWidth = `${Math.max(60, Math.floor(cross ? inward : outward))}px`;
       el.classList.toggle('flip', flip);
       // The dot's own centre sits exactly on the orbit; nearer points are
       // drawn larger and brighter, further ones smaller, dimmer and, once
@@ -269,7 +292,7 @@
       const s = Math.max(0.7, Math.min(1.35, q.s));
       el.style.transform = `translate(${q.x}px, ${q.y}px) scale(${s.toFixed(3)}) translate(${-dx}px, ${-dy}px)`;
       const depth = Math.max(-1, Math.min(1, q.z / radii[2]));
-      el.style.setProperty('--o', Math.min(1, 0.82 + depth * 0.4).toFixed(3));
+      el.style.setProperty('--o', phone ? '1' : Math.min(1, 0.82 + depth * 0.4).toFixed(3));
       el.style.zIndex = q.z < 0 ? 2 : 8;
       if (b.mark) {
         const h1 = (hue + i * 22) % 360, h2 = (h1 + 70) % 360;
