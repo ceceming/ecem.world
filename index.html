@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- The front door of ecem.world: the logo, ECEM'S WORLD beneath it, and
+<!-- The front door of ecem.world: the logo, a line about Ecem beneath it, and
      the places to go, orbiting it. The portfolio feed is at /portfolio/. -->
 <title>Ecem Öztürk — ecem.world</title>
 <meta name="description" content="Ecem Öztürk — designer and art director, Toronto.">
@@ -47,14 +47,15 @@
   #stage canvas { display: block; width: 100% !important; height: 100% !important; }
   .settled #stage { left: var(--lx, 50%); transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
 
-  /* ECEM'S WORLD, under the logo: large beneath it during the opening, then
+  /* The line under the logo: large beneath it during the opening, then
      small beneath it once it has settled in the middle. */
   .title {
     position: absolute; left: 50%; top: calc(50% + var(--big) / 2 + 14px);
     transform: translateX(-50%); margin: 0; z-index: 6;
-    font-size: 15px; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; white-space: nowrap;
-    padding-left: 0.32em;   /* balance the tracking after the last letter */
-    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), left 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
+    font-size: 15px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    width: max-content; max-width: 86vw; text-align: center; line-height: 1.5;
+    padding-left: 0.2em;    /* balance the tracking after the last letter */
+    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), left 1400ms cubic-bezier(0.65, 0, 0.35, 1), transform 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
   }
   .settled .title { left: var(--lx, 50%); top: calc(50% + var(--logo) / 2 + 6px); font-size: 10px; }
 
@@ -96,6 +97,11 @@
   }
 
 
+  /* Phones held upright: once settled on the left, the line reads from the
+     left edge under the logo, on two lines, rather than running off screen. */
+  @media (max-aspect-ratio: 1/1.15) {
+    .settled .title { left: 16px; transform: none; text-align: left; max-width: 136px; padding-left: 0; }
+  }
   @media (max-width: 600px) {
     :root { --logo: 84px; }
     body { font-size: 11px; }
@@ -116,7 +122,7 @@
 
 <main class="sky" aria-label="ecem.world">
   <div id="stage" aria-hidden="true"></div>
-  <h1 class="title">Ecem's World</h1>
+  <h1 class="title">Ecem is a creative in Toronto.</h1>
   <svg class="rings" aria-hidden="true"><path/><path/><path/></svg>
   <nav id="bodies" aria-label="Pages"></nav>
 </main>
