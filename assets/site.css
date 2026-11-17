@@ -98,6 +98,9 @@ html.intro .feed,
 html.arrive .panel > :not(.mark),
 html.arrive .feed { opacity: 0; }
 html.arrive .panel { border-right-color: transparent; }
+html.departing .panel > :not(.mark),
+html.departing .feed { opacity: 0; transition: opacity 380ms ease !important; }
+html.departing .panel { border-right-color: transparent; transition: border-color 380ms ease; }
 html.intro .panel { border-right-color: transparent; }
 .panel { transition: border-color 900ms ease 450ms; }
 .panel > :not(.mark), .feed { transition: opacity 900ms ease 450ms; }
