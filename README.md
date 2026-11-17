@@ -298,3 +298,15 @@ WebGL is unavailable — very old browsers, or Safari with hardware
 acceleration off. Open the browser console to see what `assets/scene.js`
 logged; it reports which model file it found, or that it fell back to the
 placeholder.
+
+## Site structure (since Nov 2026)
+
+- `/` — the front door (`index.html`): the 3D "e", ECEM'S WORLD beneath it, and
+  six links orbiting it (Portfolio, Merch, Instagram, Email, CV, Me). The links
+  are the `BODIES` list near the top of its script; orbit sizes, speeds and the
+  depth sway are `RINGS` and `DEPTH` just below.
+- `/portfolio/` — the feed (what used to be the home page), filled from
+  `content/*.json` by `assets/site.js`. Old links of the form
+  `ecem.world/#/a-project` are forwarded here.
+- `/merch/` — holding page for the merch offer.
+- `/orbit/` — old preview address, now forwards to `/`.

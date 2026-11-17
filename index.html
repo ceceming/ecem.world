@@ -3,143 +3,300 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- The front door of ecem.world: the logo, ECEM'S WORLD beneath it, and
+     the places to go, orbiting it. The portfolio feed is at /portfolio/. -->
+<title>Ecem Öztürk — ecem.world</title>
+<meta name="description" content="Ecem Öztürk — designer and art director, Toronto.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ecem Öztürk">
+<meta property="og:description" content="Designer and art director, Toronto.">
+<meta property="og:url" content="https://ecem.world/">
+<script>
+  // Links shared before the portfolio moved (ecem.world/#/a-project) still
+  // land on that project.
+  if (/^#\//.test(location.hash)) location.replace('/portfolio/' + location.hash);
+</script>
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
-<title>Ecem Öztürk — ecem.world</title>
-<meta name="description" content="Ecem Öztürk — art director and designer, Toronto.">
-<meta name="theme-color" content="#000000">
-<link rel="icon" href="assets/favicon.ico?v=2" sizes="32x32">
-<link rel="icon" href="assets/icon-192.png?v=2" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
+<style>
+  :root {
+    --bg: #000;
+    --fg: #fff;
+    --ring: rgba(255, 255, 255, 0.22);
+    --font: "Jost", Helvetica, Arial, sans-serif;
+    --logo: 112px;             /* the "e" once it has settled in the middle */
+    --big: min(64vmin, 560px); /* the "e" during the opening */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); }
+  body { font: 400 13px/1.3 var(--font); overflow: hidden; -webkit-font-smoothing: antialiased; }
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ecem Öztürk">
-<meta property="og:description" content="Art director and designer, Toronto.">
-<meta property="og:url" content="https://ecem.world/">
+  .sky { position: fixed; inset: 0; }
 
-<link rel="stylesheet" href="assets/site.css?v=20261113a">
+  /* The logo: large first, then it settles, smaller, in the very middle. */
+  #stage {
+    position: absolute; left: 50%; top: 50%;
+    width: var(--big); height: var(--big);
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 5;
+  }
+  #stage canvas { display: block; width: 100% !important; height: 100% !important; }
+  .settled #stage { transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
 
-<!-- The opening (see "The opening" in site.css): once per browser tab, and
-     not when arriving on a project's link or in the studio's preview. If the
-     script below never runs, the page simply shows as normal. -->
-<script>
-  (function () {
-    if (location.hash.length > 2 || /[?&]preview/.test(location.search)) return;
-    try {
-      if (sessionStorage.getItem('ecem.world:intro')) return;
-      sessionStorage.setItem('ecem.world:intro', '1');
-    } catch (err) { /* storage blocked: play it anyway */ }
-    var root = document.documentElement;
-    root.classList.add('intro');
-    // Never leave the page hidden, whatever fails.
-    setTimeout(function () { root.classList.remove('intro'); }, 7000);
-  })();
-</script>
+  /* ECEM'S WORLD, under the logo: large beneath it during the opening, then
+     small beneath it once it has settled in the middle. */
+  .title {
+    position: absolute; left: 50%; top: calc(50% + var(--big) / 2 + 14px);
+    transform: translateX(-50%); margin: 0; z-index: 6;
+    font-size: 15px; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; white-space: nowrap;
+    padding-left: 0.32em;   /* balance the tracking after the last letter */
+    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
+  }
+  .settled .title { top: calc(50% + var(--logo) / 2 + 6px); font-size: 10px; }
+
+  /* The orbits: circles on tilting planes, traced in script, fading in one by one. */
+  svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  svg.rings path { fill: none; stroke: var(--ring); stroke-width: 1; opacity: 0; transition: opacity 900ms ease; }
+  .settled svg.rings path { opacity: 1; }
+  .settled svg.rings path:nth-child(2) { transition-delay: 180ms; }
+  .settled svg.rings path:nth-child(3) { transition-delay: 360ms; }
+
+  /* A point on an orbit, with its title right beside it, travelling with it.
+     Point and title are one link. Behind the logo (the far half of an orbit)
+     they dim and pass under it. */
+  .body {
+    position: absolute; left: 0; top: 0;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--fg); text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    opacity: 0; transition: opacity 700ms ease;
+    will-change: transform;
+    z-index: 8;
+    padding: 8px;               /* a comfortable target for a finger */
+  }
+  .settled .body.on { opacity: var(--o, 1); }
+  /* The two main destinations: highlighted, the text staying white. */
+  /* Its colour drifts slowly round the spectrum, deep enough for white text. */
+  .body.mark .label { background: var(--hl, rgba(15, 138, 60, 0.2)); padding: 2px 6px; }
+  /* [ PORTFOLIO ]: the main door, set larger. */
+  .body.big .label { font-size: 1.45em; }
+  .body .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; transition: transform 200ms ease; }
+  .body .label { transition: opacity 200ms ease; }
+  /* Titles on the left half read toward the middle from the left. */
+  .body.flip { flex-direction: row-reverse; }
+  .body.flip .label { text-align: right; }
+  .body .label { width: max-content; }
+  @media (hover: hover) {
+    .body:hover { opacity: 1 !important; }
+    .body:hover .dot { transform: scale(1.5); }
+  }
+
+
+  @media (max-width: 600px) {
+    :root { --logo: 84px; }
+    body { font-size: 11px; }
+    .body { gap: 7px; letter-spacing: 0.06em; }
+    .body .dot { width: 7px; height: 7px; }
+  }
+  .no-anim #stage, .no-anim .title, .no-anim svg.rings path, .no-anim .body { transition: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    #stage, svg.rings path, .body { transition: none !important; }
+  }
+</style>
 </head>
 <body>
 
-<!-- Everything inside data-slot is filled from content/*.json by
-     assets/site.js. The text here is only what shows if that fails. -->
-<aside class="panel">
-  <a class="mark" href="#/" aria-label="Ecem Öztürk — home">
-    <div id="stage" aria-hidden="true"></div>
-  </a>
-
-  <h1 class="name" data-slot="name">Ecem Ozturk</h1>
-  <div class="bio" data-slot="bio"></div>
-  <p class="currently" data-slot="currently" hidden></p>
-
-  <nav class="filters" aria-label="Show">
-    <button type="button" data-filter="all" aria-pressed="true">All</button>
-    <button type="button" data-filter="project" aria-pressed="false">Projects</button>
-    <button type="button" data-filter="image" aria-pressed="false">Works</button>
-    <button type="button" data-filter="tool" aria-pressed="false">Tools</button>
-    <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
-    <a class="about-link" href="#/about">About</a>
-  </nav>
-
-  <div class="spacer"></div>
-
-  <!-- The coming-soon page's footer menu, kept as it was. -->
-  <footer class="menu">
-    <a href="mailto:hello@ecem.world" data-slot="email">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
-      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a><span class="sep" aria-hidden="true">·</span><a
-      href="cv/">cv</a><span class="sep" aria-hidden="true">·</span><a
-      href="https://www.instagram.com/ecem.zip/" target="_blank" rel="noopener" data-slot="instagram">instagram</a>
-  </footer>
-</aside>
-
-<main class="feed" data-slot="feed" aria-live="polite"></main>
-
-<!-- Writing and About open over the page. Projects and tools do not: they
-     unfold in place in the feed (see "A project, opened in place"). -->
-<dialog class="sheet" id="sheet" aria-label="Project">
-  <div class="sheet-bar">
-    <p class="sheet-title" data-slot="sheet-title"></p>
-    <button type="button" class="close" data-close aria-label="Close">close <span aria-hidden="true">&times;</span></button>
-  </div>
-  <div class="sheet-body" data-slot="sheet-body" tabindex="-1" autofocus></div>
-</dialog>
-
-<!-- An image, full size over a dimmed page. A click or tap anywhere but
-     the image itself (or Escape) puts the page back. -->
-<dialog id="lightbox" aria-label="Image, full size" tabindex="-1"></dialog>
-
-<dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
-  <div class="panel-pop" tabindex="-1" autofocus>
-    <div class="pop-head">
-      <p class="eyebrow">my newsletter</p>
-      <button type="button" class="close" data-close aria-label="Close">&times;</button>
-    </div>
-    <iframe src="https://luckbug.substack.com/embed"
-            title="Subscribe to luckbug on Substack"
-            loading="lazy"></iframe>
-  </div>
-</dialog>
+<main class="sky" aria-label="ecem.world">
+  <div id="stage" aria-hidden="true"></div>
+  <h1 class="title">Ecem's World</h1>
+  <svg class="rings" aria-hidden="true"><path/><path/><path/></svg>
+  <nav id="bodies" aria-label="Pages"></nav>
+</main>
 
 <script type="importmap">
-{ "imports": { "three": "./vendor/three/three.module.js" } }
+{ "imports": { "three": "/vendor/three/three.module.js" } }
 </script>
 
 <script type="module">
-  import { createScene } from './assets/scene.js?v=20261113a';
+  import { createScene } from '/assets/scene.js?v=20261117a';
+
+  /* ── What orbits where ─────────────────────────────────────────────
+     ring: 0 innermost … 2 outermost. */
+  const BODIES = [
+    { ring: 0, label: '[ PORTFOLIO ]', href: '/portfolio/', mark: true, big: true },
+    { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]', href: '/merch/', mark: true },
+    { ring: 1, label: '[ INSTAGRAM ]', href: 'https://www.instagram.com/ecem.zip/', away: true },
+    { ring: 2, label: '[ EMAIL ME ]', href: 'mailto:hello@ecem.world' },
+    { ring: 2, label: '[ CV ]', href: '/cv/' },
+    { ring: 2, label: '[ ME ]', href: '/portfolio/#/about' },
+  ];
+
+  /* Each orbit: its radius as a share of the screen's shorter side (a
+     phone held upright gets a little more), how many seconds one lap takes,
+     and which way it turns. Inner orbits are quicker; all of them slow. */
+  const RINGS = [
+    { size: 0.17, phone: 0.25, lap: 240, dir: 1 },
+    { size: 0.27, phone: 0.37, lap: 330, dir: -1 },
+    { size: 0.37, phone: 0.48, lap: 440, dir: 1 },
+  ];
 
   const root = document.documentElement;
+  const sky = document.querySelector('.sky');
   const stage = document.getElementById('stage');
-  const mark = stage.parentElement;
-  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const nav = document.getElementById('bodies');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // How far the large "e" is scaled down to sit in its corner.
-  const fit = () => root.style.setProperty('--k', String(mark.clientWidth / stage.clientWidth));
-  fit();
-  window.addEventListener('resize', fit);
+  // The points and their titles. Spread evenly round each orbit, with the
+  // orbits offset from one another so no two titles start stacked.
+  const els = BODIES.map((b, i) => {
+    const onRing = BODIES.filter((x) => x.ring === b.ring);
+    const k = onRing.indexOf(b);
+    b.phase = (k / onRing.length) * Math.PI * 2 + b.ring * 0.9 + 0.35;
+    const a = document.createElement('a');
+    a.className = 'body' + (b.mark ? ' mark' : '') + (b.big ? ' big' : '');
+    a.href = b.href;
+    if (b.away) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.innerHTML = `<span class="dot"></span><span class="label"></span>`;
+    a.querySelector('.label').textContent = b.label;
+    nav.appendChild(a);
+    return a;
+  });
 
-  const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
-
-  if (root.classList.contains('intro')) {
-    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Let the model load (but never wait on it for long), then let it be
-    // seen large and drifting for a moment, as on the coming-soon page.
-    await Promise.race([ready, wait(3500)]);
-    await wait(still ? 0 : 1300);
-
-    // Measure the large "e", switch to the finished layout, measure again,
-    // then animate between the two (so the move lands exactly in place).
-    const first = stage.getBoundingClientRect();
-    root.classList.remove('intro');
-    fit();
-    const last = stage.getBoundingClientRect();
-    if (!still) {
-      const k = mark.clientWidth / stage.clientWidth;
-      stage.animate([
-        { transform: `translate(${first.left - last.left}px, ${first.top - last.top}px) scale(1)` },
-        { transform: `scale(${k})` },
-      ], { duration: 1300, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
-    }
+  /* ── How the orbits move in depth ─────────────────────────────────
+     Each orbit is a circle on its own plane, always tipped well back so the
+     whole system reads in 3D: points come toward you (larger, brighter, over
+     the logo) and recede (smaller, dimmer, behind it). On top of that, each
+     plane sways a little, very slowly, on its own rhythm.
+       tip:   how far each orbit leans back (radians), and to which side
+       sway:  how much that lean drifts, forward/back and side to side
+       period: seconds for one sway */
+  const DEPTH = {
+    tip:    [1.05, -0.95, 1.12],
+    swing:  [0.28, -0.22, 0.12],
+    sway:   { ax: 0.14, ay: 0.12 },
+    period: [96, 124, 152],
+  };
+  // Sizes follow the screen; a phone held upright gets slightly larger orbits.
+  let W, H, cx, cy, radii, F, tipScale = 1;
+  function layout() {
+    W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
+    const portrait = H > W * 1.15;
+    tipScale = portrait ? 0.72 : 1;   // upright phones: a little less tipped, so orbits keep some height
+    const base = Math.min(W, H);
+    radii = RINGS.map((r) => base * (portrait ? r.phone : r.size));
+    F = radii[2] * 3.2;            // camera distance: how strong the perspective is
+    root.style.setProperty('--k', String(parseFloat(getComputedStyle(root).getPropertyValue('--logo')) / stage.offsetWidth));
   }
-</script>
+  addEventListener('resize', layout);
+  layout();
 
-<script src="assets/site.js?v=20261113a"></script>
+  // A point at angle `a` on orbit k, at that orbit's moment `t`: tipped onto
+  // its plane, then seen in perspective. Returns screen x, y, depth z
+  // (positive = toward you) and the perspective scale.
+  function project(k, a, t) {
+    const per = DEPTH.period[k];
+    const ph = k * 2.1;
+    const tx = DEPTH.tip[k] * tipScale + DEPTH.sway.ax * Math.sin((2 * Math.PI * t) / per + ph);
+    const ty = DEPTH.swing[k] + DEPTH.sway.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
+    const r = radii[k];
+    let x = r * Math.cos(a), y = r * Math.sin(a), z = 0;
+    // tip forward/back round the horizontal axis
+    const y1 = y * Math.cos(tx), z1 = y * Math.sin(tx);
+    // swing round the vertical axis
+    const x2 = x * Math.cos(ty) + z1 * Math.sin(ty), z2 = -x * Math.sin(ty) + z1 * Math.cos(ty);
+    const s = F / (F - z2);
+    return { x: cx + x2 * s, y: cy + y1 * s, z: z2, s };
+  }
+
+  // Motion: each orbit keeps its own clock; hovering a title holds its orbit
+  // (turning and tilting) still so it is easy to click.
+  let last = null;
+  const held = new Set();
+  els.forEach((el, i) => {
+    el.addEventListener('mouseenter', () => held.add(BODIES[i].ring));
+    el.addEventListener('mouseleave', () => held.delete(BODIES[i].ring));
+  });
+  const ringT = RINGS.map(() => 0);
+  let clock = 0;
+  function tick(now) {
+    if (last !== null) {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      if (!still) RINGS.forEach((_, k) => { if (!held.has(k)) ringT[k] += dt; });
+      clock += dt;
+    }
+    last = now;
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  function draw() {
+    // The orbits themselves, traced through their tilted planes.
+    paths.forEach((path, k) => {
+      let d = '';
+      for (let n = 0; n <= 96; n++) {
+        const q = project(k, (n / 96) * Math.PI * 2, ringT[k]);
+        d += (n ? 'L' : 'M') + q.x.toFixed(1) + ' ' + q.y.toFixed(1);
+      }
+      path.setAttribute('d', d + 'Z');
+    });
+    // The highlight's colour: a slow, subtle drift round the spectrum.
+    const hue = (140 + clock * 2.4) % 360;   // one round of colours in about 2½ minutes
+    BODIES.forEach((b, i) => {
+      const r = RINGS[b.ring];
+      const ang = b.phase + (r.dir * ringT[b.ring] * Math.PI * 2) / r.lap;
+      const q = project(b.ring, ang, ringT[b.ring]);
+      const el = els[i];
+      // Titles run outward from the middle, away from the logo. If that side
+      // of the screen is short of room they wrap onto more lines; only when
+      // there is really no room do they cross to the other side.
+      const label = el.lastElementChild;
+      const edge = 12, gap = 28;
+      const outward = q.x >= cx ? W - edge - q.x - gap : q.x - edge - gap;
+      const inward = q.x >= cx ? q.x - edge - gap : W - edge - q.x - gap;
+      const flip = (q.x < cx) !== (outward < 110);
+      label.style.maxWidth = `${Math.max(60, Math.floor(outward < 110 ? inward : outward))}px`;
+      el.classList.toggle('flip', flip);
+      // The dot's own centre sits exactly on the orbit; nearer points are
+      // drawn larger and brighter, further ones smaller, dimmer and, once
+      // they are behind the middle, underneath the logo.
+      const dot = el.firstElementChild;
+      const dx = dot.offsetLeft + dot.offsetWidth / 2;
+      const dy = dot.offsetTop + dot.offsetHeight / 2;
+      const s = Math.max(0.7, Math.min(1.35, q.s));
+      el.style.transform = `translate(${q.x}px, ${q.y}px) scale(${s.toFixed(3)}) translate(${-dx}px, ${-dy}px)`;
+      const depth = Math.max(-1, Math.min(1, q.z / radii[2]));
+      el.style.setProperty('--o', Math.min(1, 0.82 + depth * 0.4).toFixed(3));
+      el.style.zIndex = q.z < 0 ? 2 : 8;
+      if (b.mark) {
+        const h1 = (hue + i * 22) % 360, h2 = (h1 + 70) % 360;
+        el.style.setProperty('--hl', `linear-gradient(90deg, hsl(${h1} 85% 55% / 0.2), hsl(${h2} 85% 55% / 0.2))`);
+      }
+    });
+  }
+  const paths = [...document.querySelectorAll('svg.rings path')];
+  draw();
+  requestAnimationFrame(tick);
+
+  // The opening: the logo large on black, then it settles in the middle, the
+  // orbits draw in, and the points arrive one by one.
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
+  let seen = false;
+  try { seen = !!sessionStorage.getItem('ecem.world:intro'); sessionStorage.setItem('ecem.world:intro', '1'); } catch (e) { /* storage blocked */ }
+  if (!seen) {
+    await Promise.race([ready, wait(3500)]);
+    await wait(still ? 0 : 1100);
+  } else {
+    // Coming back: straight to the settled view, no opening.
+    root.classList.add('no-anim');
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-anim')));
+  }
+  root.classList.add('settled');
+  els.forEach((el, i) => setTimeout(() => el.classList.add('on'), still || seen ? 0 : 900 + i * 140));
+</script>
 </body>
 </html>

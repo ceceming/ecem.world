@@ -31,7 +31,10 @@
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  const src = (path) => (/^(https?:|blob:|data:)/.test(path) ? path : mediaBase + path);
+  // Media paths are kept relative to the site root (media/…); this page lives
+  // at /portfolio/, so they are resolved from the root, or from the preview's
+  // base while the studio shows unpublished work.
+  const src = (path) => (/^(https?:|blob:|data:|\/)/.test(path) ? path : (mediaBase || '/') + path);
 
   // 18.09.26 — short and even.
   const fmtDate = (iso) => {
@@ -506,7 +509,7 @@
   // "Try it ↗" and "Source ↗" for a tool, as a caption line or as buttons.
   function tryLinks(p, cls, tag = 'p') {
     const links = [
-      p.live ? `<a href="${esc(p.live)}" target="_blank" rel="noopener">Try it ↗</a>` : '',
+      p.live ? `<a href="${esc(/^(https?:|\/)/.test(p.live) ? p.live : '/' + p.live)}" target="_blank" rel="noopener">Try it ↗</a>` : '',
       p.repo ? `<a href="${esc(p.repo)}" target="_blank" rel="noopener">Source ↗</a>` : '',
     ].filter(Boolean);
     return links.length ? `<${tag} class="${cls}">${links.join('')}</${tag}>` : '';
@@ -581,7 +584,7 @@
           ${site.email ? `<dt>Contact</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd>` : ''}
           ${site.instagram ? `<dt>Instagram</dt><dd><a href="${esc(igUrl(site.instagram))}" target="_blank" rel="noopener">${esc(igName(site.instagram))} ↗</a></dd>` : ''}
           <dt>Newsletter</dt><dd><a href="${esc((site.substack && site.substack.url) || 'https://luckbug.substack.com')}" target="_blank" rel="noopener">luck bug, on Substack ↗</a></dd>
-          <dt>CV</dt><dd><a href="cv/">View or download</a></dd>
+          <dt>CV</dt><dd><a href="/cv/">View or download</a></dd>
         </dl>
       </div>
     </div>`;
@@ -597,7 +600,7 @@
     const about = document.querySelector('.about-link');
     if (about) about.removeAttribute('aria-current');
     if (sheet.open) sheet.close();
-    document.title = 'Ecem Öztürk — ecem.world';
+    document.title = 'Portfolio — Ecem Öztürk';
   }
 
   // Closing About (or a piece of writing) takes its address back out: if it
@@ -654,7 +657,7 @@
 
   /* ── Loading ──────────────────────────────────────────────────────── */
 
-  const load = (name) => fetch(`content/${name}.json`, { cache: 'no-cache' })
+  const load = (name) => fetch(`/content/${name}.json`, { cache: 'no-cache' })
     .then((r) => (r.ok ? r.json() : {}))
     .catch(() => ({}));
 
