@@ -46,6 +46,10 @@
   }
   #stage canvas { display: block; width: 100% !important; height: 100% !important; }
   .settled #stage { left: var(--lx, 50%); transform: translate(-50%, -50%) scale(var(--k, 0.2)); }
+  /* Once settled, the logo is drawn at its real size instead of being drawn
+     large and shrunk: far fewer pixels to render every frame, so the page
+     stays smooth on phones. (Swapped in with no visible change.) */
+  .small #stage { width: var(--logo); height: var(--logo); transform: translate(-50%, -50%) scale(1); }
 
   /* The line under the logo: large beneath it during the opening, then
      small beneath it once it has settled in the middle. */
@@ -132,7 +136,7 @@
 </script>
 
 <script type="module">
-  import { createScene } from '/assets/scene.js?v=20261117a';
+  import { createScene } from '/assets/scene.js?v=20261118a';
 
   /* ── What orbits where ─────────────────────────────────────────────
      ring: 0 innermost … 2 outermost. `at`: where the link stays on a phone,
@@ -328,6 +332,19 @@
   // Into the portfolio: the logo travels to where the portfolio keeps it
   // (top left: 92px on wide screens, 79px on phones), the rest fades away,
   // then the portfolio opens around it.
+  // Draw the settled logo at its real size (see .small). Only once it has
+  // stopped moving: the swap is invisible at rest, not mid-glide.
+  function drawSmall() {
+    root.classList.add('no-anim', 'small');
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-anim')));
+  }
+  function afterGlide(fn) {
+    let done = false;
+    const finish = () => { if (done) return; done = true; stage.removeEventListener('transitionend', onEnd); fn(); };
+    const onEnd = (e) => { if (e.target === stage && e.propertyName === 'transform') finish(); };
+    stage.addEventListener('transitionend', onEnd);
+    setTimeout(finish, 4000);   // in case no transition ran at all
+  }
   function toCorner() {
     const wide = innerWidth > 860;
     const size = wide ? 92 : 79, left = wide ? 4 : 0, top = wide ? 8 : 4;
@@ -361,7 +378,7 @@
   // orbits draw in, and the points arrive one by one.
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
-  let seen = false;
+  let seen = false, returning = false;
   try { seen = !!sessionStorage.getItem('ecem.world:intro'); sessionStorage.setItem('ecem.world:intro', '1'); } catch (e) { /* storage blocked */ }
   if (!seen) {
     await Promise.race([ready, wait(3500)]);
@@ -370,7 +387,6 @@
     // Coming back: no opening. From the portfolio's logo, the logo starts in
     // the portfolio's corner and glides home; otherwise straight to the
     // settled view.
-    let returning = false;
     try {
       // Only a fresh note counts: straight back from the portfolio, not a
       // visit to the CV or elsewhere first.
@@ -385,6 +401,9 @@
     }));
   }
   root.classList.add('settled');
+  // When the logo has finished moving, swap it to drawing at its real size.
+  if (still || (seen && !returning)) drawSmall();
+  else afterGlide(drawSmall);
   els.forEach((el, i) => setTimeout(() => el.classList.add('on'), still || seen ? 0 : 900 + i * 140));
 </script>
 </body>
