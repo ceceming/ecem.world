@@ -53,7 +53,7 @@
   .body {
     position: absolute; left: 0; top: 0;
     display: flex; align-items: center; gap: 10px;
-    color: var(--fg); text-decoration: none; white-space: nowrap;
+    color: var(--fg); text-decoration: none;
     letter-spacing: 0.08em; text-transform: uppercase;
     opacity: 0; transition: opacity 700ms ease;
     will-change: transform;
@@ -63,30 +63,27 @@
   .settled .body.on { opacity: var(--o, 1); }
   /* The two main destinations: highlighted, the text staying white. */
   /* Its colour drifts slowly round the spectrum, deep enough for white text. */
-  .body.mark .label { background: var(--hl, #0f8a3c); padding: 2px 6px; }
+  .body.mark .label { background: var(--hl, rgba(15, 138, 60, 0.2)); padding: 2px 6px; }
+  /* [ PORTFOLIO ]: the main door, set larger. */
+  .body.big .label { font-size: 1.45em; }
   .body .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; transition: transform 200ms ease; }
   .body .label { transition: opacity 200ms ease; }
   /* Titles on the left half read toward the middle from the left. */
   .body.flip { flex-direction: row-reverse; }
+  .body.flip .label { text-align: right; }
+  .body .label { width: max-content; }
   @media (hover: hover) {
     .body:hover { opacity: 1 !important; }
     .body:hover .dot { transform: scale(1.5); }
   }
 
-  /* Preview only: switch between ways the orbits can move. */
-  .feel { position: fixed; top: max(14px, env(safe-area-inset-top)); left: 16px; z-index: 20; display: flex; gap: 12px; align-items: baseline;
-          font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-  .feel button { font: inherit; letter-spacing: inherit; color: rgba(255,255,255,0.55); background: none; border: 0; padding: 6px 0; cursor: pointer; }
-  .feel button[aria-pressed="true"] { color: #fff; border-bottom: 1px solid #fff; }
   .hint { position: fixed; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); text-align: center; color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0; transition: opacity 900ms ease 1.2s; }
   .settled .hint { opacity: 1; }
 
   @media (max-width: 600px) {
     :root { --logo: 84px; }
     body { font-size: 11px; }
-    .body { gap: 7px; letter-spacing: 0.06em; white-space: normal; }
-    .body .label { max-width: calc(50vw - 30px); }
-    .body.flip .label { text-align: right; }
+    .body { gap: 7px; letter-spacing: 0.06em; }
     .body .dot { width: 7px; height: 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -101,11 +98,6 @@
   <svg class="rings" aria-hidden="true"><path/><path/><path/></svg>
   <nav id="bodies" aria-label="Pages"></nav>
   <p class="hint">Preview — links not working yet</p>
-  <div class="feel" role="group" aria-label="How the orbits move">Feel
-    <button type="button" data-feel="flat">Flat</button>
-    <button type="button" data-feel="drift">Drift</button>
-    <button type="button" data-feel="gyro">Gyro</button>
-  </div>
 </main>
 
 <script type="importmap">
@@ -118,7 +110,7 @@
   /* ── What orbits where ─────────────────────────────────────────────
      ring: 0 innermost … 2 outermost. Links are placeholders for now. */
   const BODIES = [
-    { ring: 0, label: '[ PORTFOLIO ]', mark: true },
+    { ring: 0, label: '[ PORTFOLIO ]', mark: true, big: true },
     { ring: 0, label: '[ LET ME DESIGN (& SUPPLY) YOUR MERCH! ]', mark: true },
     { ring: 1, label: '[ INSTAGRAM ]' },
     { ring: 2, label: '[ EMAIL ME ]' },
@@ -130,9 +122,9 @@
      phone held upright gets a little more), how many seconds one lap takes,
      and which way it turns. Inner orbits are quicker; all of them slow. */
   const RINGS = [
-    { size: 0.17, phone: 0.21, lap: 150, dir: 1 },
-    { size: 0.27, phone: 0.32, lap: 220, dir: -1 },
-    { size: 0.37, phone: 0.43, lap: 300, dir: 1 },
+    { size: 0.17, phone: 0.25, lap: 240, dir: 1 },
+    { size: 0.27, phone: 0.37, lap: 330, dir: -1 },
+    { size: 0.37, phone: 0.48, lap: 440, dir: 1 },
   ];
 
   const root = document.documentElement;
@@ -148,7 +140,7 @@
     const k = onRing.indexOf(b);
     b.phase = (k / onRing.length) * Math.PI * 2 + b.ring * 0.9 + 0.35;
     const a = document.createElement('a');
-    a.className = 'body' + (b.mark ? ' mark' : '');
+    a.className = 'body' + (b.mark ? ' mark' : '') + (b.big ? ' big' : '');
     a.href = '#';
     a.addEventListener('click', (e) => e.preventDefault());   // preview only
     a.innerHTML = `<span class="dot"></span><span class="label"></span>`;
@@ -157,38 +149,26 @@
     return a;
   });
 
-  /* ── How the orbits can feel ──────────────────────────────────────
-     Each orbit is a circle on its own plane. That plane slowly tips forward
-     and back (x) and swings left and right (y), each orbit on its own slow
-     rhythm, so points travel toward you, grow and brighten, then recede,
-     dim and pass behind the logo.
-       flat:  the plain circles, no depth
-       drift: a gentle sway, as if floating
-       gyro:  orbits tilting freely, like a gyroscope */
-  const FEELS = {
-    flat:  { ax: 0,    ay: 0,    base: 0,    periods: [1, 1, 1] },
-    drift: { ax: 0.32, ay: 0.24, base: 0.18, periods: [46, 61, 77] },
-    gyro:  { ax: 1.05, ay: 0.85, base: 0.35, periods: [28, 36, 45] },
+  /* ── How the orbits move in depth ─────────────────────────────────
+     Each orbit is a circle on its own plane, always tipped well back so the
+     whole system reads in 3D: points come toward you (larger, brighter, over
+     the logo) and recede (smaller, dimmer, behind it). On top of that, each
+     plane sways a little, very slowly, on its own rhythm.
+       tip:   how far each orbit leans back (radians), and to which side
+       sway:  how much that lean drifts, forward/back and side to side
+       period: seconds for one sway */
+  const DEPTH = {
+    tip:    [1.05, -0.95, 1.12],
+    swing:  [0.28, -0.22, 0.12],
+    sway:   { ax: 0.14, ay: 0.12 },
+    period: [96, 124, 152],
   };
-  const feelButtons = [...document.querySelectorAll('.feel button')];
-  let feel = new URLSearchParams(location.search).get('feel');
-  try { feel = feel || localStorage.getItem('ecem.world:orbit-feel'); } catch (e) { /* storage blocked */ }
-  if (!FEELS[feel]) feel = 'drift';
-  function setFeel(f) {
-    feel = f;
-    feelButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.feel === f)));
-    try { localStorage.setItem('ecem.world:orbit-feel', f); } catch (e) { /* storage blocked */ }
-  }
-  feelButtons.forEach((b) => b.addEventListener('click', () => setFeel(b.dataset.feel)));
-  setFeel(feel);
-  // Changing feel eases over a couple of seconds instead of snapping.
-  const amp = { ax: FEELS[feel].ax, ay: FEELS[feel].ay, base: FEELS[feel].base };
-
   // Sizes follow the screen; a phone held upright gets slightly larger orbits.
-  let W, H, cx, cy, radii, F;
+  let W, H, cx, cy, radii, F, tipScale = 1;
   function layout() {
     W = sky.clientWidth; H = sky.clientHeight; cx = W / 2; cy = H / 2;
     const portrait = H > W * 1.15;
+    tipScale = portrait ? 0.72 : 1;   // upright phones: a little less tipped, so orbits keep some height
     const base = Math.min(W, H);
     radii = RINGS.map((r) => base * (portrait ? r.phone : r.size));
     F = radii[2] * 3.2;            // camera distance: how strong the perspective is
@@ -201,10 +181,10 @@
   // its plane, then seen in perspective. Returns screen x, y, depth z
   // (positive = toward you) and the perspective scale.
   function project(k, a, t) {
-    const per = FEELS[feel].periods[k];
+    const per = DEPTH.period[k];
     const ph = k * 2.1;
-    const tx = amp.base * (k % 2 ? -1 : 1) + amp.ax * Math.sin((2 * Math.PI * t) / per + ph);
-    const ty = amp.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
+    const tx = DEPTH.tip[k] * tipScale + DEPTH.sway.ax * Math.sin((2 * Math.PI * t) / per + ph);
+    const ty = DEPTH.swing[k] + DEPTH.sway.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
     const r = radii[k];
     let x = r * Math.cos(a), y = r * Math.sin(a), z = 0;
     // tip forward/back round the horizontal axis
@@ -230,10 +210,6 @@
       const dt = Math.min((now - last) / 1000, 0.05);
       if (!still) RINGS.forEach((_, k) => { if (!held.has(k)) ringT[k] += dt; });
       clock += dt;
-      // ease the tilt amount toward the chosen feel
-      const goal = FEELS[feel];
-      const e = Math.min(1, dt * 1.2);
-      amp.ax += (goal.ax - amp.ax) * e; amp.ay += (goal.ay - amp.ay) * e; amp.base += (goal.base - amp.base) * e;
     }
     last = now;
     draw();
@@ -257,14 +233,15 @@
       const ang = b.phase + (r.dir * ringT[b.ring] * Math.PI * 2) / r.lap;
       const q = project(b.ring, ang, ringT[b.ring]);
       const el = els[i];
-      // Titles run outward from the middle, unless that side has no room
-      // left on the screen; then they run the other way.
-      const room = 12;
-      let flip = q.x < cx;
-      el.classList.toggle('flip', flip);
-      let w = el.offsetWidth;
-      if (!flip && q.x + w - 12 > W - room && q.x - w + 12 >= room) flip = true;
-      else if (flip && q.x - w + 12 < room && q.x + w - 12 <= W - room) flip = false;
+      // Titles run outward from the middle, away from the logo. If that side
+      // of the screen is short of room they wrap onto more lines; only when
+      // there is really no room do they cross to the other side.
+      const label = el.lastElementChild;
+      const edge = 12, gap = 28;
+      const outward = q.x >= cx ? W - edge - q.x - gap : q.x - edge - gap;
+      const inward = q.x >= cx ? q.x - edge - gap : W - edge - q.x - gap;
+      const flip = (q.x < cx) !== (outward < 110);
+      label.style.maxWidth = `${Math.max(60, Math.floor(outward < 110 ? inward : outward))}px`;
       el.classList.toggle('flip', flip);
       // The dot's own centre sits exactly on the orbit; nearer points are
       // drawn larger and brighter, further ones smaller, dimmer and, once
@@ -277,7 +254,10 @@
       const depth = Math.max(-1, Math.min(1, q.z / radii[2]));
       el.style.setProperty('--o', Math.min(1, 0.82 + depth * 0.4).toFixed(3));
       el.style.zIndex = q.z < 0 ? 2 : 8;
-      if (b.mark) el.style.setProperty('--hl', `hsl(${(hue + i * 22) % 360} 52% 34%)`);
+      if (b.mark) {
+        const h1 = (hue + i * 22) % 360, h2 = (h1 + 70) % 360;
+        el.style.setProperty('--hl', `linear-gradient(90deg, hsl(${h1} 85% 55% / 0.2), hsl(${h2} 85% 55% / 0.2))`);
+      }
     });
   }
   const paths = [...document.querySelectorAll('svg.rings path')];
