@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
+<title>Portfolio — Ecem Öztürk</title>
+<meta name="description" content="Ecem Öztürk — art director and designer, Toronto.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
+<link rel="icon" href="/assets/icon-192.png?v=2" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ecem Öztürk">
+<meta property="og:description" content="Art director and designer, Toronto.">
+<meta property="og:url" content="https://ecem.world/portfolio/">
+
+<link rel="stylesheet" href="/assets/site.css?v=20261113a">
+
+<!-- The opening (see "The opening" in site.css): once per browser tab, and
+     not when arriving on a project's link or in the studio's preview. If the
+     script below never runs, the page simply shows as normal. -->
+<script>
+  (function () {
+    if (location.hash.length > 2 || /[?&]preview/.test(location.search)) return;
+    try {
+      if (sessionStorage.getItem('ecem.world:intro')) return;
+      sessionStorage.setItem('ecem.world:intro', '1');
+    } catch (err) { /* storage blocked: play it anyway */ }
+    var root = document.documentElement;
+    root.classList.add('intro');
+    // Never leave the page hidden, whatever fails.
+    setTimeout(function () { root.classList.remove('intro'); }, 7000);
+  })();
+</script>
+</head>
+<body>
+
+<!-- Everything inside data-slot is filled from content/*.json by
+     assets/site.js. The text here is only what shows if that fails. -->
+<aside class="panel">
+  <a class="mark" href="/" aria-label="ecem.world — back to the start">
+    <div id="stage" aria-hidden="true"></div>
+  </a>
+
+  <h1 class="name" data-slot="name">Ecem Ozturk</h1>
+  <div class="bio" data-slot="bio"></div>
+  <p class="currently" data-slot="currently" hidden></p>
+
+  <nav class="filters" aria-label="Show">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="project" aria-pressed="false">Projects</button>
+    <button type="button" data-filter="image" aria-pressed="false">Works</button>
+    <button type="button" data-filter="tool" aria-pressed="false">Tools</button>
+    <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
+    <a class="about-link" href="#/about">About</a>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <!-- The coming-soon page's footer menu, kept as it was. -->
+  <footer class="menu">
+    <a href="mailto:hello@ecem.world" data-slot="email">hello@ecem.world</a><span class="sep" aria-hidden="true">·</span><a
+      href="https://luckbug.substack.com" id="newsletter-link">newsletter</a><span class="sep" aria-hidden="true">·</span><a
+      href="/cv/">cv</a><span class="sep" aria-hidden="true">·</span><a
+      href="https://www.instagram.com/ecem.zip/" target="_blank" rel="noopener" data-slot="instagram">instagram</a>
+  </footer>
+</aside>
+
+<main class="feed" data-slot="feed" aria-live="polite"></main>
+
+<!-- Writing and About open over the page. Projects and tools do not: they
+     unfold in place in the feed (see "A project, opened in place"). -->
+<dialog class="sheet" id="sheet" aria-label="Project">
+  <div class="sheet-bar">
+    <p class="sheet-title" data-slot="sheet-title"></p>
+    <button type="button" class="close" data-close aria-label="Close">close <span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="sheet-body" data-slot="sheet-body" tabindex="-1" autofocus></div>
+</dialog>
+
+<!-- An image, full size over a dimmed page. A click or tap anywhere but
+     the image itself (or Escape) puts the page back. -->
+<dialog id="lightbox" aria-label="Image, full size" tabindex="-1"></dialog>
+
+<dialog id="newsletter" aria-label="Subscribe to the luckbug newsletter">
+  <div class="panel-pop" tabindex="-1" autofocus>
+    <div class="pop-head">
+      <p class="eyebrow">my newsletter</p>
+      <button type="button" class="close" data-close aria-label="Close">&times;</button>
+    </div>
+    <iframe src="https://luckbug.substack.com/embed"
+            title="Subscribe to luckbug on Substack"
+            loading="lazy"></iframe>
+  </div>
+</dialog>
+
+<script type="importmap">
+{ "imports": { "three": "/vendor/three/three.module.js" } }
+</script>
+
+<script type="module">
+  import { createScene } from '/assets/scene.js?v=20261117a';
+
+  const root = document.documentElement;
+  const stage = document.getElementById('stage');
+  const mark = stage.parentElement;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // How far the large "e" is scaled down to sit in its corner.
+  const fit = () => root.style.setProperty('--k', String(mark.clientWidth / stage.clientWidth));
+  fit();
+  window.addEventListener('resize', fit);
+
+  const ready = createScene(stage).catch((err) => console.error('3D scene failed to start:', err));
+
+  if (root.classList.contains('intro')) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Let the model load (but never wait on it for long), then let it be
+    // seen large and drifting for a moment, as on the coming-soon page.
+    await Promise.race([ready, wait(3500)]);
+    await wait(still ? 0 : 1300);
+
+    // Measure the large "e", switch to the finished layout, measure again,
+    // then animate between the two (so the move lands exactly in place).
+    const first = stage.getBoundingClientRect();
+    root.classList.remove('intro');
+    fit();
+    const last = stage.getBoundingClientRect();
+    if (!still) {
+      const k = mark.clientWidth / stage.clientWidth;
+      stage.animate([
+        { transform: `translate(${first.left - last.left}px, ${first.top - last.top}px) scale(1)` },
+        { transform: `scale(${k})` },
+      ], { duration: 1300, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
+    }
+  }
+</script>
+
+<script src="/assets/site.js?v=20261117a"></script>
+</body>
+</html>

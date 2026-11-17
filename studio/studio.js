@@ -1082,7 +1082,7 @@
 
   $('#preview').addEventListener('click', () => {
     if (location.protocol === 'file:') return alert('Preview works once the studio is opened from the website (ecem.world/studio/).');
-    previewWin = window.open('../?preview', 'ecem-preview');
+    previewWin = window.open('../portfolio/?preview', 'ecem-preview');
   });
 
   $('#publish').addEventListener('click', publish);

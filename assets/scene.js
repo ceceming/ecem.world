@@ -29,8 +29,8 @@ const MODEL_FILES = ['model.glb', 'model.gltf', 'model.obj'];
  * out of an export tool often arrives capitalised. Both spellings are tried
  * so "Model.glb" works exactly as well as "model.glb". */
 export const MODEL_CANDIDATES = MODEL_FILES.flatMap((name) => [
-  `model/${name}`,
-  `model/${name[0].toUpperCase()}${name.slice(1)}`,
+  `/model/${name}`,
+  `/model/${name[0].toUpperCase()}${name.slice(1)}`,
 ]);
 
 /* Tweak these if your model comes in sideways or upside down. Values are
