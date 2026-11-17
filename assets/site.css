@@ -94,7 +94,10 @@ img, video { display: block; max-width: 100%; }
 html.intro body { overflow: hidden; }
 html.intro #stage { position: fixed; left: calc(50vw - var(--big) / 2); top: calc(50vh - var(--big) / 2); transform: none; z-index: 5; }
 html.intro .panel > :not(.mark),
-html.intro .feed { opacity: 0; }
+html.intro .feed,
+html.arrive .panel > :not(.mark),
+html.arrive .feed { opacity: 0; }
+html.arrive .panel { border-right-color: transparent; }
 html.intro .panel { border-right-color: transparent; }
 .panel { transition: border-color 900ms ease 450ms; }
 .panel > :not(.mark), .feed { transition: opacity 900ms ease 450ms; }
