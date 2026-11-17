@@ -18,12 +18,24 @@
 <meta property="og:description" content="Art director and designer, Toronto.">
 <meta property="og:url" content="https://ecem.world/portfolio/">
 
-<link rel="stylesheet" href="/assets/site.css?v=20261113a">
+<link rel="stylesheet" href="/assets/site.css?v=20261117b">
 
 <!-- The opening (see "The opening" in site.css): once per browser tab, and
      not when arriving on a project's link or in the studio's preview. If the
      script below never runs, the page simply shows as normal. -->
 <script>
+  // Arriving from the home page's [ PORTFOLIO ]: the logo is already in its
+  // corner; the rest of the page fades in around it.
+  (function () {
+    try {
+      if (!sessionStorage.getItem('ecem.world:arrive')) return;
+      sessionStorage.removeItem('ecem.world:arrive');
+    } catch (err) { return; }
+    var root = document.documentElement;
+    root.classList.add('arrive');
+    // Don't wait for the page's scripts: start fading in almost at once.
+    setTimeout(function () { root.classList.remove('arrive'); }, 200);
+  })();
   (function () {
     if (location.hash.length > 2 || /[?&]preview/.test(location.search)) return;
     try {

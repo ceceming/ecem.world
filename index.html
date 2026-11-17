@@ -102,6 +102,10 @@
     .body { gap: 7px; letter-spacing: 0.06em; }
     .body .dot { width: 7px; height: 7px; }
   }
+  /* Leaving for the portfolio: everything else fades and the logo glides
+     to its place in the portfolio's corner (see the [ PORTFOLIO ] link). */
+  .leaving #stage { transition: left 900ms cubic-bezier(0.65, 0, 0.35, 1), top 900ms cubic-bezier(0.65, 0, 0.35, 1), transform 900ms cubic-bezier(0.65, 0, 0.35, 1); }
+  .leaving .body, .leaving .title, .leaving svg.rings path { opacity: 0 !important; transition: opacity 380ms ease !important; }
   .no-anim #stage, .no-anim .title, .no-anim svg.rings path, .no-anim .body { transition: none !important; }
   @media (prefers-reduced-motion: reduce) {
     #stage, svg.rings path, .body { transition: none !important; }
@@ -181,6 +185,8 @@
     sway:   { ax: 0.14, ay: 0.12 },
     period: [96, 124, 152],
   };
+  // How far the phone's orbits tip while breathing (radians).
+  const PHONE_BREATH = { ax: 0.22, ay: 0.3, period: [24, 31, 38] };
   // Sizes follow the screen; a phone held upright gets slightly larger orbits.
   let W, H, cx, cy, radii, F, tipScale = 1;
   /* On a phone held upright the orbits are seen side-on: their centre, and
@@ -196,7 +202,7 @@
       const logoPx = parseFloat(getComputedStyle(root).getPropertyValue('--logo'));
       cx = Math.max(logoPx / 2 + 22, W * 0.17);
       radii = [0.24, 0.35, 0.44].map((f) => H * f);
-      F = 1e9;
+      F = radii[2] * 3.2;
       root.style.setProperty('--lx', `${cx}px`);
       root.style.setProperty('--k', String(logoPx / stage.offsetWidth));
       return;
@@ -215,11 +221,17 @@
   // its plane, then seen in perspective. Returns screen x, y, depth z
   // (positive = toward you) and the perspective scale.
   function project(k, a, t) {
-    if (phone) return { x: cx + radii[k] * Math.cos(a), y: cy + radii[k] * Math.sin(a), z: 0, s: 1 };
-    const per = DEPTH.period[k];
+    const per = phone ? PHONE_BREATH.period[k] : DEPTH.period[k];
     const ph = k * 2.1;
-    const tx = DEPTH.tip[k] * tipScale + DEPTH.sway.ax * Math.sin((2 * Math.PI * t) / per + ph);
-    const ty = DEPTH.swing[k] + DEPTH.sway.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
+    // Phones: the orbits face you and only breathe — each slowly tips a
+    // little toward and away from you, on its own rhythm, so the arcs swell
+    // and settle in depth while the links keep their places on them.
+    const tx = phone
+      ? PHONE_BREATH.ax * Math.sin((2 * Math.PI * t) / per + ph)
+      : DEPTH.tip[k] * tipScale + DEPTH.sway.ax * Math.sin((2 * Math.PI * t) / per + ph);
+    const ty = phone
+      ? PHONE_BREATH.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7)
+      : DEPTH.swing[k] + DEPTH.sway.ay * Math.sin((2 * Math.PI * t) / (per * 1.31) + ph * 1.7);
     const r = radii[k];
     let x = r * Math.cos(a), y = r * Math.sin(a), z = 0;
     // tip forward/back round the horizontal axis
@@ -279,7 +291,10 @@
       // when wrapped (short titles need only their own width).
       label.style.maxWidth = 'none';
       const need = Math.min(label.offsetWidth, 110);
-      const cross = outward < need;
+      // Some resistance, so a title near the edge doesn't flick from side to
+      // side as its orbit breathes: once crossed, it needs clear room to come back.
+      const cross = el.dataset.cross === '1' ? outward < need + 36 : outward < need - 4;
+      el.dataset.cross = cross ? '1' : '0';
       const flip = (q.x < cx) !== cross;
       label.style.maxWidth = `${Math.max(60, Math.floor(cross ? inward : outward))}px`;
       el.classList.toggle('flip', flip);
@@ -292,7 +307,7 @@
       const s = Math.max(0.7, Math.min(1.35, q.s));
       el.style.transform = `translate(${q.x}px, ${q.y}px) scale(${s.toFixed(3)}) translate(${-dx}px, ${-dy}px)`;
       const depth = Math.max(-1, Math.min(1, q.z / radii[2]));
-      el.style.setProperty('--o', phone ? '1' : Math.min(1, 0.82 + depth * 0.4).toFixed(3));
+      el.style.setProperty('--o', Math.min(1, (phone ? 0.92 : 0.82) + depth * 0.4).toFixed(3));
       el.style.zIndex = q.z < 0 ? 2 : 8;
       if (b.mark) {
         const h1 = (hue + i * 22) % 360, h2 = (h1 + 70) % 360;
@@ -303,6 +318,29 @@
   const paths = [...document.querySelectorAll('svg.rings path')];
   draw();
   requestAnimationFrame(tick);
+
+  // Into the portfolio: the logo travels to where the portfolio keeps it
+  // (top left: 92px on wide screens, 79px on phones), the rest fades away,
+  // then the portfolio opens around it.
+  const portfolioLink = els[BODIES.findIndex((b) => b.href === '/portfolio/')];
+  portfolioLink.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || still) return;
+    e.preventDefault();
+    const wide = innerWidth > 860;
+    const size = wide ? 92 : 79, left = wide ? 4 : 0, top = wide ? 8 : 4;
+    root.classList.add('leaving');
+    stage.style.left = `${left + size / 2}px`;
+    stage.style.top = `${top + size / 2}px`;
+    stage.style.transform = `translate(-50%, -50%) scale(${size / stage.offsetWidth})`;
+    try { sessionStorage.setItem('ecem.world:arrive', '1'); } catch (err) { /* storage blocked */ }
+    setTimeout(() => { location.href = portfolioLink.href; }, 920);
+  });
+  // Coming back with the browser's Back button: undo the leaving.
+  addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    root.classList.remove('leaving');
+    stage.style.left = stage.style.top = stage.style.transform = '';
+  });
 
   // The opening: the logo large on black, then it settles in the middle, the
   // orbits draw in, and the points arrive one by one.
