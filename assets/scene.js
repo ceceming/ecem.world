@@ -249,7 +249,9 @@ export async function createScene(container) {
     powerPreference: 'high-performance',
   });
   renderer.setClearAlpha(0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // Sharp phone screens are 3x; at the logo's size 1.5x is indistinguishable
+  // and draws far fewer pixels each frame.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   container.appendChild(renderer.domElement);

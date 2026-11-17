@@ -85,6 +85,10 @@ img, video { display: block; max-width: 100%; }
   transform: scale(var(--k, 0.41));
 }
 #stage canvas { display: block; width: 100% !important; height: 100% !important; }
+/* After the opening (or straight away when there is none) the "e" is drawn
+   at the corner's own size instead: the same look, a fraction of the pixels
+   to render every frame, so scrolling stays smooth on phones. */
+html.small #stage { width: 100%; transform: none; }
 
 /* ── The opening ─────────────────────────────────────────────────────────
    On the first visit of a session the page starts as the coming-soon page

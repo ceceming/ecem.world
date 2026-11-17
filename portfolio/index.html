@@ -18,7 +18,7 @@
 <meta property="og:description" content="Art director and designer, Toronto.">
 <meta property="og:url" content="https://ecem.world/portfolio/">
 
-<link rel="stylesheet" href="/assets/site.css?v=20261117c">
+<link rel="stylesheet" href="/assets/site.css?v=20261118a">
 
 <!-- The opening (see "The opening" in site.css): once per browser tab, and
      not when arriving on a project's link or in the studio's preview. If the
@@ -115,7 +115,7 @@
 </script>
 
 <script type="module">
-  import { createScene } from '/assets/scene.js?v=20261117a';
+  import { createScene } from '/assets/scene.js?v=20261118a';
 
   const root = document.documentElement;
   const stage = document.getElementById('stage');
@@ -150,6 +150,10 @@
       ], { duration: 1300, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
     }
   }
+  // Once the "e" is in its corner, draw it at that size rather than large
+  // and shrunk (see html.small in site.css): far less to render per frame.
+  await Promise.all(stage.getAnimations().map((a) => a.finished.catch(() => {})));
+  root.classList.add('small');
 </script>
 
 <script>
