@@ -15,6 +15,10 @@
   // Links shared before the portfolio moved (ecem.world/#/a-project) still
   // land on that project.
   if (/^#\//.test(location.hash)) location.replace('/portfolio/' + location.hash);
+  // The studio's Preview shows the portfolio; a studio tab opened before the
+  // portfolio moved still asks for /?preview, so pass that along too (the
+  // preview window keeps its link back to the studio).
+  if (/[?&]preview/.test(location.search)) location.replace('/portfolio/' + location.search + location.hash);
 </script>
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
