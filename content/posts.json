@@ -299,12 +299,19 @@
       "media": [
         {
           "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-macbook-mockup-web-k9dr.mp4",
+          "src": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1.mp4",
           "w": 1920,
           "h": 1080,
           "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-macbook-mockup-web-k9dr-poster.webp",
-          "feed": true
+          "poster": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt.mp4",
+          "w": 1920,
+          "h": 1080,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt-poster.webp"
         },
         {
           "type": "video",
