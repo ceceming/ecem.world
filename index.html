@@ -55,17 +55,20 @@
      stays smooth on phones. (Swapped in with no visible change.) */
   .small #stage { width: var(--logo); height: var(--logo); transform: translate(-50%, -50%) scale(1); }
 
-  /* The line under the logo: large beneath it during the opening, then
-     small beneath it once it has settled in the middle. */
+  /* The line under the logo. It is always laid out at its settled size and
+     place; during the opening it is carried, larger, to just under the big
+     logo (--topen, worked out in script), and glides home as one piece, so
+     the letters never re-flow or re-wrap mid-motion. */
   .title {
-    position: absolute; left: 50%; top: calc(50% + var(--big) / 2 + 14px);
-    transform: translateX(-50%); margin: 0; z-index: 6;
-    font-size: 15px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    position: absolute; left: var(--tl, 50%); top: calc(50% + var(--logo) / 2 + 6px);
+    margin: 0; z-index: 6;
+    font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
     width: max-content; max-width: 86vw; text-align: center; line-height: 1.5;
     padding-left: 0.2em;    /* balance the tracking after the last letter */
-    transition: top 1400ms cubic-bezier(0.65, 0, 0.35, 1), left 1400ms cubic-bezier(0.65, 0, 0.35, 1), transform 1400ms cubic-bezier(0.65, 0, 0.35, 1), font-size 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
+    transform-origin: 0 0; transform: var(--topen, none);
+    transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
   }
-  .settled .title { left: var(--lx, 50%); top: calc(50% + var(--logo) / 2 + 6px); font-size: 10px; }
+  .settled .title { transform: none; }
 
   /* The orbits: circles on tilting planes, traced in script, fading in one by one. */
   svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
@@ -108,7 +111,7 @@
   /* Phones held upright: once settled on the left, the line reads from the
      left edge under the logo, on two lines, rather than running off screen. */
   @media (max-aspect-ratio: 1/1.15) {
-    .settled .title { left: 16px; transform: none; text-align: left; max-width: 136px; padding-left: 0; }
+    .title { text-align: left; max-width: 136px; padding-left: 0; }
   }
   @media (max-width: 600px) {
     :root { --logo: 84px; }
@@ -122,7 +125,7 @@
   .leaving .body, .leaving .title, .leaving svg.rings path { opacity: 0 !important; transition: opacity 380ms ease !important; }
   .no-anim #stage, .no-anim .title, .no-anim svg.rings path, .no-anim .body { transition: none !important; }
   @media (prefers-reduced-motion: reduce) {
-    #stage, svg.rings path, .body { transition: none !important; }
+    #stage, .title, svg.rings path, .body { transition: none !important; }
   }
 </style>
 </head>
@@ -228,8 +231,23 @@
     F = radii[2] * 3.2;            // camera distance: how strong the perspective is
     root.style.setProperty('--k', String(parseFloat(getComputedStyle(root).getPropertyValue('--logo')) / stage.offsetWidth));
   }
-  addEventListener('resize', layout);
+  // The line under the logo: its settled place, and the larger place under
+  // the big logo it starts from during the opening (see .title).
+  const title = document.querySelector('.title');
+  function placeTitle() {
+    const w = title.offsetWidth;
+    const left = phone ? 16 : W / 2 - w / 2;
+    title.style.setProperty('--tl', `${left}px`);
+    const s = 1.5, big = stage.offsetWidth;
+    const dx = W / 2 - (w * s) / 2 - left;
+    const dy = H / 2 + big / 2 + 14 - title.offsetTop;
+    title.style.setProperty('--topen', `translate(${dx}px, ${dy}px) scale(${s})`);
+  }
+  addEventListener('resize', () => { layout(); placeTitle(); });
   layout();
+  placeTitle();
+  // The font arriving changes the line's width: place it again.
+  if (document.fonts) document.fonts.ready.then(placeTitle);
 
   // A point at angle `a` on orbit k, at that orbit's moment `t`: tipped onto
   // its plane, then seen in perspective. Returns screen x, y, depth z
