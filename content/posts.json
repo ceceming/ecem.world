@@ -1,82 +1,6 @@
 {
   "posts": [
     {
-      "id": "mvoneg",
-      "type": "project",
-      "status": "published",
-      "slug": "rosalissa-rose-water-cosmetics",
-      "title": "Rosalissa Rose Water Cosmetics",
-      "year": "2021-2026",
-      "client": "",
-      "role": "",
-      "tags": [
-        "Content",
-        "Brand",
-        "Packaging"
-      ],
-      "summary": "Social media content to build the brand world of Rosalissa.",
-      "body": "Rosalissa is a transparent, farm to customer cosmetics brand based in China.\nAdobe Illustrator for graphic design work, Blender MCP & Claude Code for animation and rendering.",
-      "credits": "",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli-poster.webp",
-          "feed": true
-        },
-        {
-          "type": "image",
-          "src": "media/mvoneg/products-200-draft02-z927.webp",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "feed": false
-        },
-        {
-          "type": "image",
-          "src": "media/mvoneg/products-material-draft02-ld46.webp",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "feed": false
-        },
-        {
-          "type": "image",
-          "src": "media/mvoneg/products-100-draft02-423q.webp",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "feed": false
-        },
-        {
-          "type": "image",
-          "src": "media/mvoneg/products-30-draft02-s3rx.webp",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "feed": false
-        }
-      ]
-    },
-    {
-      "id": "0dd3tm",
-      "type": "project",
-      "status": "draft",
-      "slug": "kirmizi-zaman-pop-up-interactive-book",
-      "title": "Kirmizi Zaman pop up interactive book",
-      "year": "2026",
-      "client": "",
-      "role": "",
-      "tags": [],
-      "summary": "",
-      "body": "",
-      "credits": "",
-      "media": []
-    },
-    {
       "id": "vnost",
       "type": "project",
       "status": "published",
@@ -168,6 +92,193 @@
           "feed": false
         }
       ]
+    },
+    {
+      "id": "yr8k0v",
+      "type": "project",
+      "status": "published",
+      "slug": "sticky-bloom-macos-app",
+      "title": "Sticky Bloom MacOS App",
+      "year": "2025",
+      "client": "",
+      "role": "Designer",
+      "tags": [
+        "Graphic Design",
+        "Product",
+        "Vibe Coding"
+      ],
+      "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
+      "body": "Vibe coded using Claude Code. \nThe logo and the animations carry the sticky notes app concept further. ",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1.mp4",
+          "w": 1920,
+          "h": 1080,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt.mp4",
+          "w": 1920,
+          "h": 1080,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5-poster.webp",
+          "feed": false
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-flower-states-zje4.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-flower-states-zje4-poster.webp"
+        },
+        {
+          "type": "video",
+          "src": "media/yr8k0v/sticky-bloom-logo-360-0u3e.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/yr8k0v/sticky-bloom-logo-360-0u3e-poster.webp"
+        }
+      ],
+      "feedLayout": "gallery",
+      "autoplay": 2.5
+    },
+    {
+      "id": "mvoneg",
+      "type": "project",
+      "status": "published",
+      "slug": "rosalissa-rose-water-cosmetics",
+      "title": "Rosalissa Rose Water Cosmetics",
+      "year": "2021-2026",
+      "client": "",
+      "role": "",
+      "tags": [
+        "Content",
+        "Brand",
+        "Packaging"
+      ],
+      "summary": "Social media content to build the brand world of Rosalissa.",
+      "body": "Rosalissa is a transparent, farm to customer cosmetics brand based in China.\nAdobe Illustrator for graphic design work, Blender MCP & Claude Code for animation and rendering.",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/mvoneg/rosalissa-matchcards-draft-v5-fwli-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "image",
+          "src": "media/mvoneg/products-200-draft02-z927.webp",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/mvoneg/products-material-draft02-ld46.webp",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/mvoneg/products-100-draft02-423q.webp",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "feed": false
+        },
+        {
+          "type": "image",
+          "src": "media/mvoneg/products-30-draft02-s3rx.webp",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "feed": false
+        }
+      ]
+    },
+    {
+      "id": "5k7rva",
+      "type": "writing",
+      "status": "published",
+      "slug": "i-bought-a-keychain-from-torontos",
+      "substack": "https://luckbug.substack.com/p/i-bought-a-keychain-from-torontos"
+    },
+    {
+      "id": "l0u7js",
+      "type": "project",
+      "status": "published",
+      "slug": "osseous-branding-work-in-progress",
+      "title": "Osseous Branding #WORK-IN-PROGRESS",
+      "year": "2026",
+      "client": "",
+      "role": "Designer, Art Director",
+      "tags": [
+        "Art Direction",
+        "Branding"
+      ],
+      "summary": "",
+      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
+      "credits": "",
+      "media": [
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5.mp4",
+          "w": 540,
+          "h": 960,
+          "alt": "",
+          "poster": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
+          "w": 1080,
+          "h": 1920,
+          "alt": "",
+          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp",
+          "feed": true
+        },
+        {
+          "type": "video",
+          "src": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9.mp4",
+          "w": 540,
+          "h": 960,
+          "alt": "",
+          "poster": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9-poster.webp",
+          "feed": true
+        }
+      ],
+      "feedLayout": "gallery"
     },
     {
       "id": "dq2oqb",
@@ -273,132 +384,6 @@
       "autoplay": ""
     },
     {
-      "id": "5k7rva",
-      "type": "writing",
-      "status": "published",
-      "slug": "i-bought-a-keychain-from-torontos",
-      "substack": "https://luckbug.substack.com/p/i-bought-a-keychain-from-torontos"
-    },
-    {
-      "id": "yr8k0v",
-      "type": "project",
-      "status": "published",
-      "slug": "sticky-bloom-macos-app",
-      "title": "Sticky Bloom MacOS App",
-      "year": "2025",
-      "client": "",
-      "role": "Designer",
-      "tags": [
-        "Graphic Design",
-        "Product",
-        "Vibe Coding"
-      ],
-      "summary": "I vibe-coded a playful desktop stickies app that gets me through the day with fun animations. ",
-      "body": "Vibe coded using Claude Code. \nThe logo and the animations carry the sticky notes app concept further. ",
-      "credits": "",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1.mp4",
-          "w": 1920,
-          "h": 1080,
-          "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-line-to-living-16x9-web-zir1-poster.webp"
-        },
-        {
-          "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt.mp4",
-          "w": 1920,
-          "h": 1080,
-          "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-macbook-mockup-web-6okt-poster.webp"
-        },
-        {
-          "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-app-demo-v2-web-duc5-poster.webp",
-          "feed": false
-        },
-        {
-          "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-flower-states-zje4.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-flower-states-zje4-poster.webp"
-        },
-        {
-          "type": "video",
-          "src": "media/yr8k0v/sticky-bloom-logo-360-0u3e.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/yr8k0v/sticky-bloom-logo-360-0u3e-poster.webp"
-        }
-      ],
-      "feedLayout": "gallery",
-      "autoplay": 2.5
-    },
-    {
-      "id": "l0u7js",
-      "type": "project",
-      "status": "published",
-      "slug": "osseous-branding-work-in-progress",
-      "title": "Osseous Branding #WORK-IN-PROGRESS",
-      "year": "2026",
-      "client": "",
-      "role": "Designer, Art Director",
-      "tags": [
-        "Art Direction",
-        "Branding"
-      ],
-      "summary": "",
-      "body": "A light design project I did as part of my studies at NABA Milano in 2020, has resurged as a brand design case study. \nI have designed the visual language and brand world design for Osseous, a fictional light design brand. \nThe animation for the short form videos help construct the playful world of Osseous. ",
-      "credits": "",
-      "media": [
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-v13-hlf6.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-v13-hlf6-poster.webp",
-          "feed": true
-        },
-        {
-          "type": "video",
-          "src": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5.mp4",
-          "w": 540,
-          "h": 960,
-          "alt": "",
-          "poster": "media/l0u7js/cqms6fmto-l57180c8v-g-vfe5-poster.webp",
-          "feed": true
-        },
-        {
-          "type": "video",
-          "src": "media/l0u7js/osseous-reel-3d-v4-dho7.mp4",
-          "w": 1080,
-          "h": 1920,
-          "alt": "",
-          "poster": "media/l0u7js/osseous-reel-3d-v4-dho7-poster.webp",
-          "feed": true
-        },
-        {
-          "type": "video",
-          "src": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9.mp4",
-          "w": 540,
-          "h": 960,
-          "alt": "",
-          "poster": "media/l0u7js/osegxn-tdvenqp2-diqvyq-mkg9-poster.webp",
-          "feed": true
-        }
-      ],
-      "feedLayout": "gallery"
-    },
-    {
       "id": "18quen",
       "type": "project",
       "status": "published",
@@ -444,6 +429,21 @@
           "size": "m"
         }
       ]
+    },
+    {
+      "id": "0dd3tm",
+      "type": "project",
+      "status": "draft",
+      "slug": "kirmizi-zaman-pop-up-interactive-book",
+      "title": "Kirmizi Zaman pop up interactive book",
+      "year": "2026",
+      "client": "",
+      "role": "",
+      "tags": [],
+      "summary": "",
+      "body": "",
+      "credits": "",
+      "media": []
     },
     {
       "id": "zpmel1",
