@@ -113,6 +113,10 @@
   @media (max-aspect-ratio: 1/1.15) {
     .title { text-align: left; max-width: 136px; padding-left: 0; }
   }
+  /* Phones held upright: [ PORTFOLIO ] sits in the middle, set larger still. */
+  @media (max-aspect-ratio: 1/1.15) {
+    .body.big .label { font-size: 2em; }
+  }
   @media (max-width: 600px) {
     :root { --logo: 84px; }
     body { font-size: 11px; }
@@ -149,10 +153,10 @@
      ring: 0 innermost … 2 outermost. `at`: where the link stays on a phone,
      in degrees round its orbit (0 = straight right of the logo, -90 = up). */
   const BODIES = [
-    { ring: 0, label: '[ PORTFOLIO ]', href: '/portfolio/', mark: true, big: true, at: -50 },
+    { ring: 0, label: '[ PORTFOLIO ]', href: '/portfolio/', mark: true, big: true, at: -24 },
     { ring: 0, label: '[ I WILL DESIGN & SUPPLY YOUR MERCH ]', href: '/merch/', mark: true, at: 45 },
     { ring: 1, label: '[ INSTAGRAM ]', href: 'https://www.instagram.com/ecem.zip/', away: true, at: -74 },
-    { ring: 1, label: '[ FREELANCE SERVICES ]', href: '/freelance/', mark: true, at: -14 },
+    { ring: 1, label: '[ FREELANCE SERVICES ]', href: '/freelance/', mark: true, at: -42 },
     { ring: 2, label: '[ EMAIL ME ]', href: 'mailto:hello@ecem.world', at: 62 },
     { ring: 2, label: '[ CV ]', href: '/cv/', at: 40 },
     { ring: 2, label: '[ ME ]', href: '/portfolio/#/about', at: -40 },
