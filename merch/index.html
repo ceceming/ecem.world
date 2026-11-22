@@ -3,30 +3,984 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Holding page for the merch offer; to be built out. -->
-<title>Merch — Ecem Öztürk</title>
-<meta name="description" content="Let Ecem Öztürk design (and supply) your merch.">
-<meta name="theme-color" content="#000000">
+<title>Merch by Ecem</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!-- /merch/ — the merch inquiry page. DRAFT: the brief is not sent anywhere
+     yet (see SEND_URL and BOOKING_URL in the script). Everything a visitor
+     types or uploads stays in their browser until those are set. -->
+<meta name="description" content="Merch designed and supplied by Ecem Öztürk, a designer in Toronto. Get a ballpark price and timeline in five minutes, then book a call.">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Handjet:wght@300;400;500&family=Jost:wght@400;500;600&family=Lora:ital,wght@0,600;0,700;1,500&family=Montserrat:wght@600;700&display=swap">
 <style>
-  html, body { margin: 0; min-height: 100%; background: #000; color: #fff; }
-  body { font: 400 13px/1.4 "Jost", Helvetica, Arial, sans-serif; min-height: 100dvh; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-  h1 { margin: 0 0 18px; font-size: clamp(18px, 4vw, 30px); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
-  h1 span { background: linear-gradient(90deg, hsl(150 85% 55% / 0.2), hsl(220 85% 55% / 0.2)); padding: 2px 8px; }
-  p { margin: 0 0 32px; color: rgba(255,255,255,0.6); letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; }
-  a { color: #fff; letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
-  a:hover { border-bottom-color: #fff; }
+  /* Layout: stacked framed panels, as in the cold-email cards — a neon-green
+     frame for the big statements, a black frame for the working parts, white
+     inside with dashed construction lines. One deliberate look, light only. */
+  :root {
+    --green: #00ff00;        /* the frame */
+    --ink: #000000;          /* black frames, the script, buttons */
+    --paper: #ffffff;
+    --tile: #f2f0f1;         /* the grey product tiles */
+    --line: #d9d6d8;         /* hairlines and dashed guides */
+    --outline: #b9b6b8;      /* outlined display letters */
+    --mute: #6b6769;         /* secondary text */
+    --band: #5e5e5e;         /* the grey ticker band */
+    --warn: #b34700;
+
+    --display: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    --script: "Great Vibes", "Snell Roundhand", "Brush Script MT", cursive;
+    --serif: "Lora", Georgia, "Times New Roman", serif;
+    --pixel: "Handjet", "Arial Narrow", sans-serif;
+    --ui: "Jost", Helvetica, Arial, sans-serif;
+
+    --frame: 10px;
+    --radius: 22px;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { background: var(--paper); }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 16px/1.5 var(--ui); -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 16px 48px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--green); outline-offset: 2px; box-shadow: 0 0 0 5px var(--ink); border-radius: 6px; }
+
+  /* Top line */
+  .top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .top a { text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  .top a:hover { border-color: var(--ink); }
+
+  .panel { border: var(--frame) solid var(--ink); border-radius: var(--radius); background: var(--paper); padding: 14px; }
+  .panel.green { border-color: var(--green); }
+  .panel.dark { background: var(--ink); color: var(--paper); }
+  .guides { border: 1px dashed var(--line); border-radius: 6px; }
+  .dark .guides { border-color: #333; }
+
+  /* ---------- Hero: the email's headline, as type ---------- */
+  .hero h1 { margin: 0; font-weight: 400; line-height: 0.92; position: relative; }
+  .hero .row { display: block; border-bottom: 1px dashed var(--line); padding: 0.06em 0.12em; }
+  .hero .row:last-child { border-bottom: 0; }
+  .hero .o {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(44px, 11.2vw, 132px);
+    color: transparent; -webkit-text-stroke: 1.4px var(--outline);
+    white-space: nowrap;
+  }
+  .hero .script {
+    font-family: var(--script); color: var(--ink);
+    font-size: clamp(92px, 23vw, 270px); line-height: 0.62;
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow: 0 0 0 var(--ink), 2px 2px 0 #fff, 3px 3px 0 var(--outline);
+    display: block; text-align: right; padding: 0.16em 0.08em 0.1em; margin-top: -0.18em;
+    position: relative; z-index: 2;
+  }
+  .hero .row.small .o { font-size: clamp(30px, 7.4vw, 88px); }
+  .hero .sub { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 14px 4px 2px; }
+  .hero .sub p { margin: 0; max-width: 46ch; color: var(--mute); }
+
+  .btn {
+    appearance: none; border: 2px solid var(--ink); background: var(--ink); color: var(--paper);
+    font: 500 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 16px 22px; border-radius: 999px; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px; transition: background 150ms, color 150ms;
+  }
+  .btn:hover { background: var(--green); color: var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--tile); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .dark .btn { background: var(--green); color: var(--ink); border-color: var(--green); }
+
+  /* ---------- Ticker: the grey pixel band ---------- */
+  .ticker { background: var(--band); color: #161616; border-radius: 14px; overflow: hidden; padding: 10px 0; }
+  .ticker .track { display: flex; width: max-content; animation: slide 60s linear infinite; }
+  .ticker span { font: 400 clamp(22px, 3vw, 30px)/1.2 var(--pixel); letter-spacing: 0.01em; padding-right: 2em; white-space: nowrap; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Promises: the manicule list ---------- */
+  .promises ul { list-style: none; margin: 0; padding: 18px clamp(12px, 3vw, 28px); display: grid; gap: 6px; }
+  .promises li { font: 700 clamp(19px, 2.6vw, 28px)/1.25 var(--serif); display: flex; gap: 14px; align-items: baseline; }
+  .promises li::before { content: "☞"; font-family: "Segoe UI Symbol", "Apple Symbols", "DejaVu Sans", serif; font-weight: 400; font-size: 1.25em; line-height: 1; transform: translateY(0.08em); }
+
+  /* ---------- About: who's behind it ---------- */
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(20px, 4vw, 48px); align-items: center; padding: clamp(18px, 4vw, 48px); }
+  .portrait { display: flex; align-items: center; gap: clamp(10px, 2vw, 22px); }
+  .portrait .ring { flex: 1 1 auto; min-width: 0; max-width: 340px; aspect-ratio: 1; border-radius: 50%; padding: 8px; border: 1.5px solid #fff; box-shadow: 0 0 0 4px var(--ink), 0 0 0 5.5px #fff; }
+  .portrait .ring img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #fff; }
+  .portrait .dot { width: 12px; height: 12px; border-radius: 50%; background: #fff; flex: none; }
+  .portrait .mark { width: clamp(54px, 9vw, 110px); flex: none; }
+  .about h2 { font: 600 clamp(15px, 1.6vw, 17px)/1.3 var(--ui); letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin: 0 0 14px; }
+  .about .lede { font: 500 italic clamp(22px, 2.6vw, 30px)/1.3 var(--serif); margin: 0 0 16px; text-wrap: balance; }
+  .about p { margin: 0 0 12px; color: #d8d6d7; max-width: 58ch; }
+  .about .sign { font: 400 46px/1 var(--script); color: #fff; margin-top: 8px; }
+
+  /* ---------- How it works ---------- */
+  .how h2, .brief-head h2 { font: 600 12px/1 var(--ui); letter-spacing: 0.2em; text-transform: uppercase; margin: 6px 6px 14px; color: var(--mute); }
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .steps li { list-style: none; background: var(--tile); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .steps { padding: 0; margin: 0; }
+  .steps .n { font: 400 28px/1 var(--pixel); }
+  .steps h3 { margin: 0; font: 700 19px/1.2 var(--serif); }
+  .steps p { margin: 0; font-size: 14px; color: var(--mute); }
+  .steps .when { margin-top: auto; font: 500 11px/1.3 var(--ui); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* ---------- The brief ---------- */
+  .brief { padding: 0; overflow: hidden; }
+  .brief-head { padding: 18px 20px 0; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 8px; }
+  .brief-head h2 { margin: 0; }
+  .brief-head .title { font: 700 clamp(24px, 3vw, 34px)/1.1 var(--serif); margin: 6px 0 0; }
+  .brief-head .meta { font: 400 20px/1 var(--pixel); color: var(--mute); }
+
+  .stepper { display: flex; gap: 6px; padding: 16px 20px; overflow-x: auto; border-bottom: 1px dashed var(--line); }
+  .stepper button {
+    appearance: none; border: 1px solid var(--line); background: var(--paper); color: var(--mute);
+    font: 500 12px/1 var(--ui); letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 10px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap; display: flex; gap: 8px; align-items: center;
+  }
+  .stepper button .k { font: 400 17px/0.6 var(--pixel); }
+  .stepper button[aria-current="step"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .stepper button.done { color: var(--ink); border-color: var(--ink); }
+  .stepper button.done::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 1px var(--ink); }
+  .stepper button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+  .brief-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; }
+  .stage { padding: 22px 20px 26px; min-width: 0; border-right: 1px dashed var(--line); }
+  .step { display: flex; flex-direction: column; gap: 22px; }
+  .step > header h3 { margin: 0; font: 700 24px/1.2 var(--serif); }
+  .step > header p { margin: 4px 0 0; color: var(--mute); max-width: 60ch; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  label, .label { font: 500 12px/1.2 var(--ui); letter-spacing: 0.1em; text-transform: uppercase; }
+  .opt { color: var(--mute); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  input[type=text], input[type=email], input[type=url], input[type=number], input[type=date], select, textarea {
+    font: 400 16px/1.3 var(--ui); color: var(--ink); background: var(--paper);
+    border: 1px solid #bdb9bb; border-radius: 10px; padding: 12px 12px; width: 100%; min-width: 0;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px var(--green); }
+  .err { color: var(--warn); font-size: 13px; min-height: 0; }
+  .field.bad input { border-color: var(--warn); }
+  .hint { font-size: 13px; color: var(--mute); }
+
+  /* Chips (checkbox and radio pills) */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid #bdb9bb; border-radius: 999px; font-size: 14px; background: var(--paper); transition: background 120ms; }
+  .chip span::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--ink); background: var(--paper); flex: none; }
+  .chip input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .chip input:checked + span::before { background: var(--green); border-color: var(--green); }
+  .chip input:focus-visible + span { outline: 3px solid var(--green); outline-offset: 2px; }
+
+  /* Product tiles: the grey cards with a circle in the corner */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 10px; }
+  .tile { position: relative; }
+  .tile input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 2; }
+  .tile .card {
+    background: var(--tile); border: 1px solid var(--line); border-radius: 14px; aspect-ratio: 1 / 0.92;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px; padding: 14px 10px 12px;
+    position: relative; transition: border-color 120ms, background 120ms;
+  }
+  .tile .card::before { content: ""; position: absolute; left: 12px; top: 12px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1px solid #c9c5c7; }
+  .tile svg { width: 58%; max-height: 62%; flex: 1 1 auto; fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+  .tile .name { font: 500 13px/1.2 var(--ui); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+  .tile input:checked + .card { background: var(--paper); border: 2px solid var(--ink); }
+  .tile input:checked + .card::before { background: var(--green); border-color: var(--ink); box-shadow: inset 0 0 0 4px var(--green), inset 0 0 0 10px var(--ink); }
+  .tile input:focus-visible + .card { outline: 3px solid var(--green); outline-offset: 2px; }
+  @media (hover: hover) { .tile:hover .card { border-color: var(--ink); } }
+
+  /* Quantity rows, one per chosen product */
+  .lines { display: flex; flex-direction: column; gap: 10px; }
+  .line { border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .line .head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+  .line .head strong { font: 700 18px/1.2 var(--serif); }
+  .line .head .q { display: flex; align-items: center; gap: 8px; }
+  .line .head .q input { width: 110px; }
+  .line .head .q .unit { font-size: 13px; color: var(--mute); }
+  .sizes { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .sizes label { display: flex; flex-direction: column; gap: 4px; align-items: stretch; text-align: center; font-size: 11px; }
+  .sizes input { padding: 8px 4px; text-align: center; font-size: 15px; }
+  .size-tools { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; font-size: 13px; color: var(--mute); }
+  .size-tools .ok { color: var(--ink); }
+  .size-tools .off { color: var(--warn); }
+  .linkbtn { appearance: none; background: none; border: 0; padding: 0; font: 500 13px var(--ui); color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .ideas { display: flex; flex-direction: column; gap: 8px; }
+  .idea { display: grid; grid-template-columns: minmax(0, 1fr) 100px 36px; gap: 8px; }
+  .idea button { appearance: none; border: 1px solid var(--line); background: var(--paper); border-radius: 10px; cursor: pointer; font-size: 18px; line-height: 1; }
+  .empty { border: 1px dashed var(--line); border-radius: 14px; padding: 18px; color: var(--mute); text-align: center; font-size: 14px; }
+
+  /* Logo drop and palette */
+  .drop {
+    font: 400 15px/1.4 var(--ui); letter-spacing: 0; text-transform: none;
+    border: 1.5px dashed #a9a5a7; border-radius: 14px; background: var(--tile); padding: 20px; display: flex; gap: 18px; align-items: center; cursor: pointer; position: relative;
+  }
+  .drop.over { border-color: var(--ink); background: #fff; }
+  .drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .drop .thumb { width: 96px; height: 96px; border-radius: 10px; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; flex: none; font: 400 20px var(--pixel); color: var(--mute); }
+  .drop .thumb img { max-width: 86%; max-height: 86%; }
+  .drop strong { display: block; font: 700 18px/1.2 var(--serif); }
+  .drop span { font-size: 13px; color: var(--mute); }
+  .palette { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+  .sw { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .sw input[type=color] { appearance: none; -webkit-appearance: none; width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--line); padding: 0; background: none; cursor: pointer; }
+  .sw input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+  .sw input[type=color]::-webkit-color-swatch { border: 0; border-radius: 50%; }
+  .sw input[type=color]::-moz-color-swatch { border: 0; border-radius: 50%; }
+  .sw code { font: 400 16px/1 var(--pixel); color: var(--mute); }
+  .sw .x { appearance: none; border: 0; background: none; color: var(--mute); cursor: pointer; font-size: 12px; text-decoration: underline; }
+  .addsw { width: 64px; height: 64px; border-radius: 50%; border: 1px dashed #a9a5a7; background: #fff; font-size: 24px; cursor: pointer; margin-bottom: 22px; }
+  .source-note { font: 400 18px/1.2 var(--pixel); color: var(--mute); }
+
+  .nav { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-top: 6px; border-top: 1px dashed var(--line); margin-top: 4px; padding-top: 18px; }
+
+  /* Running estimate, beside the brief */
+  .est { padding: 22px 18px 26px; background: #fbfafb; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .est .label { color: var(--mute); }
+  .est .big { font: 700 30px/1.1 var(--serif); font-variant-numeric: tabular-nums; }
+  .est .big small { font: 400 14px var(--ui); color: var(--mute); }
+  .est .when { font: 600 18px/1.3 var(--serif); }
+  .est ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+  .est li { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dashed var(--line); padding-bottom: 6px; font-variant-numeric: tabular-nums; }
+  .est li span:first-child { min-width: 0; }
+  .est .notes { display: flex; flex-direction: column; gap: 8px; }
+  .note { font-size: 13px; border-left: 3px solid var(--green); padding: 2px 0 2px 10px; }
+  .note.warn { border-color: var(--warn); }
+  .fine { font: 400 17px/1.15 var(--pixel); color: var(--mute); }
+
+  /* Review step */
+  .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .summary div { background: var(--tile); border-radius: 12px; padding: 12px 14px; min-width: 0; overflow-wrap: anywhere; }
+  .summary dt { font: 500 11px/1 var(--ui); letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
+  .summary dd { margin: 0; font-size: 14px; }
+  .consent { text-transform: none; letter-spacing: 0; font-weight: 400; line-height: 1.45; display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+  .consent input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--ink); flex: none; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* Sent: book the call */
+  .booked { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; padding: clamp(18px, 4vw, 40px); }
+  .booked h3 { font: 700 clamp(26px, 3.4vw, 38px)/1.1 var(--serif); margin: 0 0 10px; }
+  .booked p { margin: 0 0 12px; color: #d8d6d7; }
+  .slots { background: #fff; color: var(--ink); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .slots .days { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .slots .day { text-align: center; font-size: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .slots .day b { font: 600 12px var(--ui); letter-spacing: 0.08em; text-transform: uppercase; }
+  .slots .slot { appearance: none; border: 1px solid var(--line); background: var(--tile); border-radius: 8px; padding: 8px 2px; font: 500 13px var(--ui); cursor: pointer; font-variant-numeric: tabular-nums; }
+  .slots .slot[aria-pressed="true"] { background: var(--green); border-color: var(--ink); }
+  .draft-tag { display: inline-block; font: 400 16px/1 var(--pixel); background: var(--green); color: var(--ink); padding: 4px 8px; border-radius: 4px; }
+  details.payload { font-size: 13px; }
+  details.payload pre { background: #161616; color: #cfcfcf; padding: 12px; border-radius: 10px; overflow-x: auto; max-height: 320px; font-size: 12px; }
+
+  footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); padding: 8px 4px; }
+
+  .demo { position: fixed; right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: flex; gap: 6px; align-items: center; }
+  .demo button { appearance: none; border: 2px solid var(--ink); background: var(--green); font: 400 18px/1 var(--pixel); padding: 8px 12px; border-radius: 999px; cursor: pointer; }
+
+  /* Phones and narrow windows */
+  @media (max-width: 900px) {
+    .brief-body { grid-template-columns: minmax(0, 1fr); }
+    .stage { border-right: 0; border-bottom: 1px dashed var(--line); }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .about, .booked { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 560px) {
+    :root { --frame: 7px; --radius: 18px; }
+    .panel { padding: 8px; }
+    .grid2, .summary { grid-template-columns: minmax(0, 1fr); }
+    .steps { grid-template-columns: minmax(0, 1fr); }
+    .sizes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero .o { -webkit-text-stroke-width: 1px; }
+    .stage, .est { padding-left: 14px; padding-right: 14px; }
+    .idea { grid-template-columns: minmax(0, 1fr) 80px 36px; }
+    .slots .days { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker .track { animation: none; }
+    * { transition: none !important; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1><span>[ Let me design (&amp; supply) your merch! ]</span></h1>
-  <p>Coming soon</p>
-  <a href="/">← Ecem's World</a>
-</main>
+<div class="wrap">
+
+  <div class="top">
+    <a href="/">← ecem.world</a>
+    <span>Merch · Toronto</span>
+  </div>
+
+  <!-- The headline, as in the cold email -->
+  <section class="panel green hero" aria-labelledby="h">
+    <div class="guides">
+      <h1 id="h">
+        <span class="row"><span class="o">I will design</span></span>
+        <span class="row"><span class="o">&amp; supply</span></span>
+        <span class="script">merch</span>
+        <span class="row small"><span class="o">for your business.</span></span>
+      </h1>
+    </div>
+    <div class="sub">
+      <p>Merch designed the way a studio hands off a brand, then sourced, checked and delivered by the same person. Tell me what you need and get a ballpark price and timeline in about five minutes.</p>
+      <a class="btn" href="#brief">Start your brief <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <div class="ticker" aria-label="Tote bags, hats, water bottles, tumblers, notebooks, t-shirts, posters, towels, anything and everything. Premium quality, best price, short delivery time.">
+    <div class="track" aria-hidden="true">
+      <span>Tote bags, hats, water bottles, tumblers, notebooks, t-shirts, posters, towels, anything &amp; everything &gt; premium quality &gt; best price &gt; short delivery time</span>
+      <span>Tote bags, hats, water bottles, tumblers, notebooks, t-shirts, posters, towels, anything &amp; everything &gt; premium quality &gt; best price &gt; short delivery time</span>
+    </div>
+  </div>
+
+  <section class="panel promises" aria-label="What you get">
+    <div class="guides">
+      <ul>
+        <li>Premium Quality Assurance</li>
+        <li>Coherent Design Made by A Human</li>
+        <li>Complete End-to-End Ownership</li>
+        <li>Doorstep Delivery</li>
+        <li>Best Prices</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Who is behind it -->
+  <section class="panel green dark" aria-labelledby="who">
+    <div class="about">
+      <div class="portrait">
+        <div class="ring"><img src="ecem.webp" alt="Ecem Öztürk, sitting cross-legged, smiling" width="640" height="640"></div>
+        <span class="dot" aria-hidden="true"></span>
+        <img class="mark" src="e.webp" alt="" width="300" height="310">
+      </div>
+      <div>
+        <h2 id="who">Who's behind it</h2>
+        <p class="lede">Hi, I'm Ecem. One designer, from the first sketch to the box at your door.</p>
+        <p>I'm a designer based in Toronto. Most merch companies hand you a catalogue and a spot for your logo. I start from your brand and design a small collection that belongs to it, with the same care I'd give an identity project.</p>
+        <p>Then I source it. I work directly with manufacturers in China and act as your bridge to them, which is how the prices stay fair. I check the quality before anything ships, and I deliver it to your door, or to each person on your team.</p>
+        <p>You'll talk to me at every step. There is no account manager in between.</p>
+        <div class="sign" aria-hidden="true">Ecem</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works: a real sequence, so it is numbered -->
+  <section class="panel how" aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <ol class="steps">
+      <li><span class="n">01</span><h3>Your brief</h3><p>The form below. You get a ballpark price and delivery window straight away.</p><span class="when">5 minutes</span></li>
+      <li><span class="n">02</span><h3>First call</h3><p>We meet. I learn what you need, then research exact materials and pricing. Your firm quote follows.</p><span class="when">30 minutes · quote in 2–3 days</span></li>
+      <li><span class="n">03</span><h3>Design review</h3><p>A second call. I show you each piece as a 3D model you can turn around, here on this site, and we settle the design.</p><span class="when">1–2 weeks after the call</span></li>
+      <li><span class="n">04</span><h3>Made &amp; delivered</h3><p>I manage production, check quality before it ships, and track it to your door, with clear costs at every step.</p><span class="when">Usually 3–5 weeks</span></li>
+    </ol>
+  </section>
+
+  <!-- The brief -->
+  <section class="panel brief" id="brief" aria-labelledby="brief-title">
+    <div class="brief-head">
+      <div>
+        <h2>Start here</h2>
+        <p class="title" id="brief-title">Your merch brief</p>
+      </div>
+      <span class="meta">Nothing is sent until the last step</span>
+    </div>
+
+    <nav class="stepper" aria-label="Brief steps" id="stepper"></nav>
+
+    <form id="form" novalidate>
+      <div class="brief-body">
+        <div class="stage">
+
+          <!-- 1. You -->
+          <section class="step" data-step="0" aria-labelledby="s1">
+            <header><h3 id="s1">About you</h3><p>So I know who I'm designing for.</p></header>
+            <div class="grid2">
+              <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required><span class="err" id="e-name"></span></div>
+              <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><span class="err" id="e-email"></span></div>
+              <div class="field"><label for="f-company">Business name</label><input id="f-company" name="company" type="text" autocomplete="organization" required><span class="err" id="e-company"></span></div>
+              <div class="field"><label for="f-site">Website or Instagram <span class="opt">optional</span></label><input id="f-site" name="site" type="text" placeholder="@yourstudio or yourstudio.com"></div>
+              <div class="field"><label for="f-role">Your role <span class="opt">optional</span></label><input id="f-role" name="role" type="text" placeholder="Owner, People Ops, Marketing…"></div>
+              <div class="field"><label for="f-city">City <span class="opt">optional</span></label><input id="f-city" name="city" type="text" autocomplete="address-level2" placeholder="Toronto"></div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-biz">What kind of business?</span>
+              <div class="chips" role="radiogroup" aria-labelledby="l-biz" id="biz"></div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-purpose">What is the merch for? <span class="opt">pick any</span></span>
+              <div class="chips" role="group" aria-labelledby="l-purpose" id="purpose"></div>
+            </div>
+          </section>
+
+          <!-- 2. Products -->
+          <section class="step" data-step="1" aria-labelledby="s2" hidden>
+            <header><h3 id="s2">What would you like made?</h3><p>Pick as many as you like, then tell me how many. Rough numbers are fine; we'll firm them up on the call.</p></header>
+            <div class="tiles" id="tiles"></div>
+            <div class="lines" id="lines"></div>
+            <span class="err" id="e-products"></span>
+          </section>
+
+          <!-- 3. Brand -->
+          <section class="step" data-step="2" aria-labelledby="s3" hidden>
+            <header><h3 id="s3">Your brand</h3><p>Upload your logo and I'll pull your colours from it. No logo file handy? Pick your colours by hand, or I'll suggest a palette.</p></header>
+            <label class="drop" id="drop" for="f-logo">
+              <input id="f-logo" type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.ai,.eps,image/*,application/pdf">
+              <span class="thumb" id="thumb">logo</span>
+              <span><strong id="drop-title">Drop your logo here, or click to choose</strong><span id="drop-sub">SVG, PNG, JPG or PDF, up to 10 MB. Vector files (SVG, PDF, AI) print best.</span></span>
+            </label>
+            <div class="field">
+              <span class="label" id="l-pal">Brand colours</span>
+              <span class="source-note" id="pal-source">Suggested for your kind of business. Click a colour to change it.</span>
+              <div class="palette" id="palette" aria-labelledby="l-pal"></div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-deco">How should the design be applied? <span class="opt">optional</span></span>
+              <div class="chips" role="group" aria-labelledby="l-deco" id="deco"></div>
+            </div>
+            <div class="field"><label for="f-guide">Link to brand guidelines <span class="opt">optional</span></label><input id="f-guide" name="guidelines" type="url" placeholder="https://"></div>
+          </section>
+
+          <!-- 4. Details -->
+          <section class="step" data-step="3" aria-labelledby="s4" hidden>
+            <header><h3 id="s4">The details</h3><p>Deadlines, special needs and anything you're imagining.</p></header>
+            <div class="grid2">
+              <div class="field"><label for="f-date">Needed by <span class="opt">optional</span></label><input id="f-date" name="deadline" type="date"><span class="hint">Leave empty if you're flexible.</span></div>
+              <div class="field"><label for="f-budget">Budget <span class="opt">optional</span></label>
+                <select id="f-budget" name="budget">
+                  <option value="">Prefer to discuss</option>
+                  <option>Under $1,000</option><option>$1,000–3,000</option><option>$3,000–7,500</option><option>$7,500–15,000</option><option>$15,000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-needs">Special needs <span class="opt">pick any</span></span>
+              <div class="chips" role="group" aria-labelledby="l-needs" id="needs"></div>
+            </div>
+            <div class="field"><label for="f-custom">Customization requests &amp; ideas <span class="opt">optional</span></label><textarea id="f-custom" name="custom" placeholder="e.g. Our logo small on the chest, the studio's address on the back. A tote that matches our sage walls. Each instructor's name on their towel."></textarea></div>
+          </section>
+
+          <!-- 5. Estimate & send -->
+          <section class="step" data-step="4" aria-labelledby="s5" hidden>
+            <header><h3 id="s5">Your estimate</h3><p>Here is the ballpark. Send the brief and book a call with me to turn it into a firm quote.</p></header>
+            <dl class="summary" id="summary"></dl>
+            <div class="hp" aria-hidden="true"><label for="f-hp">Leave this empty</label><input id="f-hp" name="company_fax" type="text" tabindex="-1" autocomplete="off"></div>
+            <label class="consent" for="f-consent"><input id="f-consent" type="checkbox"> <span>Ecem can contact me about this request. My brief and logo are only used to prepare my quote and are deleted on request.</span></label>
+            <span class="err" id="e-consent"></span>
+          </section>
+
+          <div class="nav">
+            <button type="button" class="btn ghost" id="back">← Back</button>
+            <button type="submit" class="btn" id="next">Next →</button>
+          </div>
+        </div>
+
+        <aside class="est" aria-live="polite" aria-label="Running estimate">
+          <span class="label">Ballpark</span>
+          <div class="big" id="est-total">—</div>
+          <span class="label">At your door</span>
+          <div class="when" id="est-when">—</div>
+          <ul id="est-lines"></ul>
+          <div class="notes" id="est-notes"></div>
+          <p class="fine">A starting range from typical runs: one-colour logo, standard blanks, shipping and duties into Canada. Your firm quote comes after our call.</p>
+        </aside>
+      </div>
+    </form>
+
+    <!-- After sending: book the call -->
+    <div class="dark" id="sent" hidden>
+      <div class="booked">
+        <div>
+          <span class="draft-tag">Draft: nothing was sent</span>
+          <h3 style="margin-top:14px">Thank you. Now let's meet.</h3>
+          <p id="sent-copy">Your brief is with me. Pick a time for a 30-minute video call: I'll come with questions, material ideas and a first look at pricing.</p>
+          <p>After the call I research exact pricing with my manufacturers and send your firm quote within 2–3 working days.</p>
+          <details class="payload"><summary>What Ecem receives (draft view)</summary><pre id="payload"></pre></details>
+        </div>
+        <div class="slots" id="slots" aria-label="Pick a time"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>hello@ecem.world</span>
+    <span>Ecem Öztürk · designer · Toronto</span>
+  </footer>
+</div>
+
+<div class="demo"><button type="button" id="demo">Draft: fill an example</button></div>
+
+<script>
+(() => {
+  // ---------------------------------------------------------------
+  // Settings. SEND_URL and BOOKING_URL are empty in this draft:
+  // the brief stays in the browser and the slot picker is a mock.
+  // ---------------------------------------------------------------
+  const SEND_URL = '';      // Google Apps Script web app URL (see MERCH-PLAN in the notes repo)
+  const BOOKING_URL = '';   // e.g. https://cal.com/ecem/merch-intro
+  const MAX_LOGO_MB = 10;
+
+  // Customer-facing ballpark ranges, CAD per unit, landed in Canada,
+  // one-location print or embroidery included. [from qty, low, high].
+  // PLACEHOLDERS: Ecem sets the real numbers. This file is public, so
+  // only ranges you'd show a client belong here, never supplier costs.
+  const SMALL_RUN = { below: 50, factor: 1.4 };   // under 50: made locally
+  const PRODUCTS = [
+    { id: 'tshirt',     name: 'T-shirt',           textile: true, weeks: [2, 3], tiers: [[50, 14, 22], [100, 11, 18], [250, 9, 14], [500, 7, 11]] },
+    { id: 'sweatshirt', name: 'Sweatshirt / hoodie', textile: true, weeks: [3, 4], tiers: [[50, 32, 48], [100, 26, 40], [250, 22, 34], [500, 18, 28]] },
+    { id: 'cap',        name: 'Cap',               weeks: [3, 4], tiers: [[50, 14, 22], [100, 11, 17], [250, 8, 13], [500, 6, 10]] },
+    { id: 'tumbler',    name: 'Tumbler',           weeks: [3, 4], tiers: [[50, 18, 28], [100, 14, 22], [250, 11, 18], [500, 9, 14]] },
+    { id: 'mug',        name: 'Coffee mug',        weeks: [2, 3], tiers: [[50, 9, 15], [100, 7, 12], [250, 5, 9], [500, 4, 7]] },
+    { id: 'tote',       name: 'Tote bag',          weeks: [2, 3], tiers: [[50, 8, 14], [100, 6, 11], [250, 4.5, 8], [500, 3.5, 6]] },
+    { id: 'notebook',   name: 'Notebook',          weeks: [3, 4], tiers: [[50, 10, 16], [100, 8, 13], [250, 6, 10], [500, 4.5, 8]] },
+    { id: 'towel',      name: 'Towel',             weeks: [3, 4], tiers: [[50, 14, 22], [100, 11, 18], [250, 9, 14], [500, 7, 11]], variants: ['Gym / pilates', 'Hand', 'Bath', 'Beach'] },
+    { id: 'other',      name: 'Other ideas',       other: true },
+  ];
+  const SIZES = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
+  const TYPICAL_SPLIT = { XS: 0.05, S: 0.2, M: 0.3, L: 0.25, XL: 0.13, '2XL': 0.05, '3XL': 0.02 };
+
+  // Timeline, in weeks: design (two calls) + production + air freight.
+  const DESIGN_WEEKS = [1, 2], FREIGHT_WEEKS = [1, 2], LOCAL_WEEKS = [1, 2];
+  // Factories in China close around Lunar New Year. Windows are generous on purpose.
+  const LNY = [['2027-01-25', '2027-02-21'], ['2028-01-15', '2028-02-12'], ['2029-02-02', '2029-03-01']];
+
+  const BUSINESSES = ['Pilates / yoga studio', 'Coffee shop', 'Beauty salon / spa', 'Restaurant / bar', 'Retail / boutique', 'Startup', 'VC fund', 'PR / creative agency', 'Tech company', 'Other'];
+  const PURPOSES = ['Sell to customers', 'Gift to our team', 'Staff uniforms', 'Client gifts', 'Launch / event'];
+  const DECO = ['Embroidery', 'Screen print', 'Engraving', 'Full-colour print', 'Not sure, advise me'];
+  const NEEDS = ['Sustainable / organic materials', 'Made in North America', 'Gift boxes / packaging', 'Names on each piece', 'Ship to many addresses', 'A sample before production'];
+  const SUGGESTED = {
+    'Pilates / yoga studio': ['#9aa58c', '#e9e1d4', '#b9866a', '#2f3a33'],
+    'Coffee shop': ['#3b2a22', '#efe6d8', '#c26a3d', '#7d8a6a'],
+    'Beauty salon / spa': ['#e8cfc8', '#f7f2ee', '#8c5a5a', '#2b2626'],
+    'Restaurant / bar': ['#1f2a24', '#e7dccb', '#b2412f', '#d9a441'],
+    'Retail / boutique': ['#111111', '#f3f0ea', '#c9a27e', '#6d7b8c'],
+    'Startup': ['#1a1aff', '#f4f4f0', '#111111', '#00d18f'],
+    'VC fund': ['#0f1b2d', '#f2efe8', '#a58b5b', '#6e7f91'],
+    'PR / creative agency': ['#111111', '#ffffff', '#ff4fa3', '#ffd23f'],
+    'Tech company': ['#0b0b0b', '#f5f5f5', '#3d5afe', '#00e0b8'],
+    'Other': ['#111111', '#f2f0f1', '#00ff00', '#6b6769'],
+  };
+
+  const ICONS = {
+    tshirt: '<path d="M22 14l10-6h8c1 4 4 6 8 6s7-2 8-6h8l10 6 8 16-12 6-4-6v42H30V30l-4 6-12-6z" transform="translate(-6 0)"/>',
+    sweatshirt: '<path d="M28 12l8-4h6c1 4 3 6 6 6s5-2 6-6h6l8 4 10 18-6 30h-8l-2-26v44H32V34l-2 26h-8l-6-30z" transform="translate(-4 0)"/><path d="M42 8c0 6 3 9 6 9s6-3 6-9" transform="translate(-4 0)"/>',
+    cap: '<path d="M16 54c0-20 14-34 32-34s32 14 32 34z"/><path d="M48 20v34M30 26c-4 8-6 18-6 28M66 26c4 8 6 18 6 28"/><path d="M16 54c-6 2-8 8-4 10 10 4 34 2 44-4"/><circle cx="48" cy="19" r="2"/>',
+    tumbler: '<path d="M30 16h36l-4 64H34z"/><path d="M28 16h40v-6H28zM36 10l2-4h20l2 4"/><path d="M33 34h30"/>',
+    mug: '<path d="M22 24h44v40c0 8-6 12-14 12H36c-8 0-14-4-14-12z"/><path d="M66 32h6c6 0 10 4 10 11s-4 11-10 11h-6"/><path d="M34 12c-2 4 2 6 0 9M44 10c-2 4 2 6 0 10M54 12c-2 4 2 6 0 9"/>',
+    tote: '<path d="M18 34h60l-4 48H22z"/><path d="M34 34c0-14 4-22 14-22s14 8 14 22"/>',
+    notebook: '<path d="M26 10h46v76H26z"/><path d="M32 10v76M20 22h12M20 36h12M20 50h12M20 64h12M20 78h12"/><path d="M44 30h20M44 38h14"/>',
+    towel: '<path d="M22 14h52v62H22z"/><path d="M22 24h52M22 66h52"/><path d="M18 12h60"/><path d="M30 76v8M40 76v8M50 76v8M60 76v8M70 76v8"/>',
+    other: '<circle cx="48" cy="48" r="26"/><path d="M48 36v24M36 48h24"/>',
+  };
+
+  // ---------------------------------------------------------------
+  const $ = (s, r = document) => r.querySelector(s);
+  const state = {
+    step: 0, reached: 0,
+    business: '', purposes: new Set(), deco: new Set(), needs: new Set(),
+    items: {},                       // id -> { qty, sizes:{}, fit, variant, ideas:[{text,qty}] }
+    palette: [], paletteSource: 'suggested', logo: null, sent: false,
+  };
+  const money = (n) => '$' + Math.round(n).toLocaleString('en-CA');
+  const roundTo = (n, step) => Math.round(n / step) * step;
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  // ---------- chips ----------
+  function chips(el, list, { name, type = 'checkbox', set, onChange }) {
+    el.innerHTML = list.map((v, i) => `<label class="chip"><input type="${type}" name="${name}" id="${name}-${i}" value="${esc(v)}"><span>${esc(v)}</span></label>`).join('');
+    el.addEventListener('change', (e) => {
+      const v = e.target.value;
+      if (type === 'radio') onChange(v);
+      else { e.target.checked ? set.add(v) : set.delete(v); onChange && onChange(); }
+    });
+  }
+  chips($('#biz'), BUSINESSES, { name: 'biz', type: 'radio', onChange: (v) => { state.business = v; if (state.paletteSource === 'suggested') setPalette(SUGGESTED[v], 'suggested'); } });
+  chips($('#purpose'), PURPOSES, { name: 'purpose', set: state.purposes });
+  chips($('#deco'), DECO, { name: 'deco', set: state.deco });
+  chips($('#needs'), NEEDS, { name: 'needs', set: state.needs, onChange: estimate });
+
+  // ---------- product tiles and quantity lines ----------
+  $('#tiles').innerHTML = PRODUCTS.map((p) => `
+    <label class="tile" for="t-${p.id}">
+      <input type="checkbox" id="t-${p.id}" value="${p.id}">
+      <span class="card"><svg viewBox="0 0 96 92" aria-hidden="true">${ICONS[p.id]}</svg><span class="name">${p.name}</span></span>
+    </label>`).join('');
+  $('#tiles').addEventListener('change', (e) => {
+    const id = e.target.value;
+    if (e.target.checked) state.items[id] = state.items[id] || { qty: '', sizes: {}, fit: 'Unisex', variant: '', ideas: [{ text: '', qty: '' }] };
+    else delete state.items[id];
+    renderLines(); estimate();
+  });
+
+  function renderLines() {
+    const ids = PRODUCTS.filter((p) => state.items[p.id]).map((p) => p.id);
+    const box = $('#lines');
+    if (!ids.length) { box.innerHTML = '<div class="empty">Choose one or more products above.</div>'; return; }
+    box.innerHTML = ids.map((id) => {
+      const p = PRODUCTS.find((x) => x.id === id), it = state.items[id];
+      if (p.other) return `
+        <div class="line" data-id="other">
+          <div class="head"><strong>Other ideas</strong><span class="hint">Posters, socks, candles, stickers, anything.</span></div>
+          <div class="ideas">${it.ideas.map((d, i) => `
+            <div class="idea">
+              <input type="text" aria-label="Idea ${i + 1}" data-k="idea" data-i="${i}" value="${esc(d.text)}" placeholder="e.g. grip socks with our logo">
+              <input type="number" min="1" inputmode="numeric" aria-label="Quantity for idea ${i + 1}" data-k="ideaqty" data-i="${i}" value="${esc(d.qty)}" placeholder="Qty">
+              <button type="button" data-k="rm" data-i="${i}" aria-label="Remove idea ${i + 1}">×</button>
+            </div>`).join('')}
+          </div>
+          <div><button type="button" class="linkbtn" data-k="addidea">+ Add another idea</button></div>
+        </div>`;
+      const sizes = p.textile ? `
+          <div class="sizes">${SIZES.map((s) => `<label>${s}<input type="number" min="0" inputmode="numeric" data-k="size" data-s="${s}" value="${esc(it.sizes[s] ?? '')}"></label>`).join('')}</div>
+          <div class="size-tools">
+            <label class="opt" style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0">Fit
+              <select data-k="fit" style="width:auto;padding:6px 8px;font-size:14px">${['Unisex', "Women's", "Men's", 'A mix'].map((f) => `<option${f === it.fit ? ' selected' : ''}>${f}</option>`).join('')}</select>
+            </label>
+            <button type="button" class="linkbtn" data-k="split">Not sure? Use a typical split</button>
+            <span data-k="tally"></span>
+          </div>` : '';
+      const variants = p.variants ? `<label class="opt" style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px">Type
+              <select data-k="variant" style="width:auto;padding:6px 8px;font-size:14px"><option value="">Not sure</option>${p.variants.map((v) => `<option${v === it.variant ? ' selected' : ''}>${v}</option>`).join('')}</select></label>` : '';
+      return `
+        <div class="line" data-id="${id}">
+          <div class="head">
+            <strong>${p.name}</strong>
+            <span class="q">${variants}<input type="number" min="1" inputmode="numeric" aria-label="${p.name} quantity" data-k="qty" value="${esc(it.qty)}" placeholder="Qty"><span class="unit">pieces</span></span>
+          </div>${sizes}
+        </div>`;
+    }).join('');
+    ids.forEach(tally);
+  }
+  function tally(id) {
+    const p = PRODUCTS.find((x) => x.id === id);
+    if (!p || !p.textile) return;
+    const it = state.items[id], el = $(`.line[data-id="${id}"] [data-k="tally"]`);
+    if (!el) return;
+    const sum = SIZES.reduce((a, s) => a + (+it.sizes[s] || 0), 0), q = +it.qty || 0;
+    if (!sum) { el.className = ''; el.textContent = 'Sizes can wait until the call.'; return; }
+    if (!q) { it.qty = sum; $(`.line[data-id="${id}"] [data-k="qty"]`).value = sum; }
+    const diff = (+it.qty || 0) - sum;
+    el.className = diff === 0 ? 'ok' : 'off';
+    el.textContent = diff === 0 ? `Sizes add up to ${sum}.` : diff > 0 ? `${diff} still to place in a size.` : `Sizes add up to ${sum}, ${-diff} more than the quantity.`;
+  }
+  $('#lines').addEventListener('input', (e) => {
+    const line = e.target.closest('.line'); if (!line) return;
+    const id = line.dataset.id, it = state.items[id], k = e.target.dataset.k;
+    if (k === 'qty') it.qty = e.target.value;
+    if (k === 'size') it.sizes[e.target.dataset.s] = e.target.value;
+    if (k === 'fit') it.fit = e.target.value;
+    if (k === 'variant') it.variant = e.target.value;
+    if (k === 'idea') it.ideas[+e.target.dataset.i].text = e.target.value;
+    if (k === 'ideaqty') it.ideas[+e.target.dataset.i].qty = e.target.value;
+    tally(id); estimate();
+  });
+  $('#lines').addEventListener('change', (e) => { if (e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+  $('#lines').addEventListener('click', (e) => {
+    const k = e.target.dataset.k; if (!k) return;
+    const line = e.target.closest('.line'), id = line.dataset.id, it = state.items[id];
+    if (k === 'split') {
+      const q = +it.qty || 100; it.qty = q;
+      let left = q; const out = {};
+      SIZES.forEach((s) => { out[s] = Math.floor(q * TYPICAL_SPLIT[s]); left -= out[s]; });
+      out.M += left; it.sizes = out; renderLines(); estimate();
+    }
+    if (k === 'addidea') { it.ideas.push({ text: '', qty: '' }); renderLines(); line.parentElement.querySelector('.line[data-id="other"] .idea:last-child input')?.focus(); }
+    if (k === 'rm') { it.ideas.splice(+e.target.dataset.i, 1); if (!it.ideas.length) it.ideas.push({ text: '', qty: '' }); renderLines(); estimate(); }
+  });
+
+  // ---------- logo and palette ----------
+  function setPalette(colors, source) {
+    state.palette = colors.slice(0, 6); state.paletteSource = source; renderPalette();
+  }
+  function renderPalette() {
+    const notes = {
+      suggested: state.business ? `Suggested for a ${state.business.toLowerCase()}. Click a colour to change it.` : 'A starting palette. Click a colour to change it, or upload your logo.',
+      logo: 'Pulled from your logo. Click a colour to correct it.',
+      manual: 'Your picks.',
+      file: 'I\'ll take exact colours from your file. Add any you know here.',
+    };
+    $('#pal-source').textContent = notes[state.paletteSource];
+    $('#palette').innerHTML = state.palette.map((c, i) => `
+      <span class="sw"><input type="color" value="${c}" data-i="${i}" aria-label="Brand colour ${i + 1}"><code>${c.toUpperCase()}</code><button type="button" class="x" data-rm="${i}" aria-label="Remove colour ${i + 1}">remove</button></span>`).join('')
+      + (state.palette.length < 6 ? '<button type="button" class="addsw" id="addsw" aria-label="Add a colour">+</button>' : '');
+  }
+  $('#palette').addEventListener('input', (e) => {
+    if (e.target.type !== 'color') return;
+    state.palette[+e.target.dataset.i] = e.target.value; state.paletteSource = 'manual';
+    e.target.nextElementSibling.textContent = e.target.value.toUpperCase();
+    $('#pal-source').textContent = 'Your picks.';
+  });
+  $('#palette').addEventListener('click', (e) => {
+    if (e.target.id === 'addsw') { state.palette.push('#888888'); state.paletteSource = 'manual'; renderPalette(); $('#palette input[type=color]:last-of-type')?.click(); }
+    if (e.target.dataset.rm) { state.palette.splice(+e.target.dataset.rm, 1); state.paletteSource = 'manual'; renderPalette(); }
+  });
+
+  const drop = $('#drop'), fileIn = $('#f-logo');
+  ['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, () => drop.classList.remove('over')));
+  drop.addEventListener('drop', (e) => { e.preventDefault(); if (e.dataTransfer.files[0]) takeLogo(e.dataTransfer.files[0]); });
+  fileIn.addEventListener('change', () => fileIn.files[0] && takeLogo(fileIn.files[0]));
+
+  function takeLogo(file) {
+    if (file.size > MAX_LOGO_MB * 1024 * 1024) { $('#drop-sub').textContent = `That file is ${(file.size / 1048576).toFixed(1)} MB. Please send one under ${MAX_LOGO_MB} MB, or bring it to the call.`; return; }
+    state.logo = { name: file.name, type: file.type, size: file.size, file };
+    $('#drop-title').textContent = file.name;
+    $('#drop-sub').textContent = `${(file.size / 1024).toFixed(0)} KB · click to replace`;
+    const isImage = /^image\/(png|jpe?g|webp|svg\+xml|gif)$/.test(file.type) || /\.svg$/i.test(file.name);
+    if (!isImage) { $('#thumb').textContent = (file.name.split('.').pop() || 'file').toUpperCase(); if (state.paletteSource !== 'manual') { state.paletteSource = 'file'; renderPalette(); } return; }
+    const url = URL.createObjectURL(file);
+    $('#thumb').innerHTML = `<img src="${url}" alt="Your logo">`;
+    const img = new Image();
+    img.onload = () => { const cols = extractColors(img); if (cols.length) setPalette(cols, 'logo'); };
+    img.src = url;
+  }
+
+  // Pull the main colours out of a logo: sample it small, drop the
+  // background (whatever fills the border) and transparent pixels, bucket
+  // what is left, and keep the most-used colours that differ enough.
+  function extractColors(img) {
+    const S = 96, c = document.createElement('canvas'); c.width = c.height = S;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    const r = Math.min(S / (img.naturalWidth || S), S / (img.naturalHeight || S));
+    const w = Math.max(1, Math.round((img.naturalWidth || S) * r)), h = Math.max(1, Math.round((img.naturalHeight || S) * r));
+    x.drawImage(img, 0, 0, w, h);
+    let d; try { d = x.getImageData(0, 0, w, h).data; } catch { return []; }
+    const key = (i) => ((d[i] >> 4) << 8) | ((d[i + 1] >> 4) << 4) | (d[i + 2] >> 4);
+    const border = new Map();
+    for (let px = 0; px < w * h; px++) {
+      const X = px % w, Y = (px / w) | 0; if (X && Y && X < w - 1 && Y < h - 1) continue;
+      const i = px * 4; if (d[i + 3] < 128) continue; const k = key(i); border.set(k, (border.get(k) || 0) + 1);
+    }
+    const bg = [...border.entries()].sort((a, b) => b[1] - a[1])[0];
+    const bgKey = bg && bg[1] > (2 * (w + h)) * 0.4 ? bg[0] : -1;
+    const buckets = new Map();
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] < 128) continue; const k = key(i); if (k === bgKey) continue;
+      const b = buckets.get(k) || { n: 0, r: 0, g: 0, b: 0 }; b.n++; b.r += d[i]; b.g += d[i + 1]; b.b += d[i + 2]; buckets.set(k, b);
+    }
+    const total = [...buckets.values()].reduce((a, b) => a + b.n, 0) || 1;
+    const picks = [];
+    [...buckets.values()].sort((a, b) => b.n - a.n).forEach((b) => {
+      if (b.n / total < 0.01 || picks.length >= 5) return;
+      const col = [b.r / b.n, b.g / b.n, b.b / b.n];
+      if (picks.some((p) => Math.hypot(p[0] - col[0], p[1] - col[1], p[2] - col[2]) < 48)) return;
+      picks.push(col);
+    });
+    const hex = (c) => '#' + c.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
+    const out = picks.map(hex);
+    if (bgKey !== -1 && out.length < 5) { const i = [...border.keys()].indexOf(bgKey); const rgb = [(bgKey >> 8) * 17, ((bgKey >> 4) & 15) * 17, (bgKey & 15) * 17]; out.push(hex(rgb)); }
+    return out;
+  }
+
+  // ---------- the estimate ----------
+  const addWeeks = (date, w) => new Date(date.getTime() + w * 7 * 864e5);
+  const fmt = (d) => d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric' });
+  const fmtY = (d) => d.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  function computeEstimate() {
+    const lines = [], notes = [];
+    let lo = 0, hi = 0, pLo = 0, pHi = 0, anyChina = false, anyLocal = false, units = 0, otherCount = 0;
+    PRODUCTS.forEach((p) => {
+      const it = state.items[p.id]; if (!it) return;
+      if (p.other) { otherCount = it.ideas.filter((d) => d.text.trim()).length; return; }
+      const q = Math.floor(+it.qty || 0); if (q <= 0) { lines.push({ name: p.name, text: 'add a quantity' }); return; }
+      units += q;
+      const tier = [...p.tiers].reverse().find((t) => q >= t[0]) || p.tiers[0];
+      const small = q < SMALL_RUN.below, f = small ? SMALL_RUN.factor : 1;
+      const uLo = tier[1] * f, uHi = tier[2] * f;
+      lo += uLo * q; hi += uHi * q;
+      if (small) { anyLocal = true; pLo = Math.max(pLo, LOCAL_WEEKS[0]); pHi = Math.max(pHi, LOCAL_WEEKS[1]); }
+      else { anyChina = true; const big = q >= 1000 ? 1 : 0; pLo = Math.max(pLo, p.weeks[0] + FREIGHT_WEEKS[0] + big); pHi = Math.max(pHi, p.weeks[1] + FREIGHT_WEEKS[1] + big); }
+      lines.push({ name: `${p.name} × ${q}`, text: `${money(uLo)}–${money(uHi)} ea` });
+    });
+    if (otherCount) lines.push({ name: `Other ideas × ${otherCount}`, text: 'priced on the call' });
+    if (!lo && !otherCount) return { empty: true, lines };
+
+    // Extras that change the number
+    if (state.needs.has('Made in North America')) { lo *= 1.35; hi *= 1.6; notes.push({ t: 'Made in North America usually costs 35–60% more than overseas production, and is often faster.' }); }
+    if (state.needs.has('Gift boxes / packaging')) { lo += units * 3; hi += units * 8; notes.push({ t: 'Includes $3–8 per piece for packaging.' }); }
+    if (state.needs.has('Ship to many addresses')) notes.push({ t: 'Shipping to individual addresses is quoted per address, on top of this.' });
+
+    // Timeline
+    const start = addWeeks(new Date(), 1);                  // first call, roughly a week out
+    let wLo = DESIGN_WEEKS[0] + pLo, wHi = DESIGN_WEEKS[1] + pHi;
+    if (anyChina) {
+      const prodStart = addWeeks(start, DESIGN_WEEKS[0]), prodEnd = addWeeks(start, wHi);
+      const hit = LNY.find(([a, b]) => new Date(a) < prodEnd && new Date(b) > prodStart);
+      if (hit) { wLo += 2; wHi += 3; notes.push({ t: `Factories in China close for Lunar New Year (${fmt(new Date(hit[0]))} – ${fmt(new Date(hit[1]))}), which adds 2–3 weeks. Ordering early avoids it.`, warn: true }); }
+    }
+    if (anyLocal) notes.push({ t: `Under ${SMALL_RUN.below} pieces I produce locally in Toronto: faster, and a little more per piece.` });
+    const arriveLo = addWeeks(start, wLo), arriveHi = addWeeks(start, wHi);
+    const dl = $('#f-date').value ? new Date($('#f-date').value + 'T12:00') : null;
+    if (dl) {
+      if (dl < arriveLo) notes.push({ t: `Your date (${fmtY(dl)}) is tight. There are rush options (local production, express freight). Let's look at them on the call.`, warn: true });
+      else if (dl < arriveHi) notes.push({ t: `Your date (${fmtY(dl)}) is reachable if we start soon.` });
+      else notes.push({ t: `Your date (${fmtY(dl)}) leaves comfortable room.` });
+    }
+    return {
+      lo: roundTo(lo, 50), hi: roundTo(hi, 50), lines, notes, units,
+      weeks: [wLo + 1, wHi + 1], arriveLo, arriveHi,
+    };
+  }
+
+  function estimate() {
+    const e = computeEstimate();
+    if (e.empty) {
+      $('#est-total').innerHTML = '—';
+      $('#est-when').textContent = 'Choose products to see a range.';
+    } else {
+      $('#est-total').innerHTML = e.lo ? `${money(e.lo)}–${money(e.hi)} <small>CAD</small>` : '<small>On the call</small>';
+      $('#est-when').textContent = e.arriveLo ? `${fmt(e.arriveLo)} – ${fmtY(e.arriveHi)}` : '—';
+      if (e.weeks && e.lo) $('#est-when').insertAdjacentHTML('beforeend', `<br><span class="hint">about ${e.weeks[0]}–${e.weeks[1]} weeks from today</span>`);
+    }
+    $('#est-lines').innerHTML = (e.lines || []).map((l) => `<li><span>${esc(l.name)}</span><span>${esc(l.text)}</span></li>`).join('');
+    $('#est-notes').innerHTML = (e.notes || []).map((n) => `<p class="note${n.warn ? ' warn' : ''}">${esc(n.t)}</p>`).join('');
+    return e;
+  }
+  $('#f-date').addEventListener('input', estimate);
+
+  // ---------- steps ----------
+  const LABELS = ['You', 'Products', 'Brand', 'Details', 'Estimate'];
+  const stepper = $('#stepper');
+  function renderStepper() {
+    stepper.innerHTML = LABELS.map((l, i) => `<button type="button" data-go="${i}" ${i === state.step ? 'aria-current="step"' : ''} class="${i < state.reached && i !== state.step ? 'done' : ''}" ${i > state.reached ? 'disabled' : ''}><span class="k">${i + 1}</span>${l}</button>`).join('');
+  }
+  stepper.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b && !b.disabled) go(+b.dataset.go); });
+
+  function go(n) {
+    state.step = n; state.reached = Math.max(state.reached, n);
+    document.querySelectorAll('.step').forEach((s) => { s.hidden = +s.dataset.step !== n; });
+    $('#back').style.visibility = n === 0 ? 'hidden' : 'visible';
+    $('#next').innerHTML = n === 4 ? 'Send brief &amp; book a call <span aria-hidden="true">→</span>' : 'Next <span aria-hidden="true">→</span>';
+    if (n === 1 && !Object.keys(state.items).length) renderLines();
+    if (n === 2 && !state.palette.length) setPalette(SUGGESTED[state.business || 'Other'], 'suggested');
+    if (n === 4) renderSummary();
+    renderStepper();
+    try { localStorage.setItem('merch-step', String(n)); } catch {}
+  }
+
+  function setErr(id, msg) { const e = $('#e-' + id); if (e) e.textContent = msg; const f = e && e.closest('.field'); if (f) f.classList.toggle('bad', !!msg); return !msg; }
+  function validate(n) {
+    if (n === 0) {
+      const a = setErr('name', $('#f-name').value.trim() ? '' : 'Please add your name.');
+      const b = setErr('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('#f-email').value.trim()) ? '' : 'Please add an email I can reply to.');
+      const c = setErr('company', $('#f-company').value.trim() ? '' : 'Please add your business name.');
+      return a && b && c;
+    }
+    if (n === 1) {
+      const ok = Object.entries(state.items).some(([id, it]) => id === 'other' ? it.ideas.some((d) => d.text.trim()) : +it.qty > 0);
+      return setErr('products', ok ? '' : 'Choose at least one product and give it a rough quantity (or describe an idea).');
+    }
+    if (n === 4) return setErr('consent', $('#f-consent').checked ? '' : 'Please tick the box so I can reply to you.');
+    return true;
+  }
+
+  function payload() {
+    const e = computeEstimate();
+    return {
+      sent_at: new Date().toISOString(),
+      contact: { name: $('#f-name').value.trim(), email: $('#f-email').value.trim(), company: $('#f-company').value.trim(), site: $('#f-site').value.trim(), role: $('#f-role').value.trim(), city: $('#f-city').value.trim() },
+      business: state.business, purposes: [...state.purposes],
+      products: Object.entries(state.items).map(([id, it]) => id === 'other'
+        ? { product: 'other', ideas: it.ideas.filter((d) => d.text.trim()) }
+        : { product: id, qty: +it.qty || 0, ...(PRODUCTS.find((p) => p.id === id).textile ? { fit: it.fit, sizes: it.sizes } : {}), ...(it.variant ? { type: it.variant } : {}) }),
+      brand: { palette: state.palette, palette_source: state.paletteSource, logo: state.logo ? { name: state.logo.name, size: state.logo.size } : null, decoration: [...state.deco], guidelines: $('#f-guide').value.trim() },
+      details: { deadline: $('#f-date').value || null, budget: $('#f-budget').value || null, needs: [...state.needs], custom: $('#f-custom').value.trim() },
+      estimate_shown: e.empty ? null : { cad: [e.lo, e.hi], arrives: e.arriveLo ? [e.arriveLo.toISOString().slice(0, 10), e.arriveHi.toISOString().slice(0, 10)] : null },
+      source: new URLSearchParams(location.search).get('ref') || null,
+    };
+  }
+
+  function renderSummary() {
+    const p = payload();
+    const prod = p.products.map((x) => x.product === 'other' ? x.ideas.map((d) => d.text + (d.qty ? ` × ${d.qty}` : '')).join(', ') : `${PRODUCTS.find((q) => q.id === x.product).name} × ${x.qty}`).join('<br>');
+    const rows = [
+      ['Contact', `${esc(p.contact.name)}<br>${esc(p.contact.email)}`],
+      ['Business', esc([p.contact.company, p.business].filter(Boolean).join(' · '))],
+      ['Products', prod || '—'],
+      ['Brand', `${p.brand.logo ? esc(p.brand.logo.name) + '<br>' : ''}<span style="display:inline-flex;gap:4px">${p.brand.palette.map((c) => `<span style="width:18px;height:18px;border-radius:50%;background:${c};border:1px solid #ccc;display:inline-block" title="${c}"></span>`).join('')}</span>`],
+      ['Needed by', p.details.deadline ? fmtY(new Date(p.details.deadline + 'T12:00')) : 'Flexible'],
+      ['Special needs', esc(p.details.needs.join(', ') || '—')],
+    ];
+    $('#summary').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  }
+
+  $('#back').addEventListener('click', () => go(Math.max(0, state.step - 1)));
+  $('#form').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    if (!validate(state.step)) { $('.step:not([hidden]) .bad input, .step:not([hidden]) .err:not(:empty)')?.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+    if (state.step < 4) { go(state.step + 1); $('#brief').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if ($('#f-hp').value) return;                         // a bot filled the hidden field
+    const data = payload();
+    if (SEND_URL) {
+      // Sent as text/plain so the browser makes one simple request (no preflight).
+      try {
+        $('#next').disabled = true; $('#next').textContent = 'Sending…';
+        if (state.logo) data.logo_file = { name: state.logo.name, type: state.logo.type, base64: await toBase64(state.logo.file) };
+        await fetch(SEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
+      } catch { $('#e-consent').textContent = 'That didn\'t go through. Check your connection and try again, or email hello@ecem.world.'; $('#next').disabled = false; return; }
+    }
+    showSent(data);
+  });
+  const toBase64 = (f) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(f); });
+
+  function showSent(data) {
+    $('#form').hidden = true; $('#stepper').hidden = true; $('#sent').hidden = false;
+    $('#sent-copy').textContent = `Thanks, ${data.contact.name.split(' ')[0]}. Your brief for ${data.contact.company} is with me. Pick a time for a 30-minute video call: I'll come with questions, material ideas and a first look at pricing.`;
+    $('#payload').textContent = JSON.stringify(data, null, 2);
+    if (BOOKING_URL) {
+      const u = new URL(BOOKING_URL); u.searchParams.set('name', data.contact.name); u.searchParams.set('email', data.contact.email);
+      u.searchParams.set('notes', `${data.contact.company}: ` + data.products.map((p) => p.product + (p.qty ? ' x' + p.qty : '')).join(', '));
+      $('#slots').innerHTML = `<a class="btn" href="${u}" target="_blank" rel="noopener">Choose a time →</a>`;
+    } else renderSlots();
+    $('#brief').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Mock picker for the draft. In production this is the booking tool's embed.
+  function renderSlots() {
+    const days = []; let d = new Date(); d.setDate(d.getDate() + 2);
+    while (days.length < 5) { if (d.getDay() % 6) days.push(new Date(d)); d.setDate(d.getDate() + 1); }
+    const times = ['10:00', '11:30', '14:00', '16:30'];
+    $('#slots').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><strong style="font:700 18px var(--serif)">30-min call with Ecem</strong><span class="draft-tag">Mock, not connected</span></div>
+      <div class="days">${days.map((x, i) => `<div class="day"><b>${x.toLocaleDateString('en-CA', { weekday: 'short' })}</b><span>${fmt(x)}</span>${times.filter((_, j) => (i + j) % 3).map((t) => `<button type="button" class="slot" aria-pressed="false">${t}</button>`).join('')}</div>`).join('')}</div>
+      <span class="hint">Toronto time · Google Meet link sent by email</span>
+      <button type="button" class="btn" id="confirm" disabled>Confirm time</button>`;
+    $('#slots').addEventListener('click', (e) => {
+      if (e.target.classList.contains('slot')) { $('#slots').querySelectorAll('.slot').forEach((s) => s.setAttribute('aria-pressed', String(s === e.target))); $('#confirm').disabled = false; }
+      if (e.target.id === 'confirm') { e.target.textContent = 'Booked (mock)'; e.target.disabled = true; }
+    });
+  }
+
+  // ---------- draft helper: fill a realistic example ----------
+  $('#demo').addEventListener('click', () => {
+    $('#f-name').value = 'Maya Chen'; $('#f-email').value = 'maya@corestudio.example'; $('#f-company').value = 'Core Pilates (example)';
+    $('#f-site').value = '@corepilates.example'; $('#f-role').value = 'Owner'; $('#f-city').value = 'Toronto';
+    const pick = (sel, v) => { const i = document.querySelector(`${sel} input[value="${v}"]`); if (i && !i.checked) { i.checked = true; i.dispatchEvent(new Event('change', { bubbles: true })); } };
+    pick('#biz', 'Pilates / yoga studio'); pick('#purpose', 'Sell to customers'); pick('#purpose', 'Staff uniforms');
+    ['tshirt', 'tote', 'towel', 'other'].forEach((id) => pick('#tiles', id));
+    state.items.tshirt.qty = 120; state.items.tote.qty = 150; state.items.towel.qty = 60; state.items.towel.variant = 'Gym / pilates';
+    state.items.other.ideas = [{ text: 'Grip socks with our logo', qty: '200' }];
+    state.items.tshirt.qty = 120; let left = 120; SIZES.forEach((s) => { state.items.tshirt.sizes[s] = Math.floor(120 * TYPICAL_SPLIT[s]); left -= state.items.tshirt.sizes[s]; }); state.items.tshirt.sizes.M += left;
+    pick('#deco', 'Embroidery'); pick('#needs', 'Sustainable / organic materials');
+    $('#f-custom').value = 'Logo small on the chest, studio address on the back. Totes in our sage green.';
+    const dl = addWeeks(new Date(), 10); $('#f-date').value = dl.toISOString().slice(0, 10);
+    renderLines(); estimate(); go(1); $('#brief').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ?ref=pilates in a cold email link preselects the business type.
+  const REF = { pilates: 'Pilates / yoga studio', yoga: 'Pilates / yoga studio', coffee: 'Coffee shop', cafe: 'Coffee shop', salon: 'Beauty salon / spa', spa: 'Beauty salon / spa', startup: 'Startup', vc: 'VC fund', pr: 'PR / creative agency', agency: 'PR / creative agency', tech: 'Tech company' };
+  const ref = REF[(new URLSearchParams(location.search).get('ref') || '').toLowerCase()];
+  if (ref) { const i = document.querySelector(`#biz input[value="${ref}"]`); if (i) { i.checked = true; state.business = ref; } }
+
+  go(0); estimate();
+})();
+</script>
 </body>
 </html>

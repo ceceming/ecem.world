@@ -308,5 +308,9 @@ placeholder.
 - `/portfolio/` — the feed (what used to be the home page), filled from
   `content/*.json` by `assets/site.js`. Old links of the form
   `ecem.world/#/a-project` are forwarded here.
-- `/merch/` — holding page for the merch offer.
+- `/merch/` — the merch inquiry page: a five-step brief with a live ballpark
+  price and delivery window, logo colour extraction, then booking a call. All
+  in `merch/index.html`. `SEND_URL` and `BOOKING_URL` at the top of its script
+  connect it to the outside world; while they are empty nothing is sent.
+  Only customer-facing price ranges belong in that file: the repo is public.
 - `/orbit/` — old preview address, now forwards to `/`.
