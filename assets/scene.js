@@ -178,7 +178,14 @@ function makePlaceholder() {
 }
 
 async function loadModel() {
-  for (const url of MODEL_CANDIDATES) {
+  // The usual file first, straight away: no existence check, so it can use
+  // the copy the page already started downloading (see the <link rel=preload>).
+  try {
+    const object = await loadGLTF(MODEL_CANDIDATES[0]);
+    console.info('Loaded model:', MODEL_CANDIDATES[0]);
+    return object;
+  } catch (err) { /* not there: look through the other names below */ }
+  for (const url of MODEL_CANDIDATES.slice(1)) {
     if (!(await fileExists(url))) continue;
     try {
       const object = url.endsWith('.obj') ? await loadOBJ(url) : await loadGLTF(url);
@@ -370,6 +377,9 @@ export async function createScene(container) {
 
   applyPose(poseAt(0));
   renderer.render(scene, camera);
+  // Once the first frame is on screen, the page can swap any still stand-in
+  // for the live logo (it matches this first frame exactly).
+  requestAnimationFrame(() => container.classList.add('live'));
   start();
 
   return { scene, camera, renderer, pivot, start, stop };
