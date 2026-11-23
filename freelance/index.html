@@ -102,6 +102,25 @@
   .cta a:hover { background: linear-gradient(90deg, hsl(150 85% 55% / 0.34), hsl(220 85% 55% / 0.34)); }
   .cta .fine { margin: 22px 0 0; color: var(--faint); }
 
+
+  /* Ways in: the main button, a quieter link, and per-service enquiries. */
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; margin: 32px 0 0; }
+  .btn { display: inline-block; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--hl); padding: 8px 14px; transition: background 200ms ease; }
+  .btn:hover { background: linear-gradient(90deg, hsl(150 85% 55% / 0.34), hsl(220 85% 55% / 0.34)); }
+  .enquire { display: inline-block; margin-top: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--faint); transition: color 150ms ease, border-color 150ms ease; }
+  .enquire:hover { color: var(--fg); border-bottom-color: var(--fg); }
+  .copy { margin-left: 10px; color: var(--dim); font: inherit; letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; background: none; border: 0; border-bottom: 1px solid var(--faint); padding: 0; cursor: pointer; }
+  .copy:hover { color: var(--fg); }
+  .brief { margin: 24px auto 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; color: var(--dim); }
+  /* Phones: the way in stays on screen. */
+  .dock { display: none; }
+  @media (max-width: 760px) {
+    .enquire { margin-top: 2px; margin-left: 12px; }
+    .dock { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--rule); text-align: center; }
+    .dock .btn { width: 100%; }
+    main { padding-bottom: 120px; }
+  }
+
   /* Phones: every row stacks; the price sits under the service. */
   @media (max-width: 760px) {
     .intro { padding: 48px 0 32px; }
@@ -126,7 +145,7 @@
 
 <header class="bar caps">
   <a href="/">← Ecem's World</a>
-  <a href="mailto:hello@ecem.world?subject=Freelance%20enquiry">hello@ecem.world</a>
+  <a href="mailto:hello@ecem.world?subject=Project%20enquiry&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Start a project</a>
 </header>
 
 <main>
@@ -139,6 +158,10 @@
       <li>Prices in <b>CAD</b></li>
       <li><b>Introductory</b> rates</li>
     </ul>
+    <div class="actions">
+      <a class="btn" href="mailto:hello@ecem.world?subject=Project%20enquiry&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">[ Start a project ]</a>
+      <a class="line-link caps" href="/portfolio/">See the work →</a>
+    </div>
   </div>
 
   <nav class="index caps" aria-label="On this page">
@@ -158,42 +181,42 @@
       <div class="row">
         <div><p class="name">Landing page</p><p class="scope">1 page, mobile-ready, contact or sign-up form, basic search setup (page titles, descriptions) <span class="hours">· ~20 h</span></p></div>
         <p class="problem">You need one clear page to explain the offer and collect leads, fast.</p>
-        <div class="price">$950</div>
+        <div class="price">$950<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Landing%20page&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Sign-up / waitlist page</p><p class="scope">1 page + email list connection (Mailchimp, Substack, Kit) <span class="hours">· ~12 h</span></p></div>
         <p class="problem">You're pre-launch and need to start building an audience now.</p>
-        <div class="price">$575</div>
+        <div class="price">$575<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Sign-up%20/%20waitlist%20page&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Starter website</p><p class="scope">Up to 5 pages: Home, About, Services, Basic Blog, Contact <span class="hours">· ~40 h</span></p></div>
         <p class="problem">You have no site, or a DIY one that undersells you.</p>
-        <div class="price">$1,900</div>
+        <div class="price">$1,900<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Starter%20website&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Business / portfolio website</p><p class="scope">6–10 pages, blog + CMS, booking or gallery, basic search setup <span class="hours">· ~70 h</span></p></div>
         <p class="problem">Your business has outgrown a starter site and needs room for content.</p>
-        <div class="price">$3,350</div>
+        <div class="price">$3,350<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Business%20/%20portfolio%20website&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Shopify store</p><p class="scope">Theme customization, up to 25 products, payments, shipping, launch <span class="hours">· ~60 h</span></p></div>
         <p class="problem">You want to start selling online without building from scratch.</p>
-        <div class="price">$2,900</div>
+        <div class="price">$2,900<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Shopify%20store&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Custom e-commerce</p><p class="scope">Custom-designed Shopify store, 25+ products, collections, integrations <span class="hours">· ~100+ h</span></p></div>
         <p class="problem">Your brand needs a store that looks and works unlike a template.</p>
-        <div class="price"><small>from</small>$4,800</div>
+        <div class="price"><small>from</small>$4,800<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Custom%20e-commerce&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Website refresh</p><p class="scope">Redesign of an existing site, up to 4 pages <span class="hours">· ~30 h</span></p></div>
         <p class="problem">Your site works but looks dated or off-brand.</p>
-        <div class="price">$1,450</div>
+        <div class="price">$1,450<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Website%20refresh&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Website care plan</p><p class="scope">Monthly updates, edits, backups, up to 4 h/month</p></div>
         <p class="problem">You don't have time to keep the site current.</p>
-        <div class="price">$190<small>per month</small></div>
+        <div class="price">$190<small>per month</small><br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Website%20care%20plan&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
     </div>
 
@@ -203,17 +226,17 @@
       <div class="row">
         <div><p class="name">Substack launch</p><p class="scope">Publication design (logo, header, colours), About page, welcome email, sections, first post written for you <span class="hours">· ~12 h</span></p></div>
         <p class="problem">You want a newsletter but don't know where to start.</p>
-        <div class="price">$575</div>
+        <div class="price">$575<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Substack%20launch&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Substack Lite</p><p class="scope">2 posts/month written for you, scheduling, basic engagement <span class="hours">· ~17 h/month</span></p></div>
         <p class="problem">You need a steady presence without a big commitment.</p>
-        <div class="price">$815<small>per month</small></div>
+        <div class="price">$815<small>per month</small><br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Substack%20Lite&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Substack Growth</p><p class="scope">4 weekly posts written for you, content curation, comments and Notes engagement, cross-promotion, monthly report <span class="hours">· ~30 h/month</span></p></div>
         <p class="problem">Your venture needs consistent exposure but you have no time to write.</p>
-        <div class="price">$1,440<small>per month</small></div>
+        <div class="price">$1,440<small>per month</small><br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Substack%20Growth&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
     </div>
 
@@ -223,22 +246,22 @@
       <div class="row">
         <div><p class="name">Logo refresh</p><p class="scope">3 concepts, 2 revision rounds, final files for print and web <span class="hours">· ~30 h</span></p></div>
         <p class="problem">Your logo looks dated or doesn't fit where the brand is going.</p>
-        <div class="price">$1,440</div>
+        <div class="price">$1,440<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Logo%20refresh&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Brand refresh package</p><p class="scope">Logo, colour palette, typography, mini brand guide <span class="hours">· ~55 h</span></p></div>
         <p class="problem">Your brand looks inconsistent across channels.</p>
-        <div class="price">$2,640</div>
+        <div class="price">$2,640<br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Brand%20refresh%20package&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Packaging design</p><p class="scope">Per SKU, dieline layout, print-ready files <span class="hours">· ~15 h</span></p></div>
         <p class="problem">Your product doesn't stand out on the shelf or online.</p>
-        <div class="price">$720<small>per SKU</small></div>
+        <div class="price">$720<small>per SKU</small><br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Packaging%20design&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
       <div class="row">
         <div><p class="name">Merch design</p><p class="scope">Per item (t-shirt, tote, cap, stickers), print-ready files <span class="hours">· ~5 h</span></p></div>
         <p class="problem">You want merch that feels like the brand, not a template.</p>
-        <div class="price">$240<small>per item</small></div>
+        <div class="price">$240<small>per item</small><br><a class="enquire" href="mailto:hello@ecem.world?subject=Enquiry%3A%20Merch%20design&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">Enquire</a></div>
       </div>
     </div>
   </section>
@@ -295,12 +318,26 @@
     </dl>
   </section>
 
-  <div class="cta">
+  <div class="cta" id="contact">
     <p class="caps">Tell me about your project</p>
-    <a href="mailto:hello@ecem.world?subject=Freelance%20enquiry">[ hello@ecem.world ]</a>
-    <p class="fine caps">A written quote follows the discovery call · Quotes are valid for 30 days</p>
+    <a href="mailto:hello@ecem.world?subject=Project%20enquiry&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">[ hello@ecem.world ]</a><button class="copy" type="button" data-copy="hello@ecem.world">Copy</button>
+    <ul class="brief caps" aria-label="Useful to include">
+      <li style="color: var(--faint)">Useful to include:</li><li>What you need</li><li>Your business</li><li>Budget range</li><li>Timeline</li><li>Links</li>
+    </ul>
+    <p class="fine caps">Next: a discovery call, then a written quote · Quotes are valid for 30 days</p>
   </div>
 </main>
+
+<div class="dock"><a class="btn" href="mailto:hello@ecem.world?subject=Project%20enquiry&amp;body=Hi%20Ecem%2C%0A%0AName%3A%0ABusiness%20/%20brand%3A%0AService%28s%29%20I%27m%20interested%20in%3A%0ABudget%20range%3A%0AIdeal%20timeline%3A%0ALinks%20%28current%20site%2C%20socials%29%3A%0A%0AA%20bit%20about%20the%20project%3A%0A%0A">[ Start a project ]</a></div>
+
+<script>
+  // Copy the address, for people whose email links don't open an app.
+  document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copied'; }
+    catch (e) { b.textContent = b.dataset.copy; }
+    setTimeout(() => { b.textContent = 'Copy'; }, 1800);
+  }));
+</script>
 
 </body>
 </html>
