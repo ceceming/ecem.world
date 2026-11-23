@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- The corner logo's files start downloading at once, not one after another. -->
+<link rel="preload" href="/model/model.glb" as="fetch" crossorigin="anonymous">
+<link rel="modulepreload" href="/vendor/three/three.module.js">
+<link rel="modulepreload" href="/assets/scene.js?v=20261124a">
+<link rel="modulepreload" href="/vendor/three/loaders/GLTFLoader.js">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
 <title>Portfolio — Ecem Öztürk</title>
 <meta name="description" content="Ecem Öztürk — art director and designer, Toronto.">
@@ -115,7 +120,7 @@
 </script>
 
 <script type="module">
-  import { createScene } from '/assets/scene.js?v=20261118a';
+  import { createScene } from '/assets/scene.js?v=20261124a';
 
   const root = document.documentElement;
   const stage = document.getElementById('stage');
