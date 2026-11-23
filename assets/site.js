@@ -99,9 +99,11 @@
       const full = src(m.src);
       const light = PHONE && /\.(mp4|m4v|mov)$/i.test(m.src) && !/^https?:/.test(m.src)
         ? full.replace(/\.(mp4|m4v|mov)$/i, '-phone.mp4') : full;
-      inner = `<video src="${esc(light)}" ${m.poster ? `poster="${esc(src(m.poster))}"` : ''}
-        ${light !== full ? `onerror="if(!this.dataset.full){this.dataset.full=1;this.src='${esc(full)}'}"` : ''}
-        autoplay muted loop playsinline preload="metadata" aria-label="${esc(m.alt)}"></video>`;
+      // Only the first posts' videos load at once; the rest get their file
+      // when scrolled near (see watchVideos), then autoplay as usual.
+      inner = `<video ${eager ? 'src' : 'data-src'}="${esc(light)}" ${m.poster ? `poster="${esc(src(m.poster))}"` : ''}
+        ${light !== full ? `onerror="if(this.getAttribute('src')&&!this.dataset.full){this.dataset.full=1;this.src='${esc(full)}'}"` : ''}
+        autoplay muted loop playsinline preload="${eager ? 'metadata' : 'none'}" aria-label="${esc(m.alt)}"></video>`;
     } else if (m.type === 'html') {
       // An HTML piece runs sealed off from the site (no access to its pages
       // or to the studio's sign-in), and loads only when scrolled near.
@@ -116,6 +118,42 @@
     }
     return `<div class="frame" style="--r:${r.toFixed(4)};--sz:${SIZE[m.size] || 1}">${inner}</div>`;
   }
+
+  // Substack covers come at full size (often 1–2 MB; one GIF is 18 MB); ask
+  // Substack's own image service for a copy sized for the feed. Animated
+  // GIFs become animated WebP: every frame kept, about a third of the weight.
+  function coverSrc(url) {
+    if (!url) return url;
+    const gif = /\.gif($|\?)/i.test(decodeURIComponent(url));
+    const W = gif ? 'f_webp' : 'w_900,c_limit,f_auto,q_auto:good';
+    // Already from Substack's image service: take the original address out
+    // (its options are signed, so they aren't edited) and size it afresh.
+    const fetched = url.match(/^https:\/\/substackcdn\.com\/image\/fetch\/[^/]+\/(https?%3A.+)$/i);
+    if (fetched) url = decodeURIComponent(fetched[1]);
+    if (/^https:\/\/substack-post-media\.s3\.amazonaws\.com\//.test(url)) {
+      return `https://substackcdn.com/image/fetch/${W}/${encodeURIComponent(url)}`;
+    }
+    return url;
+  }
+
+  // Videos further down get their file only when they come within about
+  // half a screen of view (or into a gallery's reach), so the first
+  // screen isn't waiting behind every video on the page.
+  const nearVideo = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const v = e.target; nearVideo.unobserve(v);
+      v.preload = 'metadata'; v.src = v.dataset.src; v.removeAttribute('data-src');
+      const go = v.play(); if (go && go.catch) go.catch(() => {});
+    });
+  }, { rootMargin: '60% 100%' }) : null;
+  function watchVideos(root) {
+    (root || document).querySelectorAll('video[data-src]').forEach((v) => {
+      if (nearVideo) nearVideo.observe(v);
+      else { v.src = v.dataset.src; v.removeAttribute('data-src'); }
+    });
+  }
+  new MutationObserver(() => watchVideos()).observe(document.documentElement, { childList: true, subtree: true });
 
   const badge = (p) => (PREVIEW && p.status !== 'published' ? `<span class="badge">${esc(p.status)}</span>` : '');
 
@@ -210,7 +248,7 @@
             <div class="w-meta"><span>${p.fromSubstack ? 'Substack' : 'Writing'}${badge(p)}</span><span>${p.date ? esc(fmtDate(p.date)) : ''}</span></div>
             <h2>${esc(p.title)}</h2>
             ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
-            ${p.image ? `<div class="w-cover"><img src="${esc(p.image)}" alt="" loading="lazy"></div>` : ''}
+            ${p.image ? `<div class="w-cover"><img src="${esc(coverSrc(p.image))}" alt="" loading="lazy"></div>` : ''}
             <span class="go">${p.repost || !p.url ? 'Read' : 'Read on Substack ↗'}</span>
           </a></article>`;
       }
@@ -440,7 +478,7 @@
     const stage = lightbox.querySelector('.lb-stage');
     stage.innerHTML = img
       ? `<img src="${esc(img.getAttribute('src'))}" alt="${esc(img.alt)}">`
-      : `<video src="${esc(vid.getAttribute('src'))}" autoplay loop playsinline controls></video>`;
+      : `<video src="${esc(vid.getAttribute('src') || vid.dataset.src)}" autoplay loop playsinline controls></video>`;
     if (vid) stage.querySelector('video').muted = vid.muted;
     const count = lightbox.querySelector('.lb-count');
     if (count) count.textContent = `${at + 1} / ${gallery.length}`;
