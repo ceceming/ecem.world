@@ -24,6 +24,10 @@
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Where "three" lives: must come before anything loads the 3D code. -->
+<script type="importmap">
+{ "imports": { "three": "/vendor/three/three.module.js" } }
+</script>
 <!-- The logo arrives first: its still frame straight away, and everything the
      live 3D logo needs downloading at once rather than one after another. -->
 <link rel="preload" href="/assets/logo-still.webp" as="image" fetchpriority="high">
@@ -191,9 +195,6 @@
   <nav id="bodies" aria-label="Pages"></nav>
 </main>
 
-<script type="importmap">
-{ "imports": { "three": "/vendor/three/three.module.js" } }
-</script>
 
 <script type="module">
   // The 3D logo is fetched on the side, so the opening doesn't wait for it.
