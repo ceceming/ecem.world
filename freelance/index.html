@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Holding page for freelance services; to be built out. -->
+<!-- Freelance services, prices and terms (from Ecem's quote, 23 Nov 2026).
+     The phone number on the quote is left off on purpose: no personal
+     number on public pages. The per-client quote form (page 3) is not here. -->
 <title>Freelance Services — Ecem Öztürk</title>
-<meta name="description" content="Freelance art direction and design by Ecem Öztürk.">
+<meta name="description" content="Freelance art direction, brand and web design by Ecem Öztürk in Toronto: services, prices, timelines and terms.">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
@@ -13,20 +15,292 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..700;1,300..700&display=swap">
 <style>
-  html, body { margin: 0; min-height: 100%; background: #000; color: #fff; }
-  body { font: 400 13px/1.4 "Jost", Helvetica, Arial, sans-serif; min-height: 100dvh; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-  h1 { margin: 0 0 18px; font-size: clamp(18px, 4vw, 30px); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
-  h1 span { background: linear-gradient(90deg, hsl(150 85% 55% / 0.2), hsl(220 85% 55% / 0.2)); padding: 2px 8px; }
-  p { margin: 0 0 32px; color: rgba(255,255,255,0.6); letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; }
-  a { color: #fff; letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
-  a:hover { border-bottom-color: #fff; }
+  /* The site's own tokens (see assets/site.css). */
+  :root {
+    color-scheme: dark;
+    --bg: #000; --fg: #fff;
+    --dim: rgba(255, 255, 255, 0.52);
+    --faint: rgba(255, 255, 255, 0.3);
+    --rule: rgba(255, 255, 255, 0.16);
+    --font: "Jost", Helvetica, Arial, sans-serif;
+    --hl: linear-gradient(90deg, hsl(150 85% 55% / 0.2), hsl(220 85% 55% / 0.2));
+    --pad: 18px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body { font: 400 13px/1.5 var(--font); letter-spacing: 0.01em; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 1px solid var(--dim); outline-offset: 3px; }
+
+  .caps { text-transform: uppercase; letter-spacing: 0.12em; font-size: 11px; }
+  .line-link { border-bottom: 1px solid var(--faint); padding-bottom: 1px; transition: border-color 150ms ease; }
+  .line-link:hover { border-bottom-color: var(--fg); }
+
+  /* Top bar: home on the left, email on the right, on a hairline. */
+  .bar {
+    position: sticky; top: 0; z-index: 5; background: var(--bg);
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 16px var(--pad) 12px; border-bottom: 1px solid var(--rule);
+  }
+  .bar a { color: var(--dim); transition: color 150ms ease; }
+  .bar a:hover { color: var(--fg); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 0 var(--pad) 96px; }
+
+  /* Opening. */
+  .intro { padding: 72px 0 40px; }
+  h1 { margin: 0 0 20px; font-size: clamp(20px, 4vw, 34px); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+  h1 span { background: var(--hl); padding: 2px 10px; }
+  .intro .sub { margin: 0 0 28px; color: var(--dim); }
+  .intro .lead { margin: 0; max-width: 40em; font-size: 16px; line-height: 1.5; }
+  .facts { margin: 28px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 28px; color: var(--dim); }
+  .facts b { font-weight: 400; color: var(--fg); }
+
+  /* In-page index. */
+  .index { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .index a { color: var(--dim); transition: color 150ms ease; }
+  .index a:hover { color: var(--fg); }
+
+  section { padding-top: 64px; scroll-margin-top: 56px; }
+  h2 { margin: 0 0 6px; font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); }
+  h3 { margin: 0 0 4px; font-size: 22px; font-weight: 400; letter-spacing: 0.01em; }
+  .note { margin: 0 0 18px; color: var(--dim); max-width: 44em; }
+
+  /* Service rows: what it is | the problem it solves | price. */
+  .head, .row { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) 150px; gap: 24px; }
+  .head { padding: 8px 0; border-bottom: 1px solid var(--rule); color: var(--faint); }
+  .head span:last-child, .price { text-align: right; }
+  .row { padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .row .name { margin: 0 0 3px; font-size: 15px; }
+  .row .scope { margin: 0; color: var(--dim); }
+  .row .hours { color: var(--faint); white-space: nowrap; }
+  .row .problem { margin: 0; }
+  .price { font-size: 15px; white-space: nowrap; }
+  .price small { display: block; font-size: 11px; color: var(--dim); }
+  .group + .group { margin-top: 44px; }
+
+  /* Timelines: three columns on the same hairlines. */
+  .tl .head, .tl .row { grid-template-columns: minmax(0, 1fr) 170px minmax(0, 1.4fr); }
+  .tl .head span:last-child { text-align: left; }
+  .tl .row { padding: 12px 0; }
+
+  /* Process: five steps in a line. */
+  .steps { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+  .steps li { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule); }
+  .steps li span { display: block; color: var(--faint); margin-bottom: 4px; }
+
+  /* Terms: label | text. */
+  dl.terms { margin: 0; display: grid; grid-template-columns: 200px minmax(0, 1fr); border-top: 1px solid var(--rule); }
+  dl.terms dt, dl.terms dd { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  dl.terms dt { color: var(--dim); padding-right: 16px; }
+  dl.terms dd { max-width: 46em; }
+
+  /* The way in. */
+  .cta { margin-top: 80px; padding: 40px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-align: center; }
+  .cta p { margin: 0 0 18px; color: var(--dim); }
+  .cta a { display: inline-block; font-size: clamp(15px, 2.4vw, 20px); letter-spacing: 0.08em; text-transform: uppercase; background: var(--hl); padding: 6px 14px; transition: background 200ms ease; }
+  .cta a:hover { background: linear-gradient(90deg, hsl(150 85% 55% / 0.34), hsl(220 85% 55% / 0.34)); }
+  .cta .fine { margin: 22px 0 0; color: var(--faint); }
+
+  /* Phones: every row stacks; the price sits under the service. */
+  @media (max-width: 760px) {
+    .intro { padding: 48px 0 32px; }
+    .intro .lead { font-size: 15px; }
+    .head { display: none; }
+    .row, .tl .row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .price { text-align: left; }
+    .price small { display: inline; margin-left: 6px; }
+    .row .problem { color: var(--fg); }
+    .row .problem::before { content: "Solves: "; color: var(--faint); }
+    .tl .row span:nth-child(2) { color: var(--dim); }
+    .steps { grid-template-columns: minmax(0, 1fr); }
+    .steps li { display: flex; gap: 12px; padding-right: 0; }
+    .steps li span { margin: 0; }
+    dl.terms { grid-template-columns: minmax(0, 1fr); }
+    dl.terms dt { padding-bottom: 0; border-bottom: 0; }
+    dl.terms dd { padding-top: 4px; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1><span>[ Freelance Services ]</span></h1>
-  <p>Coming soon</p>
+
+<header class="bar caps">
   <a href="/">← Ecem's World</a>
+  <a href="mailto:hello@ecem.world?subject=Freelance%20enquiry">hello@ecem.world</a>
+</header>
+
+<main>
+  <div class="intro">
+    <h1><span>[ Freelance Services ]</span></h1>
+    <p class="sub caps">Art Direction, Brand &amp; Web Design · Toronto, ON</p>
+    <p class="lead">Flat rates are fixed for the scope described and include 2 rounds of revisions. The hourly rate applies to extra revisions, added scope and small one-off requests. Estimated hours are shown.</p>
+    <ul class="facts caps">
+      <li>Hourly rate <b>$48/h</b></li>
+      <li>Prices in <b>CAD</b></li>
+      <li><b>Introductory</b> rates</li>
+    </ul>
+  </div>
+
+  <nav class="index caps" aria-label="On this page">
+    <a href="#services">Services &amp; Pricing</a>
+    <a href="#timelines">Timelines</a>
+    <a href="#process">Process</a>
+    <a href="#payment">Payment</a>
+    <a href="#terms">Terms</a>
+  </nav>
+
+  <section id="services" aria-labelledby="h-services">
+    <h2 id="h-services">Services &amp; Pricing</h2>
+
+    <div class="group">
+      <h3>Web Design</h3>
+      <div class="head caps" aria-hidden="true"><span>Service</span><span>Problem solved</span><span>Flat rate</span></div>
+      <div class="row">
+        <div><p class="name">Landing page</p><p class="scope">1 page, mobile-ready, contact or sign-up form, basic search setup (page titles, descriptions) <span class="hours">· ~20 h</span></p></div>
+        <p class="problem">You need one clear page to explain the offer and collect leads, fast.</p>
+        <div class="price">$950</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Sign-up / waitlist page</p><p class="scope">1 page + email list connection (Mailchimp, Substack, Kit) <span class="hours">· ~12 h</span></p></div>
+        <p class="problem">You're pre-launch and need to start building an audience now.</p>
+        <div class="price">$575</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Starter website</p><p class="scope">Up to 5 pages: Home, About, Services, Basic Blog, Contact <span class="hours">· ~40 h</span></p></div>
+        <p class="problem">You have no site, or a DIY one that undersells you.</p>
+        <div class="price">$1,900</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Business / portfolio website</p><p class="scope">6–10 pages, blog + CMS, booking or gallery, basic search setup <span class="hours">· ~70 h</span></p></div>
+        <p class="problem">Your business has outgrown a starter site and needs room for content.</p>
+        <div class="price">$3,350</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Shopify store</p><p class="scope">Theme customization, up to 25 products, payments, shipping, launch <span class="hours">· ~60 h</span></p></div>
+        <p class="problem">You want to start selling online without building from scratch.</p>
+        <div class="price">$2,900</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Custom e-commerce</p><p class="scope">Custom-designed Shopify store, 25+ products, collections, integrations <span class="hours">· ~100+ h</span></p></div>
+        <p class="problem">Your brand needs a store that looks and works unlike a template.</p>
+        <div class="price"><small>from</small>$4,800</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Website refresh</p><p class="scope">Redesign of an existing site, up to 4 pages <span class="hours">· ~30 h</span></p></div>
+        <p class="problem">Your site works but looks dated or off-brand.</p>
+        <div class="price">$1,450</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Website care plan</p><p class="scope">Monthly updates, edits, backups, up to 4 h/month</p></div>
+        <p class="problem">You don't have time to keep the site current.</p>
+        <div class="price">$190<small>per month</small></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Substack for Founders</h3>
+      <div class="head caps" aria-hidden="true"><span>Service</span><span>Problem solved</span><span>Flat rate</span></div>
+      <div class="row">
+        <div><p class="name">Substack launch</p><p class="scope">Publication design (logo, header, colours), About page, welcome email, sections, first post written for you <span class="hours">· ~12 h</span></p></div>
+        <p class="problem">You want a newsletter but don't know where to start.</p>
+        <div class="price">$575</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Substack Lite</p><p class="scope">2 posts/month written for you, scheduling, basic engagement <span class="hours">· ~17 h/month</span></p></div>
+        <p class="problem">You need a steady presence without a big commitment.</p>
+        <div class="price">$815<small>per month</small></div>
+      </div>
+      <div class="row">
+        <div><p class="name">Substack Growth</p><p class="scope">4 weekly posts written for you, content curation, comments and Notes engagement, cross-promotion, monthly report <span class="hours">· ~30 h/month</span></p></div>
+        <p class="problem">Your venture needs consistent exposure but you have no time to write.</p>
+        <div class="price">$1,440<small>per month</small></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Brand Refresh</h3>
+      <div class="head caps" aria-hidden="true"><span>Service</span><span>Problem solved</span><span>Flat rate</span></div>
+      <div class="row">
+        <div><p class="name">Logo refresh</p><p class="scope">3 concepts, 2 revision rounds, final files for print and web <span class="hours">· ~30 h</span></p></div>
+        <p class="problem">Your logo looks dated or doesn't fit where the brand is going.</p>
+        <div class="price">$1,440</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Brand refresh package</p><p class="scope">Logo, colour palette, typography, mini brand guide <span class="hours">· ~55 h</span></p></div>
+        <p class="problem">Your brand looks inconsistent across channels.</p>
+        <div class="price">$2,640</div>
+      </div>
+      <div class="row">
+        <div><p class="name">Packaging design</p><p class="scope">Per SKU, dieline layout, print-ready files <span class="hours">· ~15 h</span></p></div>
+        <p class="problem">Your product doesn't stand out on the shelf or online.</p>
+        <div class="price">$720<small>per SKU</small></div>
+      </div>
+      <div class="row">
+        <div><p class="name">Merch design</p><p class="scope">Per item (t-shirt, tote, cap, stickers), print-ready files <span class="hours">· ~5 h</span></p></div>
+        <p class="problem">You want merch that feels like the brand, not a template.</p>
+        <div class="price">$240<small>per item</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timelines" class="tl" aria-labelledby="h-tl">
+    <h2 id="h-tl">Timelines &amp; Deliverables</h2>
+    <p class="note">Work starts once the deposit is paid and all content (text, photos, logins) has been sent. Timelines assume feedback within 3 business days.</p>
+    <div class="head caps" aria-hidden="true"><span>Service</span><span>Typical timeline</span><span>What you receive</span></div>
+    <div class="row"><span>Landing or sign-up page</span><span>1–2 weeks</span><span>Live page, form connected, 1 walkthrough call</span></div>
+    <div class="row"><span>Starter website</span><span>3–4 weeks</span><span>Live site, blog set up, CMS training video</span></div>
+    <div class="row"><span>Business / portfolio website</span><span>5–7 weeks</span><span>Live site, basic search setup, CMS training</span></div>
+    <div class="row"><span>Shopify store</span><span>4–6 weeks</span><span>Live store, products loaded, payments and shipping tested</span></div>
+    <div class="row"><span>Custom e-commerce</span><span>8–12 weeks</span><span>Custom store design, launch support for 2 weeks</span></div>
+    <div class="row"><span>Substack launch</span><span>1–2 weeks</span><span>Designed publication, welcome email, first post live</span></div>
+    <div class="row"><span>Substack monthly plans</span><span>Ongoing, monthly</span><span>Posts on schedule, monthly engagement report</span></div>
+    <div class="row"><span>Logo refresh</span><span>2–3 weeks</span><span>Logo files (SVG, PNG, PDF), colour and mono versions</span></div>
+    <div class="row"><span>Brand refresh package</span><span>4–5 weeks</span><span>Logo suite, palette, fonts, brand guide PDF</span></div>
+    <div class="row"><span>Packaging / merch</span><span>1–3 weeks per item</span><span>Print-ready files to the printer's specs</span></div>
+  </section>
+
+  <section id="process" aria-labelledby="h-process">
+    <h2 id="h-process">Process</h2>
+    <ol class="steps">
+      <li><span class="caps">01</span>Discovery call</li>
+      <li><span class="caps">02</span>Moodboard / direction</li>
+      <li><span class="caps">03</span>First design</li>
+      <li><span class="caps">04</span>2 revision rounds</li>
+      <li><span class="caps">05</span>Final files or launch</li>
+    </ol>
+  </section>
+
+  <section id="payment" aria-labelledby="h-payment">
+    <h2 id="h-payment">Payment Terms</h2>
+    <dl class="terms">
+      <dt>Deposit</dt><dd>50% upfront to book the project; 50% on final delivery or launch. Projects over $3,000: 40% deposit, 30% at design approval, 30% at launch.</dd>
+      <dt>Monthly plans</dt><dd>Billed on the 1st of each month, in advance. Minimum 3 months; cancel with 30 days' notice.</dd>
+      <dt>Due date</dt><dd>Invoices are due within 14 days.</dd>
+      <dt>Late payments</dt><dd>1.5% per month on overdue balances; work pauses after 14 days overdue.</dd>
+      <dt>Payment methods</dt><dd>Interac e-Transfer or bank transfer; credit card via Stripe (+3% processing).</dd>
+    </dl>
+  </section>
+
+  <section id="terms" aria-labelledby="h-terms">
+    <h2 id="h-terms">Terms</h2>
+    <dl class="terms">
+      <dt>Revisions</dt><dd>2 rounds included per deliverable. Extra rounds are billed at $48/h.</dd>
+      <dt>Third-party costs</dt><dd>Shopify plans, domains, hosting, paid apps, fonts, stock images and printing are paid by the client directly.</dd>
+      <dt>Ownership</dt><dd>Full rights to final deliverables transfer to the client once paid in full. Unused concepts and working files stay with the designer.</dd>
+      <dt>Portfolio use</dt><dd>The designer may show the finished work in her portfolio and on social media unless agreed otherwise in writing.</dd>
+      <dt>Client responsibilities</dt><dd>Provide content, brand assets, logins and feedback on time. Delays over 2 weeks may move the project to the next open slot.</dd>
+      <dt>Out of scope</dt><dd>Anything not listed is quoted separately or billed at $48/h, with approval first.</dd>
+      <dt>Cancellation</dt><dd>The deposit is non-refundable. If the client cancels mid-project, completed work is billed at the hourly rate.</dd>
+      <dt>Substack content</dt><dd>Posts are written by the designer in the client's voice and approved by the client before publishing. Growth results are not guaranteed.</dd>
+    </dl>
+  </section>
+
+  <div class="cta">
+    <p class="caps">Tell me about your project</p>
+    <a href="mailto:hello@ecem.world?subject=Freelance%20enquiry">[ hello@ecem.world ]</a>
+    <p class="fine caps">A written quote follows the discovery call · Quotes are valid for 30 days</p>
+  </div>
 </main>
+
 </body>
 </html>
